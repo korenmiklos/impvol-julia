@@ -88,7 +88,7 @@ function compute_import_shares!(variables, parameters)
 	variables[:d_mnjt] = share ./ sum(share,2)
 end
 
-function eq18rhs(variables, parameters)
+function price_step(variables, parameters)
 	input_price_index!(variables, parameters)
 
 	B_j_theta = parameters[:B_j_theta]
@@ -105,7 +105,7 @@ function price_loop!(variables, parameters)
 	# FIXME: init with a reasobale price vector
 	for k=1:30
 		# FIXME: check convergence
-		new_price = eq18rhs(variables, parameters)
+		new_price = price_step(variables, parameters)
 		variables[:P_njt] = new_price
 	end
 end
