@@ -2,6 +2,14 @@ macro assert0(expression)
 	:(@assert all($expression .<= 1e-12))
 end
 
+macro unpack_dictionary(expression)
+	lines = []
+	dict = eval(expression)
+	for (key, value) in dict
+		:(local $key = $value)
+	end 
+end
+
 function fill_dict(;kwargs...)
 	return Dict(kwargs)
 end
@@ -29,4 +37,18 @@ function array_transpose(array)
 	index[1], index[2] = 2, 1
 	return permutedims(array, index)	
 end
+
+function rotate_along_dimension(rotator, array, n)
+	index = [i for i in 1:ndims(array)]
+	index[1], index[n] = n, 1
+	temp = permutedims(array, index)
+	S1 = size(temp)
+	A = zeros()
+	for i in CartesianRange(S1[2:end])
+		@show i
+		A[:,i] = rotator*temp[:,i]
+	end
+	return A
+end
+
 
