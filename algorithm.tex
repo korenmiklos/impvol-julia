@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{amsmath}
 \begin{document}
 Solving a simple Armington-endowment model.
 
@@ -51,4 +52,107 @@ This leads to a better iteration: Pick $w_n$ and calculate corresponding $\Phi_n
 	and repeat.
 \end{enumerate}
 This should converge fast, in 3-4 steps, because (i) we start from a close guess, (ii) $\theta$ is large so that $1/\theta$ is small, resulting in dampening, (iii) $\alpha$ has limited impact on wages, only due to destination-country variation in $\tau$, dampening feedback.
+
+\section{Full model}
+Introduce a new variable for the factory-gate price of intermediate goods,
+\begin{equation}\label{eq:varrho}
+	\varrho_{njt} = \xi B_j T_{nj}^{-1/\theta} A_{njt}^{-1} w_{njt}^{\beta_j} \prod_{k=1}^J P_{nkt}^{\gamma_{kj}}.
+\end{equation}
+With this variable, we can write the price of the final good as
+\begin{equation}\label{eq:price}
+	P_{njt} = \left[
+		\sum_{m=1}^N (\varrho_{mjt}/\kappa_{nmjt})^{-\theta}
+		\right]^{-1/\theta}.
+\end{equation}
+This is a standard CES price index. We can write import shares as
+\begin{equation}\label{eq:import_share}
+	d_{nmjt} = \left[
+	\frac
+	{\varrho_{mjt}/\kappa_{nmjt}}
+	{P_{njt}}
+	\right]^{-\theta}.
+\end{equation}
+Wages can be expressed by inverting \eqref{eq:varrho},
+\begin{equation}\label{eq:wage}
+	w_{njt} = (\xi B_j)^{-1/\beta_j}
+	\varrho_{njt}^{1/\beta_j}  
+	T_{nj}^{1/(\beta_j\theta)}A_{njt}^{1/\beta_j} 
+	\prod_{k=1}^J P_{nkt}^{-\gamma_{kj}/\beta_j}.
+\end{equation}
+
+Taking the market clearing condition,
+\begin{equation}
+	R_{mjt} = \sum_{n=1}^N
+		d_{nmjt}
+		\left[
+			\alpha_{jt}
+			\left(
+				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+			\right)
+			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+		\right],
+\end{equation}
+\[
+	R_{mjt}\varrho_{mjt}^{\theta} = \sum_{n=1}^N
+		(\kappa_{nmjt} P_{njt})^{\theta}
+		\left[
+			\alpha_{jt}
+			\left(
+				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+			\right)
+			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+		\right],
+\]
+\begin{equation}\label{eq:market_clearing}
+	\varrho_{mjt} = R_{mjt}^{-1/\theta}
+	\left\{
+	\sum_{n=1}^N
+		(\kappa_{nmjt} P_{njt})^{\theta}
+		\left[
+			\alpha_{jt}
+			\left(
+				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+			\right)
+			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+		\right]
+	\right\}^{1/\theta}.
+\end{equation}
+Here both $R_{njt}$ and $\varrho_{njt}$ depend on equilibrium prices. But starting from a guess for $R$ (say, the autarky equilibrium), we can easily compute a shadow price $\varrho$ supporting that allocation. 
+\begin{enumerate}
+	\item Set $R_{njt}^{(0)}$ and $P_{njt}^{(0)}$ to the autarky equilibrium value or other suitable starting value.
+	\item Given $R_{njt}^{(k)}$ and $P_{njt}^{(k)}$, solve for $\varrho_{njt}^{(k+1)}$ using equation \eqref{eq:market_clearing}.
+	\item Solve for $w_{njt}^{(k+1)}$ and $P_{njt}^{(k+1)}$ using \eqref{eq:wage} and \eqref{eq:price}.
+	\item Calculate $R_{njt}^{(k+1)} = w_{njt}^{(k+1)}L_{njt}/\beta_j$.
+	\item Go back to Step 2 and repeat until convergence.
+\end{enumerate}
+Typically, this converges in 4--6 steps. This might even be a contraction mapping. 
+
+\subsection{Suitable starting values}
+Suppose that trade is free, $\kappa_{nmjt}\equiv 1$. Then $P_{njt}\equiv P_{jt}$ and
+\begin{equation*}
+	\varrho_{mjt}^{(0)} = 
+	P_{jt}
+	R_{mjt}^{-1/\theta}
+	\left\{
+	\sum_{n=1}^N
+		\left[
+			\alpha_{jt}
+			\left(
+				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+			\right)
+			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+		\right]
+	\right\}^{1/\theta}.
+\end{equation*}
+Let $R_{wjt}$ denote the world revenue in sector $j$.
+\begin{equation*}
+	\varrho_{mjt}^{(0)} = 
+	P_{jt}
+	R_{mjt}^{-1/\theta}
+		\left[
+				\sum_{k=1}^J
+				(\alpha_{jt}\beta_k + \gamma_{jk}) R_{wkt}
+		\right]^{1/\theta}.
+\end{equation*}
+FIXME: This only determines $\varrho_{mjt}/P_{jt}$, what determines $P_{jt}$ relative to other sectors?
 \end{document}
