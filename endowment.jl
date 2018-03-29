@@ -12,7 +12,8 @@ function alpha(w_nt, L_nt)
 end
 
 function loop(L_nt)
-	alpha_guess = ones(L_nt)/N
+	# world is close to autarky, start from autarky solution
+	alpha_guess = L_nt ./ sum(L_nt)
 	for k in 1:6
 		new_wage = step(L_nt, alpha_guess)
 		alpha_guess = alpha(new_wage, L_nt)

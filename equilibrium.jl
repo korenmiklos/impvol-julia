@@ -1,6 +1,6 @@
 include("utils.jl")
-global parameters = Dict{Symbol, Any}()
-global variables = Dict{Symbol, Any}()
+variables = Dict{Symbol, Any}()
+parameters = Dict{Symbol, Any}()
 
 # for matrix conformity, store all variables in a 4-dimensional array:
 # mnjt: destination, source, sector, time
@@ -43,11 +43,13 @@ end
 
 function input_price_index!(variables, parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
+	P = variables[:P_njt]
 	variables[:rho_njt] = Array{Float64}(1,N,J,T)
+	rho = variables[:rho_njt]
 	for n in 1:N
 		for t in 1:T
-			p = variables[:P_njt][1,n,:,t]
-			variables[:rho_njt][1,n,:,t] = input_price_index(p, parameters)
+			p = P[1,n,:,t]
+			rho[1,n,:,t] = input_price_index(p, parameters)
 		end
 	end
 end
@@ -89,11 +91,11 @@ function compute_import_shares!(variables, parameters)
 end
 
 function price_step(variables, parameters)
-	input_price_index!(variables, parameters)
+	input_price_index!(variables, parameters, true)
 
 	B_j_theta = parameters[:B_j_theta]
 	D = variables[:D]
-	rho_njt = variables[:rho_njt]
+	rho_njt = variables[:rho_njt_theta]
 	theta = parameters[:theta]
 
 	# FIXME add constant params
@@ -106,11 +108,11 @@ function price_loop!(variables, parameters)
 	for k=1:30
 		# FIXME: check convergence
 		new_price = price_step(variables, parameters)
-		variables[:P_njt] = new_price
+		variables[:P_njt_theta] = new_price
 	end
 end
 
-function market_clearing!(variables, parameters)
+function revenue_step(variables, parameters)
 	compute_import_shares!(variables, parameters)
 
 	d_mnjt = variables[:d_mnjt]
@@ -122,7 +124,17 @@ function market_clearing!(variables, parameters)
 	# use eq 19 of "paper November 8 2017.pdf"
 	wagebill_nt = rotate_sectors(beta_j[:]',R_njt)
 	intermediate_njt = rotate_sectors(gamma_jk,R_njt)
-	new_revenue=sum(array_transpose(d_mnjt) .* (alpha_jt .* wagebill_nt + intermediate_njt - alpha_jt .* S_nt), 1)
+	return sum(array_transpose(d_mnjt) .* (alpha_jt .* wagebill_nt + intermediate_njt - alpha_jt .* S_nt), 1)
+end
+
+function revenue_loop!(variables, parameters)
+	# FIXME: init with a reasobale revenue vector
+	for k=1:30
+		# FIXME: check convergence
+		new_revenue = revenue_step(variables, parameters)
+		println(new_revenue[1,1])
+		variables[:R_njt] = new_revenue
+	end
 end
 
 function check_parameters(globals)
@@ -162,7 +174,7 @@ println(size(variables[:rho_njt]))
 
 @time price_loop!(variables, parameters)
 
-@time market_clearing!(variables, parameters)
+@time revenue_loop!(variables, parameters)
 
 
 #print(size(compute_Ds(variables, parameters)))
