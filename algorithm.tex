@@ -1,0 +1,54 @@
+\documentclass{article}
+\begin{document}
+Solving a simple Armington-endowment model.
+
+Let $Q_n = A_NL_n$, with $L_n$ completely inelastic. Demand is CES:
+\[
+C_n^{1-1/\theta} = \sum_m Q_m^{1-1/\theta}.
+\]
+Trade costs are $\tau_{ij}$ and we denote $\kappa_{ij} = \tau_{ij}^{-\theta}$.
+
+This model has the following equilibrium equations.
+\[
+d_{nm} = 
+	\frac
+	{(\tau_{nm}w_m)^{1-\theta}}
+	{\sum_k (\tau_{nk} w_k)^{1-\theta}}
+\]
+\[
+w_m \cdot L_m = \sum_n d_{nm} w_n \cdot L_n
+\]
+where $w_m$ is the unit cost of labor $L_m$.
+\[
+w_m L_m = w_m^{1-\theta}
+\sum_n 	\frac
+	{\tau_{nm}^{1-\theta}}
+	{\sum_k (\tau_{nk} w_k)^{1-\theta}}
+ w_n L_n
+\]
+Let $\Phi_n = \sum_k (\tau_{nk} w_k)^{1-\theta}$ 
+\[
+w_m^\theta L_m = 
+\sum_n 	
+	{\tau_{nm}^{1-\theta}}
+ w_n L_n/\Phi_n.
+\]
+This leads to a better iteration: Pick $w_n$ and calculate corresponding $\Phi_n$. Calculate new $w_n$ from LHS. 
+
+\begin{enumerate}
+	\item Pick $\alpha_m^{(0)} = w_mL_m/\Phi_m$ from some previous equilibrium (or data).
+	\item Solve for
+	\[
+	w_m^{(k+1)} = L_m^{-1/\theta} 
+		\left[
+		\sum_n \alpha_n^{(k)} \tau_{nm}^{1-\theta}
+		\right]^{1/\theta}
+	\]
+	\item Set 
+	\[
+	\alpha_m^{(k+1)} = w_m^{(k)} L_m/\Phi_m(w^{(k)})
+	\]
+	and repeat.
+\end{enumerate}
+This should converge fast, in 3-4 steps, because (i) we start from a close guess, (ii) $\theta$ is large so that $1/\theta$ is small, resulting in dampening, (iii) $\alpha$ has limited impact on wages, only due to destination-country variation in $\tau$, dampening feedback.
+\end{document}
