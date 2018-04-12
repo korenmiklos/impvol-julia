@@ -14,7 +14,9 @@ function coerce_parameters!(parameters)
 
 	beta_j = parameters[:beta]'
 	gamma_jk = parameters[:gamma_jk]
-	parameters[:B_j_theta] = reshape(beta_j .^ (-beta_j) .* prod(gamma_jk .^ (-gamma_jk),2), (1,1,J,1)) .^ (-parameters[:theta])
+	parameters[:B_j] = reshape(beta_j .^ (-beta_j) .* prod(gamma_jk .^ (-gamma_jk),2), (1,1,J,1)) 
+	# FIXME: use definition of xi parameter
+	parameters[:xi] = 1 
 end
 
 function coerce_variable!(variable, parameters)
@@ -23,13 +25,13 @@ function coerce_variable!(variable, parameters)
 end
 
 function rotate_sectors(A, y)
-	N, M, J, T = size(y)
+	M, N, J, T = size(y)
 	K = size(A,1)
-	B = zeros(N,M,K,T)
-	for n=1:N
-		for m=1:M
+	B = zeros(M,N,K,T)
+	for m=1:M
+		for n=1:N
 			for t=1:T
-				B[n,m,:,t] = A * y[n,m,:,t] 
+				B[m,n,:,t] = A * y[m,n,:,t] 
 			end
 		end
 	end
@@ -44,8 +46,8 @@ end
 function input_price_index!(variables, parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
 	P = variables[:P_njt]
-	variables[:rho_njt] = Array{Float64}(1,N,J,T)
-	rho = variables[:rho_njt]
+	variables[:input_price_njt] = Array{Float64}(1,N,J,T)
+	rho = variables[:input_price_njt]
 	for n in 1:N
 		for t in 1:T
 			p = P[1,n,:,t]
@@ -54,15 +56,12 @@ function input_price_index!(variables, parameters)
 	end
 end
 
-function compute_Ds!(variables, parameters)
-	w_njt = variables[:w_njt]
-	Z_njt = variables[:Z_njt]
-	L_nt = parameters[:L_nt]
-	beta_j = parameters[:beta_j]
+function compute_price!(variables, parameters)
 	theta = parameters[:theta]
 	kappa_mnjt = parameters[:kappa_mnjt]
-	# use formula on p43 of "paper November 8 2017.pdf"
-	variables[:D] = Z_njt .* (L_nt .* w_njt) .^ (-beta_j*theta) .* kappa_mnjt .^ theta
+	rho_njt = variables[:rho_njt]
+
+	variables[:P_njt] = array_transpose(sum((rho_njt ./ kappa_mnjt) .^ (-theta), 2) .^ (-1/theta))
 end
 
 function compute_price_index!(variables, parameters)
@@ -77,63 +76,88 @@ function compute_price_index!(variables, parameters)
 end
 
 function compute_import_shares!(variables, parameters)
-	compute_Ds!(variables, parameters)
-	compute_price_index!(variables, parameters)
+	compute_price!(variables, parameters)
 
-	D = variables[:D]
-	P_nt = variables[:P_nt]
+	P_mjt = array_transpose(variables[:P_njt])
 	theta = parameters[:theta]
+	kappa_mnjt = parameters[:kappa_mnjt]
+	rho_njt = variables[:rho_njt]
+
+	variables[:d_mnjt] = (rho_njt ./ kappa_mnjt ./ P_mjt) .^ (-theta)
+end
+
+function compute_wage!(variables, parameters)
+	input_price_index!(variables, parameters)
+
+	P_njt = variables[:P_njt]
+	theta = parameters[:theta]
+	rho_njt = variables[:rho_njt]
+	input_price_njt = variables[:input_price_njt]
+
+	gamma_jk = parameters[:gamma_jk]
+	beta_j = parameters[:beta_j]
+	B_j = parameters[:B_j]
+	xi = parameters[:xi]
+	# we dont need T
+	A_njt = parameters[:A_njt]
+
+	variables[:w_njt] = (rho_njt .* A_njt ./ input_price_njt ./ (xi * B_j)) .^ (1 ./ beta_j)
+end
+
+function compute_revenue!(variables, parameters)
+	w_njt = variables[:w_njt]
+	L_njt = variables[:L_njt]
 	beta_j = parameters[:beta_j]
 
-	# use formula on p45 of "paper November 8 2017.pdf"
-	share = D .* (P_nt .^ (theta*(beta_j-1)))
-	variables[:d_mnjt] = share ./ sum(share,2)
+	variables[:R_njt] = w_njt .* L_njt ./ beta_j
 end
 
-function price_step(variables, parameters)
-	input_price_index!(variables, parameters, true)
-
-	B_j_theta = parameters[:B_j_theta]
-	D = variables[:D]
-	rho_njt = variables[:rho_njt_theta]
-	theta = parameters[:theta]
-
-	# FIXME add constant params
-	return array_transpose(B_j_theta .* sum(D .* rho_njt .^ (-theta), 2)) .^ (-1/theta)
-end
-
-function price_loop!(variables, parameters)
-	compute_Ds!(variables, parameters)
-	# FIXME: init with a reasobale price vector
-	for k=1:30
-		# FIXME: check convergence
-		new_price = price_step(variables, parameters)
-		variables[:P_njt_theta] = new_price
-	end
-end
-
-function revenue_step(variables, parameters)
-	compute_import_shares!(variables, parameters)
-
-	d_mnjt = variables[:d_mnjt]
+function compute_expenditure!(variables, parameters)
+	# use eq 19 of "paper November 8 2017.pdf"
+	R_nkt = variables[:R_njt]
+	beta_j = parameters[:beta_j]
+	gamma_jk = parameters[:gamma_jk]
 	alpha_jt = parameters[:alpha_jt]
-	beta_j = parameters[:beta_j]
-	R_njt = variables[:R_njt]
 	S_nt = parameters[:S_nt]
 
-	# use eq 19 of "paper November 8 2017.pdf"
-	wagebill_nt = rotate_sectors(beta_j[:]',R_njt)
-	intermediate_njt = rotate_sectors(gamma_jk,R_njt)
-	return sum(array_transpose(d_mnjt) .* (alpha_jt .* wagebill_nt + intermediate_njt - alpha_jt .* S_nt), 1)
+	wagebill_nt = rotate_sectors(beta_j[:]',R_nkt)
+	intermediate_njt = rotate_sectors(gamma_jk,R_nkt)
+	variables[:E_mjt] = array_transpose(alpha_jt .* wagebill_nt + intermediate_njt - alpha_jt .* S_nt)
 end
 
-function revenue_loop!(variables, parameters)
-	# FIXME: init with a reasobale revenue vector
-	for k=1:30
-		# FIXME: check convergence
-		new_revenue = revenue_step(variables, parameters)
-		println(new_revenue[1,1])
-		variables[:R_njt] = new_revenue
+function shadow_price_step(variables, parameters)
+	compute_expenditure!(variables, parameters)
+	theta = parameters[:theta]
+	E_mjt = variables[:E_mjt]
+	R_njt = variables[:R_njt]
+	kappa_mnjt = parameters[:kappa_mnjt]
+	P_mjt = array_transpose(variables[:P_njt])
+
+	return sum( (kappa_mnjt .* P_mjt) .^ theta .* E_mjt ./ R_njt, 1) .^ (1/theta) 
+end
+
+function starting_values(variables, parameters)
+	compute_expenditure!(variables, parameters)
+	theta = parameters[:theta]
+	E_mjt = variables[:E_mjt]
+	R_njt = variables[:R_njt]
+	kappa_mnjt = ones(parameters[:kappa_mnjt])
+	P_mjt = array_transpose(variables[:P_njt])
+
+	return sum( (kappa_mnjt .* P_mjt) .^ theta .* E_mjt ./ R_njt, 1) .^ (1/theta) 
+end
+
+function loop!(variables, parameters)
+	# starting value
+	variables[:rho_njt] = starting_values(variables, parameters)
+
+	for k=1:10
+		new_rho = shadow_price_step(variables, parameters)
+		println(k, mean((new_rho-variables[:rho_njt]) .^ 2))
+		variables[:rho_njt] = new_rho
+		compute_wage!(variables, parameters)
+		compute_price!(variables, parameters)
+		compute_revenue!(variables, parameters)
 	end
 end
 
@@ -166,15 +190,12 @@ gamma_jk = rand(J,J)
 parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 coerce_parameters!(parameters)
 
-global variables = fill_dict(P_njt=rand(1,N,J,T), w_njt=rand(1,N,J,T), Z_njt=rand(1,N,J,T), R_njt=rand(1,N,J,T))
+variables = fill_dict(P_njt=rand(1,N,J,T), w_njt=rand(1,N,J,T), R_njt=rand(1,N,J,T))
+parameters[:A_njt] = rand(1,N,J,T)
+variables[:L_njt] = ones(1,N,J,T)
 
 #check_parameters(parameters)
-@time input_price_index!(variables, parameters)
-println(size(variables[:rho_njt]))
-
-@time price_loop!(variables, parameters)
-
-@time revenue_loop!(variables, parameters)
+@time loop!(variables, parameters)
 
 
 #print(size(compute_Ds(variables, parameters)))

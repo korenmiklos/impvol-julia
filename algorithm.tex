@@ -60,16 +60,16 @@ Introduce a new variable for the factory-gate price of intermediate goods,
 \end{equation}
 With this variable, we can write the price of the final good as
 \begin{equation}\label{eq:price}
-	P_{njt} = \left[
-		\sum_{m=1}^N (\varrho_{mjt}/\kappa_{nmjt})^{-\theta}
+	P_{mjt} = \left[
+		\sum_{n=1}^N (\varrho_{njt}/\kappa_{mnjt})^{-\theta}
 		\right]^{-1/\theta}.
 \end{equation}
 This is a standard CES price index. We can write import shares as
 \begin{equation}\label{eq:import_share}
-	d_{nmjt} = \left[
+	d_{mnjt} = \left[
 	\frac
-	{\varrho_{mjt}/\kappa_{nmjt}}
-	{P_{njt}}
+	{\varrho_{njt}/\kappa_{mnjt}}
+	{P_{mjt}}
 	\right]^{-\theta}.
 \end{equation}
 Wages can be expressed by inverting \eqref{eq:varrho},
@@ -82,38 +82,38 @@ Wages can be expressed by inverting \eqref{eq:varrho},
 
 Taking the market clearing condition,
 \begin{equation}
-	R_{mjt} = \sum_{n=1}^N
-		d_{nmjt}
+	R_{njt} = \sum_{m=1}^N
+		d_{mnjt}
 		\left[
 			\alpha_{jt}
 			\left(
-				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+				\sum_{k=1}^J\beta_k R_{mkt} - S_{mt}
 			\right)
-			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+			+ \sum_{k=1}^J\gamma_{jk}R_{mkt}
 		\right],
 \end{equation}
 \[
-	R_{mjt}\varrho_{mjt}^{\theta} = \sum_{n=1}^N
-		(\kappa_{nmjt} P_{njt})^{\theta}
+	R_{njt}\varrho_{njt}^{\theta} = \sum_{m=1}^N
+		(\kappa_{mnjt} P_{mjt})^{\theta}
 		\left[
 			\alpha_{jt}
 			\left(
-				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+				\sum_{k=1}^J\beta_k R_{mkt} - S_{mt}
 			\right)
-			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+			+ \sum_{k=1}^J\gamma_{jk}R_{mkt}
 		\right],
 \]
 \begin{equation}\label{eq:market_clearing}
-	\varrho_{mjt} = R_{mjt}^{-1/\theta}
+	\varrho_{njt} = R_{njt}^{-1/\theta}
 	\left\{
-	\sum_{n=1}^N
-		(\kappa_{nmjt} P_{njt})^{\theta}
+	\sum_{m=1}^N
+		(\kappa_{mnjt} P_{mjt})^{\theta}
 		\left[
 			\alpha_{jt}
 			\left(
-				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+				\sum_{k=1}^J\beta_k R_{mkt} - S_{mt}
 			\right)
-			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+			+ \sum_{k=1}^J\gamma_{jk}R_{mkt}
 		\right]
 	\right\}^{1/\theta}.
 \end{equation}
@@ -127,20 +127,36 @@ Here both $R_{njt}$ and $\varrho_{njt}$ depend on equilibrium prices. But starti
 \end{enumerate}
 Typically, this converges in 4--6 steps. This might even be a contraction mapping. 
 
-\subsection{Suitable starting values}
-Suppose that trade is free, $\kappa_{nmjt}\equiv 1$. Then $P_{njt}\equiv P_{jt}$ and
 \begin{equation*}
-	\varrho_{mjt}^{(0)} = 
-	P_{jt}
-	R_{mjt}^{-1/\theta}
+	\varrho_{njt}/P_{njt} = 
 	\left\{
-	\sum_{n=1}^N
+	\sum_{m=1}^N
+		(\kappa_{nmjt} P_{mjt}/P_{njt})^{\theta}
 		\left[
 			\alpha_{jt}
 			\left(
-				\sum_{k=1}^J\beta_k R_{nkt} - S_{nt}
+				\sum_{k=1}^J\beta_k R_{mkt}/R_{njt} - S_{mt}/R_{njt}
 			\right)
-			+ \sum_{k=1}^J\gamma_{jk}R_{nkt}
+			+ \sum_{k=1}^J\gamma_{jk}R_{mkt}/R_{njt}
+		\right]
+	\right\}^{1/\theta}.
+\end{equation*}
+
+
+\subsection{Suitable starting values}
+Suppose that trade is free, $\kappa_{nmjt}\equiv 1$. Then $P_{njt}\equiv P_{jt}$ and
+\begin{equation*}
+	\varrho_{njt}^{(0)} = 
+	P_{jt}
+	R_{njt}^{-1/\theta}
+	\left\{
+	\sum_{m=1}^N
+		\left[
+			\alpha_{jt}
+			\left(
+				\sum_{k=1}^J\beta_k R_{mkt} - S_{mt}
+			\right)
+			+ \sum_{k=1}^J\gamma_{jk}R_{mkt}
 		\right]
 	\right\}^{1/\theta}.
 \end{equation*}
@@ -154,5 +170,38 @@ Let $R_{wjt}$ denote the world revenue in sector $j$.
 				(\alpha_{jt}\beta_k + \gamma_{jk}) R_{wkt}
 		\right]^{1/\theta}.
 \end{equation*}
-FIXME: This only determines $\varrho_{mjt}/P_{jt}$, what determines $P_{jt}$ relative to other sectors?
+This only determines $\varrho_{mjt}/P_{jt}$, what determines $P_{jt}$ relative to other sectors?\begin{equation*}
+	\varrho_{mjt}/P_{jt} = 
+	\beta_j^{1/\theta}
+	(w_{mjt}L_{mjt})^{-1/\theta}
+		\left[
+				\sum_{k=1}^J
+				(\alpha_{jt} + \gamma_{jk}/\beta_k) 
+				\sum_{n=1}^N w_{nkt}L_{nkt}
+		\right]^{1/\theta}.
+\end{equation*}
+With no IO linkages,
+\begin{equation*}
+	\frac
+	{\varrho_{mjt}}
+	{P_{jt}} = 
+	\alpha_{jt}^{1/\theta} 
+	\left[
+		\frac
+		{w_{mjt}L_{mjt}}
+		{\sum_{n=1}^N w_{nt}L_{nt}}
+	\right]^{-1/\theta}.
+\end{equation*}
+Given equation \eqref{eq:price},
+\[
+1 = \sum_{m=1}^M (\varrho_{mjt}/P_{jt})^{-\theta}
+\]
+for all $j$. Substituting in,
+\begin{equation*}
+\alpha_{jt} = \frac
+	{\sum_{m=1}^N
+		{w_{mjt}L_{mjt}}}
+		{\sum_{n=1}^N w_{nt}L_{nt}}
+\end{equation*}
+for all $j$. This pins down the scale of prices and wages in sector $j$.
 \end{document}
