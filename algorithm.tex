@@ -162,46 +162,227 @@ Suppose that trade is free, $\kappa_{nmjt}\equiv 1$. Then $P_{njt}\equiv P_{jt}$
 \end{equation*}
 Let $R_{wjt}$ denote the world revenue in sector $j$.
 \begin{equation*}
-	\varrho_{mjt}^{(0)} = 
+	\varrho_{njt}^{(0)} = 
 	P_{jt}
-	R_{mjt}^{-1/\theta}
+	R_{njt}^{-1/\theta}
 		\left[
 				\sum_{k=1}^J
 				(\alpha_{jt}\beta_k + \gamma_{jk}) R_{wkt}
 		\right]^{1/\theta}.
 \end{equation*}
-This only determines $\varrho_{mjt}/P_{jt}$, what determines $P_{jt}$ relative to other sectors?\begin{equation*}
-	\varrho_{mjt}/P_{jt} = 
+This only determines $\varrho_{njt}/P_{jt}$, what determines $P_{jt}$ relative to other sectors?\begin{equation*}
+	\varrho_{njt}/P_{jt} = 
 	\beta_j^{1/\theta}
-	(w_{mjt}L_{mjt})^{-1/\theta}
+	(w_{njt}L_{njt})^{-1/\theta}
 		\left[
 				\sum_{k=1}^J
 				(\alpha_{jt} + \gamma_{jk}/\beta_k) 
-				\sum_{n=1}^N w_{nkt}L_{nkt}
+				\sum_{m=1}^N w_{mkt}L_{mkt}
 		\right]^{1/\theta}.
 \end{equation*}
-With no IO linkages,
+Sum across $n$s,
 \begin{equation*}
-	\frac
-	{\varrho_{mjt}}
-	{P_{jt}} = 
-	\alpha_{jt}^{1/\theta} 
-	\left[
-		\frac
-		{w_{mjt}L_{mjt}}
-		{\sum_{n=1}^N w_{nt}L_{nt}}
-	\right]^{-1/\theta}.
+	(\varrho_{njt}/P_{jt})^{-\theta} = 
+	\beta_j^{-1}
+	(w_{njt}L_{njt})
+		\left[
+				\sum_{k=1}^J
+				(\alpha_{jt} + \gamma_{jk}/\beta_k) 
+				\sum_{m=1}^N w_{mkt}L_{mkt}
+		\right]^{-1}.
 \end{equation*}
-Given equation \eqref{eq:price},
+\begin{equation*}
+	w_{wjt}L_{wjt}
+	= \beta_j
+				\sum_{k=1}^J
+				(\alpha_{jt} + \gamma_{jk}/\beta_k) 
+				w_{wkt}L_{wkt}.
+\end{equation*}
+\begin{equation*}
+	R_{wjt}
+	=
+			\sum_{k=1}^J
+			(\alpha_{jt}\beta_k + \gamma_{jk}) 
+			R_{wkt}.
+\end{equation*}
+We can solve this for eigenvalue equation for $R_{wjt}$ without knowing anything about equilibrium prices, conditional a global numeraire.
+
+
+Write the log of equation \eqref{eq:varrho} in matrix notation, and recognizing that under free trade, $P$ does not depend on $n$,
 \[
-1 = \sum_{m=1}^M (\varrho_{mjt}/P_{jt})^{-\theta}
+\ln\mathbf \varrho_{nt} = \ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
+	+ \text{diag}(\beta) \ln\mathbf w_{nt}
+	+ \Gamma \ln\mathbf P_{t}  
 \]
-for all $j$. Substituting in,
+\[
+\ln\mathbf \varrho_{nt} - \ln\mathbf P_{t} 
+ = \frac1\theta\ln\mathbf\beta
+ 	-\frac1\theta(\ln \mathbf w_{nt}+ \ln \mathbf L_{nt})
+ 	+\frac1\theta \ln \mathbf E_{wt}
+\]
+\[
+\frac1\theta\ln\mathbf\beta
+ 	-\frac1\theta(\ln \mathbf w_{nt}+ \ln \mathbf L_{nt})
+ 	+\frac1\theta \ln \mathbf E_{wt}
+=
+\ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
+	+ \text{diag}(\beta) \ln\mathbf w_{nt}
+	+ (\Gamma-\mathbf I) \ln\mathbf P_{t}
+\]
+\[
+\ln\mathbf\beta
+ 	-\ln \mathbf L_{nt}
+ 	+ \ln \mathbf E_{wt}
+	+ \theta\ln\mathbf A_{nt}
+	-\theta\ln\xi
+	- \theta\ln\mathbf B
+	+ \theta(\mathbf I-\Gamma) \ln\mathbf P_{t}
+=
+	 \text{diag}(1+\beta\theta) \ln\mathbf w_{nt}
+\]
+Guess a $P$. Solve above for $w$. Then solve for next $P$.
+\subsubsection{General problem for free trade}
+Pricing equation:
+\[
+\ln\mathbf \varrho_{nt}-\ln\mathbf P_{t} = 
+\ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
++\text{diag}(\beta)(\ln\mathbf w_{nt}-\ln\mathbf P_{t})
++ \mathbf C \ln\mathbf P_{t}  
+\]
+The last matrix $\mathbf C = \Gamma+\text{diag}(\beta)-\mathbf I$ has the property $\mathbf C\mathbf 1=\mathbf 0$ so this equation is hom(0) in prices. 
+
+Import share equation:
+\[
+\ln\mathbf \varrho_{nt} - \ln\mathbf P_{t} 
+ = 
+ 	+\frac1\theta(\ln\mathbf\beta+\ln \mathbf E_{wt}-\ln \mathbf w_{nt}- \ln \mathbf L_{nt})
+\]
+This is also hom(0) in prices. World expenditure $E_{wt}$ can be precomputed up to a choice of numeraire.
+
+CES price index:
+\[
+\ln\mathbf P_{t} = -\frac1\theta
+ \ln \left[
+ 	\sum_{n=1}^N \exp(-\theta \ln \varrho_{nt})
+ \right]
+\]
+\[
+\mathbf 1 =  
+ 	\sum_{n=1}^N \exp[-\theta (\ln \varrho_{nt}-\ln\mathbf P_{t})]
+\]
+Again, hom(0) in prices. Substituting in the import share equation,
+\[
+\mathbf 1 =  
+ 	\sum_{n=1}^N \exp(\ln\mathbf w_{nt}-\ln\mathbf E_{wt}-\theta\mathbf b_2).
+\]
+This just says that the import shares add up to 1. This suggests that we can limit the search to import shares on the simplex. Let $\mathbf d_{nt}$ denote the import share vector.
+\[
+\ln\mathbf \varrho_{nt} - \ln\mathbf P_{t} 
+ = -\frac1\theta \ln\mathbf d_{nt}
+\]
+Wages are
+\[
+\ln\mathbf w_{nt} = \ln\beta+\ln\mathbf d_{nt}+\ln\mathbf E_{wt}-\ln\mathbf L_{nt}
+\]
+so that
+\[
+-\frac1\theta \ln\mathbf d_{nt} = 
+\ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
++
+\text{diag}(\beta)(\ln\beta+\ln\mathbf d_{nt}-\ln\mathbf L_{nt}+\ln\mathbf E_{wt})
+- (\mathbf I-\Gamma) \ln\mathbf P_{t}  
+\]
+\[
+\text{diag}(\beta+1/\theta) \ln\mathbf d_{nt} = 
+-\ln\xi
+	- \ln\mathbf B
+	+ \ln\mathbf A_{nt}
++
+\text{diag}(\beta)(\ln\mathbf L_{nt}-\ln\mathbf E_{wt})
++ (\mathbf I-\Gamma) \ln\mathbf P_{t}  
+\]
+This holds for all $n$ and $t$. In particular, it also holds for country $0$, which we can subtract:
+\[
+\text{diag}(\beta+1/\theta) (\ln\mathbf d_{nt}-\ln\mathbf d_{0t}) = 
+	\ln\mathbf A_{nt}-\ln\mathbf A_{0t}
++
+\text{diag}(\beta)(\ln\mathbf L_{nt}-\ln\mathbf L_{0t})
+\]
+\[
+(\ln\mathbf d_{nt}-\ln\mathbf d_{0t}) = 
+	\text{diag}(\theta/(1+\beta\theta)) (\ln\mathbf A_{nt}-\ln\mathbf A_{0t})
++
+\text{diag}(\beta\theta/(1+\beta\theta))(\ln\mathbf L_{nt}-\ln\mathbf L_{0t})
+\]
+This suggests the following solution for import shares,
+\[
+d_{njt} = c_{jt}A_{njt}^{\theta/(1+\beta_j\theta)}L_{njt}^{\beta_j\theta/(1+\beta_j\theta)},
+\]
+where the $c_{jt}$ constant is such that import shares add up to 1 for all $j$ and all $t$.
+
+Given $d_{njt}$ and the precomputed $E_{wjt}$, we can calculate wages in all sectors. Prices can be calculated from
+\[
+\ln\mathbf P_{t} = 
+(\mathbf I-\Gamma)^{-1}[\text{diag}(\beta+1/\theta) \ln\mathbf d_{0t}  
++\ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{0t}
++
+\text{diag}(\beta)(\ln\mathbf E_{wt}-\ln\mathbf L_{0t})]
+ .  
+\]
+
+
+\subsubsection{Autarky}
+Suppose that each country is in autarky, $\kappa_{nmjt}\equiv 0$ for all $n\neq m$ and 1 otherwise, and $S_{nt}\equiv 0$. Then $P_{njt}=\varrho_{njt}$ and 
 \begin{equation*}
-\alpha_{jt} = \frac
-	{\sum_{m=1}^N
-		{w_{mjt}L_{mjt}}}
-		{\sum_{n=1}^N w_{nt}L_{nt}}
+	R_{njt} = 			
+		\sum_{k=1}^J(\alpha_{jt}\beta_k+\gamma_{jk}) R_{nkt}. 
 \end{equation*}
-for all $j$. This pins down the scale of prices and wages in sector $j$.
+Solving the eigenvalue equation
+\[
+\mathbf R_{nt} = (\mathrm\alpha_t \mathbf \beta'+\Gamma)\mathbf R_{nt}
+\]
+pins down $R_{njt}$ up to a scale parameter $\omega_{nt}$ and we can easily solve for wages, again up to the same scale parameter. Note that this only depends on fixed parameters, so we can pre-calculate autarky wages.
+
+$\omega_{nt}R_{njt}$, $\omega_{nt}w_{njt}$
+
+Write the log of equation \eqref{eq:varrho} in matrix notation and recognizing $\varrho_{njt}\equiv P_{njt}$ in autarky,
+\[
+\ln\mathbf P_{nt} = \ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
+	+ \text{diag}(\beta) \ln\mathbf w_{nt}
+	+ \Gamma \ln\mathbf P_{nt}  
+\]
+\[
+\ln\mathbf P_{nt} = 
+(\mathbf I-\Gamma)^{-1}
+	[
+	\ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
+	+ \text{diag}(\beta) \ln\mathbf w_{nt}
+	]
+\]
+This gives us prices up to the same scale parameter. Again, everything can be precalculated and the only part that varies across simulations is
+\[
+\Delta \ln\mathbf P_{nt}
+-(\mathbf I-\Gamma)^{-1}
+	\Delta\ln\mathbf A_{nt}.
+\]
+We still need to find suitable starting values for $\omega_{nt}$. We can use the overall GDP shares in the data 
+\[
+\omega_{nt} = c\cdot Y_{nt}^{-1/\theta}.
+\]
+This can also be precalculated.
+
 \end{document}
