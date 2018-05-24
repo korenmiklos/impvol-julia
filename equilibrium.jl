@@ -2,10 +2,15 @@ using Images
 
 include("utils.jl")
 variables = Dict{Symbol, Any}()
+random_variables = Dict{Symbol, Any}()
 parameters = Dict{Symbol, Any}()
 
 # for matrix conformity, store all variables in a 4-dimensional array:
 # mnjt: destination, source, sector, time
+
+# per-period random variables are stored as
+# mnjs: destination, source, sector, state
+
 
 function coerce_parameters!(parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
@@ -26,7 +31,14 @@ function coerce_variable!(variable, parameters)
 	variable = ones(N,N,J,T) .* variable
 end
 
+function non_random_variable(y, t)
+	# array coersion is going to take care of rest
+	B = y[:,:,:,t]
+	return cat(ndims(B)+1, B)
+end
+
 function rotate_sectors(A, y)
+	# y may be a time series variable or a random variable
 	M, N, J, T = size(y)
 	K = size(A,1)
 	B = zeros(M,N,K,T)
@@ -66,152 +78,153 @@ function input_price_index(sectoral_prices_j, globals)
 	return prod(sectoral_prices_j .^ gamma_jk, 1)
 end
 
-function input_price_index!(variables, parameters)
-	N, J, T = parameters[:N], parameters[:J], parameters[:T]
-	P = variables[:P_njt]
-	variables[:input_price_njt] = Array{Float64}(1,N,J,T)
-	rho = variables[:input_price_njt]
+function input_price_index!(random_variables, parameters)
+	N, J, S = parameters[:N], parameters[:J], parameters[:S]
+	P = random_variables[:P_njs]
+	random_variables[:input_price_njs] = Array{Float64}(1,N,J,S)
+	rho = random_variables[:input_price_njs]
 	for n in 1:N
-		for t in 1:T
-			p = P[1,n,:,t]
-			rho[1,n,:,t] = input_price_index(p, parameters)
+		for s in 1:S
+			p = P[1,n,:,s]
+			rho[1,n,:,s] = input_price_index(p, parameters)
 		end
 	end
 end
 
-function compute_price!(variables, parameters)
+function compute_price!(random_variables, parameters, t)
 	theta = parameters[:theta]
-	kappa_mnjt = parameters[:kappa_mnjt]
-	rho_njt = variables[:rho_njt]
+	kappa = non_random_variable(parameters[:kappa_mnjt], t)
+	rho_njs = random_variables[:rho_njs]
 
-	variables[:P_njt] = array_transpose(sum((rho_njt ./ kappa_mnjt) .^ (-theta), 2) .^ (-1/theta))
+	random_variables[:P_njs] = array_transpose(sum((rho_njs ./ kappa) .^ (-theta), 2) .^ (-1/theta))
 end
 
-function compute_price_index!(variables, parameters)
-	# so that parameters[:theta] can be referred to as theta
-	#@unpack_dictionary variables
-	#@unpack_dictionary parameters
-	alpha_jt = parameters[:alpha_jt]
-	P_njt = variables[:P_njt]
+function compute_price_index!(random_variables, parameters, t)
+	alpha = non_random_variable(parameters[:alpha_jt], t)
+	P_njs = random_variables[:P_njs]
 
 	# use formula on p43 of "paper November 8 2017.pdf"
-	variables[:P_nt]=prod(alpha_jt .^ (-alpha_jt) .* P_njt .^ (alpha_jt), 3)
+	random_variables[:P_ns]=prod(alpha .^ (-alpha) .* P_njs .^ (alpha), 3)
 end
 
-function free_trade_country_shares!(variables, parameters)
-	N, J, T = parameters[:N], parameters[:J], parameters[:T]
-	A_njt = parameters[:A_njt]
-	L_njt = variables[:L_njt]
+function free_trade_country_shares!(random_variables, variables, parameters, t)
+	A_njs = random_variables[:A_njs]
+	L_njt = non_random_variable(variables[:L_njt], t)
 	theta = parameters[:theta]
 	beta_j = parameters[:beta_j]
 
-	d_njt = A_njt .^ (theta ./ (1 + theta*beta_j)) .* L_njt .^ (theta .* beta_j ./ (1 + theta*beta_j))
-	variables[:d_njt_free] = d_njt ./ sum(d_njt,2)
+	d_njs = A_njs .^ (theta ./ (1 + theta*beta_j)) .* L_njt .^ (theta .* beta_j ./ (1 + theta*beta_j))
+	random_variables[:d_njs_free] = d_njs ./ sum(d_njs,2)
 end
 
-function free_trade_wages!(variables, parameters)
-	free_trade_country_shares!(variables, parameters)
+function free_trade_wages!(random_variables, variables, parameters, t)
+	free_trade_country_shares!(random_variables, variables, parameters, t)
 	free_trade_sector_shares!(parameters)
 
-	d_njt = variables[:d_njt_free]
+	d_njs = random_variables[:d_njs_free]
 	beta_j = parameters[:beta_j]
-	E_wt = parameters[:sector_shares]
-	L_njt = variables[:L_njt]
+	E_wt = non_random_variable(parameters[:sector_shares], t)
+	L_njt = non_random_variable(variables[:L_njt], t)
 
-	variables[:w_njt] = beta_j .* d_njt .* E_wt ./ L_njt
+	random_variables[:w_njs] = beta_j .* d_njs .* E_wt ./ L_njt
 end
 
-function free_trade_prices!(variables, parameters)
-	free_trade_country_shares!(variables, parameters)
+function free_trade_prices!(random_variables, variables, parameters, t)
+	free_trade_country_shares!(random_variables, variables, parameters, t)
 	free_trade_sector_shares!(parameters)
 	beta_j = parameters[:beta_j]
 	theta = parameters[:theta]
-	d_njt = variables[:d_njt_free]
+	d_njs = random_variables[:d_njs_free]
 	xi = parameters[:xi]
 	B_j = parameters[:B_j]
-	A_njt = parameters[:A_njt]
-	E_wt = parameters[:sector_shares]
-	L_njt = variables[:L_njt]
+	A_njs = random_variables[:A_njs]
+	E_wt = non_random_variable(parameters[:sector_shares], t)
+	L_njt = non_random_variable(variables[:L_njt], t)
 	gamma_jk = parameters[:gamma_jk]
 
-	variables[:P_njt] = exp(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log(xi * d_njt .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_njt) .^(beta_j) ./ A_njt)))
-	variables[:rho_njt] = variables[:P_njt] ./ d_njt .^(1/theta)
+	random_variables[:P_njs] = exp(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log(xi * d_njs .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_njt) .^(beta_j) ./ A_njs)))
+	random_variables[:rho_njs] = random_variables[:P_njs] ./ d_njs .^(1/theta)
 end
 
-function compute_import_shares!(variables, parameters)
-	compute_price!(variables, parameters)
+function compute_import_shares!(random_variables, variables, parameters, t)
+	compute_price!(random_variables, parameters, t)
 
-	P_mjt = array_transpose(variables[:P_njt])
+	P_mjs = array_transpose(random_variables[:P_njs])
 	theta = parameters[:theta]
-	kappa_mnjt = parameters[:kappa_mnjt]
-	rho_njt = variables[:rho_njt]
+	kappa_mnjt = non_random_variable(parameters[:kappa_mnjt], t)
+	rho_njs = random_variables[:rho_njs]
 
-	variables[:d_mnjt] = (rho_njt ./ kappa_mnjt ./ P_mjt) .^ (-theta)
+	variables[:d_mnjs] = (rho_njs ./ kappa_mnjt ./ P_mjs) .^ (-theta)
 end
 
-function compute_wage!(variables, parameters)
-	input_price_index!(variables, parameters)
+function compute_wage!(random_variables, parameters)
+	input_price_index!(random_variables, parameters)
 
-	rho_njt = variables[:rho_njt]
-	input_price_njt = variables[:input_price_njt]
+	rho_njs = random_variables[:rho_njs]
+	input_price_njs = random_variables[:input_price_njs]
 
 	beta_j = parameters[:beta_j]
 	B_j = parameters[:B_j]
 	xi = parameters[:xi]
 	# we dont need T
-	A_njt = parameters[:A_njt]
+	A_njs = random_variables[:A_njs]
 
-	variables[:w_njt] = (rho_njt .* A_njt ./ input_price_njt ./ (xi * B_j)) .^ (1 ./ beta_j)
+	random_variables[:w_njs] = (rho_njs .* A_njs ./ input_price_njs ./ (xi * B_j)) .^ (1 ./ beta_j)
 end
 
-function compute_revenue!(variables, parameters)
-	w_njt = variables[:w_njt]
-	L_njt = variables[:L_njt]
+function compute_revenue!(random_variables, variables, parameters, t)
+	w_njs = random_variables[:w_njs]
+	L_njt = non_random_variable(variables[:L_njt], t)
 	beta_j = parameters[:beta_j]
 
-	variables[:R_njt] = w_njt .* L_njt ./ beta_j
+	random_variables[:R_njs] = w_njs .* L_njt ./ beta_j
 end
 
-function compute_expenditure!(variables, parameters)
+function compute_expenditure!(random_variables, variables, parameters, t)
 	# use eq 19 of "paper November 8 2017.pdf"
-	R_nkt = variables[:R_njt]
+	R_nks = random_variables[:R_njs]
 	beta_j = parameters[:beta_j]
 	gamma_jk = parameters[:gamma_jk]
-	alpha_jt = parameters[:alpha_jt]
-	S_nt = parameters[:S_nt]
+	alpha_jt = non_random_variable(parameters[:alpha_jt], t)
+	S_nt = non_random_variable(parameters[:S_nt], t)
 
-	wagebill_nt = rotate_sectors(beta_j[:]',R_nkt)
-	intermediate_njt = rotate_sectors(gamma_jk,R_nkt)
-	variables[:E_mjt] = array_transpose(alpha_jt .* wagebill_nt + intermediate_njt - alpha_jt .* S_nt)
+	wagebill_ns = rotate_sectors(beta_j[:]', R_nks)
+	intermediate_njs = rotate_sectors(gamma_jk, R_nks)
+	random_variables[:E_mjs] = array_transpose(alpha_jt .* wagebill_ns .+ intermediate_njs .- alpha_jt .* S_nt)
 end
 
-function shadow_price_step(variables, parameters)
+function shadow_price_step(random_variables, parameters, t)
 	theta = parameters[:theta]
-	E_mjt = variables[:E_mjt]
-	R_njt = variables[:R_njt]
-	kappa_mnjt = parameters[:kappa_mnjt]
-	P_mjt = array_transpose(variables[:P_njt])
+	E_mjs = random_variables[:E_mjs]
+	R_njs = random_variables[:R_njs]
+	kappa_mnjt = non_random_variable(parameters[:kappa_mnjt], t)
+	P_mjs = array_transpose(random_variables[:P_njs])
 
-	return sum( (kappa_mnjt .* P_mjt) .^ theta .* E_mjt ./ R_njt, 1) .^ (1/theta)  
+	return sum( (kappa_mnjt .* P_mjs) .^ theta .* E_mjs ./ R_njs, 1) .^ (1/theta)  
 end
 
-function loop!(variables, parameters)
+function loop!(random_variables, variables, parameters, t)
 	# starting value
+	free_trade_wages!(random_variables, variables, parameters, t)
+	free_trade_prices!(random_variables, variables, parameters, t)
+	compute_revenue!(random_variables, variables, parameters, t)
+	compute_expenditure!(random_variables, variables, parameters, t)
+
 	lambda = parameters[:lambda]
 	dist = 999
 	k = 1
 
 	while dist > parameters[:tolerance]
-		new_rho = shadow_price_step(variables, parameters)
-		dist = distance(new_rho, variables[:rho_njt])
+		new_rho = shadow_price_step(random_variables, parameters, t)
+		dist = distance(new_rho, random_variables[:rho_njs])
 		println(k, ": ")
 		println(meanfinite(new_rho, 4)[1,1,1,1])
 		println(dist)
-		variables[:rho_njt] = lambda*new_rho + (1-lambda)*variables[:rho_njt]
-		compute_price!(variables, parameters)
-		compute_wage!(variables, parameters)
-		compute_revenue!(variables, parameters)
-		compute_expenditure!(variables, parameters)
+		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
+		compute_price!(random_variables, parameters, t)
+		compute_wage!(random_variables, parameters)
+		compute_revenue!(random_variables, variables, parameters, t)
+		compute_expenditure!(random_variables, variables, parameters, t)
 		k = k+1
 	end
 end
@@ -222,8 +235,9 @@ end
 
 N = 24
 J = 25
-T = 1000
-fill_dict!(parameters, N=N, J=J, T=T)
+T = 2
+S = 1000
+fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
 alpha = rand(J) .* ones(J,T)
 beta = rand(1, J)
@@ -249,20 +263,10 @@ parameters[:lambda] = exp(-0.10*(J-1)^0.75)
 parameters[:tolerance] = 0.001
 coerce_parameters!(parameters)
 
-variables = fill_dict(P_njt=rand(1,N,J,T), w_njt=rand(1,N,J,T), R_njt=rand(1,N,J,T))
-parameters[:A_njt] = rand(1,N,J,T)
+random_variables = fill_dict(P_njs=rand(1,N,J,S), w_njs=rand(1,N,J,S), R_njs=rand(1,N,J,S))
+random_variables[:A_njs] = rand(1,N,J,S)
 variables[:L_njt] = ones(1,N,J,T)
 
-free_trade_wages!(variables, parameters)
-free_trade_prices!(variables, parameters)
-compute_revenue!(variables, parameters)
-compute_expenditure!(variables, parameters)
-
-
-println(variables[:d_njt_free][1,:,1,1])
-println(variables[:w_njt][1,:,1,1])
-println(variables[:P_njt][1,:,:,1])
-println(variables[:rho_njt][1,:,:,1])
-
-@time loop!(variables, parameters)
+t = 1
+@time loop!(random_variables, variables, parameters, t)
 
