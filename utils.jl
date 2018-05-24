@@ -51,4 +51,13 @@ function rotate_along_dimension(rotator, array, n)
 	return A
 end
 
+function share_within_dimension(X, i)
+	return X ./ sum(X,i)
+end
 
+function eigen_share(A)
+	# the solution to x = Ax with x'1 = 1
+	D, V = eig(A)
+	i = find(abs(D - 1.0) .< 1e-6)[1]
+	return V[:,i] ./ sum(V[:,i])
+end
