@@ -61,45 +61,6 @@ function free_trade_sector_shares!(parameters)
 	parameters[:sector_shares] = revenue_shares
 end
 
-function free_trade_wage_step!(variables, parameters)
-	N, J, T = parameters[:N], parameters[:J], parameters[:T]
-	beta_j = parameters[:beta_j]
-	theta = parameters[:theta]
-	diag_beta = diagm(beta_j[1,1,:,1])
-	L_njt = variables[:L_njt]
-	A_njt = parameters[:A_njt]
-	xi = parameters[:xi]
-	B_j = parameters[:B_j]
-	P_0t = variables[:P_0t]
-
-	# numeraire: world revenues sum to one in each year t
-	# world revenue equals world expenditure
-	E_wt = parameters[:revenue_shares]
-
-	RHS = log(beta_j).-log(L_njt).+log(E_wt) .+ theta .* (log(A_njt).-log(xi).-log(B_j).+rotate_sectors(eye(J)-gamma_jk, log(P_0t)))
-	ln_w = rotate_sectors(inv(eye(J)+theta*diag_beta), RHS)
-	ln_rho = log(xi).+log(B_j).-log(A_njt).+ beta_j.*ln_w .+ rotate_sectors(gamma_jk, log(P_0t))
-	new_P = array_transpose(sum(exp(ln_rho).^(-theta), 2) .^ (-1/theta))
-
-	variables[:w_njt] = exp(ln_w)
-	variables[:rho_njt] = exp(ln_rho)
-	variables[:P_0t] = new_P
-end
-
-function free_trade_loop!(variables, parameters)
-	compute_free_trade_revenue_shares!(parameters)
-	N, J, T = parameters[:N], parameters[:J], parameters[:T]
-	variables[:P_0t] = ones(1,1,J,T) 
-
-	for k=1:20
-		previous_price = copy(variables[:P_0t])
-		free_trade_wage_step!(variables, parameters)
-		println(k, ": ", variables[:w_njt][1,:,:,1])
-		println(previous_price[1,1,:,1])
-		println(variables[:P_0t][1,1,:,1])
-	end
-end
-
 function input_price_index(sectoral_prices_j, globals)
 	gamma_jk = globals[:gamma_jk]
 	return prod(sectoral_prices_j .^ gamma_jk, 1)
