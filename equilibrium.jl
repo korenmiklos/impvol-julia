@@ -44,6 +44,10 @@ function share_within_year(X)
 	return X ./ mean(X, [1 2 3])
 end
 
+function distance(p1, p2)
+	return meanfinite(((log(p1) .- log(p2)) .^ 2)[:], 1)[1] .^ 0.5
+end
+
 function free_trade_sector_shares!(parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
 	gamma_jk = parameters[:gamma_jk]
@@ -233,18 +237,21 @@ end
 function loop!(variables, parameters)
 	# starting value
 	lambda = parameters[:lambda]
+	dist = 999
+	k = 1
 
-	for k=1:20
+	while dist > parameters[:tolerance]
 		new_rho = shadow_price_step(variables, parameters)
+		dist = distance(new_rho, variables[:rho_njt])
 		println(k, ": ")
 		println(meanfinite(new_rho, 4)[1,1,1,1])
-		#println(variables[:E_mjt][:,1,:,1])
-		#println(variables[:R_njt][1,:,:,1])
+		println(dist)
 		variables[:rho_njt] = lambda*new_rho + (1-lambda)*variables[:rho_njt]
 		compute_price!(variables, parameters)
 		compute_wage!(variables, parameters)
 		compute_revenue!(variables, parameters)
 		compute_expenditure!(variables, parameters)
+		k = k+1
 	end
 end
 
@@ -276,7 +283,9 @@ parameters[:gamma_jk] = zeros(J,J)
 parameters[:beta] = ones(1,J)
 #parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
-parameters[:lambda] = exp(-0.05*(J-1)^0.75)
+parameters[:lambda] = exp(-0.10*(J-1)^0.75)
+# this is log points of average input price differences
+parameters[:tolerance] = 0.001
 coerce_parameters!(parameters)
 
 variables = fill_dict(P_njt=rand(1,N,J,T), w_njt=rand(1,N,J,T), R_njt=rand(1,N,J,T))
