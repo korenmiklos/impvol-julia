@@ -269,11 +269,13 @@ end
 Z_njt = rand(1,N,J,T)
 
 fill_dict!(parameters, alpha=alpha ./ sum(alpha, 1), beta=beta, theta=4, kappa_mnjt=kappa_mnjt, Z_njt=Z_njt, S_nt=zeros(1,N,1,T))
-gamma_jk = rand(J,J)
+# make Gamma more diagonal
+# gamma_jk = rand(J,J)+99*eye(J)
 # for testing purposed, set IO links to 0
 # test for continuity with small IO links
-parameters[:gamma_jk] = 0.75*eye(J)
-parameters[:beta] = 0.25*ones(1,J)
+#parameters[:gamma_jk] = 0.75*eye(J)
+parameters[:gamma_jk] = diagm(1-beta[:])
+#parameters[:beta] = 0.25*ones(1,J)
 # QUESTION: is this the right dimension to sum over?
 #parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
