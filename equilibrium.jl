@@ -257,7 +257,7 @@ S = 1000
 fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
 alpha = rand(J) .* ones(J,T)
-beta = 0.5 * rand(1, J)
+beta = 0.5 + 0.5 * rand(1, J)
 kappa_mnjt = rand(N,N,J,T)
 for j=1:J
 	for t=1:T
