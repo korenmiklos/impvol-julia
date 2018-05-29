@@ -257,7 +257,7 @@ S = 1000
 fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
 alpha = rand(J) .* ones(J,T)
-beta = 0.5 + 0.5 * rand(1, J)
+beta = 0.9 + 0.1 * rand(1, J)
 kappa_mnjt = rand(N,N,J,T)
 for j=1:J
 	for t=1:T
@@ -274,7 +274,7 @@ fill_dict!(parameters, alpha=alpha ./ sum(alpha, 1), beta=beta, theta=4, kappa_m
 # for testing purposed, set IO links to 0
 # test for continuity with small IO links
 #parameters[:gamma_jk] = 0.75*eye(J)
-parameters[:gamma_jk] = diagm(1-beta[:])
+parameters[:gamma_jk] = repmat((1-beta[:]')/J, J, 1)
 #parameters[:beta] = 0.25*ones(1,J)
 # QUESTION: is this the right dimension to sum over?
 #parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
