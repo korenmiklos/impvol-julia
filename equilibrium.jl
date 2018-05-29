@@ -37,6 +37,10 @@ function non_random_variable(y, t)
 	return cat(ndims(B)+1, B)
 end
 
+function expected_value(y)
+	return meanfinite(y, 4)[:,:,:,1]
+end
+
 function rotate_sectors(A, y)
 	# y may be a time series variable or a random variable
 	M, N, J, T = size(y)
@@ -206,6 +210,7 @@ end
 function loop!(random_variables, variables, parameters, t)
 	# starting value
 	free_trade_wages!(random_variables, variables, parameters, t)
+	print(parameters[:sector_shares])
 	free_trade_prices!(random_variables, variables, parameters, t)
 	compute_revenue!(random_variables, variables, parameters, t)
 	compute_expenditure!(random_variables, variables, parameters, t)
@@ -229,6 +234,18 @@ function loop!(random_variables, variables, parameters, t)
 	end
 end
 
+function expected_wage_share(random_variables, variables, t)
+	# note the different order!
+
+	L_njt = non_random_variable(variables[:L_njt], t)
+	w_njs = random_variables[:w_njs]
+
+	wage_bill = w_njs .* L_njt
+	wage_share = wage_bill ./ sum(wage_bill, 3)
+
+	return expected_value(wage_share)
+end
+
 function check_parameters(globals)
 	@assert0 sum(globals[:alpha], 2)-1.0
 end
@@ -240,7 +257,7 @@ S = 1000
 fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
 alpha = rand(J) .* ones(J,T)
-beta = rand(1, J)
+beta = 0.5 * rand(1, J)
 kappa_mnjt = rand(N,N,J,T)
 for j=1:J
 	for t=1:T
@@ -254,8 +271,10 @@ Z_njt = rand(1,N,J,T)
 fill_dict!(parameters, alpha=alpha ./ sum(alpha, 1), beta=beta, theta=4, kappa_mnjt=kappa_mnjt, Z_njt=Z_njt, S_nt=zeros(1,N,1,T))
 gamma_jk = rand(J,J)
 # for testing purposed, set IO links to 0
-parameters[:gamma_jk] = zeros(J,J)
-parameters[:beta] = ones(1,J)
+# test for continuity with small IO links
+parameters[:gamma_jk] = 0.01*eye(J)
+parameters[:beta] = 0.99*ones(1,J)
+# QUESTION: is this the right dimension to sum over?
 #parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
 parameters[:lambda] = exp(-0.10*(J-1)^0.75)
@@ -263,10 +282,10 @@ parameters[:lambda] = exp(-0.10*(J-1)^0.75)
 parameters[:tolerance] = 0.001
 coerce_parameters!(parameters)
 
-random_variables = fill_dict(P_njs=rand(1,N,J,S), w_njs=rand(1,N,J,S), R_njs=rand(1,N,J,S))
-random_variables[:A_njs] = rand(1,N,J,S)
+random_variables[:A_njs] = 1.0 .+ rand(1,N,J,S)
 variables[:L_njt] = ones(1,N,J,T)
 
 t = 1
 @time loop!(random_variables, variables, parameters, t)
+println(expected_wage_share(random_variables, variables, t)[1,:,:])
 
