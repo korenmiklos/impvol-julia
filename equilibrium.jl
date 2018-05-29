@@ -272,8 +272,8 @@ fill_dict!(parameters, alpha=alpha ./ sum(alpha, 1), beta=beta, theta=4, kappa_m
 gamma_jk = rand(J,J)
 # for testing purposed, set IO links to 0
 # test for continuity with small IO links
-parameters[:gamma_jk] = 0.01*eye(J)
-parameters[:beta] = 0.99*ones(1,J)
+parameters[:gamma_jk] = 0.75*eye(J)
+parameters[:beta] = 0.25*ones(1,J)
 # QUESTION: is this the right dimension to sum over?
 #parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
