@@ -184,17 +184,24 @@ function compute_revenue!(random_variables, variables, parameters, t)
 	random_variables[:R_njs] = w_njs .* L_njt ./ beta_j
 end
 
-function compute_expenditure!(random_variables, variables, parameters, t)
+function compute_expenditure_shares!(random_variables, variables, parameters, t)
 	# use eq 19 of "paper November 8 2017.pdf"
 	R_nks = random_variables[:R_njs]
 	beta_j = parameters[:beta_j]
 	gamma_jk = parameters[:gamma_jk]
 	alpha_jt = non_random_variable(parameters[:alpha_jt], t)
 	S_nt = non_random_variable(parameters[:S_nt], t)
+	expenditure = sum(R_nks, 3) .- S_nt
 
 	wagebill_ns = rotate_sectors(beta_j[:]', R_nks)
 	intermediate_njs = rotate_sectors(gamma_jk, R_nks)
-	random_variables[:E_mjs] = array_transpose(alpha_jt .* wagebill_ns .+ intermediate_njs .- alpha_jt .* S_nt)
+	random_variables[:e_mjs] = array_transpose((alpha_jt .* wagebill_ns .+ intermediate_njs .- alpha_jt .* S_nt) ./ expenditure)
+end
+
+function fixed_expenditure_shares!(random_variables, variables, parameters, t)
+	R_mjs = array_transpose(random_variables[:R_njs])	
+	expenditure = sum(R_mjs, 3) .- array_transpose(non_random_variable(parameters[:S_nt], t))
+	random_variables[:E_mjs] = random_variables[:e_mjs] .* expenditure
 end
 
 function shadow_price_step(random_variables, parameters, t)
@@ -207,13 +214,15 @@ function shadow_price_step(random_variables, parameters, t)
 	return sum( (kappa_mnjt .* P_mjs) .^ theta .* E_mjs ./ R_njs, 1) .^ (1/theta)  
 end
 
-function loop!(random_variables, variables, parameters, t)
-	# starting value
+function starting_values!(random_variables, variables, parameters, t)
 	free_trade_wages!(random_variables, variables, parameters, t)
-	print(parameters[:sector_shares])
 	free_trade_prices!(random_variables, variables, parameters, t)
 	compute_revenue!(random_variables, variables, parameters, t)
-	compute_expenditure!(random_variables, variables, parameters, t)
+	compute_expenditure_shares!(random_variables, variables, parameters, t)
+	fixed_expenditure_shares!(random_variables, variables, parameters, t)
+end
+
+function inner_loop!(random_variables, variables, parameters, t)
 
 	lambda = parameters[:lambda]
 	dist = 999
@@ -229,7 +238,7 @@ function loop!(random_variables, variables, parameters, t)
 		compute_price!(random_variables, parameters, t)
 		compute_wage!(random_variables, parameters)
 		compute_revenue!(random_variables, variables, parameters, t)
-		compute_expenditure!(random_variables, variables, parameters, t)
+		fixed_expenditure_shares!(random_variables, variables, parameters, t)
 		k = k+1
 	end
 end
@@ -257,7 +266,7 @@ S = 1000
 fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
 alpha = rand(J) .* ones(J,T)
-beta = 0.9 + 0.1 * rand(1, J)
+beta = 0.25 + 0.75 * rand(1, J)
 kappa_mnjt = rand(N,N,J,T)
 for j=1:J
 	for t=1:T
@@ -279,15 +288,21 @@ parameters[:gamma_jk] = repmat((1-beta[:]')/J, J, 1)
 # QUESTION: is this the right dimension to sum over?
 #parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
-parameters[:lambda] = exp(-0.10*(J-1)^0.75)
+parameters[:lambda] = exp(-0.05*(J-1)^0.75)
 # this is log points of average input price differences
-parameters[:tolerance] = 0.001
+parameters[:tolerance] = 0.005
 coerce_parameters!(parameters)
 
 random_variables[:A_njs] = 1.0 .+ rand(1,N,J,S)
 variables[:L_njt] = ones(1,N,J,T)
 
 t = 1
-@time loop!(random_variables, variables, parameters, t)
-println(expected_wage_share(random_variables, variables, t)[1,:,:])
+starting_values!(random_variables, variables, parameters, t)
+@time inner_loop!(random_variables, variables, parameters, t)
+println(random_variables[:e_mjs][1:2,1,:,t])
+compute_expenditure_shares!(random_variables, variables, parameters, t)
+println(random_variables[:e_mjs][1:2,1,:,t])
+parameters[:tolerance] = 0.001
+@time inner_loop!(random_variables, variables, parameters, t)
+#println(expected_wage_share(random_variables, variables, t)[1,:,:])
 

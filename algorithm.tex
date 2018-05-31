@@ -122,7 +122,7 @@ Here both $R_{njt}$ and $\varrho_{njt}$ depend on equilibrium prices. But starti
 	\item Set $R_{njt}^{(0)}$ and $P_{njt}^{(0)}$ to the autarky equilibrium value or other suitable starting value.
 	\item Given $R_{njt}^{(k)}$ and $P_{njt}^{(k)}$, solve for $\varrho_{njt}^{(k+1)}$ using equation \eqref{eq:market_clearing}.
 	\item Solve for $w_{njt}^{(k+1)}$ and $P_{njt}^{(k+1)}$ using \eqref{eq:wage} and \eqref{eq:price}.
-	\item Calculate $R_{njt}^{(k+1)} = w_{njt}^{(k+1)}L_{njt}/\beta_j$.
+	\item Calculate $R_{njt}^{(k+1)} = w_{njt}^{(k+1)}L_{njt}/\beta_j$. (This step sounds the most divergent, nothing ensures that relative sectoral revenue shares will remain close to equilibrium.)
 	\item Go back to Step 2 and repeat until convergence.
 \end{enumerate}
 Typically, this converges in 4--6 steps. This might even be a contraction mapping. 
@@ -142,6 +142,40 @@ Typically, this converges in 4--6 steps. This might even be a contraction mappin
 	\right\}^{1/\theta}.
 \end{equation*}
 
+
+\subsection{Dual loop}
+What are the sectoral expenditures across countries?
+\[
+E_{mjt} = 			\alpha_{jt}
+			\left(
+				\sum_{k=1}^J\beta_k R_{mkt} - S_{mt}
+			\right)
+			+ \sum_{k=1}^J\gamma_{jk}R_{mkt}
+\]
+The sectoral expenditure share is
+\begin{equation}\label{eq:sectoral_share}
+e_{mjt} = \frac
+	{\sum_{k=1}^J(\alpha_{jt}\beta_k+\gamma_{jk}) R_{mkt} - S_{mt}}
+	{\sum_{k=1}^J R_{mkt}-S_{mt}}.
+\end{equation}
+Even if $S_{mt}=0$, this is not constant, because it depends on the revenue distribution across sectors. If a country has a comparative advantage in car production, it will have high revenue (not expenditure) in cars. But then it will have high expenditure in car inputs. 
+
+For the purposes of finding the equilibrium, fix sectoral expenditure shares in each country. (We can start from free-trade expenditure shares, which are exogenous and are the same across countries.) Rewriting the equilibrium condition,
+\[
+	\varrho_{njt} = R_{njt}^{-1/\theta}
+	\left[
+	\sum_{m=1}^N
+		(\kappa_{mnjt} P_{mjt})^{\theta}
+		e_{mjt}
+		\left(
+			\sum_{k=1}^J R_{mkt}
+			-S_{mt}
+		\right)
+	\right]^{1/\theta}.
+\]
+Inner loop: solve for $\varrho$ and $R$, holding $e$ fixed. This does not allow for divergence across sectors off the equilibrium path, as the sectoral composition is held fixed.
+
+Middle loop: given the solved $R$s, calculate the new expenditure shares from equation \eqref{eq:sectoral_share}. This may be dampened. 
 
 \subsection{Suitable starting values}
 Suppose that trade is free, $\kappa_{nmjt}\equiv 1$. Then $P_{njt}\equiv P_{jt}$ and
