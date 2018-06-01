@@ -223,7 +223,7 @@ function starting_values!(random_variables, variables, parameters, t)
 end
 
 function inner_loop!(random_variables, variables, parameters, t)
-
+	println("Inner loop")
 	lambda = parameters[:lambda]
 	dist = 999
 	k = 1
@@ -231,7 +231,7 @@ function inner_loop!(random_variables, variables, parameters, t)
 	while dist > parameters[:tolerance]
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
-		println(k, ": ")
+		println("Inner ", k, ": ")
 		println(meanfinite(new_rho, 4)[1,1,1,1])
 		println(dist)
 		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
@@ -239,6 +239,26 @@ function inner_loop!(random_variables, variables, parameters, t)
 		compute_wage!(random_variables, parameters)
 		compute_revenue!(random_variables, variables, parameters, t)
 		fixed_expenditure_shares!(random_variables, variables, parameters, t)
+		k = k+1
+	end
+end
+
+function middle_loop!(random_variables, variables, parameters, t)
+	println("Middle loop")
+	starting_values!(random_variables, variables, parameters, t)
+	dist = 999
+	k = 1
+	old_expenditure_shares = random_variables[:e_mjs]
+
+	while dist > parameters[:tolerance]
+		inner_loop!(random_variables, variables, parameters, t)
+		compute_expenditure_shares!(random_variables, variables, parameters, t)
+		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
+		println("Middle ", k, ": ")
+		println(meanfinite(random_variables[:e_mjs], 4)[1,1,1,1])
+		println(dist)
+		# dampening
+		random_variables[:e_mjs] = 0.5*random_variables[:e_mjs] .+ 0.5*old_expenditure_shares
 		k = k+1
 	end
 end
@@ -290,19 +310,13 @@ parameters[:gamma_jk] = repmat((1-beta[:]')/J, J, 1)
 # adaptive step size. large lambda means large steps
 parameters[:lambda] = exp(-0.05*(J-1)^0.75)
 # this is log points of average input price differences
-parameters[:tolerance] = 0.005
+parameters[:tolerance] = 0.001
 coerce_parameters!(parameters)
 
 random_variables[:A_njs] = 1.0 .+ rand(1,N,J,S)
 variables[:L_njt] = ones(1,N,J,T)
 
 t = 1
-starting_values!(random_variables, variables, parameters, t)
-@time inner_loop!(random_variables, variables, parameters, t)
-println(random_variables[:e_mjs][1:2,1,:,t])
-compute_expenditure_shares!(random_variables, variables, parameters, t)
-println(random_variables[:e_mjs][1:2,1,:,t])
-parameters[:tolerance] = 0.001
-@time inner_loop!(random_variables, variables, parameters, t)
+@time middle_loop!(random_variables, variables, parameters, t)
 #println(expected_wage_share(random_variables, variables, t)[1,:,:])
 
