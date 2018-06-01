@@ -299,14 +299,14 @@ Z_njt = rand(1,N,J,T)
 
 fill_dict!(parameters, alpha=alpha ./ sum(alpha, 1), beta=beta, theta=4, kappa_mnjt=kappa_mnjt, Z_njt=Z_njt, S_nt=zeros(1,N,1,T))
 # make Gamma more diagonal
-# gamma_jk = rand(J,J)+99*eye(J)
+gamma_jk = rand(J,J) + 1.0*eye(J)
 # for testing purposed, set IO links to 0
 # test for continuity with small IO links
 #parameters[:gamma_jk] = 0.75*eye(J)
-parameters[:gamma_jk] = repmat((1-beta[:]')/J, J, 1)
+#parameters[:gamma_jk] = repmat((1-beta[:]')/J, J, 1)
 #parameters[:beta] = 0.25*ones(1,J)
 # QUESTION: is this the right dimension to sum over?
-#parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
+parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
 parameters[:lambda] = exp(-0.05*(J-1)^0.75)
 # this is log points of average input price differences
@@ -318,5 +318,6 @@ variables[:L_njt] = ones(1,N,J,T)
 
 t = 1
 @time middle_loop!(random_variables, variables, parameters, t)
-#println(expected_wage_share(random_variables, variables, t)[1,:,:])
+println("")
+display(expected_wage_share(random_variables, variables, t)[1,:,:])
 
