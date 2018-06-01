@@ -257,8 +257,8 @@ function middle_loop!(random_variables, variables, parameters, t)
 		println("Middle ", k, ": ")
 		println(meanfinite(random_variables[:e_mjs], 4)[1,1,1,1])
 		println(dist)
-		# dampening
-		random_variables[:e_mjs] = 0.5*random_variables[:e_mjs] .+ 0.5*old_expenditure_shares
+
+		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1
 	end
 end
