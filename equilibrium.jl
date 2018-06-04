@@ -275,6 +275,27 @@ function expected_wage_share(random_variables, variables, t)
 	return expected_value(wage_share)
 end
 
+function outer_loop!(random_variables, variables, parameters, t)
+	N, J, S = parameters[:N], parameters[:J], parameters[:S]
+	println("Outer loop")
+	dist = 999
+	k = 1
+
+	while dist > parameters[:tolerance]
+		L_njt = non_random_variable(variables[:L_njt], t)
+		old_wage_share = L_njt ./ sum(L_njt, 3)
+		middle_loop!(random_variables, variables, parameters, t)
+		wage_share = expected_wage_share(random_variables, variables, t)
+
+		dist = distance(wage_share, old_wage_share)
+		println("Outer ", k, ": ")
+		println(dist)
+
+		variables[:L_njt][:,:,:,t] = (0.25*old_wage_share + 0.75*wage_share) * J
+		k = k+1
+	end
+end
+
 function check_parameters(globals)
 	@assert0 sum(globals[:alpha], 2)-1.0
 end
@@ -317,7 +338,9 @@ random_variables[:A_njs] = 1.0 .+ rand(1,N,J,S)
 variables[:L_njt] = ones(1,N,J,T)
 
 t = 1
-@time middle_loop!(random_variables, variables, parameters, t)
+@time outer_loop!(random_variables, variables, parameters, t)
 println("")
-display(expected_wage_share(random_variables, variables, t)[1,:,:])
+display(variables[:L_njt][1,:,:,t])
+println("")
+display(J*expected_wage_share(random_variables, variables, t)[1,:,:])
 
