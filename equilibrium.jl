@@ -1,8 +1,6 @@
 using Images
 
 include("utils.jl")
-variables = Dict{Symbol, Any}()
-random_variables = Dict{Symbol, Any}()
 parameters = Dict{Symbol, Any}()
 
 # for matrix conformity, store all variables in a 4-dimensional array:
@@ -99,7 +97,7 @@ function compute_price_index!(random_variables, parameters, t)
 	P_njs = random_variables[:P_njs]
 
 	# use formula on p43 of "paper November 8 2017.pdf"
-	random_variables[:P_ns]=prod(alpha .^ (-alpha) .* P_njs .^ (alpha), 3)
+	random_variables[:P_ns] = prod(alpha .^ (-alpha) .* P_njs .^ (alpha), 3)
 end
 
 function free_trade_country_shares!(random_variables, L_njt, parameters, t)
@@ -285,13 +283,20 @@ function outer_loop!(random_variables, L_njt, parameters, t)
 	end
 end
 
+function period_wrapper(A_njs, L_njt, parameters, t)
+	random_variables = Dict{Symbol, Any}()
+	random_variables[:A_njs] = A_njs 
+	outer_loop!(random_variables, L_njt, parameters, t)
+	return random_variables
+end
+
 function check_parameters(globals)
 	@assert0 sum(globals[:alpha], 2)-1.0
 end
 
 N = 24
 J = 25
-T = 2
+T = 36
 S = 1000
 fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
@@ -324,13 +329,12 @@ parameters[:middle_tolerance] = 0.003
 parameters[:outer_tolerance] = 0.005
 coerce_parameters!(parameters)
 
-random_variables[:A_njs] = 1.0 .+ rand(1,N,J,S)
-variables[:L_njt] = ones(1,N,J,T)
+A_njs = 1.0 .+ rand(1,N,J,S)
+L_njt = ones(1,N,J,T)
 
 t = 1
-@time outer_loop!(random_variables, variables[:L_njt], parameters, t)
+@time random_variables = period_wrapper(A_njs, L_njt, parameters, t)
 println("")
-display(variables[:L_njt][1,:,:,t])
+display(L_njt[1,:,:,t])
 println("")
-display(J*expected_wage_share(random_variables, variables[:L_njt], t)[1,:,:])
-
+display(J*expected_wage_share(random_variables, L_njt, t)[1,:,:])
