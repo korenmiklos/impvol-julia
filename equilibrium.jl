@@ -228,7 +228,7 @@ function inner_loop!(random_variables, variables, parameters, t)
 	dist = 999
 	k = 1
 
-	while dist > parameters[:tolerance]
+	while dist > parameters[:inner_tolerance]
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
 		println("Inner ", k, ": ")
@@ -250,7 +250,7 @@ function middle_loop!(random_variables, variables, parameters, t)
 	k = 1
 	old_expenditure_shares = random_variables[:e_mjs]
 
-	while dist > parameters[:tolerance]
+	while dist > parameters[:middle_tolerance]
 		inner_loop!(random_variables, variables, parameters, t)
 		compute_expenditure_shares!(random_variables, variables, parameters, t)
 		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
@@ -281,7 +281,7 @@ function outer_loop!(random_variables, variables, parameters, t)
 	dist = 999
 	k = 1
 
-	while dist > parameters[:tolerance]
+	while dist > parameters[:outer_tolerance]
 		L_njt = non_random_variable(variables[:L_njt], t)
 		old_wage_share = L_njt ./ sum(L_njt, 3)
 		middle_loop!(random_variables, variables, parameters, t)
@@ -291,7 +291,7 @@ function outer_loop!(random_variables, variables, parameters, t)
 		println("Outer ", k, ": ")
 		println(dist)
 
-		variables[:L_njt][:,:,:,t] = (0.25*old_wage_share + 0.75*wage_share) * J
+		variables[:L_njt][:,:,:,t] = (0.0*old_wage_share + 1.00*wage_share) * J
 		k = k+1
 	end
 end
@@ -326,12 +326,13 @@ gamma_jk = rand(J,J) + 1.0*eye(J)
 #parameters[:gamma_jk] = 0.75*eye(J)
 #parameters[:gamma_jk] = repmat((1-beta[:]')/J, J, 1)
 #parameters[:beta] = 0.25*ones(1,J)
-# QUESTION: is this the right dimension to sum over?
 parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
 parameters[:lambda] = exp(-0.05*(J-1)^0.75)
 # this is log points of average input price differences
-parameters[:tolerance] = 0.001
+parameters[:inner_tolerance] = 0.001
+parameters[:middle_tolerance] = 0.003
+parameters[:outer_tolerance] = 0.005
 coerce_parameters!(parameters)
 
 random_variables[:A_njs] = 1.0 .+ rand(1,N,J,S)
