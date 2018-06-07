@@ -290,13 +290,22 @@ function period_wrapper(A_njs, L_njt, parameters, t)
 	return random_variables
 end
 
+function draw_next_productivity(current_productivity, parameters)
+	N, J, S = parameters[:N], parameters[:J], parameters[:S]
+	i = rand(1:S)
+	random_realization = non_random_variable(current_productivity, i)
+	AR_decay = parameters[:AR_decay]
+	innovation = parameters[:innovation]
+	return random_realization .^ (AR_decay) .* innovation
+end
+
 function check_parameters(globals)
 	@assert0 sum(globals[:alpha], 2)-1.0
 end
 
-N = 24
-J = 25
-T = 36
+N = 2
+J = 3
+T = 10
 S = 1000
 fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
@@ -327,14 +336,23 @@ parameters[:lambda] = exp(-0.05*(J-1)^0.75)
 parameters[:inner_tolerance] = 0.001
 parameters[:middle_tolerance] = 0.003
 parameters[:outer_tolerance] = 0.005
+
+# only draw and store innovations once
+# set variance covariance matrix here
+parameters[:innovation] = exp(0.1*randn(1,N,J,S))
+# AR coefficient for each (n,j)
+parameters[:AR_decay] = 0.9*ones(1,N,J,1)
+
 coerce_parameters!(parameters)
 
 A_njs = 1.0 .+ rand(1,N,J,S)
 L_njt = ones(1,N,J,T)
 
-t = 1
-@time random_variables = period_wrapper(A_njs, L_njt, parameters, t)
-println("")
-display(L_njt[1,:,:,t])
-println("")
-display(J*expected_wage_share(random_variables, L_njt, t)[1,:,:])
+for t = 1:T
+	@time random_variables = period_wrapper(A_njs, L_njt, parameters, t)
+	println("--- ", t, " ---")
+	display(L_njt[1,:,:,t])
+	println("")
+	display(J*expected_wage_share(random_variables, L_njt, t)[1,:,:])
+	A_njs = draw_next_productivity(A_njs, parameters)
+end
