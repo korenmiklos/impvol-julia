@@ -117,7 +117,7 @@ Taking the market clearing condition,
 		\right]
 	\right\}^{1/\theta}.
 \end{equation}
-Here both $R_{njt}$ and $\varrho_{njt}$ depend on equilibrium prices. But starting from a guess for $R$ (say, the autarky equilibrium), we can easily compute a shadow price $\varrho$ supporting that allocation. 
+Here both $R_{njt}$ and $\varrho_{njt}$ depend on equilibrium prices. But starting from a guess for $R$ (say, the free-trade equilibrium), we can easily compute a shadow price $\varrho$ supporting that allocation. 
 \begin{enumerate}
 	\item Set $R_{njt}^{(0)}$ and $P_{njt}^{(0)}$ to the autarky equilibrium value or other suitable starting value.
 	\item Given $R_{njt}^{(k)}$ and $P_{njt}^{(k)}$, solve for $\varrho_{njt}^{(k+1)}$ using equation \eqref{eq:market_clearing}.
@@ -125,23 +125,6 @@ Here both $R_{njt}$ and $\varrho_{njt}$ depend on equilibrium prices. But starti
 	\item Calculate $R_{njt}^{(k+1)} = w_{njt}^{(k+1)}L_{njt}/\beta_j$. (This step sounds the most divergent, nothing ensures that relative sectoral revenue shares will remain close to equilibrium.)
 	\item Go back to Step 2 and repeat until convergence.
 \end{enumerate}
-Typically, this converges in 4--6 steps. This might even be a contraction mapping. 
-
-\begin{equation*}
-	\varrho_{njt}/P_{njt} = 
-	\left\{
-	\sum_{m=1}^N
-		(\kappa_{nmjt} P_{mjt}/P_{njt})^{\theta}
-		\left[
-			\alpha_{jt}
-			\left(
-				\sum_{k=1}^J\beta_k R_{mkt}/R_{njt} - S_{mt}/R_{njt}
-			\right)
-			+ \sum_{k=1}^J\gamma_{jk}R_{mkt}/R_{njt}
-		\right]
-	\right\}^{1/\theta}.
-\end{equation*}
-
 
 \subsection{Dual loop}
 What are the sectoral expenditures across countries?
@@ -175,7 +158,7 @@ For the purposes of finding the equilibrium, fix sectoral expenditure shares in 
 \]
 Inner loop: solve for $\varrho$ and $R$, holding $e$ fixed. This does not allow for divergence across sectors off the equilibrium path, as the sectoral composition is held fixed.
 
-Middle loop: given the solved $R$s, calculate the new expenditure shares from equation \eqref{eq:sectoral_share}. This may be dampened. 
+Middle loop: given the solved $R$s, calculate the new expenditure shares from equation \eqref{eq:sectoral_share}. 
 
 \subsection{Suitable starting values}
 Suppose that trade is free, $\kappa_{nmjt}\equiv 1$. Then $P_{njt}\equiv P_{jt}$ and
@@ -374,49 +357,18 @@ Given $d_{njt}$ and the precomputed $E_{wjt}$, we can calculate wages in all sec
  .  
 \]
 
+\section{Expectations and outer loop}
+An equilibrium condition states
+\begin{equation}
+	\frac 
+		{L_{njt}}
+		{L_{nt}}
+	=
+	E_{t-1}\frac 
+		{w_{njt}L_{njt}}
+		{w_{nt}L_{nt}}.
+\end{equation}
+We calculate the expected wage share as follows. Given past productivities $A_{nj,t-1}$, draw $S$ realizations for current productivities, $A_{njs}$. Because we are looking for a share bounded between 0 and 1, we don't need a sophisticated sampling to calculate the numerical integral. 
 
-\subsubsection{Autarky}
-Suppose that each country is in autarky, $\kappa_{nmjt}\equiv 0$ for all $n\neq m$ and 1 otherwise, and $S_{nt}\equiv 0$. Then $P_{njt}=\varrho_{njt}$ and 
-\begin{equation*}
-	R_{njt} = 			
-		\sum_{k=1}^J(\alpha_{jt}\beta_k+\gamma_{jk}) R_{nkt}. 
-\end{equation*}
-Solving the eigenvalue equation
-\[
-\mathbf R_{nt} = (\mathrm\alpha_t \mathbf \beta'+\Gamma)\mathbf R_{nt}
-\]
-pins down $R_{njt}$ up to a scale parameter $\omega_{nt}$ and we can easily solve for wages, again up to the same scale parameter. Note that this only depends on fixed parameters, so we can pre-calculate autarky wages.
-
-$\omega_{nt}R_{njt}$, $\omega_{nt}w_{njt}$
-
-Write the log of equation \eqref{eq:varrho} in matrix notation and recognizing $\varrho_{njt}\equiv P_{njt}$ in autarky,
-\[
-\ln\mathbf P_{nt} = \ln\xi
-	+ \ln\mathbf B
-	- \ln\mathbf A_{nt}
-	+ \text{diag}(\beta) \ln\mathbf w_{nt}
-	+ \Gamma \ln\mathbf P_{nt}  
-\]
-\[
-\ln\mathbf P_{nt} = 
-(\mathbf I-\Gamma)^{-1}
-	[
-	\ln\xi
-	+ \ln\mathbf B
-	- \ln\mathbf A_{nt}
-	+ \text{diag}(\beta) \ln\mathbf w_{nt}
-	]
-\]
-This gives us prices up to the same scale parameter. Again, everything can be precalculated and the only part that varies across simulations is
-\[
-\Delta \ln\mathbf P_{nt}
--(\mathbf I-\Gamma)^{-1}
-	\Delta\ln\mathbf A_{nt}.
-\]
-We still need to find suitable starting values for $\omega_{nt}$. We can use the overall GDP shares in the data 
-\[
-\omega_{nt} = c\cdot Y_{nt}^{-1/\theta}.
-\]
-This can also be precalculated.
-
+Start from a candidate labor allocation $L_{njt}^{(0)}$. Calculate expected wage share as the simple average of wage shares across the $S$ realizations. Set $L_{njt}^{(n+1)} = L_{nt}\eta_{njt}^{(n)}$, where $\eta_{njt}^{(n)}$ is the wage share in iteration $n$. This may be dampened, but in practice, it convergence in a handful of steps.
 \end{document}
