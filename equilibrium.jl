@@ -140,17 +140,6 @@ function free_trade_prices!(random_variables, L_njt, parameters, t)
 	random_variables[:rho_njs] = random_variables[:P_njs] ./ d_njs .^(1/theta)
 end
 
-function compute_import_shares!(random_variables, variables, parameters, t)
-	compute_price!(random_variables, parameters, t)
-
-	P_mjs = array_transpose(random_variables[:P_njs])
-	theta = parameters[:theta]
-	kappa_mnjt = non_random_variable(parameters[:kappa_mnjt], t)
-	rho_njs = random_variables[:rho_njs]
-
-	variables[:d_mnjs] = (rho_njs ./ kappa_mnjt ./ P_mjs) .^ (-theta)
-end
-
 function compute_wage!(random_variables, parameters)
 	input_price_index!(random_variables, parameters)
 
@@ -291,12 +280,13 @@ function period_wrapper(A_njs, L_njt, parameters, t)
 	return random_variables
 end
 
-function draw_next_productivity(current_productivity, parameters)
+function draw_next_productivity(current_productivity, parameters, i)
+	# use "i"th realization to continue future paths
 	N, J, S = parameters[:N], parameters[:J], parameters[:S]
-	i = rand(1:S)
+	# set variance covariance matrix here
+	innovation = exp.(parameters[:sigma] .* randn(1,N,J,S))
 	random_realization = non_random_variable(current_productivity, i)
 	AR_decay = parameters[:AR_decay]
-	innovation = parameters[:innovation]
 	return random_realization .^ (AR_decay) .* innovation
 end
 
@@ -340,9 +330,8 @@ parameters[:inner_tolerance] = 0.001
 parameters[:middle_tolerance] = 0.003
 parameters[:outer_tolerance] = 0.005
 
-# only draw and store innovations once
-# set variance covariance matrix here
-parameters[:innovation] = exp.(0.1*randn(1,N,J,S))
+# standard deviation for each (n,j)
+parameters[:sigma] = 0.1*ones(1,N,J,1)
 # AR coefficient for each (n,j)
 parameters[:AR_decay] = 0.9*ones(1,N,J,1)
 
@@ -352,9 +341,9 @@ A_njs = 1.0 .+ rand(1,N,J,S)
 L_njt = ones(1,N,J,T)
 
 for t = 1:T
-	@time random_variables = period_wrapper(A_njs, L_njt, parameters, t)
 	info("--- Period ", t, " ---")
+	@time random_variables = period_wrapper(A_njs, L_njt, parameters, t)
 	debug(L_njt[1,:,:,t])
 	debug(J*expected_wage_share(random_variables, L_njt, t)[1,:,:])
-	A_njs = draw_next_productivity(A_njs, parameters)
+	A_njs = draw_next_productivity(A_njs, parameters, 1)
 end
