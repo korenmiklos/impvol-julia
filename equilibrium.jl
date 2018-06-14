@@ -1,4 +1,5 @@
 using Images
+using Logging
 
 include("utils.jl")
 parameters = Dict{Symbol, Any}()
@@ -50,7 +51,7 @@ function rotate_sectors(A, y)
 end
 
 function distance(p1, p2)
-	return meanfinite(((log(p1) .- log(p2)) .^ 2)[:], 1)[1] .^ 0.5
+	return meanfinite(((log.(p1) .- log.(p2)) .^ 2)[:], 1)[1] .^ 0.5
 end
 
 function free_trade_sector_shares!(parameters)
@@ -135,7 +136,7 @@ function free_trade_prices!(random_variables, L_njt, parameters, t)
 	L_nj = non_random_variable(L_njt, t)
 	gamma_jk = parameters[:gamma_jk]
 
-	random_variables[:P_njs] = exp(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log(xi * d_njs .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_nj) .^(beta_j) ./ A_njs)))
+	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_nj) .^(beta_j) ./ A_njs)))
 	random_variables[:rho_njs] = random_variables[:P_njs] ./ d_njs .^(1/theta)
 end
 
@@ -212,7 +213,7 @@ function starting_values!(random_variables, L_njt, parameters, t)
 end
 
 function inner_loop!(random_variables, L_njt, parameters, t)
-	println("Inner loop")
+	debug("---- BEGIN Inner loop")
 	lambda = parameters[:lambda]
 	dist = 999
 	k = 1
@@ -220,9 +221,8 @@ function inner_loop!(random_variables, L_njt, parameters, t)
 	while dist > parameters[:inner_tolerance]
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
-		println("Inner ", k, ": ")
-		println(meanfinite(new_rho, 4)[1,1,1,1])
-		println(dist)
+		debug("------ Inner ", k, ": ", dist)
+		debug(meanfinite(new_rho, 4)[1,1,1,1])
 		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
 		compute_price!(random_variables, parameters, t)
 		compute_wage!(random_variables, parameters)
@@ -230,10 +230,11 @@ function inner_loop!(random_variables, L_njt, parameters, t)
 		fixed_expenditure_shares!(random_variables, parameters, t)
 		k = k+1
 	end
+	debug("---- END Inner loop")
 end
 
 function middle_loop!(random_variables, L_njt, parameters, t)
-	println("Middle loop")
+	debug("-- BEGIN Middle loop")
 	starting_values!(random_variables, L_njt, parameters, t)
 	dist = 999
 	k = 1
@@ -243,13 +244,13 @@ function middle_loop!(random_variables, L_njt, parameters, t)
 		inner_loop!(random_variables, L_njt, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
 		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
-		println("Middle ", k, ": ")
-		println(meanfinite(random_variables[:e_mjs], 4)[1,1,1,1])
-		println(dist)
+		info("---- Middle ", k, ": ", dist)
+		debug(meanfinite(random_variables[:e_mjs], 4)[1,1,1,1])
 
 		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1
 	end
+	debug("-- END Middle loop")
 end
 
 function expected_wage_share(random_variables, L_njt, t)
@@ -264,7 +265,7 @@ end
 
 function outer_loop!(random_variables, L_njt, parameters, t)
 	N, J, S = parameters[:N], parameters[:J], parameters[:S]
-	println("Outer loop")
+	debug("BEGIN Outer loop")
 	dist = 999
 	k = 1
 
@@ -275,12 +276,12 @@ function outer_loop!(random_variables, L_njt, parameters, t)
 		wage_share = expected_wage_share(random_variables, L_njt, t)
 
 		dist = distance(wage_share, old_wage_share)
-		println("Outer ", k, ": ")
-		println(dist)
+		info("-- Outer ", k, ": ", dist)
 
 		L_njt[:,:,:,t] = (0.0*old_wage_share + 1.00*wage_share) * J
 		k = k+1
 	end
+	debug("END Outer loop")
 end
 
 function period_wrapper(A_njs, L_njt, parameters, t)
@@ -302,6 +303,8 @@ end
 function check_parameters(globals)
 	@assert0 sum(globals[:alpha], 2)-1.0
 end
+
+Logging.configure(level=INFO)
 
 N = 2
 J = 3
@@ -339,7 +342,7 @@ parameters[:outer_tolerance] = 0.005
 
 # only draw and store innovations once
 # set variance covariance matrix here
-parameters[:innovation] = exp(0.1*randn(1,N,J,S))
+parameters[:innovation] = exp.(0.1*randn(1,N,J,S))
 # AR coefficient for each (n,j)
 parameters[:AR_decay] = 0.9*ones(1,N,J,1)
 
@@ -350,9 +353,8 @@ L_njt = ones(1,N,J,T)
 
 for t = 1:T
 	@time random_variables = period_wrapper(A_njs, L_njt, parameters, t)
-	println("--- ", t, " ---")
-	display(L_njt[1,:,:,t])
-	println("")
-	display(J*expected_wage_share(random_variables, L_njt, t)[1,:,:])
+	info("--- Period ", t, " ---")
+	debug(L_njt[1,:,:,t])
+	debug(J*expected_wage_share(random_variables, L_njt, t)[1,:,:])
 	A_njs = draw_next_productivity(A_njs, parameters)
 end
