@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{amsmath}
 \begin{document}
 Solving a simple Armington-endowment model.
@@ -371,4 +371,49 @@ An equilibrium condition states
 We calculate the expected wage share as follows. Given past productivities $A_{nj,t-1}$, draw $S$ realizations for current productivities, $A_{njs}$. Because we are looking for a share bounded between 0 and 1, we don't need a sophisticated sampling to calculate the numerical integral. 
 
 Start from a candidate labor allocation $L_{njt}^{(0)}$. Calculate expected wage share as the simple average of wage shares across the $S$ realizations. Set $L_{njt}^{(n+1)} = L_{nt}\eta_{njt}^{(n)}$, where $\eta_{njt}^{(n)}$ is the wage share in iteration $n$. This may be dampened, but in practice, it convergence in a handful of steps.
+
+\subsection{Time series}
+Given the autoregressive nature of productivity, the vector of $A_{jnt}$s is a state variable. The problem is drastically simplified by the fact that no decision variable affects the state. The representative agent solves
+\[
+\max_{\{L_{njt}\}}
+E
+\sum_{t=0}^{\infty} 
+	\delta^{t} 
+	\left[
+	\ln \frac 
+		{\sum_j w_{njt}(\mathbf A_{t}, \mathbf L_{t})L_{njt}}
+		{P_{nt}(\mathbf A_{t}, \mathbf L_{t})}
+	-\frac \varrho 2
+		\sum_{j=1}^J
+		\left(
+			\frac {L_{njt}} {L_{nt}}
+			- \psi_j^*(\mathbf A_{t})
+		\right)^2
+	\right]
+\]
+subject to $\sum_j L_{njt}=L_{nt}$ and $w$ and $P$ being determined in equilibrium. (This includes adjustment costs)
+
+The corresponding Bellman equation is
+\begin{equation}
+	V_n^N(\mathbf A_{t-1}) = 
+	E V_n^D(\mathbf A_{t-1}, \mathbf A_{t})
+\end{equation}
+for the ``night'' period before productivity shocks have been realized. For the ``day'' period,
+\begin{equation}
+	V_n^D(\mathbf A_{t-1}, \mathbf A_{t}) = 
+	\max_{\{L_{njt}\}}
+		\ln \frac 
+			{\sum_j w_{njt}(\mathbf A_{t}, \mathbf L_{t})L_{njt}}
+			{P_{nt}(\mathbf A_{t}, \mathbf L_{t})}
+		-\frac \varrho 2
+			\sum_{j=1}^J
+			\left(
+				\frac {L_{njt}} {L_{nt}}
+				- \psi_j^*(\mathbf A_{t-1})
+			\right)^2
+	+ \delta E V_n^N(\mathbf A_{t}).
+\end{equation}
+The day value depends on both time-$t$ and time-$t-1$ productivity because $\psi^*$ has been determined during the night period, before $A_t$ was known.
+
+Note that choice $L_{njt}$ does not affect future state $A_t$.
 \end{document}
