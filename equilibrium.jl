@@ -177,6 +177,15 @@ function compute_expenditure_shares!(random_variables, parameters, t)
 	random_variables[:e_mjs] = array_transpose((alpha_jt .* wagebill_ns .+ intermediate_njs .- alpha_jt .* S_nt) ./ expenditure)
 end
 
+function compute_real_gdp!(random_variables, parameters, t)
+	compute_price_index!(random_variables, parameters, t)
+	w_njs = random_variables[:w_njs]
+	L_nj = non_random_variable(L_njt, t)
+	P_ns = random_variables[:P_ns]
+
+	random_variables[:real_GDP] = w_njs .* L_nj ./ P_ns
+end
+
 function fixed_expenditure_shares!(random_variables, parameters, t)
 	R_mjs = array_transpose(random_variables[:R_njs])	
 	expenditure = sum(R_mjs, 3) .- array_transpose(non_random_variable(parameters[:S_nt], t))
@@ -211,7 +220,6 @@ function inner_loop!(random_variables, L_njt, parameters, t)
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
 		debug("------ Inner ", k, ": ", dist)
-		debug(meanfinite(new_rho, 4)[1,1,1,1])
 		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
 		compute_price!(random_variables, parameters, t)
 		compute_wage!(random_variables, parameters)
@@ -277,6 +285,7 @@ function period_wrapper(A_njs, L_njt, parameters, t)
 	random_variables = Dict{Symbol, Any}()
 	random_variables[:A_njs] = A_njs 
 	outer_loop!(random_variables, L_njt, parameters, t)
+	compute_real_gdp!(random_variables, parameters, t)
 	return random_variables
 end
 
@@ -294,12 +303,14 @@ function check_parameters(globals)
 	@assert0 sum(globals[:alpha], 2)-1.0
 end
 
-Logging.configure(level=INFO)
+Logging.configure(level=DEBUG)
 
-N = 2
-J = 3
-T = 10
+N = 24
+J = 25
+T = 1
 S = 1000
+# set random seed for reproducability
+srand(2311)
 fill_dict!(parameters, N=N, J=J, T=T, S=S)
 
 alpha = rand(J) .* ones(J,T)
@@ -338,11 +349,12 @@ parameters[:AR_decay] = 0.9*ones(1,N,J,1)
 coerce_parameters!(parameters)
 
 A_njs = 1.0 .+ rand(1,N,J,S)
-L_njt = ones(1,N,J,T)
+L_njt = ones(1,N,J,T) / J
 
 for t = 1:T
 	info("--- Period ", t, " ---")
 	@time random_variables = period_wrapper(A_njs, L_njt, parameters, t)
+	real_GDP = non_random_variable(random_variables[:real_GDP], 1)
 	debug(L_njt[1,:,:,t])
 	debug(J*expected_wage_share(random_variables, L_njt, t)[1,:,:])
 	A_njs = draw_next_productivity(A_njs, parameters, 1)
