@@ -375,7 +375,7 @@ Start from a candidate labor allocation $L_{njt}^{(0)}$. Calculate expected wage
 \subsection{Time series}
 Given the autoregressive nature of productivity, the vector of $A_{jnt}$s is a state variable. The problem is drastically simplified by the fact that no decision variable affects the state. The representative agent solves
 \[
-\max_{\{L_{njt}\}}
+\max_{\{L_{njt}, L_{njt}^*\}}
 E
 \sum_{t=0}^{\infty} 
 	\delta^{t} 
@@ -387,33 +387,99 @@ E
 		\sum_{j=1}^J
 		\left(
 			\frac {L_{njt}} {L_{nt}}
-			- \psi_j^*(\mathbf A_{t})
+			- 
+			\frac {L_{njt}^*} {L_{nt}}
 		\right)^2
 	\right]
 \]
-subject to $\sum_j L_{njt}=L_{nt}$ and $w$ and $P$ being determined in equilibrium. (This includes adjustment costs)
+subject to $\sum_j L_{njt}=\sum_j L_{njt}^*=L_{nt}$ and $w$ and $P$ being determined in equilibrium. The starred labor allocation is determined before shock realizations are known.
 
 The corresponding Bellman equation is
 \begin{equation}
 	V_n^N(\mathbf A_{t-1}) = 
-	E V_n^D(\mathbf A_{t-1}, \mathbf A_{t})
+	\max_{L_{njt}^*}
+	E_{A} V_n^D(\mathbf A_{t}, \mathbf L_{t}^*)
 \end{equation}
 for the ``night'' period before productivity shocks have been realized. For the ``day'' period,
 \begin{equation}
-	V_n^D(\mathbf A_{t-1}, \mathbf A_{t}) = 
+	V_n^D(\mathbf A_{t}, \mathbf L_{t}^*) = 
 	\max_{\{L_{njt}\}}
 		\ln \frac 
-			{\sum_j w_{njt}(\mathbf A_{t}, \mathbf L_{t})L_{njt}}
-			{P_{nt}(\mathbf A_{t}, \mathbf L_{t})}
+			{\sum_j w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{njt}}
+			{P_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
 		-\frac \varrho 2
 			\sum_{j=1}^J
 			\left(
 				\frac {L_{njt}} {L_{nt}}
-				- \psi_j^*(\mathbf A_{t-1})
+				- 
+				\frac {L_{njt}^*} {L_{nt}}
 			\right)^2
 	+ \delta E V_n^N(\mathbf A_{t}).
 \end{equation}
-The day value depends on both time-$t$ and time-$t-1$ productivity because $\psi^*$ has been determined during the night period, before $A_t$ was known.
+The day value depends on both time-$t$ productivity and on labor allocations decided during the night period, before $A_t$ was known.
 
 Note that choice $L_{njt}$ does not affect future state $A_t$.
+
+The first-order-condition for the night Bellman is
+\[
+\frac 
+	{\partial E_{A} V_n^D(\mathbf A_{t}, \mathbf L_{t}^*)}
+	{\partial L_{njt}^*}
+	= 0
+\]
+for all $j$. To determine the partial derivative of the day value, we can use the envelope theorem,
+\[
+\frac 
+	{\partial V_n^D(\mathbf A_{t}, \mathbf L_{t}^*)}
+	{\partial L_{njt}^*}
+	= 
+	\frac \varrho {L_{nt}}
+	\left(
+				\frac {L_{njt}} {L_{nt}}
+				- 
+				\frac {L_{njt}^*} {L_{nt}}
+	\right).
+\]
+Equating this with zero in expectation,
+\[
+L_{njt}^* = E_{A} L_{njt}.
+\]
+Using the first-order-condition for the day period,
+\[
+\frac 
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
+	{\sum_k w_{nkt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{nkt}/L_{nt}}
+\equiv 
+\frac 
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
+	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
+= \lambda+
+	\varrho 
+	\left(
+				\frac {L_{njt}} {L_{nt}}
+				- 
+				\frac {L_{njt}^*} {L_{nt}}
+	\right).
+\]
+In sectors where the wage rate is higher than the weighted-average wage of the economy, the optimal allocation of labor is higher than the ex-ante expected allocation.
+
+Because in expectation the last term on the right-hand-side of this equation is zero, the $L^*$ has to be such that
+\[
+E_{A}\frac 
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
+	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
+= \lambda
+\]
+constant. There can be no expected deviations in the (ratio) relative wage across sectors. This is exactly the same condition we were using before,
+\[
+E_{A}
+\frac 
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{njt}^*}
+	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{nt}}
+= 
+\frac 
+	{L_{njt}^*}
+	{L_{nt}}.
+\]
+We can use our existing algorithm to calculate $L^*$, and then $L$ is going to be a random variable with a simple linear combination of $L^*$ and the relative wage.
 \end{document}
