@@ -232,7 +232,6 @@ end
 
 function middle_loop!(random_variables, parameters, t)
 	debug("---- BEGIN Middle loop")
-	starting_values!(random_variables, parameters, t)
 	dist = 999
 	k = 1
 	old_expenditure_shares = random_variables[:e_mjs]
@@ -272,6 +271,8 @@ end
 function outer_loop!(random_variables, parameters, t)
 	N, J, S = parameters[:N], parameters[:J], parameters[:S]
 	L_nj_star = ones(1,N,J,1) / J
+	random_variables[:L_njs] = L_nj_star
+	starting_values!(random_variables, parameters, t)
 
 	debug("BEGIN Outer loop")
 	dist = 999
