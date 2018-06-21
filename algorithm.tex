@@ -374,6 +374,7 @@ Start from a candidate labor allocation $L_{njt}^{(0)}$. Calculate expected wage
 
 \subsection{Time series}
 Given the autoregressive nature of productivity, the vector of $A_{jnt}$s is a state variable. The problem is drastically simplified by the fact that no decision variable affects the state. The representative agent solves
+% FIXME: we have already used varrho
 \[
 \max_{\{L_{njt}, L_{njt}^*\}}
 E
@@ -405,8 +406,8 @@ for the ``night'' period before productivity shocks have been realized. For the 
 	V_n^D(\mathbf A_{t}, \mathbf L_{t}^*) = 
 	\max_{\{L_{njt}\}}
 		\ln \frac 
-			{\sum_j w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{njt}}
-			{P_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
+			{\sum_j w_{njt}(\mathbf A_{t}, \mathbf L_{t})L_{njt}}
+			{P_{nt}(\mathbf A_{t}, \mathbf L_{t})}
 		-\frac \varrho 2
 			\sum_{j=1}^J
 			\left(
@@ -418,7 +419,7 @@ for the ``night'' period before productivity shocks have been realized. For the 
 \end{equation}
 The day value depends on both time-$t$ productivity and on labor allocations decided during the night period, before $A_t$ was known.
 
-Note that choice $L_{njt}$ does not affect future state $A_t$.
+Note that choice $L_{njt}$ does not affect future state $A_t$. Also, wages and prices do not depend on $L^*$ directly, only through $L$.
 
 The first-order-condition for the night Bellman is
 \[
@@ -444,42 +445,66 @@ Equating this with zero in expectation,
 \[
 L_{njt}^* = E_{A} L_{njt}.
 \]
+Or, in other words,
+\[
+L_{njt} = L_{njt}^* + \varepsilon_{njt}(\mathbf A_t),
+\]
+where $\varepsilon_{njt}$ is the equilibrium deviation from labor, with zero mean conditional on past productivity.
+
 Using the first-order-condition for the day period,
 \[
 \frac 
-	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
-	{\sum_k w_{nkt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{nkt}/L_{nt}}
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+	{\sum_k w_{nkt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)L_{nkt}/L_{nt}}
 \equiv 
 \frac 
-	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
-	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
-= \lambda+
-	\varrho 
-	\left(
-				\frac {L_{njt}} {L_{nt}}
-				- 
-				\frac {L_{njt}^*} {L_{nt}}
-	\right).
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+= \lambda L_{nt}+
+		\varrho 
+				\frac {\varepsilon_{njt}(\mathbf A_t)} {L_{nt}}
+.
 \]
 In sectors where the wage rate is higher than the weighted-average wage of the economy, the optimal allocation of labor is higher than the ex-ante expected allocation.
+
+The challenge is that both sides depend on $\varepsilon_t$, the labor response to productivity innovations.
 
 Because in expectation the last term on the right-hand-side of this equation is zero, the $L^*$ has to be such that
 \[
 E_{A}\frac 
-	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
-	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)}
-= \lambda
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+= \lambda L_{nt} \equiv 1
 \]
-constant. There can be no expected deviations in the (ratio) relative wage across sectors. This is exactly the same condition we were using before,
+constant. There can be no expected deviations in the (ratio) relative wage across sectors. 
+
+Substituting in $\lambda = 1/L_{nt}$,
+\begin{equation}{eq:varepsilon}
+\frac {\varepsilon_{njt}} {L_{nt}}
+=
+\frac 1\varrho
+\frac 
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)-w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+.
+\end{equation}
+This can be solved for $\varepsilon$ implicitly, as the RHS is (likely) decreasing in $\varepsilon_{njt}$. We then have $\varepsilon_{njt}(\mathbf A_t, \mathbf L_t^*)$ and $\tilde w_{njt}(\mathbf A_t, \mathbf L_t^*)$. Note that $\tilde w()$ is a different function from $w()$, because it already captures the endogenous labor response. They are only identical when $\varrho=\infty$. Otherwise, the distribution of $\tilde w$ depends on adjustment costs. 
+
+The night labor share is a fixed point of
 \[
-E_{A}
-\frac 
-	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{njt}^*}
-	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}, \mathbf L_{t}^*)L_{nt}}
-= 
-\frac 
-	{L_{njt}^*}
-	{L_{nt}}.
+E_{A}\frac 
+	{\tilde w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*)}
+	{\tilde w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*)}
+= 1.
 \]
-We can use our existing algorithm to calculate $L^*$, and then $L$ is going to be a random variable with a simple linear combination of $L^*$ and the relative wage.
+Can we calculate the mean wage share without solving for the entire distribution of $\tilde w$? Totally differentiating equation \eqref{eq:varepsilon},
+\begin{equation}{eq:varepsilon'}
+\frac {d\varepsilon_{njt}} {L_{nt}}
+=
+\frac 1\varrho
+\frac 
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)-w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+.
+\end{equation}
 \end{document}
