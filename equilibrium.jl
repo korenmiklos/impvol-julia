@@ -250,11 +250,31 @@ function middle_loop!(random_variables, parameters, t)
 end
 
 function adjustment_loop!(random_variables, L_nj_star, parameters, t)
-	# FIXME: implement adjustment equation
-	random_variables[:L_njs] = L_nj_star
 
 	debug("-- BEGIN Adjustment loop")
+	L_njs = L_nj_star
+	L_n = sum(L_nj_star, 3)
+	dist = 999
+	k = 1
+
+	nulla = ones(1,1,1,1)*parameters[:numerical_zero]
+
+	while dist > parameters[:adjustment_tolerance]
+		random_variables[:L_njs] = L_njs
 		middle_loop!(random_variables, parameters, t)
+		w_njs = random_variables[:w_njs]
+		w_ns = w_njs .* L_njs ./ L_n
+		wage_gap = w_njs ./ w_ns - 1
+
+		# FIXME: may need some dampening
+		L_njs = 0.5*L_njs .+ 0.5*max.(nulla, L_nj_star .+ L_n .* (parameters[:one_over_rho]*wage_gap)) 
+		L_njs = L_n .* L_njs ./ sum(L_njs, 3)
+
+		dist = distance(L_njs, random_variables[:L_njs])
+		info("---- Adjustment ", k, ": ", dist)
+
+		k = k+1
+	end
 	debug("-- END Adjustment loop")
 end
 
@@ -317,9 +337,9 @@ end
 
 Logging.configure(level=DEBUG)
 
-N = 2
-J = 3
-T = 2
+N = 10
+J = 20
+T = 1
 S = 1000
 # set random seed for reproducability
 srand(2311)
@@ -355,6 +375,7 @@ parameters[:inner_tolerance] = 0.001
 parameters[:middle_tolerance] = 0.003
 parameters[:adjustment_tolerance] = 0.003
 parameters[:outer_tolerance] = 0.005
+parameters[:numerical_zero] = 1e-6
 
 # standard deviation for each (n,j)
 parameters[:sigma] = 0.1*ones(1,N,J,1)
