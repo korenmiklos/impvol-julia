@@ -250,6 +250,9 @@ function middle_loop!(random_variables, L_njt, parameters, t)
 	debug("-- END Middle loop")
 end
 
+function adjustment_loop!()
+end
+
 function expected_wage_share(random_variables, L_njt, t)
 	L_nj = non_random_variable(L_njt, t)
 	w_njs = random_variables[:w_njs]
@@ -336,9 +339,12 @@ gamma_jk = rand(J,J) + 1.0*eye(J)
 parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
 # adaptive step size. large lambda means large steps
 parameters[:lambda] = exp(-0.05*(J-1)^0.75)
+# inverse of adjustment cost, 0 if cannot readjust
+parameters[:one_over_rho] = 0.01
 # this is log points of average input price differences
 parameters[:inner_tolerance] = 0.001
 parameters[:middle_tolerance] = 0.003
+parameters[:adjustment_tolerance] = 0.003
 parameters[:outer_tolerance] = 0.005
 
 # standard deviation for each (n,j)
