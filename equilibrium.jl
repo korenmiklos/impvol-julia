@@ -101,39 +101,42 @@ function compute_price_index!(random_variables, parameters, t)
 	random_variables[:P_ns] = prod(alpha .^ (-alpha) .* P_njs .^ (alpha), 3)
 end
 
-function free_trade_country_shares!(random_variables, L_nj, parameters)
+function free_trade_country_shares!(random_variables, parameters)
 	A_njs = random_variables[:A_njs]
+	L_njs = random_variables[:L_njs]
 	theta = parameters[:theta]
 	beta_j = parameters[:beta_j]
 
-	d_njs = A_njs .^ (theta ./ (1 + theta*beta_j)) .* L_nj .^ (theta .* beta_j ./ (1 + theta*beta_j))
+	d_njs = A_njs .^ (theta ./ (1 + theta*beta_j)) .* L_njs .^ (theta .* beta_j ./ (1 + theta*beta_j))
 	random_variables[:d_njs_free] = d_njs ./ sum(d_njs,2)
 end
 
-function free_trade_wages!(random_variables, L_nj, parameters, t)
-	free_trade_country_shares!(random_variables, L_nj, parameters)
+function free_trade_wages!(random_variables, parameters, t)
+	free_trade_country_shares!(random_variables, parameters)
 	free_trade_sector_shares!(parameters)
 
 	d_njs = random_variables[:d_njs_free]
+	L_njs = random_variables[:L_njs]
 	beta_j = parameters[:beta_j]
 	E_wt = non_random_variable(parameters[:sector_shares], t)
 
-	random_variables[:w_njs] = beta_j .* d_njs .* E_wt ./ L_nj
+	random_variables[:w_njs] = beta_j .* d_njs .* E_wt ./ L_njs
 end
 
-function free_trade_prices!(random_variables, L_nj, parameters, t)
-	free_trade_country_shares!(random_variables, L_nj, parameters)
+function free_trade_prices!(random_variables, parameters, t)
+	free_trade_country_shares!(random_variables, parameters)
 	free_trade_sector_shares!(parameters)
 	beta_j = parameters[:beta_j]
 	theta = parameters[:theta]
 	d_njs = random_variables[:d_njs_free]
+	L_njs = random_variables[:L_njs]
 	xi = parameters[:xi]
 	B_j = parameters[:B_j]
 	A_njs = random_variables[:A_njs]
 	E_wt = non_random_variable(parameters[:sector_shares], t)
 	gamma_jk = parameters[:gamma_jk]
 
-	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_nj) .^(beta_j) ./ A_njs)))
+	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_njs) .^(beta_j) ./ A_njs)))
 	random_variables[:rho_njs] = random_variables[:P_njs] ./ d_njs .^(1/theta)
 end
 
@@ -152,11 +155,12 @@ function compute_wage!(random_variables, parameters)
 	random_variables[:w_njs] = (rho_njs .* A_njs ./ input_price_njs ./ (xi * B_j)) .^ (1 ./ beta_j)
 end
 
-function compute_revenue!(random_variables, L_nj, parameters)
+function compute_revenue!(random_variables, parameters)
 	w_njs = random_variables[:w_njs]
+	L_njs = random_variables[:L_njs]
 	beta_j = parameters[:beta_j]
 
-	random_variables[:R_njs] = w_njs .* L_nj ./ beta_j
+	random_variables[:R_njs] = w_njs .* L_njs ./ beta_j
 end
 
 function compute_expenditure_shares!(random_variables, parameters, t)
@@ -173,12 +177,13 @@ function compute_expenditure_shares!(random_variables, parameters, t)
 	random_variables[:e_mjs] = array_transpose((alpha_jt .* wagebill_ns .+ intermediate_njs .- alpha_jt .* S_nt) ./ expenditure)
 end
 
-function compute_real_gdp!(random_variables, L_nj, parameters, t)
+function compute_real_gdp!(random_variables, parameters, t)
 	compute_price_index!(random_variables, parameters, t)
 	w_njs = random_variables[:w_njs]
+	L_njs = random_variables[:L_njs]
 	P_ns = random_variables[:P_ns]
 
-	random_variables[:real_GDP] = w_njs .* L_nj ./ P_ns
+	random_variables[:real_GDP] = w_njs .* L_njs ./ P_ns
 end
 
 function fixed_expenditure_shares!(random_variables, parameters, t)
@@ -197,16 +202,16 @@ function shadow_price_step(random_variables, parameters, t)
 	return sum( (kappa_mnjt .* P_mjs) .^ theta .* E_mjs ./ R_njs, 1) .^ (1/theta)  
 end
 
-function starting_values!(random_variables, L_nj, parameters, t)
-	free_trade_wages!(random_variables, L_nj, parameters, t)
-	free_trade_prices!(random_variables, L_nj, parameters, t)
-	compute_revenue!(random_variables, L_nj, parameters)
+function starting_values!(random_variables, parameters, t)
+	free_trade_wages!(random_variables, parameters, t)
+	free_trade_prices!(random_variables, parameters, t)
+	compute_revenue!(random_variables, parameters)
 	compute_expenditure_shares!(random_variables, parameters, t)
 	fixed_expenditure_shares!(random_variables, parameters, t)
 end
 
-function inner_loop!(random_variables, L_nj, parameters, t)
-	debug("---- BEGIN Inner loop")
+function inner_loop!(random_variables, parameters, t)
+	debug("------ BEGIN Inner loop")
 	lambda = parameters[:lambda]
 	dist = 999
 	k = 1
@@ -214,44 +219,51 @@ function inner_loop!(random_variables, L_nj, parameters, t)
 	while dist > parameters[:inner_tolerance]
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
-		debug("------ Inner ", k, ": ", dist)
+		debug("-------- Inner ", k, ": ", dist)
 		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
 		compute_price!(random_variables, parameters, t)
 		compute_wage!(random_variables, parameters)
-		compute_revenue!(random_variables, L_nj, parameters)
+		compute_revenue!(random_variables, parameters)
 		fixed_expenditure_shares!(random_variables, parameters, t)
 		k = k+1
 	end
-	debug("---- END Inner loop")
+	debug("------ END Inner loop")
 end
 
-function middle_loop!(random_variables, L_nj, parameters, t)
-	debug("-- BEGIN Middle loop")
-	starting_values!(random_variables, L_nj, parameters, t)
+function middle_loop!(random_variables, parameters, t)
+	debug("---- BEGIN Middle loop")
+	starting_values!(random_variables, parameters, t)
 	dist = 999
 	k = 1
 	old_expenditure_shares = random_variables[:e_mjs]
 
 	while dist > parameters[:middle_tolerance]
-		inner_loop!(random_variables, L_nj, parameters, t)
+		inner_loop!(random_variables, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
 		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
-		info("---- Middle ", k, ": ", dist)
+		info("------ Middle ", k, ": ", dist)
 		debug(meanfinite(random_variables[:e_mjs], 4)[1,1,1,1])
 
 		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1
 	end
-	debug("-- END Middle loop")
+	debug("---- END Middle loop")
 end
 
-function adjustment_loop!()
+function adjustment_loop!(random_variables, L_nj_star, parameters, t)
+	# FIXME: implement adjustment equation
+	random_variables[:L_njs] = L_nj_star
+
+	debug("-- BEGIN Adjustment loop")
+		middle_loop!(random_variables, parameters, t)
+	debug("-- END Adjustment loop")
 end
 
-function expected_wage_share(random_variables, L_nj)
+function expected_wage_share(random_variables)
 	w_njs = random_variables[:w_njs]
+	L_njs = random_variables[:L_njs]
 
-	wage_bill = w_njs .* L_nj
+	wage_bill = w_njs .* L_njs
 	wage_share = wage_bill ./ sum(wage_bill, 3)
 
 	return expected_value(wage_share)
@@ -259,32 +271,32 @@ end
 
 function outer_loop!(random_variables, parameters, t)
 	N, J, S = parameters[:N], parameters[:J], parameters[:S]
-	L_nj = ones(1,N,J,1) / J
+	L_nj_star = ones(1,N,J,1) / J
 
 	debug("BEGIN Outer loop")
 	dist = 999
 	k = 1
 
 	while dist > parameters[:outer_tolerance]
-		old_wage_share = L_nj ./ sum(L_nj, 3)
-		middle_loop!(random_variables, L_nj, parameters, t)
-		wage_share = expected_wage_share(random_variables, L_nj)
+		old_wage_share = L_nj_star ./ sum(L_nj_star, 3)
+		adjustment_loop!(random_variables, L_nj_star, parameters, t)
+		wage_share = expected_wage_share(random_variables)
 
 		dist = distance(wage_share, old_wage_share)
 		info("-- Outer ", k, ": ", dist)
 
-		L_nj = (0.0*old_wage_share + 1.00*wage_share) * J
+		L_nj_star = (0.0*old_wage_share + 1.00*wage_share) * J
 		k = k+1
 	end
 	debug("END Outer loop")
-	return L_nj
+	return L_nj_star
 end
 
 function period_wrapper(A_njs, parameters, t)
 	random_variables = Dict{Symbol, Any}()
 	random_variables[:A_njs] = A_njs 
-	L_nj = outer_loop!(random_variables, parameters, t)
-	compute_real_gdp!(random_variables, L_nj, parameters, t)
+	L_nj_star = outer_loop!(random_variables, parameters, t)
+	compute_real_gdp!(random_variables, parameters, t)
 	return random_variables
 end
 
@@ -304,8 +316,8 @@ end
 
 Logging.configure(level=DEBUG)
 
-N = 24
-J = 25
+N = 2
+J = 3
 T = 2
 S = 1000
 # set random seed for reproducability
