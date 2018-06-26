@@ -15,9 +15,9 @@ parameters = Dict{Symbol, Any}()
 
 @everywhere Logging.configure(level=DEBUG)
 
-N = 2
-J = 3
-T = 10
+N = 24
+J = 25
+T = 36
 S = 1000
 # set random seed for reproducability
 srand(2311)
@@ -64,8 +64,8 @@ coerce_parameters!(parameters)
 
 A_njs = 1.0 .+ rand(1,N,J,S)
 
-@time results = pmap(t -> period_wrapper(A_njs, parameters, t), 1:T)
-
+@time results = pmap(t -> (t, period_wrapper(A_njs, parameters, t)), 1:T)
+#info(results)
 #for t = 1:T
 #	@time random_variables = period_wrapper(A_njs, parameters, t)
 #	real_GDP = non_random_variable(random_variables[:real_GDP], 1)
