@@ -126,10 +126,27 @@ Here both $R_{njt}$ and $\varrho_{njt}$ depend on equilibrium prices. But starti
 	\item Go back to Step 2 and repeat until convergence.
 \end{enumerate}
 
+Under CES final demand, $\alpha_{jt}$ should be replaced with
+\[
+\alpha_{mjt}(\mathbf P_t) = 
+ \left(
+ 	\frac
+ 		{\nu_{jt}P_{mjt}}
+ 		{P_{mt}}
+ \right)^{1-\sigma},
+\]
+and the consumer price index becomes
+\[
+P_{mt} = \left(
+	\sum_{j=1}^J
+		\nu_{jt} P_{mjt}^{1-\sigma}
+	\right)^{1/(1-\sigma)}
+\]
+
 \subsection{Dual loop}
 What are the sectoral expenditures across countries?
 \[
-E_{mjt} = 			\alpha_{jt}
+E_{mjt} = 			\alpha_{mjt}(\mathbf P_t)
 			\left(
 				\sum_{k=1}^J\beta_k R_{mkt} - S_{mt}
 			\right)
@@ -138,7 +155,7 @@ E_{mjt} = 			\alpha_{jt}
 The sectoral expenditure share is
 \begin{equation}\label{eq:sectoral_share}
 e_{mjt} = \frac
-	{\sum_{k=1}^J(\alpha_{jt}\beta_k+\gamma_{jk}) R_{mkt} - S_{mt}}
+	{\sum_{k=1}^J(\alpha_{mjt}(\mathbf P_t)\beta_k+\gamma_{jk}) R_{mkt} - S_{mt}}
 	{\sum_{k=1}^J R_{mkt}-S_{mt}}.
 \end{equation}
 Even if $S_{mt}=0$, this is not constant, because it depends on the revenue distribution across sectors. If a country has a comparative advantage in car production, it will have high revenue (not expenditure) in cars. But then it will have high expenditure in car inputs. 
@@ -169,7 +186,7 @@ Suppose that trade is free, $\kappa_{nmjt}\equiv 1$. Then $P_{njt}\equiv P_{jt}$
 	\left\{
 	\sum_{m=1}^N
 		\left[
-			\alpha_{jt}
+			\alpha_{jt}(\mathbf P_t)
 			\left(
 				\sum_{k=1}^J\beta_k R_{mkt} - S_{mt}
 			\right)
