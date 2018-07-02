@@ -15,9 +15,9 @@ parameters = Dict{Symbol, Any}()
 
 @everywhere Logging.configure(level=INFO)
 
-N = 2
-J = 3
-T = 2
+N = 24
+J = 25
+T = 36
 S = 1000
 # set random seed for reproducability
 srand(2311)
