@@ -2,10 +2,16 @@
 [X] Lnt can be normalized to 1
 [] how does Snt enter outer loop?
 [] service sector in equilibrium solution?
-[] CES sectoral demand
+[X] CES sectoral demand
+[] calculate xi: gamma((theta + 1 - eta) / theta)
+[] design hyperparametrization and scenario workflow
+[] speed up algo from 11hrs
 
 # Balazs
 [] read data from files, use new data structure
+	[] correct import shares
+	[] calculate Gamma
+	[] calculate kappa
 [] calibrate shocks and report alpha, beta, gamma, kappa, Snt, Ajnt
 [] calculate volatility
 [] create exhibits
