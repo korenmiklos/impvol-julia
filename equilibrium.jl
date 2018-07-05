@@ -18,7 +18,6 @@ parameters = Dict{Symbol, Any}()
 function coerce_parameters!(parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
 
-	parameters[:alpha_jt] = reshape(parameters[:alpha], (1, 1, J, T))
 	parameters[:beta_j] = reshape(parameters[:beta], (1, 1, J, 1))
 	parameters[:L_nt] = ones(1,N,1,T)
 
@@ -62,7 +61,7 @@ function free_trade_sector_shares!(parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
 	gamma_jk = parameters[:gamma_jk]
 	beta_j = parameters[:beta_j]
-	alpha_jt = parameters[:alpha_jt]
+	alpha_jt = parameters[:nu_njt] ./ sum(parameters[:nu_njt], 3)
 
 	revenue_shares = zeros(1,1,J,T)
 	for t=1:T
@@ -98,14 +97,14 @@ function compute_price!(random_variables, parameters, t)
 end
 
 function compute_price_index!(random_variables, parameters, t)
-	#nu = non_random_variable(parameters[:nu_njt], t)
-	alpha = non_random_variable(parameters[:alpha_jt], t)
+	nu = non_random_variable(parameters[:nu_njt], t)
+	alpha = nu ./ sum(nu, 3)
 	P_njs = random_variables[:P_njs]
 	sigma = parameters[:sigma]
 
 	# use formula on p43 of "paper November 8 2017.pdf"
-	random_variables[:P_ns] = prod(alpha .^ (-alpha) .* P_njs .^ (alpha), 3)
-	#random_variables[:P_ns] = sum(nu .* P_njs .^ (1-sigma), 3) .^ (1/(1-sigma))
+	# Cobb-Douglas is a special case when sigma ~ 1
+	random_variables[:P_ns] = sum(alpha .* P_njs .^ (1-sigma), 3) .^ (1/(1-sigma))
 end
 
 function free_trade_country_shares!(random_variables, parameters)
@@ -180,9 +179,9 @@ function compute_expenditure_shares!(random_variables, parameters, t)
 	R_nks = random_variables[:R_njs]
 	beta_j = parameters[:beta_j]
 	gamma_jk = parameters[:gamma_jk]
-	#nu = non_random_variable(parameters[:nu_njt], t)
-	alpha_njt = non_random_variable(parameters[:alpha_jt], t)
-	#alpha_njt = CES_share(nu, random_variables[:P_njs], parameters[:sigma])
+	nu = non_random_variable(parameters[:nu_njt], t)
+	# encompass CES and Cobb-Douglas
+	alpha_njt = CES_share(nu, random_variables[:P_njs], parameters[:sigma])
 	S_nt = non_random_variable(parameters[:S_nt], t)
 	expenditure = sum(R_nks, 3) .- S_nt
 
@@ -346,10 +345,6 @@ function draw_next_productivity(current_productivity, parameters, i)
 	random_realization = non_random_variable(current_productivity, i)
 	AR_decay = parameters[:AR_decay]
 	return random_realization .^ (AR_decay) .* innovation
-end
-
-function check_parameters(globals)
-	@assert0 sum(globals[:alpha], 2)-1.0
 end
 
 end

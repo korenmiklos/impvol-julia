@@ -43,11 +43,9 @@ module Parameters
 	# AR coefficient for each (n,j)
 	parameters[:AR_decay] = 0.9*ones(1,N,J,1)
 
-	alpha = ones(J,T) / J
 	beta = 0.25 + 0.75 * rand(1, J)
 
 	
-	parameters[:alpha]=alpha ./ sum(alpha, 1)
 	parameters[:beta]=beta
 	parameters[:theta]=4
 	parameters[:S_nt]=zeros(1,N,1,T)
