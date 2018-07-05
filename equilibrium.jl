@@ -98,12 +98,14 @@ function compute_price!(random_variables, parameters, t)
 end
 
 function compute_price_index!(random_variables, parameters, t)
-	nu = non_random_variable(parameters[:nu_njt], t)
+	#nu = non_random_variable(parameters[:nu_njt], t)
+	alpha = non_random_variable(parameters[:alpha_jt], t)
 	P_njs = random_variables[:P_njs]
 	sigma = parameters[:sigma]
 
 	# use formula on p43 of "paper November 8 2017.pdf"
-	random_variables[:P_ns] = sum(nu .* P_njs .^ (1-sigma), 3) .^ (1/(1-sigma))
+	random_variables[:P_ns] = prod(alpha .^ (-alpha) .* P_njs .^ (alpha), 3)
+	#random_variables[:P_ns] = sum(nu .* P_njs .^ (1-sigma), 3) .^ (1/(1-sigma))
 end
 
 function free_trade_country_shares!(random_variables, parameters)
@@ -178,8 +180,9 @@ function compute_expenditure_shares!(random_variables, parameters, t)
 	R_nks = random_variables[:R_njs]
 	beta_j = parameters[:beta_j]
 	gamma_jk = parameters[:gamma_jk]
-	nu = non_random_variable(parameters[:nu_njt], t)
-	alpha_njt = CES_share(nu, random_variables[:P_njs], parameters[:sigma])
+	#nu = non_random_variable(parameters[:nu_njt], t)
+	alpha_njt = non_random_variable(parameters[:alpha_jt], t)
+	#alpha_njt = CES_share(nu, random_variables[:P_njs], parameters[:sigma])
 	S_nt = non_random_variable(parameters[:S_nt], t)
 	expenditure = sum(R_nks, 3) .- S_nt
 

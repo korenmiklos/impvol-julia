@@ -3,6 +3,8 @@
 [] how does Snt enter outer loop?
 [] service sector in equilibrium solution?
 [X] CES sectoral demand
+	[X] roll back CES
+	[] special case CES v Cobb-Douglas
 [] calculate xi: gamma((theta + 1 - eta) / theta)
 [] design hyperparametrization and scenario workflow
 [X] speed up algo from 11hrs
@@ -13,5 +15,6 @@
 	[] calculate Gamma
 	[] calculate kappa
 [] calibrate shocks and report alpha, beta, gamma, kappa, Snt, Ajnt
+	[] estimate shock process for Ajnt
 [] calculate volatility
 [] create exhibits
