@@ -2,7 +2,7 @@ module ImpvolEquilibrium
 
 export period_wrapper, non_random_variable, draw_next_productivity, coerce_parameters!
 
-using Images
+import Images.meanfinite
 using Logging
 
 include("utils.jl")
@@ -18,7 +18,6 @@ parameters = Dict{Symbol, Any}()
 function coerce_parameters!(parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
 
-	parameters[:alpha_jt] = reshape(parameters[:alpha], (1, 1, J, T))
 	parameters[:beta_j] = reshape(parameters[:beta], (1, 1, J, 1))
 	parameters[:L_nt] = ones(1,N,1,T)
 
@@ -62,7 +61,7 @@ function free_trade_sector_shares!(parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
 	gamma_jk = parameters[:gamma_jk]
 	beta_j = parameters[:beta_j]
-	alpha_jt = parameters[:alpha_jt]
+	alpha_jt = parameters[:nu_njt] ./ sum(parameters[:nu_njt], 3)
 
 	revenue_shares = zeros(1,1,J,T)
 	for t=1:T
@@ -98,11 +97,14 @@ function compute_price!(random_variables, parameters, t)
 end
 
 function compute_price_index!(random_variables, parameters, t)
-	alpha = non_random_variable(parameters[:alpha_jt], t)
+	nu = non_random_variable(parameters[:nu_njt], t)
+	alpha = nu ./ sum(nu, 3)
 	P_njs = random_variables[:P_njs]
+	sigma = parameters[:sigma]
 
 	# use formula on p43 of "paper November 8 2017.pdf"
-	random_variables[:P_ns] = prod(alpha .^ (-alpha) .* P_njs .^ (alpha), 3)
+	# Cobb-Douglas is a special case when sigma ~ 1
+	random_variables[:P_ns] = sum(alpha .* P_njs .^ (1-sigma), 3) .^ (1/(1-sigma))
 end
 
 function free_trade_country_shares!(random_variables, parameters)
@@ -167,18 +169,26 @@ function compute_revenue!(random_variables, parameters)
 	random_variables[:R_njs] = w_njs .* L_njs ./ beta_j
 end
 
+function CES_share(nu, price, sigma)
+	temp = nu .* price .^ (1-sigma)
+	return temp ./ sum(temp, 3)
+end
+
 function compute_expenditure_shares!(random_variables, parameters, t)
 	# use eq 19 of "paper November 8 2017.pdf"
 	R_nks = random_variables[:R_njs]
 	beta_j = parameters[:beta_j]
 	gamma_jk = parameters[:gamma_jk]
-	alpha_jt = non_random_variable(parameters[:alpha_jt], t)
+	nu = non_random_variable(parameters[:nu_njt], t)
+	# encompass CES and Cobb-Douglas
+	alpha_njt = CES_share(nu, random_variables[:P_njs], parameters[:sigma])
 	S_nt = non_random_variable(parameters[:S_nt], t)
 	expenditure = sum(R_nks, 3) .- S_nt
 
 	wagebill_ns = rotate_sectors(beta_j[:]', R_nks)
 	intermediate_njs = rotate_sectors(gamma_jk, R_nks)
-	random_variables[:e_mjs] = array_transpose((alpha_jt .* wagebill_ns .+ intermediate_njs .- alpha_jt .* S_nt) ./ expenditure)
+	random_variables[:e_mjs] = array_transpose((alpha_njt .* wagebill_ns .+ intermediate_njs .- alpha_njt .* S_nt) ./ expenditure)
+	debug(alpha_njt[1,1,1:2,1])
 end
 
 function compute_real_gdp!(random_variables, parameters, t)
@@ -216,7 +226,7 @@ end
 
 function inner_loop!(random_variables, parameters, t)
 	debug("------ BEGIN Inner loop")
-	lambda = parameters[:lambda]
+	lambda = parameters[:inner_step_size]
 	dist = 999
 	k = 1
 
@@ -244,8 +254,9 @@ function middle_loop!(random_variables, parameters, t)
 		inner_loop!(random_variables, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
 		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
+
+		random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
 		info("------ Middle ", k, ": ", dist)
-		debug(meanfinite(random_variables[:e_mjs], 4)[1,1,1,1])
 
 		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1
@@ -270,7 +281,6 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 		w_ns = w_njs .* L_njs ./ L_n
 		wage_gap = w_njs ./ w_ns - 1
 
-		# FIXME: may need some dampening
 		L_njs = 0.5*L_njs .+ 0.5*max.(nulla, L_nj_star .+ L_n .* (parameters[:one_over_rho]*wage_gap)) 
 		L_njs = L_n .* L_njs ./ sum(L_njs, 3)
 
@@ -294,6 +304,7 @@ end
 
 function outer_loop!(random_variables, parameters, t)
 	N, J, S = parameters[:N], parameters[:J], parameters[:S]
+	lambda = parameters[:outer_step_size]
 	L_nj_star = ones(1,N,J,1) / J
 	random_variables[:L_njs] = L_nj_star
 	starting_values!(random_variables, parameters, t)
@@ -310,7 +321,7 @@ function outer_loop!(random_variables, parameters, t)
 		dist = distance(wage_share, old_wage_share)
 		info("-- Outer ", k, ": ", dist)
 
-		L_nj_star = (0.0*old_wage_share + 1.00*wage_share) * J
+		L_nj_star = ((1-lambda)*old_wage_share + lambda*wage_share) * J
 		k = k+1
 	end
 	debug("END Outer loop")
@@ -330,14 +341,10 @@ function draw_next_productivity(current_productivity, parameters, i)
 	# use "i"th realization to continue future paths
 	N, J, S = parameters[:N], parameters[:J], parameters[:S]
 	# set variance covariance matrix here
-	innovation = exp.(parameters[:sigma] .* randn(1,N,J,S))
+	innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S))
 	random_realization = non_random_variable(current_productivity, i)
 	AR_decay = parameters[:AR_decay]
 	return random_realization .^ (AR_decay) .* innovation
-end
-
-function check_parameters(globals)
-	@assert0 sum(globals[:alpha], 2)-1.0
 end
 
 end
