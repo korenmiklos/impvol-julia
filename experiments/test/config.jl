@@ -1,3 +1,7 @@
+@everywhere using Logging
+@everywhere Logging.configure(level=INFO)
+@everywhere using JLD
+
 module Environment
 	export N, J, T, S, parameters
 	########## environment parameters
@@ -26,9 +30,6 @@ module Environment
 	parameters[:outer_tolerance] = 0.005
 	parameters[:numerical_zero] = 1e-6
 end
-
-@everywhere using Logging
-@everywhere Logging.configure(level=INFO)
 
 module Parameters
 	import ..Environment: N, J, T
