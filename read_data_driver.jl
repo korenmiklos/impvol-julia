@@ -28,11 +28,19 @@ else
 	alphas = compute_alphas(va,beta,gammas,weights)
 end
 
-d = expenditure_shares(import_shares, 0.000001)
+d = expenditure_shares(import_shares, 1e-12)
 
-kappa = trade_costs(d, 4.0, 0.000001)
+kappa = trade_costs(d, 4.0, 1e-12)
 
+xi = calculate_xi(4.0, 4.0)
 
+B = calculate_B(beta, gammas)
+
+psi = calculate_psi(va, weights)
+
+p_sectoral = calculate_p(p_sectoral_data, pwt, d, kappa, alphas, 4.0)
+
+z = calculate_z(p_sectoral, beta, gammas, kappa, psi, B, d, va, xi, 4.0)
 
 # # Pkg.add("DataFrames")
 # # Pkg.add("CSV")

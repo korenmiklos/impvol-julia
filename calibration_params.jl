@@ -1,4 +1,4 @@
-function manipulate_import_shares(data::DataFrames.DataFrame,dim_size::NTuple)
+function manipulate_import_shares(data::DataFrames.DataFrame, dim_size::NTuple)
 	# This function extends the imported import shares, so that it will be full dimensional
 	# Adds service sector (with 0 import share) and adds own country import share (0)
 	insert!(data, length(names(data))  + 1, 0, :s)
@@ -7,16 +7,16 @@ function manipulate_import_shares(data::DataFrames.DataFrame,dim_size::NTuple)
 	T = dim_size[3]
 	for t in 1:T
 		y = 1971 + t
-		for d in 1:N
+		for n in 1:N
 			vec = zeros(1,J + 3)
-			vec[1,1:3] = [y,d,d]
+			vec[1,1:3] = [y,n,n]
 			push!(data, vec)
 		end
 	end
 	return sort!(data,(1,2,3)), map(+,dim_size,(1,0,0,1))
 end
 
-function compute_gammas(beta::Array{Float64,4},io_values::Array{Float64,4},total_output::Array{Float64,4},output_shares::Array{Float64,4},intermediate_input_shares::Array{Float64,4})
+function compute_gammas(beta::Array{Float64,4}, io_values::Array{Float64,4}, total_output::Array{Float64,4}, output_shares::Array{Float64,4}, intermediate_input_shares::Array{Float64,4})
 	M, N, J, T = size(beta)
 	beta = mean(beta,(1,2,4))
 
@@ -43,7 +43,7 @@ function compute_gammas(beta::Array{Float64,4},io_values::Array{Float64,4},total
 
 	output_shares_full = ones(size(io_values_dupl))
 	split_idx = [2, 3, 4, 5, 6, 8, 9, 17, 18, 19]
-	output_shares_full[split_idx,:,:,:] = permutedims(repeat(output_shares,outer = [1,1,size(io_values_dupl,2),1]),(2,3,1,4))
+	output_shares_full[split_idx,:,:,:] = permutedims(repeat(output_shares, outer = [1,1,size(io_values_dupl,2),1]),(2,3,1,4))
 
 	io_values_new = io_values_dupl .* output_shares_full
 
@@ -51,7 +51,7 @@ function compute_gammas(beta::Array{Float64,4},io_values::Array{Float64,4},total
 	io_values_dupl = io_values_new[:,dupl_idx,:,:]
 
 	intermediate_input_shares_full = ones(size(io_values_dupl))
-	intermediate_input_shares_full[:,split_idx,:,:] = repeat(intermediate_input_shares,outer = [size(io_values_dupl,1),1,1,1])
+	intermediate_input_shares_full[:,split_idx,:,:] = repeat(intermediate_input_shares, outer = [size(io_values_dupl,1),1,1,1])
 
 	io_values_new = io_values_dupl .* intermediate_input_shares_full
 
@@ -66,10 +66,9 @@ function compute_gammas(beta::Array{Float64,4},io_values::Array{Float64,4},total
 	total_output[:,18,:,:], total_output[:,19,:,:], total_output[:,20,:,:] = total_output[:,20,:,:], total_output[:,18,:,:], total_output[:,19,:,:]
 
 	# Compute gammas
-	gammas = io_values_new ./ repeat(total_output,outer = [size(io_values_new,1),1,1,1])
+	gammas = io_values_new ./ repeat(total_output, outer = [size(io_values_new,1),1,1,1])
 	gammas = mean(gammas,4)
-	gammas = gammas .* permutedims(1-beta,(1,3,2,4)) ./ sum(gammas,1)
-	return gammas = repeat(gammas, outer = [1,1,1,T])
+	return gammas = gammas .* permutedims(1-beta,(1,3,2,4)) ./ sum(gammas,1)
 end
 
 # function compute_gammas(beta::Array{Float64,2},io_values::Array{Float64,3},total_output::Array{Float64,2},output_shares::Array{Float64,2},intermediate_input_shares::Array{Float64,2})
@@ -132,8 +131,8 @@ function compute_alphas(va::Array{Float64,4}, beta::Array{Float64,4}, gammas::Ar
 	alphas = zeros(J,T)
 
 	va = squeeze(va,1)
-	beta = squeeze(beta,(1,4))
-	gammas = squeeze(mean(gammas,4),(3,4))
+	beta = squeeze(beta, (1,4))
+	gammas = squeeze(gammas, (3,4))
 
 	for t in 1:T
 		va_t = transpose(sum(va[:,:,t],1))
@@ -180,8 +179,68 @@ function trade_costs(d::Array{Float64,4}, theta::Float64, n_zero::Float64)
 		end
 	end
 
-	kappa[:,:,end,:] = repeat(eye(M), outer = [1,1,1,T])
-
 	kappa[kappa .< n_zero] = n_zero
-	kappa = min.(kappa,1)
+	kappa[:,:,end,:] = repeat(eye(M), outer = [1,1,1,T]) # Services
+
+	return kappa = min.(kappa,1)
+end
+
+function calculate_xi(theta::Float64, eta::Float64)
+	return gamma((theta + 1 - eta)/theta)
+end
+
+function calculate_B(beta::Array{Float64,4}, gammas::Array{Float64,4})
+	beta = mean(beta,(1,2,4))
+	return B = (beta .^ -beta) .* permutedims(prod(gammas .^ -gammas, 1), [1,3,2,4])
+end
+
+function calculate_psi(va::Array{Float64,4}, weights::Array{Float64,1})
+	va_shares = va ./ repeat(sum(va, 3), outer = [1,1,size(va,3),1])
+	_, psi_t = detrend(va_shares, weights)
+	return psi_t
+end
+
+function calculate_p(p_sectoral_data::Array{Float64,4}, pwt::Array{Float64,4}, d::Array{Float64,4}, kappa::Array{Float64,4}, alphas::Array{Float64,4}, theta::Float64)
+	p_sectoral_base = p_sectoral_data ./ p_sectoral_data[:,:,:,1]
+
+	# US is assumed to be chosen as a base country (US = end), else pwt should be used to do the conversion
+	p_sectoral = exp.( mean(1 / theta * log.(d ./ permutedims(cat(ndims(d),d[end,:,:,:]),[4,1,2,3])) - log.(kappa ./ permutedims(cat(ndims(kappa),kappa[end,:,:,:]),[4,1,2,3])), 2) + repeat(permutedims(cat(ndims(p_sectoral_base),log.(p_sectoral_base[:,end,:,:])), [1,4,2,3]), outer = [size(d,1),1,1,1]) )
+
+	p_base = permutedims(cat(ndims(p_sectoral_base),prod((p_sectoral_base ./ alphas) .^ alphas, 3)), [1,2,3,4])
+	p_services = compute_p_services(p_sectoral, p_base, pwt, alphas)
+	p_sectoral[isnan.(p_sectoral)] = 0
+	return p_sectoral = p_sectoral + p_services
+end
+
+function compute_p_services(p_sectoral::Array{Float64,4}, p_base::Array{Float64,4}, pwt::Array{Float64,4}, alphas::Array{Float64,4})
+	M, N, J, T = size(p_sectoral)
+	p_services = zeros(M,N,J,T)
+
+	# Service sector is assumed to be on the last position in the sector dimension
+	for t in 1:T
+		for m in 1:M
+			p_services[m,:,end,t] = (pwt[:,m,:,t] * p_base[:,end,:,t]) .^ (1 ./ alphas[:,:,end,t]) .* prod(alphas[:,:,:,t] .^ (-alphas[:,:,:,t])) .^ (-1 ./ alphas[:,:,end,t]) .* prod(p_sectoral[m,:,1:(end-1),t] .^ alphas[1,:,1:(end-1),t]) .^ (-1 ./ alphas[1,:,end,t])
+		end
+	end
+
+	return p_services
+end
+
+function calculate_z(p_sectoral::Array{Float64,4}, beta::Array{Float64,4}, gammas::Array{Float64,4}, kappa::Array{Float64,4}, psi::Array{Float64,4}, B::Array{Float64,4}, d::Array{Float64,4}, va::Array{Float64,4}, xi::Float64, theta::Float64)
+	_, N, J, T = size(va)
+	beta = squeeze(mean(beta,(1,2,4)),(1,2,4))
+
+	z = zeros(1, N, J, T)
+
+	for n in 1:N
+		for t in 1:T
+			# Sectors except services
+			z[1, n, :, t] = exp.( theta * log.(xi * B[1,1,:,1]) + theta * beta .* (log.(va[1,n,:,t]) - log.(psi[1,n,:,t])) + reshape(transpose(mean(log.(d[:,n,:,t]) - theta * log.(kappa[:,n,:,t]),1)) - theta * transpose(mean(log.(p_sectoral[:,1,:,t]),1)),J) + transpose(gammas[:,:,1,1]) * theta * log.(p_sectoral[n,1,:,t]) )
+
+			# Services
+			z[1,n,end,t]  = xi^theta * B[1,1,end,1]^theta * (va[1,n,end,t] / psi[1,n,end,t])^(theta * beta[end]) * prod(p_sectoral[n,1,:,t].^(gammas[:,end,1,1]))^theta * p_sectoral[n,1,end,t]^(-theta)
+		end
+	end
+
+	return z
 end
