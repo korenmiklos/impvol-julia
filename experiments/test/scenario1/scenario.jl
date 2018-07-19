@@ -4,7 +4,7 @@
 @everywhere using ImpvolEquilibrium
 
 # parameters that govern counterfactual
-@everywhere include("parameters.jl")
+@everywhere include("change_parameters.jl")
 
 @time results = pmap(t -> (t, period_wrapper(A_njs, parameters, t)), 1:T)
 @save "results.jld" results
