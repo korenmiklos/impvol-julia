@@ -1,7 +1,7 @@
 # Miklos
 [X] Lnt can be normalized to 1
 [] how does Snt enter outer loop?
-[] service sector in equilibrium solution?
+[X] service sector in equilibrium solution?
 [X] CES sectoral demand
 	[X] roll back CES
 	[X] special case CES v Cobb-Douglas
@@ -16,6 +16,8 @@
 	[X] correct import shares
 	[X] calculate Gamma
 	[X] calculate kappa
+	[] read S_nt
+	[] fix B = f(beta, gamma)
 [X] calibrate shocks and report alpha, beta, gamma, kappa, Snt, Anjt
 	[] estimate shock process for Ajnt
 [] calculate volatility

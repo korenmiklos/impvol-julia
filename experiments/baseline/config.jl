@@ -4,14 +4,12 @@ module Environment
 	@everywhere include("../../calibrate_params.jl")
 	@everywhere using CalibrateParameters
 	
-	export N, J, T, S, parameters
+	export parameters
 
 	########## environment settings
 	## these are needed for data -> parameters mapping
-	N = 2
-	J = 5
-	T = 2
-	S = 100
+	parameters[:S] = 100
+	J = 24
 
 	parameters = Dict{Symbol, Any}()
 	# CES parameters
@@ -19,7 +17,6 @@ module Environment
 	parameters[:theta] = 4.0
 	parameters[:eta] = 4.0
 	parameters[:xi] = CalibrateParameters.calculate_xi(parameters[:theta], parameters[:eta])
-	parameters[:N], parameters[:J], parameters[:T], parameters[:S] = N, J, T, S 
 
 	# adaptive step size. large lambda means large steps
 	parameters[:inner_step_size] = exp(-0.10*(J-1)^0.75)
@@ -42,5 +39,5 @@ module Environment
 	#parameters[:io_links] = true # and these kind of scenario parameters...
 	#parameters[:china] = true
 
-	# FIXME: add random parameters here, no need to calibrate to data
+	CalibrateParameters.calibrate_parameters!(parameters)
 end
