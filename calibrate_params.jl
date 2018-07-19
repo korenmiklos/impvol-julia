@@ -1,6 +1,36 @@
-include("calibration_utils.jl")
 
 module CalibrateParameters
+	include("calibration_utils.jl")
+	using JLD
+	
+	function calibrate_parameters!(parameters)
+		data = JLD.load("../../../data/impvol_data.jld")
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		# standard deviation for each (n,j)
+		parameters[:shock_stdev] = 0.1*ones(1,N,J,1)
+		# AR coefficient for each (n,j)
+		parameters[:AR_decay] = 0.9*ones(1,N,J,1)
+
+		parameters[:beta] = data["beta"]
+
+		parameters[:gamma_jk] = compute_gammas(parameters[:beta],data["io_values"],data["total_output"],data["output_shares"],data["intermediate_input_shares"])
+		# CD case
+		parameters[:nu_njt] = compute_alphas(data["va"],parameters[:beta],parameters[:gamma_jk],parameters[:bp_weights])
+ 
+		parameters[:S_nt] = zeros(1,N,1,T)
+
+		d = expenditure_shares(data["import_shares"], parameters[:numerical_zero])
+
+		parameters[:kappa] = trade_costs(d, parameters[:theta], parameters[:numerical_zero])
+
+		p_sectoral = calculate_p(data["p_sectoral_data"], data["pwt"], d, parameters[:kappa], parameters[:nu_njt], parameters[:theta])
+		psi = calculate_psi(data["va"], parameters[:bp_weights])
+		B = calculate_B(parameters[:beta], parameters[:gamma_jk])
+		xi = calculate_xi(parameters[:theta], parameters[:eta])
+
+		parameters[:z] = calculate_z(p_sectoral, parameters[:beta], parameters[:gamma_jk], parameters[:kappa], psi, B, d, data["va"], xi, parameters[:theta])
+	end
 
 	function compute_gammas(beta::Array{Float64,4}, io_values::Array{Float64,4}, total_output::Array{Float64,4}, output_shares::Array{Float64,4}, intermediate_input_shares::Array{Float64,4})
 		M, N, J, T = size(beta)

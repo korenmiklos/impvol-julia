@@ -1,48 +1,9 @@
-#@everywhere using Logging
-#@everywhere Logging.configure(level=INFO)
-#@everywhere using JLD
-
-
 module Environment
-	include("../../calibration_params.jl")
+	@everywhere using Logging
+	@everywhere Logging.configure(level=INFO)
+	@everywhere include("../../calibrate_params.jl")
+	@everywhere using CalibrateParameters
 	
-	function calibrate_parameters!(parameters)
-		include("../../read_data.jl")
-		if !isfile("data/impvol_data.jld")
-			ReadData.read_all()
-		end
-		data = load("../../data/impvol_data.jld")
-
-		# mock function before implemented elsewhere
-
-		# standard deviation for each (n,j)
-		parameters[:shock_stdev] = 0.1*ones(1,N,J,1)
-		# AR coefficient for each (n,j)
-		parameters[:AR_decay] = 0.9*ones(1,N,J,1)
-
-		parameters[:beta] = data[:beta]
-
-		parameters[:gamma_jk] = CalibrateParameters.compute_gammas(parameters[:beta],data[:io_values],data[:total_output],data[:output_shares],data[:intermediate_input_shares])
-		# CD case
-		parameters[:nu_njt] = CalibrateParameters.compute_alphas(data[:va],parameters[:beta],parameters[:gamma_jk],parameters[:weights])
- 
-		parameters[:S_nt] = zeros(1,N,1,T)
-
-		d = CalibrateParameters.expenditure_shares(data[:import_shares], parameters[:numerical_zero])
-
-		parameters[:kappa] = CalibrateParameters.trade_costs(d, parameters[:theta], parameters[:numerical_zero])
-
-		p_sectoral = calculate_p(data[:p_sectoral_data], data[:pwt], d, parameters[:kappa], parameter[:nu_njt], parameters[:theta])
-		psi = CalibrateParameters.calculate_psi(data[:va], parameters[:weights])
-		B = CalibrateParameters.calculate_B(parameters[:beta], parameters[:gamma_jk])
-		xi = CalibrateParameters.calculate_xi(parameters[:theta], parameters[:eta])
-
-		parameters[:z] = CalibrateParameters.calculate_z(p_sectoral, parameters[:beta], parameters[:gamma_jk], parameters[:kappa], psi, B, d, data[:va], xi, parameters[:theta])
-		# # make Gamma more diagonal
-		# gamma_jk = rand(J,J) + 1.0*eye(J)
-		# parameters[:gamma_jk] = gamma_jk ./ sum(gamma_jk, 1) .* (1-beta)
-	end
-
 	export N, J, T, S, parameters
 
 	########## environment settings
@@ -77,9 +38,9 @@ module Environment
 	## these are function of data
 	# inverse of adjustment cost, 0 if cannot readjust
 	parameters[:one_over_rho] = 0.01
-	parameters[:w] = [0.774074394803123; -0.201004684236153; -0.135080548288772; -0.0509519648766360]
+	parameters[:bp_weights] = [0.774074394803123; -0.201004684236153; -0.135080548288772; -0.0509519648766360]
 	#parameters[:io_links] = true # and these kind of scenario parameters...
 	#parameters[:china] = true
 
-	calibrate_parameters!(parameters)
+	CalibrateParameters.calibrate_parameters!(parameters)
 end

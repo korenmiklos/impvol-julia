@@ -14,20 +14,6 @@ parameters = Dict{Symbol, Any}()
 # per-period random variables are stored as
 # mnjs: destination, source, sector, state
 
-
-function coerce_parameters!(parameters)
-	N, J, T = parameters[:N], parameters[:J], parameters[:T]
-
-	parameters[:beta_j] = reshape(parameters[:beta], (1, 1, J, 1))
-	parameters[:L_nt] = ones(1,N,1,T)
-
-	beta_j = parameters[:beta]'
-	gamma_jk = parameters[:gamma_jk]
-	parameters[:B_j] = reshape(beta_j .^ (-beta_j) .* prod(gamma_jk .^ (-gamma_jk),2), (1,1,J,1)) 
-	# FIXME: use definition of xi parameter
-	parameters[:xi] = 1 
-end
-
 function non_random_variable(y, t)
 	# array coersion is going to take care of rest
 	B = y[:,:,:,t]
