@@ -1,4 +1,3 @@
-parameters = merge(Environment.parameters, Parameters.parameters)
 coerce_parameters!(parameters)
 
 # parameters that govern counterfactual
