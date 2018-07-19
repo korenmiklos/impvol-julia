@@ -11,12 +11,12 @@
 [] productivity counterfactuals for A_njs
 
 # Balazs
-[] calculate xi: gamma((theta + 1 - eta) / theta)
-[] read data from files, use new data structure
-	[] correct import shares
-	[] calculate Gamma
-	[] calculate kappa
-[] calibrate shocks and report alpha, beta, gamma, kappa, Snt, Ajnt
+[X] calculate xi: gamma((theta + 1 - eta) / theta)
+[X] read data from files, use new data structure
+	[X] correct import shares
+	[X] calculate Gamma
+	[X] calculate kappa
+[X] calibrate shocks and report alpha, beta, gamma, kappa, Snt, Anjt
 	[] estimate shock process for Ajnt
 [] calculate volatility
 [] create exhibits
