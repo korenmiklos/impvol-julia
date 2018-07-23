@@ -323,14 +323,14 @@ function period_wrapper(A_njs, parameters, t)
 	return random_variables
 end
 
-function draw_next_productivity(current_productivity, parameters, i)
+function draw_next_productivity(parameters, t)
 	# use "i"th realization to continue future paths
 	N, J, S = parameters[:N], parameters[:J], parameters[:S]
 	# set variance covariance matrix here
-	innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S))
-	random_realization = non_random_variable(current_productivity, i)
+	innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S - 1))
+	random_realization = non_random_variable(parameters[:A], t)
 	AR_decay = parameters[:AR_decay]
-	return random_realization .^ (AR_decay) .* innovation
+	return cat(4, random_realization, random_realization .^ (AR_decay) .* innovation)
 end
 
 end
