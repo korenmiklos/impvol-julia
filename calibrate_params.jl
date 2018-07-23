@@ -6,14 +6,14 @@ module CalibrateParameters
 	function calibrate_parameters!(parameters)
 		data = JLD.load("../../../data/impvol_data.jld")
 
+		parameters[:beta] = data["beta"]
+		_, N, J, T = size(parameters[:beta])
+		parameters[:N], parameters[:J], parameters[:T] = N, J, T
+
 		# standard deviation for each (n,j)
 		parameters[:shock_stdev] = 0.1*ones(1,N,J,1)
 		# AR coefficient for each (n,j)
 		parameters[:AR_decay] = 0.9*ones(1,N,J,1)
-
-		parameters[:beta] = data["beta"]
-		_, N, J, T = size(parameters[:beta])
-		parameters[:N], parameters[:J], parameters[:T] = N, J, T
 
 		parameters[:gamma_jk] = compute_gammas(parameters[:beta],data["io_values"],data["total_output"],data["output_shares"],data["intermediate_input_shares"])
 		# CD case
@@ -21,17 +21,18 @@ module CalibrateParameters
  
 		parameters[:S_nt] = zeros(1,N,1,T)
 
-		d = expenditure_shares(data["import_shares"], parameters[:numerical_zero])
+		parameters[:d] = expenditure_shares(data["import_shares"], parameters[:numerical_zero])
 
-		parameters[:kappa] = trade_costs(d, parameters[:theta], parameters[:numerical_zero])
+		parameters[:kappa] = trade_costs(parameters[:d], parameters[:theta], parameters[:numerical_zero])
 
-		p_sectoral = calculate_p(data["p_sectoral_data"], data["pwt"], d, parameters[:kappa], parameters[:nu_njt], parameters[:theta])
-		psi = calculate_psi(data["va"], parameters[:bp_weights])
-		B = calculate_B(parameters[:beta], parameters[:gamma_jk])
-		xi = calculate_xi(parameters[:theta], parameters[:eta])
-		# FIXME: pls save these into parameters[]
+		parameters[:p_sectoral] = calculate_p(data["p_sectoral_data"], data["pwt"], parameters[:d], parameters[:kappa], parameters[:nu_njt], parameters[:theta])
+		parameters[:psi] = calculate_psi(data["va"], parameters[:bp_weights])
+		parameters[:B] = calculate_B(parameters[:beta], parameters[:gamma_jk])
+		parameters[:xi] = calculate_xi(parameters[:theta], parameters[:eta])
 
-		parameters[:z] = calculate_z(p_sectoral, parameters[:beta], parameters[:gamma_jk], parameters[:kappa], psi, B, d, data["va"], xi, parameters[:theta])
+		parameters[:z] = calculate_z(parameters[:p_sectoral], parameters[:beta], parameters[:gamma_jk], parameters[:kappa], parameters[:psi], parameters[:B], parameters[:d], data["va"], parameters[:xi], parameters[:theta])
+
+		parameters[:A] = calculate_A(parameters[:z], parameters[:theta])
 	end
 
 	function compute_gammas(beta::Array{Float64,4}, io_values::Array{Float64,4}, total_output::Array{Float64,4}, output_shares::Array{Float64,4}, intermediate_input_shares::Array{Float64,4})
@@ -157,8 +158,8 @@ module CalibrateParameters
 
 	function calculate_B(beta::Array{Float64,4}, gammas::Array{Float64,2})
 		gammas = cat(ndims(gammas) + 2,gammas)
-		beta = squeeze(mean(beta,(1,2,4)),(1,4))
-		return B = (beta .^ -beta) .* permutedims(prod(gammas .^ -gammas, 1), [2,1])
+		beta = mean(beta,(1,2,4))
+		return B = (beta .^ -beta) .* permutedims(prod(gammas .^ -gammas, 1),[1,3,2,4])
 	end
 
 	function calculate_psi(va::Array{Float64,4}, weights::Array{Float64,1})
@@ -193,7 +194,7 @@ module CalibrateParameters
 		return p_services
 	end
 
-	function calculate_z(p_sectoral::Array{Float64,4}, beta::Array{Float64,4}, gammas::Array{Float64,2}, kappa::Array{Float64,4}, psi::Array{Float64,4}, B::Array{Float64,2}, d::Array{Float64,4}, va::Array{Float64,4}, xi::Float64, theta::Float64)
+	function calculate_z(p_sectoral::Array{Float64,4}, beta::Array{Float64,4}, gammas::Array{Float64,2}, kappa::Array{Float64,4}, psi::Array{Float64,4}, B::Array{Float64,4}, d::Array{Float64,4}, va::Array{Float64,4}, xi::Float64, theta::Float64)
 		_, N, J, T = size(va)
 		beta = squeeze(mean(beta,(1,2,4)),(1,2,4))
 
@@ -205,7 +206,7 @@ module CalibrateParameters
 				z[1, n, :, t] = exp.( theta * log.(xi * B[1,1,:,1]) + theta * beta .* (log.(va[1,n,:,t]) - log.(psi[1,n,:,t])) + reshape(transpose(mean(log.(d[:,n,:,t]) - theta * log.(kappa[:,n,:,t]),1)) - theta * transpose(mean(log.(p_sectoral[:,1,:,t]),1)),J) + transpose(gammas[:,:,1,1]) * theta * log.(p_sectoral[n,1,:,t]) )
 
 				# Services
-				z[1,n,end,t]  = xi^theta * B[1,end]^theta * (va[1,n,end,t] / psi[1,n,end,t])^(theta * beta[end]) * prod(p_sectoral[n,1,:,t].^(gammas[:,end]))^theta * p_sectoral[n,1,end,t]^(-theta)
+				z[1,n,end,t]  = xi^theta * B[1,1,end,1]^theta * (va[1,n,end,t] / psi[1,n,end,t])^(theta * beta[end]) * prod(p_sectoral[n,1,:,t].^(gammas[:,end]))^theta * p_sectoral[n,1,end,t]^(-theta)
 			end
 		end
 
