@@ -6,38 +6,43 @@ module CalibrateParameters
 	function calibrate_parameters!(parameters)
 		data = JLD.load("../../../data/impvol_data.jld")
 
-		parameters[:beta] = data["beta"]
-		_, N, J, T = size(parameters[:beta])
+		_, N, J, T = size(data["beta"])
 		parameters[:N], parameters[:J], parameters[:T] = N, J, T
+		parameters[:beta_j] = mean(data["beta"],(1,2,4))
 
 		# standard deviation for each (n,j)
 		parameters[:shock_stdev] = 0.1*ones(1,N,J,1)
 		# AR coefficient for each (n,j)
 		parameters[:AR_decay] = 0.9*ones(1,N,J,1)
 
-		parameters[:gamma_jk] = compute_gammas(parameters[:beta],data["io_values"],data["total_output"],data["output_shares"],data["intermediate_input_shares"])
+		parameters[:gamma_jk] = compute_gamma(parameters, data)
 		# CD case
-		parameters[:nu_njt] = compute_alphas(data["va"],parameters[:beta],parameters[:gamma_jk],parameters[:bp_weights])
+		parameters[:nu_njt] = compute_alpha(parameters, data)
  
 		parameters[:S_nt] = zeros(1,N,1,T)
 
-		parameters[:d] = expenditure_shares(data["import_shares"], parameters[:numerical_zero])
+		parameters[:d] = expenditure_shares(parameters, data)
 
-		parameters[:kappa] = trade_costs(parameters[:d], parameters[:theta], parameters[:numerical_zero])
+		parameters[:kappa_mnjt] = trade_costs(parameters)
 
-		parameters[:p_sectoral] = calculate_p(data["p_sectoral_data"], data["pwt"], parameters[:d], parameters[:kappa], parameters[:nu_njt], parameters[:theta])
-		parameters[:psi] = calculate_psi(data["va"], parameters[:bp_weights])
-		parameters[:B] = calculate_B(parameters[:beta], parameters[:gamma_jk])
-		parameters[:xi] = calculate_xi(parameters[:theta], parameters[:eta])
+		parameters[:p_sectoral] = calculate_p(parameters, data)
+		parameters[:psi] = calculate_psi(parameters, data)
+		parameters[:B_j] = calculate_B(parameters)
+		parameters[:xi] = calculate_xi(parameters)
 
-		parameters[:z] = calculate_z(parameters[:p_sectoral], parameters[:beta], parameters[:gamma_jk], parameters[:kappa], parameters[:psi], parameters[:B], parameters[:d], data["va"], parameters[:xi], parameters[:theta])
+		parameters[:z] = calculate_z(parameters, data)
 
-		parameters[:A] = calculate_A(parameters[:z], parameters[:theta])
+		parameters[:A] = calculate_A(parameters)
 	end
 
-	function compute_gammas(beta::Array{Float64,4}, io_values::Array{Float64,4}, total_output::Array{Float64,4}, output_shares::Array{Float64,4}, intermediate_input_shares::Array{Float64,4})
-		M, N, J, T = size(beta)
-		beta = mean(beta,(1,2,4))
+	function compute_gamma(parameters, data)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		beta = parameters[:beta_j]
+		io_values = data["io_values"]
+		total_output = data["total_output"]
+		output_shares = data["output_shares"]
+		intermediate_input_shares = data["intermediate_input_shares"]
 
 		# Summing sectors
 		# Agriculture & mining
@@ -84,42 +89,46 @@ module CalibrateParameters
 		io_values_new[:,18,:,:], io_values_new[:,19,:,:], io_values_new[:,20,:,:] = io_values_new[:,20,:,:], io_values_new[:,18,:,:], io_values_new[:,19,:,:]
 		total_output[:,18,:,:], total_output[:,19,:,:], total_output[:,20,:,:] = total_output[:,20,:,:], total_output[:,18,:,:], total_output[:,19,:,:]
 
-		# Compute gammas
-		gammas = io_values_new ./ repeat(total_output, outer = [size(io_values_new,1),1,1,1])
-		gammas = mean(gammas,4)
-		gammas = gammas .* permutedims(1-beta,(1,3,2,4)) ./ sum(gammas,1)
-		return gammas = squeeze(gammas,(3,4))
+		# Compute gamma
+		gamma = io_values_new ./ repeat(total_output, outer = [size(io_values_new,1),1,1,1])
+		gamma = mean(gamma,4)
+		gamma = gamma .* permutedims(1-beta,(1,3,2,4)) ./ sum(gamma,1)
+		return gamma = squeeze(gamma,(3,4))
 	end
 
-	function compute_alphas(va::Array{Float64,4}, beta::Array{Float64,4}, gammas::Array{Float64,2},weights::Array{Float64,1})
-		M, N, J, T = size(beta)
+	function compute_alpha(parameters, data)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
 
-		beta = mean(beta,(1,2,4))
+		va = data["va"]
+		beta = parameters[:beta_j]
+		gamma = parameters[:gamma_jk]
+		weights = parameters[:bp_weights]
 
-		alphas = zeros(J,T)
-
-		va = squeeze(va,1)
-		beta = squeeze(beta, (1,4))
+		alpha = zeros(J,T)
 
 		for t in 1:T
-			va_t = transpose(sum(va[:,:,t],1))
-			alphas[:,t] = (eye(J) - gammas) * diagm(1 ./ beta[:],0) * va_t / sum(va_t)
+			va_t = transpose(sum(va[1,:,:,t],1))
+			alpha[:,t] = (eye(J) - gamma) * diagm(1 ./ beta[:],0) * va_t / sum(va_t)
 		end
 
 		# Replace negative elements with 0
-		alphas = (alphas + abs.(alphas)) / 2
+		alpha = (alpha + abs.(alpha)) / 2
 
 		# Smooth the series
-		alpha_c, alpha_t = DetrendUtilities.detrend(alphas, weights)
+		alpha_c, alpha_t = DetrendUtilities.detrend(alpha, weights)
 
 		# Normalization
-		alphas = alpha_t ./ sum(alpha_t,1)
+		alpha = alpha_t ./ sum(alpha_t,1)
 
-		return alphas = permutedims(cat(ndims(alphas) + 2,alphas),(3,4,1,2))
+		return alpha = permutedims(cat(ndims(alpha) + 2,alpha),(3,4,1,2))
 	end
 
-	function trade_costs(d::Array{Float64,4}, theta::Float64, n_zero::Float64)
-		M, N, J, T = size(d)
+	function trade_costs(parameters)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		d = parameters[:d]
+		theta = parameters[:theta]
+		n_zero = parameters[:numerical_zero]
 
 		kappa = zeros(size(d))
 		for j in 1:(J-1)
@@ -129,13 +138,17 @@ module CalibrateParameters
 		end
 
 		kappa[kappa .< n_zero] = n_zero
-		kappa[:,:,end,:] = repeat(eye(M), outer = [1,1,1,T]) # Services
+		kappa[:,:,end,:] = repeat(eye(N), outer = [1,1,1,T]) # Services
 
 		return kappa = min.(kappa,1)
 	end
 
-	function expenditure_shares(import_shares::Array{Float64,4}, n_zero::Float64)
-		M, N, J, T = size(import_shares)
+	function expenditure_shares(parameters, data)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		import_shares = data["import_shares"]
+		n_zero = parameters[:numerical_zero]
+		
 		d = import_shares
 
 		share = d ./ repeat(sum(d,2), outer = [1,N,1,1])
@@ -143,8 +156,8 @@ module CalibrateParameters
 		d_share[d_share .< n_zero] = n_zero
 		d = share ./ (1 + d_share)
 
-		for m in 1:M
-			d[m,m,:,:] = ones(J,T) - squeeze(sum(d[m,:,:,:],1),1)
+		for n in 1:N
+			d[n,n,:,:] = ones(J,T) - squeeze(sum(d[n,:,:,:],1),1)
 		end
 
 		d[d .< n_zero] = n_zero
@@ -152,68 +165,107 @@ module CalibrateParameters
 		return d
 	end
 
-	function calculate_xi(theta::Float64, eta::Float64)
+	function calculate_xi(parameters)
+		theta = parameters[:theta]
+		eta = parameters[:eta]
+
 		return gamma((theta + 1 - eta)/theta)
 	end
 
-	function calculate_B(beta::Array{Float64,4}, gammas::Array{Float64,2})
-		gammas = cat(ndims(gammas) + 2,gammas)
-		beta = mean(beta,(1,2,4))
-		return B = (beta .^ -beta) .* permutedims(prod(gammas .^ -gammas, 1),[1,3,2,4])
+	function calculate_B(parameters)
+		beta = parameters[:beta_j]
+		gamma = parameters[:gamma_jk]
+
+		gamma = permutedims(cat(ndims(gamma) + 2,gamma),[1,3,2,4])
+		return B = (beta .^ -beta) .* prod(gamma .^ -gamma, 1)
 	end
 
-	function calculate_psi(va::Array{Float64,4}, weights::Array{Float64,1})
+	function calculate_psi(parameters, data)
+		va = data["va"]
+		weights = parameters[:bp_weights]
+
 		va_shares = va ./ repeat(sum(va, 3), outer = [1,1,size(va,3),1])
 		_, psi_t = DetrendUtilities.detrend(va_shares, weights)
 		return psi_t
 	end
 
-	function calculate_p(p_sectoral_data::Array{Float64,4}, pwt::Array{Float64,4}, d::Array{Float64,4}, kappa::Array{Float64,4}, alphas::Array{Float64,4}, theta::Float64)
+	function calculate_p(parameters, data)
+		p_sectoral_data = data["p_sectoral_data"]
+		d = parameters[:d]
+		kappa = parameters[:kappa_mnjt]
+		alpha =  parameters[:nu_njt] # Only in case of CD, CES should be different!
+		theta = parameters[:theta]
+
 		p_sectoral_base = p_sectoral_data ./ p_sectoral_data[:,:,:,1]
 
 		# US is assumed to be chosen as a base country (US = end), else pwt should be used to do the conversion
 		p_sectoral = exp.( mean(1 / theta * log.(d ./ permutedims(cat(ndims(d),d[end,:,:,:]),[4,1,2,3])) - log.(kappa ./ permutedims(cat(ndims(kappa),kappa[end,:,:,:]),[4,1,2,3])), 2) + repeat(permutedims(cat(ndims(p_sectoral_base),log.(p_sectoral_base[:,end,:,:])), [1,4,2,3]), outer = [size(d,1),1,1,1]) )
+		temp = Dict{Symbol, Any}()
+		temp[:p_sectoral] = p_sectoral
 
-		p_base = permutedims(cat(ndims(p_sectoral_base),prod((p_sectoral_base ./ alphas) .^ alphas, 3)), [1,2,3,4])
-		p_services = compute_p_services(p_sectoral, p_base, pwt, alphas)
+		p_base = permutedims(cat(ndims(p_sectoral_base),prod((p_sectoral_base ./ alpha) .^ alpha, 3)), [1,2,3,4])
+		temp[:p_base] = p_base
+
+		p_services = compute_p_services(temp, parameters, data)
 		p_sectoral[isnan.(p_sectoral)] = 0
 		return p_sectoral = p_sectoral + p_services
 	end
 
-	function compute_p_services(p_sectoral::Array{Float64,4}, p_base::Array{Float64,4}, pwt::Array{Float64,4}, alphas::Array{Float64,4})
-		M, N, J, T = size(p_sectoral)
-		p_services = zeros(M,N,J,T)
+	function compute_p_services(temp, parameters, data)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		p_sectoral = temp[:p_sectoral]
+		p_base = temp[:p_base]
+		alpha = parameters[:nu_njt] # Only in case of CD, CES should be different!
+		pwt = data["pwt"]
+
+		p_services = zeros(N,1,J,T)
 
 		# Service sector is assumed to be on the last position in the sector dimension
 		for t in 1:T
-			for m in 1:M
-				p_services[m,:,end,t] = (pwt[:,m,:,t] * p_base[:,end,:,t]) .^ (1 ./ alphas[:,:,end,t]) .* prod(alphas[:,:,:,t] .^ (-alphas[:,:,:,t])) .^ (-1 ./ alphas[:,:,end,t]) .* prod(p_sectoral[m,:,1:(end-1),t] .^ alphas[1,:,1:(end-1),t]) .^ (-1 ./ alphas[1,:,end,t])
+			for n in 1:N
+				p_services[n,:,end,t] = (pwt[:,n,:,t] * p_base[:,end,:,t]) .^ (1 ./ alpha[:,:,end,t]) .* prod(alpha[:,:,:,t] .^ (-alpha[:,:,:,t])) .^ (-1 ./ alpha[:,:,end,t]) .* prod(p_sectoral[n,:,1:(end-1),t] .^ alpha[1,:,1:(end-1),t]) .^ (-1 ./ alpha[1,:,end,t])
 			end
 		end
 
 		return p_services
 	end
 
-	function calculate_z(p_sectoral::Array{Float64,4}, beta::Array{Float64,4}, gammas::Array{Float64,2}, kappa::Array{Float64,4}, psi::Array{Float64,4}, B::Array{Float64,4}, d::Array{Float64,4}, va::Array{Float64,4}, xi::Float64, theta::Float64)
-		_, N, J, T = size(va)
-		beta = squeeze(mean(beta,(1,2,4)),(1,2,4))
+	function calculate_z(parameters, data)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		p_sectoral = parameters[:p_sectoral]
+		beta = parameters[:beta_j]
+		gamma = parameters[:gamma_jk]
+		kappa = parameters[:kappa_mnjt]
+		psi = parameters[:psi]
+		B = parameters[:B_j]
+		d = parameters[:d]
+		va = data["va"]
+		xi = parameters[:xi]
+		theta = parameters[:theta]
+
+		beta = squeeze(beta,(1,2,4))
 
 		z = zeros(1, N, J, T)
 
 		for n in 1:N
 			for t in 1:T
 				# Sectors except services
-				z[1, n, :, t] = exp.( theta * log.(xi * B[1,1,:,1]) + theta * beta .* (log.(va[1,n,:,t]) - log.(psi[1,n,:,t])) + reshape(transpose(mean(log.(d[:,n,:,t]) - theta * log.(kappa[:,n,:,t]),1)) - theta * transpose(mean(log.(p_sectoral[:,1,:,t]),1)),J) + transpose(gammas[:,:,1,1]) * theta * log.(p_sectoral[n,1,:,t]) )
+				z[1, n, :, t] = exp.( theta * log.(xi * B[1,1,:,1]) + theta * beta .* (log.(va[1,n,:,t]) - log.(psi[1,n,:,t])) + reshape(transpose(mean(log.(d[:,n,:,t]) - theta * log.(kappa[:,n,:,t]),1)) - theta * transpose(mean(log.(p_sectoral[:,1,:,t]),1)),J) + transpose(gamma[:,:,1,1]) * theta * log.(p_sectoral[n,1,:,t]) )
 
 				# Services
-				z[1,n,end,t]  = xi^theta * B[1,1,end,1]^theta * (va[1,n,end,t] / psi[1,n,end,t])^(theta * beta[end]) * prod(p_sectoral[n,1,:,t].^(gammas[:,end]))^theta * p_sectoral[n,1,end,t]^(-theta)
+				z[1,n,end,t]  = xi^theta * B[1,1,end,1]^theta * (va[1,n,end,t] / psi[1,n,end,t])^(theta * beta[end]) * prod(p_sectoral[n,1,:,t].^(gamma[:,end]))^theta * p_sectoral[n,1,end,t]^(-theta)
 			end
 		end
 
 		return z
 	end
 
-	function calculate_A(z::Array{Float64,4}, theta::Float64)
+	function calculate_A(parameters)
+		z = parameters[:z]
+		theta = parameters[:theta]
+
 		return z .^ (1/theta)
 	end
 end
