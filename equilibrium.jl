@@ -62,8 +62,8 @@ function input_price_index(sectoral_prices_j, globals)
 end
 
 function input_price_index!(random_variables, parameters)
-	N, J, S = parameters[:N], parameters[:J], parameters[:S]
 	P = random_variables[:P_njs]
+	_, N, J, S = size(P)
 	random_variables[:input_price_njs] = Array{Float64}(1,N,J,S)
 	rho = random_variables[:input_price_njs]
 	for n in 1:N
@@ -289,7 +289,7 @@ function expected_wage_share(random_variables)
 end
 
 function outer_loop!(random_variables, parameters, t)
-	N, J, S = parameters[:N], parameters[:J], parameters[:S]
+	N, J = parameters[:N], parameters[:J]
 	lambda = parameters[:outer_step_size]
 	L_nj_star = ones(1,N,J,1) / J
 	random_variables[:L_njs] = L_nj_star
@@ -330,7 +330,13 @@ function draw_next_productivity(parameters, t)
 	innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S - 1))
 	random_realization = non_random_variable(parameters[:A], t)
 	AR_decay = parameters[:AR_decay]
-	return cat(4, random_realization, random_realization .^ (AR_decay) .* innovation)
+	if t>1
+		past_productivity = non_random_variable(parameters[:A], t-1)
+		return cat(4, random_realization, past_productivity .^ (AR_decay) .* innovation)
+	else
+		# NB: no uncertainty in first period
+		return random_realization
+	end
 end
 
 end

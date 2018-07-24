@@ -1,6 +1,6 @@
 module Environment
 	@everywhere using Logging
-	@everywhere Logging.configure(level=INFO)
+	@everywhere Logging.configure(level=DEBUG)
 	@everywhere include("../../calibrate_params.jl")
 	@everywhere using CalibrateParameters
 	
