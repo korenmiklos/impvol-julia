@@ -1,4 +1,4 @@
-using JLD
+using FileIO
 using CSV
 using DataFrames
 
@@ -89,4 +89,4 @@ intermediate_input_shares = read_data("data/intermediate_input_shares.csv",(13,1
 trade_balance   = read_data("data/trade_balance_new.csv",(25,36),[false,true,false,true],[1,2],',',true,1,false,true)
 p_sectoral_data = read_data("data/sectoral_price_index.csv",(36,18,24),[false,true,true,true],[2,3,1],',',false,0,false,true)
 
-save("data/impvol_data.jld", "country_names", country_names, "beta", beta, "pwt", pwt, "va", va, "import_shares", import_shares, "io_values", io_values, "total_output", total_output, "output_shares", output_shares, "intermediate_input_shares", intermediate_input_shares, "trade_balance", trade_balance, "p_sectoral_data", p_sectoral_data)
+save("data/impvol_data.jld2", "beta", beta, "pwt", pwt, "va", va, "import_shares", import_shares, "io_values", io_values, "total_output", total_output, "output_shares", output_shares, "intermediate_input_shares", intermediate_input_shares, "trade_balance", trade_balance, "p_sectoral_data", p_sectoral_data)

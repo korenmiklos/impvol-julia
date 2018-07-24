@@ -1,10 +1,10 @@
 
 module CalibrateParameters
 	include("calibration_utils.jl")
-	using JLD
+	using FileIO
 	
 	function calibrate_parameters!(parameters)
-		data = JLD.load("../../../data/impvol_data.jld")
+		data = load("../../../data/impvol_data.jld2")
 
 		_, N, J, T = size(data["beta"])
 		parameters[:N], parameters[:J], parameters[:T] = N, J, T
@@ -268,5 +268,6 @@ module CalibrateParameters
 
 		return z .^ (1/theta)
 	end
+	
 end
 
