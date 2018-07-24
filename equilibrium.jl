@@ -14,12 +14,6 @@ parameters = Dict{Symbol, Any}()
 # per-period random variables are stored as
 # mnjs: destination, source, sector, state
 
-function non_random_variable(y, t)
-	# array coersion is going to take care of rest
-	B = y[:,:,:,t]
-	return cat(ndims(B)+1, B)
-end
-
 function expected_value(y)
 	return meanfinite(y, 4)[:,:,:,1]
 end
@@ -314,29 +308,14 @@ function outer_loop!(random_variables, parameters, t)
 	return L_nj_star
 end
 
-function period_wrapper(A_njs, parameters, t)
+function period_wrapper(parameters, t)
 	info("--- Period ", t, " ---")
+	A_njs = parameters[:A_njs][t][2]
 	random_variables = Dict{Symbol, Any}()
 	random_variables[:A_njs] = A_njs 
 	L_nj_star = outer_loop!(random_variables, parameters, t)
 	compute_real_gdp!(random_variables, parameters, t)
 	return random_variables
-end
-
-function draw_next_productivity(parameters, t)
-	# use "i"th realization to continue future paths
-	N, J, S = parameters[:N], parameters[:J], parameters[:S]
-	# set variance covariance matrix here
-	innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S - 1))
-	random_realization = non_random_variable(parameters[:A], t)
-	AR_decay = parameters[:AR_decay]
-	if t>1
-		past_productivity = non_random_variable(parameters[:A], t-1)
-		return cat(4, random_realization, past_productivity .^ (AR_decay) .* innovation)
-	else
-		# NB: no uncertainty in first period
-		return random_realization
-	end
 end
 
 end
