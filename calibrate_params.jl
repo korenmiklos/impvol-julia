@@ -271,9 +271,6 @@ module CalibrateParameters
 
 		return z .^ (1/theta)
 	end
-<<<<<<< HEAD
-	
-=======
 
 	function draw_next_productivity(parameters, t)
 		# use "i"th realization to continue future paths
@@ -290,6 +287,5 @@ module CalibrateParameters
 			return random_realization
 		end
 	end
->>>>>>> 504cf1118f12a378f4cf43e0c1675030bcaaeeff
 end
 
