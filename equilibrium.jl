@@ -2,7 +2,6 @@ module ImpvolEquilibrium
 
 export period_wrapper, non_random_variable, draw_next_productivity, coerce_parameters!
 
-import Images.meanfinite
 using Logging
 
 include("utils.jl")
@@ -14,14 +13,8 @@ parameters = Dict{Symbol, Any}()
 # per-period random variables are stored as
 # mnjs: destination, source, sector, state
 
-function non_random_variable(y, t)
-	# array coersion is going to take care of rest
-	B = y[:,:,:,t]
-	return cat(ndims(B)+1, B)
-end
-
 function expected_value(y)
-	return meanfinite(y, 4)[:,:,:,1]
+	return mean(y, 4)[:,:,:,1]
 end
 
 function rotate_sectors(A, y)
@@ -40,7 +33,7 @@ function rotate_sectors(A, y)
 end
 
 function distance(p1, p2)
-	return meanfinite(((log.(p1) .- log.(p2)) .^ 2)[:], 1)[1] .^ 0.5
+	return mean(((log.(p1) .- log.(p2)) .^ 2)[:], 1)[1] .^ 0.5
 end
 
 function free_trade_sector_shares!(parameters)
@@ -314,29 +307,14 @@ function outer_loop!(random_variables, parameters, t)
 	return L_nj_star
 end
 
-function period_wrapper(A_njs, parameters, t)
+function period_wrapper(parameters, t)
 	info("--- Period ", t, " ---")
+	A_njs = parameters[:A_njs][t][2]
 	random_variables = Dict{Symbol, Any}()
 	random_variables[:A_njs] = A_njs 
 	L_nj_star = outer_loop!(random_variables, parameters, t)
 	compute_real_gdp!(random_variables, parameters, t)
 	return random_variables
-end
-
-function draw_next_productivity(parameters, t)
-	# use "i"th realization to continue future paths
-	N, J, S = parameters[:N], parameters[:J], parameters[:S]
-	# set variance covariance matrix here
-	innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S - 1))
-	random_realization = non_random_variable(parameters[:A], t)
-	AR_decay = parameters[:AR_decay]
-	if t>1
-		past_productivity = non_random_variable(parameters[:A], t-1)
-		return cat(4, random_realization, past_productivity .^ (AR_decay) .* innovation)
-	else
-		# NB: no uncertainty in first period
-		return random_realization
-	end
 end
 
 end

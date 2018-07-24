@@ -61,3 +61,9 @@ function eigen_share(A)
 	i = find(abs.(D - 1.0) .< 1e-6)[1]
 	return V[:,i] ./ sum(V[:,i])
 end
+
+function non_random_variable(y, t)
+	# array coersion is going to take care of rest
+	B = y[:,:,:,t]
+	return cat(ndims(B)+1, B)
+end

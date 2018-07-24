@@ -1,6 +1,7 @@
 
 module CalibrateParameters
 	include("calibration_utils.jl")
+	include("utils.jl")
 	using FileIO
 	
 	function calibrate_parameters!(parameters)
@@ -33,6 +34,8 @@ module CalibrateParameters
 		parameters[:z] = calculate_z(parameters, data)
 
 		parameters[:A] = calculate_A(parameters)
+
+		parameters[:A_njs] = map(t -> (t, draw_next_productivity(parameters, t)), 1:parameters[:T])
 	end
 
 	function compute_gamma(parameters, data)
@@ -268,6 +271,25 @@ module CalibrateParameters
 
 		return z .^ (1/theta)
 	end
+<<<<<<< HEAD
 	
+=======
+
+	function draw_next_productivity(parameters, t)
+		# use "i"th realization to continue future paths
+		N, J, S = parameters[:N], parameters[:J], parameters[:S]
+		# set variance covariance matrix here
+		innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S - 1))
+		random_realization = non_random_variable(parameters[:A], t)
+		AR_decay = parameters[:AR_decay]
+		if t > 1
+			past_productivity = non_random_variable(parameters[:A], t-1)
+			return cat(4, random_realization, past_productivity .^ (AR_decay) .* innovation)
+		else
+			# NB: no uncertainty in first period
+			return random_realization
+		end
+	end
+>>>>>>> 504cf1118f12a378f4cf43e0c1675030bcaaeeff
 end
 
