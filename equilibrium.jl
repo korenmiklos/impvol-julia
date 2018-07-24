@@ -1,6 +1,6 @@
 module ImpvolEquilibrium
 
-export period_wrapper, non_random_variable, draw_next_productivity, coerce_parameters!
+export period_wrapper, coerce_parameters!
 
 using Logging
 
