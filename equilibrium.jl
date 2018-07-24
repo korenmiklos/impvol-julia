@@ -2,7 +2,6 @@ module ImpvolEquilibrium
 
 export period_wrapper, non_random_variable, draw_next_productivity, coerce_parameters!
 
-import Images.meanfinite
 using Logging
 
 include("utils.jl")
@@ -15,7 +14,7 @@ parameters = Dict{Symbol, Any}()
 # mnjs: destination, source, sector, state
 
 function expected_value(y)
-	return meanfinite(y, 4)[:,:,:,1]
+	return mean(y, 4)[:,:,:,1]
 end
 
 function rotate_sectors(A, y)
@@ -34,7 +33,7 @@ function rotate_sectors(A, y)
 end
 
 function distance(p1, p2)
-	return meanfinite(((log.(p1) .- log.(p2)) .^ 2)[:], 1)[1] .^ 0.5
+	return mean(((log.(p1) .- log.(p2)) .^ 2)[:], 1)[1] .^ 0.5
 end
 
 function free_trade_sector_shares!(parameters)
