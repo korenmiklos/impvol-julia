@@ -1,4 +1,5 @@
-# FIXME: do not parallelize FileIO
+using JLD2, FileIO
+
 @everywhere include("../config.jl")
 @everywhere using Environment
 
