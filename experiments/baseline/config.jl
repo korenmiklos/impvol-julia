@@ -9,7 +9,7 @@ module Environment
 	########## environment settings
 	## these are needed for data -> parameters mapping
 	parameters = Dict{Symbol, Any}()
-	parameters[:S] = 100
+	parameters[:S] = 1000
 
 	# CES parameters
 	parameters[:sigma] = 0.999

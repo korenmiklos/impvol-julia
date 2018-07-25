@@ -273,6 +273,8 @@ module CalibrateParameters
 	end
 
 	function draw_next_productivity(parameters, t)
+		mean_producitivity = exp.(mean(log.(parameters[:A]),4))
+
 		# use "i"th realization to continue future paths
 		N, J, S = parameters[:N], parameters[:J], parameters[:S]
 		# set variance covariance matrix here
@@ -281,7 +283,8 @@ module CalibrateParameters
 		AR_decay = parameters[:AR_decay]
 		if t > 1
 			past_productivity = non_random_variable(parameters[:A], t-1)
-			return cat(4, random_realization, past_productivity .^ (AR_decay) .* innovation)
+			# reversion towards mean
+			return cat(4, random_realization, mean_producitivity .^ (1-AR_decay) .* past_productivity .^ (AR_decay) .* innovation)
 		else
 			# NB: no uncertainty in first period
 			return random_realization
