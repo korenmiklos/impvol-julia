@@ -11,11 +11,6 @@ module CalibrateParameters
 		parameters[:N], parameters[:J], parameters[:T] = N, J, T
 		parameters[:beta_j] = mean(data["beta"],(1,2,4))
 
-		# standard deviation for each (n,j)
-		parameters[:shock_stdev] = 0.1*ones(1,N,J,1)
-		# AR coefficient for each (n,j)
-		parameters[:AR_decay] = 0.9*ones(1,N,J,1)
-
 		parameters[:gamma_jk] = compute_gamma(parameters, data)
 		# CD case
 		parameters[:nu_njt] = compute_alpha(parameters, data)
@@ -35,6 +30,7 @@ module CalibrateParameters
 
 		parameters[:A] = calculate_A(parameters)
 		decompose_shocks!(parameters)
+		estimate_DGP!(parameters)
 
 		parameters[:A_njs] = map(t -> draw_next_productivity(parameters, t), 1:parameters[:T])
 	end
@@ -290,6 +286,38 @@ module CalibrateParameters
 			# NB: no uncertainty in first period
 			return random_realization
 		end
+	end
+
+	function estimate_AR1(data)
+		# data is M,N,J,T
+		_, N, J, T = size(data)
+		current = data[:,:,:,2:T]
+		lag = data[:,:,:,1:T-1]
+
+		constant = zeros(1, N, J, 1)
+		rho = zeros(1, N, J, 1)
+		sigma = zeros(1, N, J, 1)
+
+		# estimate a separate AR(1) for each series
+		for n=1:N
+			for j=1:J
+				y = current[1,n,j,:]
+				X = cat(2, ones(T-1), lag[1,n,j,:])
+
+				constant[1,n,j,1], rho[1,n,j,1] = X \ y
+				sigma[1,n,j,1] = std(y - X * [constant[1,n,j,1], rho[1,n,j,1]])
+			end
+		end
+
+		return (constant, rho, sigma)
+	end
+
+	function estimate_DGP!(parameters)
+		weights = parameters[:bp_weights]
+		detrended_log_productivity, _ = DetrendUtilities.detrend(log.(parameters[:A]), weights)
+		constant, rho, sigma = estimate_AR1(detrended_log_productivity)
+		parameters[:AR_decay] = rho
+		parameters[:shock_stdev] = sigma
 	end
 
 	function decompose_shocks!(parameters)

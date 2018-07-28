@@ -8,8 +8,10 @@
 	[] calibrate shocks under CES
 [X] design hyperparametrization and scenario workflow
 [X] speed up algo from 11hrs
-[] productivity counterfactuals for A_njs
-
+[X] productivity counterfactuals for A_njs (45 mins)
+	[X] estimate shock process for Ajnt (45 mins)
+		[] estimate and simulate AR(1) by shock components
+[]
 # Balazs
 [X] calculate xi: gamma((theta + 1 - eta) / theta)
 [X] read data from files, use new data structure
@@ -19,7 +21,6 @@
 	[] read S_nt
 	[X] fix B = f(beta, gamma)
 [X] calibrate shocks and report alpha, beta, gamma, kappa, Snt, Anjt
-	[] estimate shock process for Ajnt
-[] calculate volatility
+ calculate volatility
 [] create exhibits
 [] test productivity draw: compute percentile of A_t in A_njs and plot histogram of "p"
