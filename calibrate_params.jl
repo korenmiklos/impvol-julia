@@ -34,8 +34,9 @@ module CalibrateParameters
 		parameters[:z] = calculate_z(parameters, data)
 
 		parameters[:A] = calculate_A(parameters)
+		decompose_shocks!(parameters)
 
-		parameters[:A_njs] = map(t -> (t, draw_next_productivity(parameters, t)), 1:parameters[:T])
+		parameters[:A_njs] = map(t -> draw_next_productivity(parameters, t), 1:parameters[:T])
 	end
 
 	function compute_gamma(parameters, data)
@@ -289,6 +290,21 @@ module CalibrateParameters
 			# NB: no uncertainty in first period
 			return random_realization
 		end
+	end
+
+	function decompose_shocks!(parameters)
+		# M,N,J,T
+		# Smooth the series
+		weights = parameters[:bp_weights]
+		detrended_log_productivity, parameters[:productivity_trend] = DetrendUtilities.detrend(log.(parameters[:A]), weights)
+
+		global_sectoral_shock = mean(detrended_log_productivity, 2)
+		country_shock = mean(detrended_log_productivity .- global_sectoral_shock, 3)
+		idiosyncratic_shock = detrended_log_productivity .- global_sectoral_shock .- country_shock
+
+		parameters[:global_sectoral_shock] = global_sectoral_shock
+		parameters[:country_shock] = country_shock
+		parameters[:idiosyncratic_shock] = idiosyncratic_shock
 	end
 end
 
