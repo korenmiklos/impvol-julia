@@ -1,6 +1,6 @@
 module Environment
 	using Logging
-	Logging.configure(level=DEBUG)
+	Logging.configure(level=INFO)
 	include("../../calibrate_params.jl")
 	using .CalibrateParameters
 	

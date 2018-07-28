@@ -30,9 +30,7 @@ module CalibrateParameters
 
 		parameters[:A] = calculate_A(parameters)
 		decompose_shocks!(parameters)
-		estimate_DGP!(parameters)
-
-		parameters[:A_njs] = map(t -> draw_next_productivity(parameters, t), 1:parameters[:T])
+		draw_productivity_shocks!(parameters)
 	end
 
 	function compute_gamma(parameters, data)
@@ -269,25 +267,6 @@ module CalibrateParameters
 		return z .^ (1/theta)
 	end
 
-	function draw_next_productivity(parameters, t)
-		mean_producitivity = exp.(mean(log.(parameters[:A]),4))
-
-		# use "i"th realization to continue future paths
-		N, J, S = parameters[:N], parameters[:J], parameters[:S]
-		# set variance covariance matrix here
-		innovation = exp.(parameters[:shock_stdev] .* randn(1,N,J,S - 1))
-		random_realization = non_random_variable(parameters[:A], t)
-		AR_decay = parameters[:AR_decay]
-		if t > 1
-			past_productivity = non_random_variable(parameters[:A], t-1)
-			# reversion towards mean
-			return cat(4, random_realization, mean_producitivity .^ (1-AR_decay) .* past_productivity .^ (AR_decay) .* innovation)
-		else
-			# NB: no uncertainty in first period
-			return random_realization
-		end
-	end
-
 	function estimate_AR1(data)
 		# data is M,N,J,T
 		_, N, J, T = size(data)
@@ -312,12 +291,37 @@ module CalibrateParameters
 		return (constant, rho, sigma)
 	end
 
-	function estimate_DGP!(parameters)
-		weights = parameters[:bp_weights]
-		detrended_log_productivity, _ = DetrendUtilities.detrend(log.(parameters[:A]), weights)
-		constant, rho, sigma = estimate_AR1(detrended_log_productivity)
-		parameters[:AR_decay] = rho
-		parameters[:shock_stdev] = sigma
+	function draw_productivity_shocks!(parameters)
+		S, T = parameters[:S], parameters[:T]
+
+		parameters[:global_sectoral_shock_njs] = draw_random_realizations(parameters[:global_sectoral_shock], S)
+		parameters[:country_shock_njs] = draw_random_realizations(parameters[:country_shock], S)
+		parameters[:idiosyncratic_shock_njs] = draw_random_realizations(parameters[:idiosyncratic_shock], S)
+
+		parameters[:A_njs] = map(t -> 
+			exp.(parameters[:productivity_trend][t] 
+				.+ parameters[:global_sectoral_shock_njs][t] 
+				.+ parameters[:country_shock_njs][t] 
+				.+ parameters[:idiosyncratic_shock_njs][t]),
+				 1:T)
+	end
+
+	function draw_random_realizations(data, S)
+		# data is M,N,J,T
+		_, N, J, T = size(data)
+		constant, rho, sigma = estimate_AR1(data)
+
+		draws = Any[]
+		starting_value = non_random_variable(data, 1)
+		append!(draws, starting_value)
+		for t=2:T
+			innovation = sigma .* randn(1,N,J,S - 1)
+			random_realization = non_random_variable(data, t)
+			past_productivity = non_random_variable(data, t-1)
+			# reversion towards mean
+			append!(draws, cat(4, random_realization, constant .* (1-rho) .+ past_productivity .* rho .+ innovation))
+		end
+		return draws
 	end
 
 	function decompose_shocks!(parameters)

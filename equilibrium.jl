@@ -309,7 +309,7 @@ end
 
 function remove_shock!(parameters, symbol)
 	for t=1:length(parameters[:A_njs])
-		shock_to_remove = exp.(non_random_variable(parameters[symbol], t))
+		shock_to_remove = exp.(parameters[symbol][t])
 		parameters[:A_njs][t] = parameters[:A_njs][t] ./ shock_to_remove
 	end
 end
