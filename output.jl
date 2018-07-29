@@ -4,6 +4,9 @@ module ImpvolOutput
 	using CSV
 	using Missings
 	using Plots
+	using HypothesisTests
+	using Distributions
+	using DataFrames
 	include("calibration_utils.jl")
 
 	function read_results(path = "experiments/baseline/actual/results.jld2")
@@ -29,14 +32,15 @@ module ImpvolOutput
 		return series
 	end
 
-	function calculate_volatilities(x::Array{Float64,2}, parameters, bool_detrend::Bool)
+	function calculate_volatilities(x, parameters, bool_detrend::Bool)
 		if bool_detrend
-			x_c, x_t = detrend(log(x),parameters[:bp_weights])
+			x_c, x_t = DetrendUtilities.detrend(log.(x),parameters[:bp_weights])
 		else
-			x_c = log(x)
+			x_c = log.(x)
 		end
 
-		return var(x_c,2)
+		# time is the last dimension
+		return var(x_c,ndims(x_c))
 	end
 
 	function plot_model_vs_data(plot_data::Tuple, title::String)
@@ -88,6 +92,95 @@ module ImpvolOutput
 		gdp_m = sum(gdp_m[1,eval(parse(country_range)),:,:],2)
 		gdp_m = squeeze(gdp_m, 2)
 
-		return log.(gdp_d ./ cpi .* xr), log.(gdp_m), country_names
+		gdp_d = gdp_d ./ cpi .* xr
+
+		# normalization: model(1972) = data(1972)
+		gdp_m = gdp_m .* (gdp_d[:,1] ./ gdp_m[:,1])
+
+		return log.(gdp_d), log.(gdp_m), country_names
 	end
+
+	################ Running the 'plot_data' function ################
+	# include("output.jl")
+	# plt_dta = ImpvolOutput.plot_data() # with the desired arguments if needed
+	# Base.print_matrix(IOContext(STDOUT, :limit => false), plt_dta[3]) # to check the countries' position
+	# idx = zeros(length(plt_dta[3]))
+	# idx[6], idx[10], idx[11], idx[13], idx[15], idx[16], idx[24], idx[25] = 1, 1, 1, 1, 1, 1, 1, 1
+	# idx = idx .== 1
+	# ImpvolOutput.plot_model_vs_data((plt_dta[1][idx,:], plt_dta[2][idx,:], plt_dta[3][idx]), "GDP")
+	##################################################################
+
+	function write_results(parameters, key = :real_GDP, bool_detrend = true, rootpath = "./experiments/baseline", dirsdown = 1, pattern = r"jld2$")
+		# Volatility of the desired variable found in the last folders of depth 'dirsdown' from the 'rootpath' is calculated by this function
+
+		# Create 'stats' array to store volatilities
+		stats = DataFrame()
+
+		stats[:country_names] = CSV.read("data/country_name.txt", header = false, types = [String])[1]
+
+		# Fill 'stats' array
+		for (root, dirs, files) in walkdir(rootpath)
+			dir_depth = length(matchall(r"/", root)) - 2
+
+			if dir_depth == dirsdown
+
+				for file in files
+					if ismatch(pattern, file)
+						sectoral_series = make_series(sort_results(read_results(joinpath(root, file))), key)
+
+						# Summation over the sectors
+						series = cat(ndims(sectoral_series), sum(sectoral_series, 3))
+						stats[eval(parse(":" * SubString(root,findin(root,'/')[end] + 1, length(root))))] = squeeze(calculate_volatilities(series, parameters, bool_detrend), (1,3,4))
+					end
+				end
+			end
+		end
+
+		# Trade barriers
+		stats[:trade_barriers] = 100 * (stats[:actual] - stats[:kappa1972]) ./ stats[:kappa1972]
+
+		# Diversification
+		stats[:diversification] = 100 * (stats[:actual] - stats[:kappa1972] - stats[:nosectoral] + stats[:nosectoral_kappa1972]) ./ stats[:kappa1972]
+
+		# Specialization
+		stats[:specialization] = 100 * (stats[:nosectoral] - stats[:nosectoral_kappa1972]) ./ stats[:kappa1972]
+
+		CSV.write(rootpath * "/output_table.csv", stats)
+	end
+
+	################ Running the 'write_results' function ################
+	# include("output.jl")
+	# parameters = Dict{Symbol, Any}()
+	# parameters[:N] = 25
+	# parameters[:bp_weights] = [0.774074394803123, -0.201004684236153, -0.135080548288772,-0.050951964876636]
+	# stats = ImpvolOutput.write_results(parameters)
+	######################################################################
+
+
+
+
+# 	function test_shocks(key = :A_njs, path = "experiments/baseline/actual/results.jld2")
+# 		results = sort_results(read_results(path))
+
+# 		series = zeros(size(results[1][2][key])[1], size(results[1][2][key])[2], size(results[1][2][key])[3], 1000, length(results))
+# 		for t in 1:length(results)
+# 			# Only the first element in the shock dimension is interesting, the rest are there only for optimizaton purposes used in the algorithm
+# 			series[:,:,:,:,t] = results[t][2][key]
+# 		end
+
+# 		fault = 0 # counts the number or vectors that fails to be drawn from normal distribution based on Kolmogorov-Smirnov
+# 		for n in 1:size(series,2)
+# 			for j in 1:size(series,3)
+# 				for t in 1:size(series,4)
+# 					p = pvalue(ExactOneSampleKSTest(series[1,n,j,:,t], Normal(mean(series[1,n,j,:,t]), std(series[1,n,j,:,t]))))
+
+# 					if p > 0.05
+# 						fault = fault + 1
+# 					end
+# 				end
+# 			end
+# 		end
+
+# 		return fault
+# 	end
 end
