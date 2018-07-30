@@ -311,15 +311,14 @@ module CalibrateParameters
 		_, N, J, T = size(data)
 		constant, rho, sigma = estimate_AR1(data)
 
-		draws = Any[]
-		starting_value = non_random_variable(data, 1)
-		append!(draws, starting_value)
+		draws = Array{Array{Float64, 4}}(T)
+		draws[1] = non_random_variable(data, 1)
 		for t=2:T
 			innovation = sigma .* randn(1,N,J,S - 1)
 			random_realization = non_random_variable(data, t)
 			past_productivity = non_random_variable(data, t-1)
 			# reversion towards mean
-			append!(draws, cat(4, random_realization, constant .* (1-rho) .+ past_productivity .* rho .+ innovation))
+			draws[t] = cat(4, random_realization, constant .* (1-rho) .+ past_productivity .* rho .+ innovation)
 		end
 		return draws
 	end
@@ -331,6 +330,7 @@ module CalibrateParameters
 		detrended_log_productivity, parameters[:productivity_trend] = DetrendUtilities.detrend(log.(parameters[:A]), weights)
 
 		global_sectoral_shock = mean(detrended_log_productivity, 2)
+		# FIXME: this should be weighted by sector importance
 		country_shock = mean(detrended_log_productivity .- global_sectoral_shock, 3)
 		idiosyncratic_shock = detrended_log_productivity .- global_sectoral_shock .- country_shock
 
