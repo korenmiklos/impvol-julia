@@ -29,7 +29,9 @@ module CalibrateParameters
 		parameters[:z] = calculate_z(parameters, data)
 
 		parameters[:A] = calculate_A(parameters)
-		decompose_shocks!(parameters)
+		# global, all-time average of sector final expenditure shares
+		importance_weight = mean(parameters[:nu_njt], [1, 2, 4])
+		decompose_shocks!(parameters, importance_weight)
 		draw_productivity_shocks!(parameters)
 	end
 
@@ -323,15 +325,15 @@ module CalibrateParameters
 		return draws
 	end
 
-	function decompose_shocks!(parameters)
+	function decompose_shocks!(parameters, sectoral_weights)
 		# M,N,J,T
 		# Smooth the series
 		weights = parameters[:bp_weights]
 		detrended_log_productivity, parameters[:productivity_trend] = DetrendUtilities.detrend(log.(parameters[:A]), weights)
 
 		global_sectoral_shock = mean(detrended_log_productivity, 2)
-		# FIXME: this should be weighted by sector importance
-		country_shock = mean(detrended_log_productivity .- global_sectoral_shock, 3)
+		# weighted by sector importance, see https://github.com/ceumicrodata/impvol/commit/91d92905678df96d7068b8dd729e6f6d7cf470d8
+		country_shock = sum(sectoral_weights .* (detrended_log_productivity .- global_sectoral_shock), 3) ./ sum(sectoral_weights, 3)
 		idiosyncratic_shock = detrended_log_productivity .- global_sectoral_shock .- country_shock
 
 		parameters[:global_sectoral_shock] = global_sectoral_shock
