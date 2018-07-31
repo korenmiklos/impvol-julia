@@ -301,7 +301,7 @@ module CalibrateParameters
 		parameters[:idiosyncratic_shock_njs] = draw_random_realizations(parameters[:idiosyncratic_shock], S)
 
 		parameters[:A_njs] = map(t -> 
-			exp.(parameters[:productivity_trend][t] 
+			exp.(non_random_variable(parameters[:productivity_trend], t) 
 				.+ parameters[:global_sectoral_shock_njs][t] 
 				.+ parameters[:country_shock_njs][t] 
 				.+ parameters[:idiosyncratic_shock_njs][t]),

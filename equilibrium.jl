@@ -300,7 +300,7 @@ function outer_loop!(random_variables, parameters, t)
 		dist = distance(wage_share, old_wage_share)
 		info("-- Outer ", k, ": ", dist)
 
-		L_nj_star = ((1-lambda)*old_wage_share + lambda*wage_share) * J
+		L_nj_star = ((1-lambda)*old_wage_share + lambda*wage_share)
 		k = k+1
 	end
 	debug("END Outer loop")
