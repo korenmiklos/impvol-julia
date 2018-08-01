@@ -7,7 +7,9 @@ module ImpvolOutput
 	using HypothesisTests
 	using Distributions
 	using DataFrames
+	using Logging
 	include("calibration_utils.jl")
+	Logging.configure(level=DEBUG)
 
 	function read_results(path = "experiments/baseline/actual/results.jld2")
 		return load(path)["results"]
@@ -110,7 +112,7 @@ module ImpvolOutput
 	# ImpvolOutput.plot_model_vs_data((plt_dta[1][idx,:], plt_dta[2][idx,:], plt_dta[3][idx]), "GDP")
 	##################################################################
 
-	function write_results(parameters, key = :real_GDP, bool_detrend = true, rootpath = "./experiments/baseline", dirsdown = 1, pattern = r"jld2$")
+	function write_results(parameters, key = :real_GDP, bool_detrend = true, rootpath = "experiments/baseline/", dirsdown = 1, pattern = r"jld2$")
 		# Volatility of the desired variable found in the last folders of depth 'dirsdown' from the 'rootpath' is calculated by this function
 
 		# Create 'stats' array to store volatilities
@@ -119,8 +121,8 @@ module ImpvolOutput
 		stats[:country_names] = CSV.read("data/country_name.txt", header = false, types = [String])[1]
 
 		# Fill 'stats' array
-		for (root, dirs, files) in walkdir(rootpath)
-			dir_depth = length(matchall(r"/", root)) - 2
+		for (root, dirs, files) in walkdir(dirname(rootpath))
+			dir_depth = length(matchall(r"/", root)) - 1
 
 			if dir_depth == dirsdown
 
@@ -135,6 +137,8 @@ module ImpvolOutput
 				end
 			end
 		end
+
+		Logging.debug(stats)
 
 		# Trade barriers
 		stats[:trade_barriers] = 100 * (stats[:actual] - stats[:kappa1972]) ./ stats[:kappa1972]
