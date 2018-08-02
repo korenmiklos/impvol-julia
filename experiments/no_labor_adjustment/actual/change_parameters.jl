@@ -1,3 +1,4 @@
 # parameters that govern counterfactual
 
-## All parameters remain unchanged.
+## No labor adjustment
+parameters[:one_over_rho] = 0.0

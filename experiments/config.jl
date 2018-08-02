@@ -1,7 +1,7 @@
 module Environment
 	using Logging
 	Logging.configure(level=INFO)
-	include("../../calibrate_params.jl")
+	include("../calibrate_params.jl")
 	using .CalibrateParameters
 	
 	export parameters
@@ -21,7 +21,7 @@ module Environment
 	########## parameters common across scenarios
 	## these are function of data
 	# inverse of adjustment cost, 0 if cannot readjust
-	parameters[:one_over_rho] = 0.0
+	parameters[:one_over_rho] = 0.01
 	parameters[:bp_weights] = [0.774074394803123; -0.201004684236153; -0.135080548288772; -0.0509519648766360]
 	#parameters[:io_links] = true # and these kind of scenario parameters...
 	#parameters[:china] = true

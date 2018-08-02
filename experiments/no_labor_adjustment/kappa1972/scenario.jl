@@ -1,6 +1,6 @@
 using JLD2, FileIO
 
-@everywhere include("../config.jl")
+@everywhere include("../../config.jl")
 @everywhere using Environment
 
 @everywhere parameters = Environment.parameters
