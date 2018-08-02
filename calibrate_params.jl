@@ -15,7 +15,7 @@ module CalibrateParameters
 		# CD case
 		parameters[:nu_njt] = compute_alpha(parameters, data)
  
-		parameters[:S_nt] = zeros(1,N,1,T)
+		parameters[:S_nt] = zeros(1,N,1,T) #data["trade_balance"]
 
 		parameters[:d] = expenditure_shares(parameters, data)
 
