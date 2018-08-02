@@ -2,7 +2,7 @@
 module CalibrateParameters
 	include("calibration_utils.jl")
 	include("utils.jl")
-	using FileIO
+	using JLD2, FileIO
 	
 	function calibrate_parameters!(parameters)
 		data = load("../../../data/impvol_data.jld2")
@@ -339,6 +339,15 @@ module CalibrateParameters
 		parameters[:global_sectoral_shock] = global_sectoral_shock
 		parameters[:country_shock] = country_shock
 		parameters[:idiosyncratic_shock] = idiosyncratic_shock
+	end
+	function jld_saver(data, file_name="results.jld2")
+		jldopen(file_name, "w") do file
+	   		file["results"] = data
+		end
+	end
+	function jld_loader(file_name="results.jld2")
+		file = jldopen(file_name, "r")
+		return file["results"]
 	end
 end
 

@@ -12,7 +12,8 @@ module ImpvolOutput
 	Logging.configure(level=DEBUG)
 
 	function read_results(path = "experiments/baseline/actual/results.jld2")
-		return load(path)["results"]
+		file = jldopen(path, "r")
+		return file["results"]
 	end
 
 	function sort_results(results)

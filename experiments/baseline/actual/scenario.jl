@@ -1,6 +1,5 @@
-using JLD2, FileIO
-
 @everywhere include("../config.jl")
+
 @everywhere using Environment
 
 @everywhere parameters = Environment.parameters
@@ -12,4 +11,4 @@ using JLD2, FileIO
 @everywhere include("change_parameters.jl")
 
 @time results = pmap(t -> (t, period_wrapper(parameters, t)), 1:parameters[:T])
-@save "results.jld2" results
+Environment.CalibrateParameters.jld_saver(results)
