@@ -1,4 +1,3 @@
-# parameters that govern counterfactual
+include("../../../utils.jl")
 
-## No labor adjustment
-parameters[:one_over_rho] = 0.0
+# parameters that govern counterfactual

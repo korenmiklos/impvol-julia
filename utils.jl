@@ -67,3 +67,10 @@ function non_random_variable(y, t)
 	B = y[:,:,:,t]
 	return cat(ndims(B)+1, B)
 end
+
+function remove_shock!(parameters, symbol)
+	for t=1:length(parameters[:A_njs])
+		shock_to_remove = exp.(parameters[symbol][t])
+		parameters[:A_njs][t] = parameters[:A_njs][t] ./ shock_to_remove
+	end
+end

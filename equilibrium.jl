@@ -1,6 +1,6 @@
 module ImpvolEquilibrium
 
-export period_wrapper, coerce_parameters!, remove_shock!
+export period_wrapper, coerce_parameters!
 
 using Logging
 
@@ -305,13 +305,6 @@ function outer_loop!(random_variables, parameters, t)
 	end
 	debug("END Outer loop")
 	return L_nj_star
-end
-
-function remove_shock!(parameters, symbol)
-	for t=1:length(parameters[:A_njs])
-		shock_to_remove = exp.(parameters[symbol][t])
-		parameters[:A_njs][t] = parameters[:A_njs][t] ./ shock_to_remove
-	end
 end
 
 function period_wrapper(parameters, t)
