@@ -15,6 +15,6 @@ module Environment
 
 	include("../config.jl")
 	# change parameters after reading data, but common across scenarios
-	## Balanced trade
-	parameters[:S_nt] = zeros(size(parameters[:S_nt]))
+	## Trade imbalance
+	parameters[:S_nt] = parameters[:S_nt_data]
 end
