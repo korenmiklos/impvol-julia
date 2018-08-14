@@ -113,7 +113,7 @@ module ImpvolOutput
 	# ImpvolOutput.plot_model_vs_data((plt_dta[1][idx,:], plt_dta[2][idx,:], plt_dta[3][idx]), "GDP")
 	##################################################################
 
-	function write_results(parameters, key = :real_GDP, bool_detrend = true, rootpath = "experiments/baseline/", dirsdown = 1, pattern = r"jld2$")
+	function write_results(parameters, rootpath = "experiments/baseline/", key = :real_GDP, bool_detrend = true, dirsdown = 1, pattern = r"jld2$")
 		# Volatility of the desired variable found in the last folders of depth 'dirsdown' from the 'rootpath' is calculated by this function
 
 		# Create 'stats' array to store volatilities
