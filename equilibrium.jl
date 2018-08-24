@@ -46,6 +46,7 @@ function free_trade_sector_shares!(parameters)
 	for t=1:T
 		revenue_shares[1,1,:,t] = eigen_share(alpha_jt[1,1,:,t]*beta_j[1,1,:,1]' + gamma_jk)
 	end
+	# FIXME: choose units such that world expenditure equals that in data
 	parameters[:sector_shares] = revenue_shares
 end
 
@@ -103,7 +104,7 @@ function free_trade_wages!(random_variables, parameters, t)
 	d_njs = random_variables[:d_njs_free]
 	L_njs = random_variables[:L_njs]
 	beta_j = parameters[:beta_j]
-	E_wt = non_random_variable(parameters[:sector_shares], t)
+	E_wt = non_random_variable(parameters[:sector_shares], t) 
 
 	random_variables[:w_njs] = beta_j .* d_njs .* E_wt ./ L_njs
 end
@@ -250,6 +251,9 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 	L_n = sum(L_nj_star, 3)
 	dist = 999
 	k = 1
+	step_size = parameters[:adjustment_step_size]
+	# FIXME: DEBUG: no adjustment
+	#step_size = 0.0
 
 	nulla = ones(1,1,1,1)*parameters[:numerical_zero]
 
@@ -257,10 +261,19 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 		random_variables[:L_njs] = L_njs
 		middle_loop!(random_variables, parameters, t)
 		w_njs = random_variables[:w_njs]
-		w_ns = w_njs .* L_njs ./ L_n
-		wage_gap = w_njs ./ w_ns - 1
+		w_ns = sum(w_njs .* L_njs, 3) ./ L_n
+		wage_gap = w_njs ./ w_ns
 
-		L_njs = 0.5*L_njs .+ 0.5*max.(nulla, L_nj_star .+ L_n .* (parameters[:one_over_rho]*wage_gap)) 
+		# BUGFIX: lambda L_nt is not always 1, lambda is such that epsilon sums to zero
+		epsilon_per_L = parameters[:one_over_rho]*wage_gap
+		epsilon_per_L = epsilon_per_L .- mean(epsilon_per_L, 3)
+		epsilon_per_L = max.(nulla, epsilon_per_L)
+		epsilon_per_L = min.(1 .- nulla, epsilon_per_L)
+		info("Min wage gap: ", minimum(wage_gap))
+		info("Max wage gap: ", maximum(wage_gap))
+
+		L_njs = (1 - step_size)*L_njs .+ step_size * L_n .* epsilon_per_L
+		# make sure no negative L_njs, but they sum to L_n
 		L_njs = L_n .* L_njs ./ sum(L_njs, 3)
 
 		dist = distance(L_njs, random_variables[:L_njs])
@@ -302,6 +315,7 @@ function outer_loop!(random_variables, parameters, t)
 
 		L_nj_star = ((1-lambda)*old_wage_share + lambda*wage_share)
 		k = k+1
+		debug(sum(random_variables[:R_njs][:,:,:,1]))
 	end
 	debug("END Outer loop")
 	return L_nj_star
