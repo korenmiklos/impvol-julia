@@ -69,12 +69,16 @@ module ImpvolOutput
 	end
 
 
-	function plot_data(key = :real_GDP, country_range = ":", path = "experiments/baseline/actual/results.jld2")
+	function plot_data(path = "experiments/baseline/actual/results.jld2", key = :real_GDP, country_range = ":")
 		# output: "data, model, label", as an input for the function 'plot_model_vs_data'
 		data = load("data/impvol_data.jld2")
 		gdp_d = squeeze(sum(data["va"],3), (1,3))
 		gdp_d = Float64.(collect(Missings.replace(gdp_d, NaN)))
 		gdp_d = gdp_d[eval(parse(country_range)),:]
+
+		pwt = squeeze(data["pwt"], (1,3))
+		pwt = Float64.(collect(Missings.replace(pwt, NaN)))
+		pwt = pwt[eval(parse(country_range)),:]
 
 		cpi = CSV.read("data/cpi.csv", header = true)
 		cpi = permutedims(convert(Array, cpi)[:,2:end], (2,1))
@@ -96,6 +100,7 @@ module ImpvolOutput
 		gdp_m = squeeze(gdp_m, 2)
 
 		gdp_d = gdp_d ./ cpi .* xr
+		#gdp_d = gdp_d ./ pwt
 
 		# normalization: model(1972) = data(1972)
 		gdp_m = gdp_m .* (gdp_d[:,1] ./ gdp_m[:,1])
@@ -111,6 +116,7 @@ module ImpvolOutput
 	# idx[6], idx[10], idx[11], idx[13], idx[15], idx[16], idx[24], idx[25] = 1, 1, 1, 1, 1, 1, 1, 1
 	# idx = idx .== 1
 	# ImpvolOutput.plot_model_vs_data((plt_dta[1][idx,:], plt_dta[2][idx,:], plt_dta[3][idx]), "GDP")
+	# # solid line = data, dashed line = model
 	##################################################################
 
 	function write_results(parameters, rootpath = "experiments/baseline/", key = :real_GDP, bool_detrend = true, dirsdown = 1, pattern = r"jld2$")
