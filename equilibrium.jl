@@ -264,18 +264,19 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 		random_variables[:L_njs] = L_njs
 		middle_loop!(random_variables, parameters, t)
 		w_njs = random_variables[:w_njs]
-		w_ns = sum(w_njs .* L_njs, 3) ./ L_n
+		w_ns = sum(w_njs .* L_njs, 3) ./ sum(L_njs, 3)
 		wage_gap = w_njs ./ w_ns
 
 		# BUGFIX: lambda L_nt is not always 1, lambda is such that epsilon sums to zero
 		epsilon_per_L = parameters[:one_over_rho]*wage_gap
 		epsilon_per_L = epsilon_per_L .- mean(epsilon_per_L, 3)
+		debug("Adjustment: ", epsilon_per_L[1,1,:,1])
 		epsilon_per_L = max.(nulla, epsilon_per_L)
 		epsilon_per_L = min.(1 .- nulla, epsilon_per_L)
-		info("Min wage gap: ", minimum(wage_gap))
-		info("Max wage gap: ", maximum(wage_gap))
+		debug("Min wage gap: ", minimum(wage_gap))
+		debug("Max wage gap: ", maximum(wage_gap))
 
-		L_njs = (1 - step_size)*L_njs .+ step_size * L_n .* epsilon_per_L
+		L_njs = (1 - step_size) * L_njs .+ step_size * (L_nj_star .+ L_n .* epsilon_per_L)
 		# make sure no negative L_njs, but they sum to L_n
 		L_njs = L_n .* L_njs ./ sum(L_njs, 3)
 
