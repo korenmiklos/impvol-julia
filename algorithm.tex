@@ -492,20 +492,22 @@ Because in expectation the last term on the right-hand-side of this equation is 
 E_{A}\frac 
 	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
 	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
-= \lambda L_{nt} \equiv 1
+= \lambda L_{nt}
 \]
 constant. There can be no expected deviations in the (ratio) relative wage across sectors. 
-
-Substituting in $\lambda = 1/L_{nt}$,
-\begin{equation}{eq:varepsilon}
+\begin{equation}\label{eq:varepsilon}
 \frac {\varepsilon_{njt}} {L_{nt}}
 =
 \frac 1\varrho
+\left[
 \frac 
-	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)-w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
+	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
 	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
-.
+	-\lambda L_{nt}
+\right],
 \end{equation}
+and $\lambda$ is such that $\sum_j\varepsilon_{njt}=0$ because of the resource constraint.
+
 This can be solved for $\varepsilon$ implicitly, as the RHS is (likely) decreasing in $\varepsilon_{njt}$. We then have $\varepsilon_{njt}(\mathbf A_t, \mathbf L_t^*)$ and $\tilde w_{njt}(\mathbf A_t, \mathbf L_t^*)$. Note that $\tilde w()$ is a different function from $w()$, because it already captures the endogenous labor response. They are only identical when $\varrho=\infty$. Otherwise, the distribution of $\tilde w$ depends on adjustment costs. 
 
 The night labor share is a fixed point of
@@ -513,16 +515,6 @@ The night labor share is a fixed point of
 E_{A}\frac 
 	{\tilde w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*)}
 	{\tilde w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*)}
-= 1.
+= \lambda L_{nt}.
 \]
-Can we calculate the mean wage share without solving for the entire distribution of $\tilde w$? Totally differentiating equation \eqref{eq:varepsilon},
-\begin{equation}{eq:varepsilon'}
-\frac {d\varepsilon_{njt}} {L_{nt}}
-=
-\frac 1\varrho
-\frac 
-	{w_{njt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)-w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
-	{w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*+\varepsilon_t)}
-.
-\end{equation}
 \end{document}
