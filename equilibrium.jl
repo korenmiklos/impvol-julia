@@ -33,7 +33,10 @@ function rotate_sectors(A, y)
 end
 
 function distance(p1, p2)
-	return mean(((log.(p1) .- log.(p2)) .^ 2)[:], 1)[1] .^ 0.5
+	# distance should only depend on real prices, not on nominal
+	normalized_p1 = p1 ./ mean(p1, (1, 2, 3))
+	normalized_p2 = p2 ./ mean(p2, (1, 2, 3))
+	return mean(((log.(normalized_p1) .- log.(normalized_p2)) .^ 2)[:], 1)[1] .^ 0.5
 end
 
 function free_trade_sector_shares!(parameters)
