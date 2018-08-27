@@ -18,4 +18,9 @@ module Environment
 	## Balanced trade
 	parameters[:beta_j] = ones(size(parameters[:beta_j]))
 	parameters[:gamma_jk] = zeros(size(parameters[:gamma_jk]))
+	using .CalibrateParameters
+	parameters[:B] = CalibrateParameters.calculate_B(parameters)
+	using FileIO
+	data = load("../../../data/impvol_data.jld2")
+	parameters[:nu_njt] = CalibrateParameters.compute_alpha(parameters, data)
 end
