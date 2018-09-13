@@ -213,7 +213,7 @@ function inner_loop!(random_variables, parameters, t)
 	dist = 999
 	k = 1
 
-	while dist > parameters[:inner_tolerance]
+	while (dist > parameters[:inner_tolerance]) && (k <= parameters[:max_iter_inner])
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
 		debug("-------- Inner ", k, ": ", dist)
@@ -224,6 +224,7 @@ function inner_loop!(random_variables, parameters, t)
 		fixed_expenditure_shares!(random_variables, parameters, t)
 		k = k+1
 	end
+	#warn("inner: ", k-1)
 	debug("------ END Inner loop")
 end
 
@@ -233,7 +234,7 @@ function middle_loop!(random_variables, parameters, t)
 	k = 1
 	old_expenditure_shares = random_variables[:e_mjs]
 
-	while dist > parameters[:middle_tolerance]
+	while (dist > parameters[:middle_tolerance]) && (k <= parameters[:max_iter_middle])
 		inner_loop!(random_variables, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
 		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
@@ -244,6 +245,7 @@ function middle_loop!(random_variables, parameters, t)
 		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1
 	end
+	#warn("middle: ", k-1)
 	debug("---- END Middle loop")
 end
 
@@ -260,7 +262,7 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 
 	nulla = ones(1,1,1,1)*parameters[:numerical_zero]
 
-	while dist > parameters[:adjustment_tolerance]
+	while (dist > parameters[:adjustment_tolerance]) && (k <= parameters[:max_iter_adjustment])
 		random_variables[:L_njs] = L_njs
 		middle_loop!(random_variables, parameters, t)
 		w_njs = random_variables[:w_njs]
@@ -275,16 +277,21 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 		epsilon_per_L = min.(1 .- nulla, epsilon_per_L)
 		debug("Min wage gap: ", minimum(wage_gap))
 		debug("Max wage gap: ", maximum(wage_gap))
-
+		#info("Min: ", round(sum(epsilon_per_L[:] .== parameters[:numerical_zero])/length(epsilon_per_L[:])*100,2), "%, ", "Max: ", round(sum(epsilon_per_L[:] .== 1 - parameters[:numerical_zero])/length(epsilon_per_L[:])*100,2), "%")
+		
 		L_njs = (1 - step_size) * L_njs .+ step_size * (L_nj_star .+ L_n .* epsilon_per_L)
 		# make sure no negative L_njs, but they sum to L_n
 		L_njs = L_n .* L_njs ./ sum(L_njs, 3)
+		#if sum(L_njs[:] .<= 0) > 0
+		#	info(L_njs)
+		#end
 
 		dist = distance(L_njs, random_variables[:L_njs])
 		info("---- Adjustment ", k, ": ", dist)
 
 		k = k+1
 	end
+	#warn("adjustmenet: ", k-1)
 	debug("-- END Adjustment loop")
 end
 
@@ -309,7 +316,7 @@ function outer_loop!(random_variables, parameters, t)
 	dist = 999
 	k = 1
 
-	while dist > parameters[:outer_tolerance]
+	while (dist > parameters[:outer_tolerance]) && (k <= parameters[:max_iter_outer])
 		old_wage_share = L_nj_star ./ sum(L_nj_star, 3)
 		adjustment_loop!(random_variables, L_nj_star, parameters, t)
 		wage_share = expected_wage_share(random_variables)
@@ -321,6 +328,7 @@ function outer_loop!(random_variables, parameters, t)
 		k = k+1
 		debug(sum(random_variables[:R_njs][:,:,:,1]))
 	end
+	#warn("outer: ", k-1)
 	debug("END Outer loop")
 	return L_nj_star
 end

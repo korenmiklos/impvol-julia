@@ -24,3 +24,8 @@ parameters[:middle_tolerance] = 0.003
 parameters[:adjustment_tolerance] = 0.003
 parameters[:outer_tolerance] = 0.005
 
+# maximum number of iterations in each loop
+parameters[:max_iter_inner] = 1000
+parameters[:max_iter_middle] = 50
+parameters[:max_iter_adjustment] = 50
+parameters[:max_iter_outer] = 1000
