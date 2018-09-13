@@ -8,5 +8,5 @@
 @everywhere include("../../../equilibrium.jl")
 @everywhere using ImpvolEquilibrium
 
-@time results = pmap(t -> (t, period_wrapper(parameters, t)), 1:parameters[:T])
+@time results = pmap(t -> (t, ImpvolEquilibrium.period_wrapper(parameters, t)), 1:parameters[:T])
 Environment.CalibrateParameters.jld_saver(results)
