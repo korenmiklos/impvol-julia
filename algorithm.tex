@@ -81,7 +81,7 @@ Wages can be expressed by inverting \eqref{eq:varrho},
 \end{equation}
 
 Taking the market clearing condition,
-\begin{equation}
+\begin{equation}\label{eq5}
 	R_{njt} = \sum_{m=1}^N
 		d_{mnjt}
 		\left[
@@ -517,4 +517,44 @@ E_{A}\frac
 	{\tilde w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*)}
 = \lambda L_{nt}.
 \]
+\subsection{Calibrating the CES model}
+To calibrate the CES demand shifters $\nu$, we need data on how final expenditure is split across sectors in each country. We will recover this from the split of revenue, subtracting intermediate expenditure.
+
+Let
+\[
+\Delta_{jt} = [d_{mnjt}] 
+\]
+denote the matrix of import shares (including the domestic market). We know that $\Delta_{jt}\mathbf 1=1$. We write equation \eqref{eq5} in matrix form as
+\begin{equation}
+	\tilde {\mathbf R}_{jt} = \tilde {\mathbf E}_{jt}\Delta_{jt},
+\end{equation}
+which we can invert
+\begin{equation}
+	\tilde {\mathbf E}_{jt} = \tilde {\mathbf R}_{jt}\Delta_{jt}^{-1},
+	\end{equation}
+and we can use $\tilde {\mathbf Y}_{jt}/\beta_j = \tilde{\mathbf R}_{jt}$. Once we have $E_{mjt}$, we subtract $\sum_k\gamma_{jk}R_{mkt}$ intermediate expenditure to get the final expenditure. Note that either of these expenditures may be negative in the data, in which case they are replaced by numerical zero.
+
+Given a set of expenditure shares, we proceed as follows. First, we recover demand shifters and aggregate price index for the baseline country (US), using the observed sectoral prices there.
+\[
+\nu_{0jt} = e_{0jt} P_{0jt}^{\sigma-1} P_{0t}^{1-\sigma},
+\]
+where $P_{0t}$ is selected such that $\sum_j \nu_{0jt}=1$ for all $t$.
+
+Second, for the tradable sectors, we recover sectoral prices $P_{njt}$ using the trade share formula. This expresses prices relative to the baseline country, but we already have the baseline prices.
+
+Third, we recover tradable demand shifters using the price of the sector relative to the consumption aggregate obtained from PWT.
+\[
+\nu_{njt} = e_{njt} P_{njt}^{\sigma-1} (P_{0t}PWT_{nt})^{1-\sigma},
+\]
+for all $j<J$.
+
+Fourth, for services, we calculate the demand shifter as 
+\[
+\nu_{nJt} = 1-\sum_{j\neq J}\nu_{njt},
+\]
+and construct its prices as
+\[
+P_{nJt} = (\nu_{nJt}/e_{nJt})^{1/(\sigma-1)} P_{0t}PWT_{nt}.
+\]
+This is the only step that has to be done separately for $\sigma=1$, although approximations may be valid. CHECK.
 \end{document}

@@ -2,7 +2,8 @@
 module CalibrateParameters
 	include("calibration_utils.jl")
 	include("utils.jl")
-	using JLD2, FileIO
+	include("equilibrium.jl")
+	using JLD2, FileIO, .ImpvolEquilibrium
 	
 	function calibrate_parameters!(parameters)
 		data = load("../../../data/impvol_data.jld2")
@@ -14,7 +15,6 @@ module CalibrateParameters
 		parameters[:gamma_jk] = compute_gamma(parameters, data)
 		# CD case
 		parameters[:nu_njt] = compute_alpha(parameters, data)
- 
 		parameters[:S_nt] = zeros(1,N,1,T)
 		parameters[:S_nt_data] = data["trade_balance"] .- mean(data["trade_balance"],2)
 
@@ -22,7 +22,8 @@ module CalibrateParameters
 
 		parameters[:kappa_mnjt] = trade_costs(parameters)
 
-		parameters[:p_sectoral] = calculate_p(parameters, data)
+		final_expenditure_shares = calculate_expenditure_shares(parameters, data)
+		calculate_p_and_nu!(parameters, data, final_expenditure_shares)
 		parameters[:psi] = calculate_psi(parameters, data)
 		parameters[:B_j] = calculate_B(parameters)
 		parameters[:xi] = calculate_xi(parameters)
@@ -190,46 +191,39 @@ module CalibrateParameters
 		return psi_t
 	end
 
-	function calculate_p(parameters, data)
+	function calculate_p_and_nu!(parameters, data, final_expenditure_shares)
 		p_sectoral_data = data["p_sectoral_data"]
 		d = parameters[:d]
 		kappa = parameters[:kappa_mnjt]
 		alpha =  parameters[:nu_njt] # Only in case of CD, CES should be different!
 		theta = parameters[:theta]
+		sigma = parameters[:sigma]
+		nulla = parameters[:numerical_zero]
 
 		p_sectoral_base = p_sectoral_data ./ p_sectoral_data[:,:,:,1]
 
+		# step 1: calculate nu and price index for base country
+		p_sectoral_US = p_sectoral_base[:,end:end,:,:]
+		nu_US = final_expenditure_shares[:,end:end,:,:] .* p_sectoral_US .^ (sigma-1)
+		nu_US = nu_US ./ sum(nu_US, 3)
+		P_US = CES_price_index(nu_US, p_sectoral_US, sigma)
+
+		# step 2: calculate sectoral prices from market shares relative to US
 		# US is assumed to be chosen as a base country (US = end), else pwt should be used to do the conversion
+		# normalization: p_sectoral[1,end,:,1] = 1.0
 		p_sectoral = exp.( mean(1 / theta * log.(d ./ permutedims(cat(ndims(d),d[end,:,:,:]),[4,1,2,3])) - log.(kappa ./ permutedims(cat(ndims(kappa),kappa[end,:,:,:]),[4,1,2,3])), 2) + repeat(permutedims(cat(ndims(p_sectoral_base),log.(p_sectoral_base[:,end,:,:])), [1,4,2,3]), outer = [size(d,1),1,1,1]) )
-		temp = Dict{Symbol, Any}()
-		temp[:p_sectoral] = p_sectoral
 
-		p_base = permutedims(cat(ndims(p_sectoral_base),prod((p_sectoral_base ./ alpha) .^ alpha, 3)), [1,2,3,4])
-		temp[:p_base] = p_base
+		# step 3: calculate tradable nu and infer nontradable nu
+		nu = final_expenditure_shares .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (sigma-1)
+		nontradable_nu = max.(nulla, 1 .- sum(nu[:,:,1:end-1,:], 3))
+		nu[:,:,end:end,:] = nontradable_nu
+		nu = nu ./ sum(nu, 3)
 
-		p_services = compute_p_services(temp, parameters, data)
-		p_sectoral[isnan.(p_sectoral)] = 0
-		return p_sectoral = p_sectoral + p_services
-	end
-
-	function compute_p_services(temp, parameters, data)
-		N, J, T = parameters[:N], parameters[:J], parameters[:T]
-
-		p_sectoral = temp[:p_sectoral]
-		p_base = temp[:p_base]
-		alpha = parameters[:nu_njt] # Only in case of CD, CES should be different!
-		pwt = data["pwt"]
-
-		p_services = zeros(N,1,J,T)
-
-		# Service sector is assumed to be on the last position in the sector dimension
-		for t in 1:T
-			for n in 1:N
-				p_services[n,:,end,t] = (pwt[:,n,:,t] * p_base[:,end,:,t]) .^ (1 ./ alpha[:,:,end,t]) .* prod(alpha[:,:,:,t] .^ (-alpha[:,:,:,t])) .^ (-1 ./ alpha[:,:,end,t]) .* prod(p_sectoral[n,:,1:(end-1),t] .^ alpha[1,:,1:(end-1),t]) .^ (-1 ./ alpha[1,:,end,t])
-			end
-		end
-
-		return p_services
+		# step 4: calculate nontradable prices
+		# NB: if nu changed, we recalibrate also tradable prices
+		p_sectoral = data["pwt"] .* P_US .* (nu ./ final_expenditure_shares) .^ (1/(sigma-1))
+		parameters[:p_sectoral] = p_sectoral
+		parameters[:nu_njt] = nu
 	end
 
 	function calculate_z(parameters, data)
@@ -268,6 +262,45 @@ module CalibrateParameters
 		theta = parameters[:theta]
 
 		return z .^ (1/theta)
+	end
+
+	function calculate_expenditure_shares(parameters, data)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		nulla = parameters[:numerical_zero]
+		weights = parameters[:bp_weights]
+
+		beta = parameters[:beta_j]
+		gamma = parameters[:gamma_jk]
+		d = parameters[:d]
+		# service import shares are NaN
+		for t=1:T
+			d[:,:,J,t] = eye(N)
+		end
+		va = data["va"]
+
+		#beta = squeeze(beta,(1,2,4))
+		revenue = va ./ beta
+		expenditure = zeros(revenue)
+		for j=1:J
+			for t=1:T
+				expenditure[1,:,j,t]  = revenue[1,:,j,t]' * inv(d[:,:,j,t])
+			end
+		end
+		intermediate = rotate_sectors(gamma, revenue)
+		final_expenditure = max.(nulla, expenditure - intermediate)
+		# FIXME: adjust for trade imbalance here
+
+		nu = final_expenditure ./ sum(final_expenditure, 3)
+
+		# Replace negative elements with 0
+		nu = (nu + abs.(nu)) / 2
+
+		# Smooth the series
+		nu_c, nu_t = DetrendUtilities.detrend(nu, weights)
+
+		# Normalization
+		return nu_t ./ sum(nu_t, 3)
 	end
 
 	function estimate_AR1(data)
