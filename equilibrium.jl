@@ -1,6 +1,6 @@
 module ImpvolEquilibrium
 
-export period_wrapper, coerce_parameters!
+export period_wrapper, coerce_parameters!, rotate_sectors, CES_price_index
 
 using Logging
 
@@ -79,6 +79,10 @@ function compute_price!(random_variables, parameters, t)
 	random_variables[:P_njs] = array_transpose(sum((rho_njs ./ kappa) .^ (-theta), 2) .^ (-1/theta))
 end
 
+function CES_price_index(alpha, P_njs, sigma)
+	return sum(alpha .* P_njs .^ (1-sigma), 3) .^ (1/(1-sigma))
+end
+
 function compute_price_index!(random_variables, parameters, t)
 	nu = non_random_variable(parameters[:nu_njt], t)
 	alpha = nu ./ sum(nu, 3)
@@ -87,7 +91,7 @@ function compute_price_index!(random_variables, parameters, t)
 
 	# use formula on p43 of "paper November 8 2017.pdf"
 	# Cobb-Douglas is a special case when sigma ~ 1
-	random_variables[:P_ns] = sum(alpha .* P_njs .^ (1-sigma), 3) .^ (1/(1-sigma))
+	random_variables[:P_ns] = CES_price_index(alpha, P_njs, sigma)
 end
 
 function free_trade_country_shares!(random_variables, parameters)
