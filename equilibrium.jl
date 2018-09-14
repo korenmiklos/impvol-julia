@@ -111,7 +111,7 @@ function free_trade_wages!(random_variables, parameters, t)
 	d_njs = random_variables[:d_njs_free]
 	L_njs = random_variables[:L_njs]
 	beta_j = parameters[:beta_j]
-	E_wt = non_random_variable(parameters[:sector_shares], t) 
+	E_wt = non_random_variable(parameters[:sector_shares], t) .* non_random_variable(parameters[:nominal_world_expenditure], t)
 
 	random_variables[:w_njs] = beta_j .* d_njs .* E_wt ./ L_njs
 end
@@ -126,7 +126,7 @@ function free_trade_prices!(random_variables, parameters, t)
 	xi = parameters[:xi]
 	B_j = parameters[:B_j]
 	A_njs = random_variables[:A_njs]
-	E_wt = non_random_variable(parameters[:sector_shares], t)
+	E_wt = non_random_variable(parameters[:sector_shares], t) .* non_random_variable(parameters[:nominal_world_expenditure], t)
 	gamma_jk = parameters[:gamma_jk]
 
 	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_njs) .^(beta_j) ./ A_njs)))

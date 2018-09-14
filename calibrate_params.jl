@@ -30,11 +30,21 @@ module CalibrateParameters
 
 		parameters[:z] = calculate_z(parameters, data)
 
-		parameters[:A] = calculate_A(parameters)
+		A_US = calculate_US_A(parameters, data)
+		A_relative = calculate_A(parameters) 
+		parameters[:A] = A_relative .* A_US
+
+		# total world expenditure in the data - needed to get reasonable starting values
+		parameters[:nominal_world_expenditure] = sum(data["va"] ./ parameters[:beta_j], (1,2,3))
+		info(size(parameters[:nominal_world_expenditure]))
+
 		# global, all-time average of sector final expenditure shares
 		importance_weight = mean(parameters[:nu_njt], [1, 2, 4])
 		decompose_shocks!(parameters, importance_weight)
 		draw_productivity_shocks!(parameters)
+		info(size(parameters[:A]))
+		info(size(parameters[:A_njs][1]))
+		info(size(parameters[:A_njs][2]))
 	end
 
 	function compute_gamma(parameters, data)
@@ -262,6 +272,29 @@ module CalibrateParameters
 		theta = parameters[:theta]
 
 		return z .^ (1/theta)
+	end
+
+	function calculate_US_A(parameters, data)
+		N, J, T = parameters[:N], parameters[:J], parameters[:T]
+
+		p_sectoral = parameters[:p_sectoral]
+		beta = parameters[:beta_j]
+		gamma = parameters[:gamma_jk]
+		kappa = parameters[:kappa_mnjt]
+		psi = parameters[:psi]
+		B = parameters[:B_j]
+		d = parameters[:d]
+		va = data["va"]
+		xi = parameters[:xi]
+		theta = parameters[:theta]
+
+		nominal_GDP = sum(data["va"], 3)
+		own_market_share = zeros(1,N,J,T)
+		for n=1:N
+			own_market_share[1,n,:,:] = d[n,n,:,:]
+		end
+	    A = xi * B .* own_market_share .^ theta .* nominal_GDP .^ beta .* exp.(rotate_sectors(gamma, log.(p_sectoral))) ./ p_sectoral
+	    return A[1:1,end:end,:,:]
 	end
 
 	function calculate_expenditure_shares(parameters, data)
