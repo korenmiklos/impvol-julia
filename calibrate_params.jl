@@ -274,6 +274,23 @@ module CalibrateParameters
 		return z .^ (1/theta)
 	end
 
+	function calculate_US_wages(parameters, data)
+		nulla = parameters[:numerical_zero]
+		weights = parameters[:bp_weights]
+		# FIXME: what to do if 1/rho=0?
+		rho = 1/parameters[:one_over_rho]
+
+		value_added_shares = data["va"] ./ sum(data["va"], 3)
+		V_c, V_t = DetrendUtilities.detrend(value_added_shares, weights)
+
+		deviation = max.(nulla, 1+4*rho*V_c)
+		wage_ratio = 0.5 + 0.5 * deviation .^ 0.5
+
+		nominal_GDP = sum(data["va"], 3)
+		wage = nominal_GDP .* wage_ratio
+		return wage[1:1,end:end,:,:]
+	end
+
 	function calculate_US_A(parameters, data)
 		N, J, T = parameters[:N], parameters[:J], parameters[:T]
 
@@ -284,16 +301,15 @@ module CalibrateParameters
 		psi = parameters[:psi]
 		B = parameters[:B_j]
 		d = parameters[:d]
-		va = data["va"]
 		xi = parameters[:xi]
 		theta = parameters[:theta]
 
-		nominal_GDP = sum(data["va"], 3)
 		own_market_share = zeros(1,N,J,T)
+		wage = calculate_US_wages(parameters, data)
 		for n=1:N
 			own_market_share[1,n,:,:] = d[n,n,:,:]
 		end
-	    A = xi * B .* own_market_share .^ theta .* nominal_GDP .^ beta .* exp.(rotate_sectors(gamma, log.(p_sectoral))) ./ p_sectoral
+	    A = xi * B .* own_market_share .^ theta .* wage .^ beta .* exp.(rotate_sectors(gamma, log.(p_sectoral))) ./ p_sectoral
 	    return A[1:1,end:end,:,:]
 	end
 

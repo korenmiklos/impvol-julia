@@ -506,7 +506,11 @@ constant. There can be no expected deviations in the (ratio) relative wage acros
 	-\lambda L_{nt}
 \right],
 \end{equation}
-and $\lambda$ is such that $\sum_j\varepsilon_{njt}=0$ because of the resource constraint.
+and $\lambda$ is such that $\sum_j\varepsilon_{njt}=0$ because of the resource constraint. That is, 
+\[
+\lambda L_{nt} = \frac1J \sum_{j=1}^{J} \frac{w_{njt}} {w_n},
+\]
+the average wage ratio across sectors (which may be different from one due to Jensen inequality terms).
 
 This can be solved for $\varepsilon$ implicitly, as the RHS is (likely) decreasing in $\varepsilon_{njt}$. We then have $\varepsilon_{njt}(\mathbf A_t, \mathbf L_t^*)$ and $\tilde w_{njt}(\mathbf A_t, \mathbf L_t^*)$. Note that $\tilde w()$ is a different function from $w()$, because it already captures the endogenous labor response. They are only identical when $\varrho=\infty$. Otherwise, the distribution of $\tilde w$ depends on adjustment costs. 
 
@@ -592,9 +596,37 @@ A_{njt} =
 \end{equation}
 Productivity is high when domestic market share is high, when real wages in sector are high, or when real input costs are high.
 
-Assume that the US is in a flexible-labor equilibrium in every period so that 
+Using \eqref{eq:varepsilon} to express sectoral wages in the US,
 \[
-w_{njt} = w_{nt},
+w_{njt} = w_{nt}
+\left[
+\frac {\varrho(L_{njt}-L_{njt}^*)}
+	{L_{nt}}
++\lambda L_{nt}
+\right].
 \]
-nominal GDP. 
+How do we calibrate this without observing $L_{njt}$? Multiply by $w_{njt}/w_{nt}$,
+\[
+\left(\frac {w_{njt}} {w_{nt}}\right)^2
+= 
+\varrho\frac {w_{njt}L_{njt}-w_{njt}L_{njt}^*}
+	{w_{nt}L_{nt}}
++\lambda L_{nt}\frac {w_{njt}} {w_{nt}}
+=\varrho (V_{njt} - V_{njt}^*)
++\lambda L_{nt}\frac {w_{njt}} {w_{nt}}.
+\]
+The first term is value added share at current and at expected allocations, denoted $V_{njt}$ and $V_{njt}^*$, respectively. Solving this quadratic equation,
+\[
+\frac {w_{njt}} {w_{nt}} = \frac12 \lambda L_{nt}
++\frac12 \sqrt{\lambda^2 L_{nt}^2 + 4\varrho (V_{njt}-V_{njt}^*)}.
+\]
+Recall that $\lambda L_{nt}$ equals the unweighted average wage ratio across sectors, and is approximately one, ignoring Jensen inequality terms. This helps us calibrate the sectoral wage rate as
+\[
+w_{njt} \approx w_{nt} \left[
+\frac12
++\frac12 \sqrt{1 + 4\varrho (V_{njt}-V_{njt}^*)}
+\right].
+\]
+We measure $V_{njt}$ as value added share in the data, and approximate $V_{njt}^*$ as the trend of value added shares.
+
 \end{document}
