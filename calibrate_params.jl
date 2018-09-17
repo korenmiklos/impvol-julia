@@ -233,7 +233,8 @@ module CalibrateParameters
 		# NB: if nu changed, we recalibrate also tradable prices
 		p_sectoral = data["pwt"] .* P_US .* (nu ./ final_expenditure_shares) .^ (1/(sigma-1))
 		parameters[:p_sectoral] = p_sectoral
-		parameters[:nu_njt] = nu
+		# demand shifter only varies across sectors and over time, not across countries
+		parameters[:nu_njt] = mean(nu, (1,2))
 	end
 
 	function calculate_z(parameters, data)
