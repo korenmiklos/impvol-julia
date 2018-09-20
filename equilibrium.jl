@@ -221,11 +221,14 @@ function inner_loop!(random_variables, parameters, t)
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
 		debug("-------- Inner ", k, ": ", dist)
-		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
-		compute_price!(random_variables, parameters, t)
-		compute_wage!(random_variables, parameters)
-		compute_revenue!(random_variables, parameters)
-		fixed_expenditure_shares!(random_variables, parameters, t)
+		if (dist > parameters[:inner_tolerance])
+			# do not update unless necessary
+			random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
+			compute_price!(random_variables, parameters, t)
+			compute_wage!(random_variables, parameters)
+			compute_revenue!(random_variables, parameters)
+			fixed_expenditure_shares!(random_variables, parameters, t)
+		end
 		k = k+1
 	end
 	#warn("inner: ", k-1)
@@ -243,7 +246,10 @@ function middle_loop!(random_variables, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
 		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
 
-		random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
+		if (dist > parameters[:middle_tolerance])
+			# do not update unless necessary
+			random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
+		end
 		info("------ Middle ", k, ": ", dist)
 
 		old_expenditure_shares = random_variables[:e_mjs]
@@ -255,45 +261,86 @@ end
 
 function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 
+	function evaluate_utility(random_variables, L_nj_star, parameters, t)
+		random_variables[:L_njs] = max.(parameters[:numerical_zero], min.(1.0, random_variables[:L_njs]))
+		random_variables[:L_njs] = random_variables[:L_njs] ./ sum(random_variables[:L_njs], 3)
+
+		middle_loop!(random_variables, parameters, t)
+
+		w_ns = sum(random_variables[:w_njs] .* random_variables[:L_njs], 3)
+		wage_gap = random_variables[:w_njs] ./ w_ns
+		return sum(log.(w_ns) .- 0.5/parameters[:one_over_rho]*sum((random_variables[:L_njs] .- L_nj_star).^2, 3))
+	end
+
+	function calculate_derivative(random_variables, L_nj_star, parameters)
+		w_njs = random_variables[:w_njs]
+		L_njs = random_variables[:L_njs]
+		rho = 1/parameters[:one_over_rho]
+		w_ns = sum(w_njs .* random_variables[:L_njs], 3)
+		wage_gap = w_njs ./ w_ns
+		gradient = wage_gap .- (rho * (L_njs .- L_nj_star))
+		# ensure that steps sum to zero: we can only reallocate labor across sectors
+		return gradient .- mean(gradient, 3)
+	end
+
 	debug("-- BEGIN Adjustment loop")
-	L_njs = L_nj_star
-	L_n = sum(L_nj_star, 3)
+	random_variables[:L_njs] = L_nj_star
 	dist = 999
 	k = 1
-	step_size = parameters[:adjustment_step_size]
-	# FIXME: DEBUG: no adjustment
-	#step_size = 0.0
+	one_over_rho = parameters[:one_over_rho]
+	if one_over_rho==0
+		# FIXME: break loop
+	else
+		rho = 1/one_over_rho
+	end
 
 	nulla = ones(1,1,1,1)*parameters[:numerical_zero]
+	# initisal step size converts a 10-fold wage gap into a 100pp increase in labor share
 
+	utility = evaluate_utility(random_variables, L_nj_star, parameters, t)
+	gradient = calculate_derivative(random_variables, L_nj_star, parameters)
+
+	step_size = one_over_rho/10.0
 	while (dist > parameters[:adjustment_tolerance]) && (k <= parameters[:max_iter_adjustment])
-		random_variables[:L_njs] = L_njs
-		middle_loop!(random_variables, parameters, t)
-		w_njs = random_variables[:w_njs]
-		w_ns = sum(w_njs .* L_njs, 3) ./ sum(L_njs, 3)
-		wage_gap = w_njs ./ w_ns
+		snapshot = random_variables
 
-		# BUGFIX: lambda L_nt is not always 1, lambda is such that epsilon sums to zero
-		epsilon_per_L = parameters[:one_over_rho]*wage_gap
-		epsilon_per_L = epsilon_per_L .- mean(epsilon_per_L, 3)
-		debug("Adjustment: ", epsilon_per_L[1,1,:,1])
-		epsilon_per_L = max.(nulla, epsilon_per_L)
-		epsilon_per_L = min.(1 .- nulla, epsilon_per_L)
-		debug("Min wage gap: ", minimum(wage_gap))
-		debug("Max wage gap: ", maximum(wage_gap))
-		#info("Min: ", round(sum(epsilon_per_L[:] .== parameters[:numerical_zero])/length(epsilon_per_L[:])*100,2), "%, ", "Max: ", round(sum(epsilon_per_L[:] .== 1 - parameters[:numerical_zero])/length(epsilon_per_L[:])*100,2), "%")
-		
-		L_njs = (1 - step_size) * L_njs .+ step_size * (L_nj_star .+ L_n .* epsilon_per_L)
-		# make sure no negative L_njs, but they sum to L_n
-		L_njs = L_n .* L_njs ./ sum(L_njs, 3)
-		#if sum(L_njs[:] .<= 0) > 0
-		#	info(L_njs)
-		#end
+		previous_utility = utility
+		previous_L = random_variables[:L_njs]
+		snapshot[:L_njs] = previous_L .+ (gradient*step_size)
 
-		dist = distance(L_njs, random_variables[:L_njs])
-		info("---- Adjustment ", k, ": ", dist)
+		utility = evaluate_utility(snapshot, L_nj_star, parameters, t)
+		gradient = calculate_derivative(snapshot, L_nj_star, parameters)
+		difference = utility - previous_utility 
+		proportional_increase = difference / sum(gradient .^ 2) / step_size
+		debug("Difference: ", difference)
+		info("Proportional increase: ", proportional_increase)
+
+		kk = 1
+
+		# find small-enough step size
+		while (proportional_increase < 0.25) && (kk <= parameters[:max_iter_adjustment])
+			snapshot = copy(random_variables)
+			# optimal backtracking for quadratic functions
+			correction = max.(0.1, min.(0.8, 0.5*1/(1-proportional_increase)))
+			step_size = correction*step_size
+			debug("Backtracking: ", correction)
+			debug("Step size: ", step_size)
+			snapshot[:L_njs] = previous_L .+ gradient*step_size
+			utility = evaluate_utility(snapshot, L_nj_star, parameters, t)
+			difference = utility - previous_utility 
+			proportional_increase = difference / sum(gradient .^ 2) / step_size
+			debug("Difference: ", difference)
+			debug("Proportional increase: ", proportional_increase)
+
+			# give up after a number of iterations
+			kk += 1
+		end
+
+		dist = mean(gradient .^ 2) .^ 0.5 / rho
+		info("---- Adjustment $k--$kk: $dist")
 
 		k = k+1
+		random_variables = snapshot
 	end
 	#warn("adjustmenet: ", k-1)
 	debug("-- END Adjustment loop")
