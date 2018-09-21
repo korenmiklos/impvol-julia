@@ -220,9 +220,9 @@ function inner_loop!(random_variables, parameters, t)
 	while (dist > parameters[:inner_tolerance]) && (k <= parameters[:max_iter_inner])
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
-		debug("-------- Inner ", k, ": ", dist)
 		if (dist > parameters[:inner_tolerance])
 			# do not update unless necessary
+			debug("-------- Inner ", k, ": ", dist)
 			random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
 			compute_price!(random_variables, parameters, t)
 			compute_wage!(random_variables, parameters)
@@ -249,8 +249,8 @@ function middle_loop!(random_variables, parameters, t)
 		if (dist > parameters[:middle_tolerance])
 			# do not update unless necessary
 			random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
+			info("------ Middle ", k, ": ", dist)
 		end
-		info("------ Middle ", k, ": ", dist)
 
 		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1

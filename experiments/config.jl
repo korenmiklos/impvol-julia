@@ -1,5 +1,5 @@
 using Logging
-Logging.configure(level=INFO)
+Logging.configure(level=DEBUG)
 include("../calibrate_params.jl")
 using .CalibrateParameters
 
@@ -12,7 +12,7 @@ parameters[:bp_weights] = [0.774074394803123; -0.201004684236153; -0.13508054828
 CalibrateParameters.calibrate_parameters!(parameters)
 
 # adaptive step size. large lambda means large steps
-parameters[:inner_step_size] = exp(-0.10*(parameters[:J]-1)^0.75)
+parameters[:inner_step_size] = exp(-0.06*(parameters[:J]-1)^0.75)
 # large substitution needs more dampening
 parameters[:middle_step_size] = exp(-0.275*max(1,parameters[:sigma]))
 parameters[:adjustment_step_size] = 0.25
@@ -28,4 +28,4 @@ parameters[:outer_tolerance] = 0.005
 parameters[:max_iter_inner] = 1000
 parameters[:max_iter_middle] = 50
 parameters[:max_iter_adjustment] = 50
-parameters[:max_iter_outer] = 1000
+parameters[:max_iter_outer] = 50
