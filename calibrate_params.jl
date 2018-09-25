@@ -278,14 +278,19 @@ module CalibrateParameters
 	function calculate_US_wages(parameters, data)
 		nulla = parameters[:numerical_zero]
 		weights = parameters[:bp_weights]
-		# FIXME: what to do if 1/rho=0?
-		rho = 1/parameters[:one_over_rho]
-
 		value_added_shares = data["va"] ./ sum(data["va"], 3)
 		V_c, V_t = DetrendUtilities.detrend(value_added_shares, weights)
+		if parameters[:one_over_rho]>0.0
+			rho = 1/parameters[:one_over_rho]
 
-		deviation = max.(nulla, 1+4*rho*V_c)
-		wage_ratio = 0.5 + 0.5 * deviation .^ 0.5
+			deviation = max.(nulla, 1+4*rho*V_c)
+			wage_ratio = 0.5 + 0.5 * deviation .^ 0.5
+			info("Unweighted wage ratio should be 1: ", mean(wage_ratio))
+			# FIXME: if not, do one more loop?
+		else
+			# if no labor adjustment, the ratio of value added = the ratio of wages
+			wage_ratio = value_added_shares ./ V_t
+		end
 
 		nominal_GDP = sum(data["va"], 3)
 		wage = nominal_GDP .* wage_ratio
