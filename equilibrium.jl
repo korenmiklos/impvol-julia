@@ -1,6 +1,6 @@
 module ImpvolEquilibrium
 
-export period_wrapper, coerce_parameters!, rotate_sectors, CES_price_index
+export period_wrapper, coerce_parameters!, rotate_sectors, CES_price_index, array_transpose
 
 using Logging
 
