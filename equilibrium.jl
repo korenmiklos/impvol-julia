@@ -2,7 +2,7 @@ module ImpvolEquilibrium
 
 export period_wrapper, coerce_parameters!, rotate_sectors, CES_price_index, array_transpose
 
-using Logging
+using Logging, Base.Test
 
 include("utils.jl")
 parameters = Dict{Symbol, Any}()
@@ -13,8 +13,13 @@ parameters = Dict{Symbol, Any}()
 # per-period random variables are stored as
 # mnjs: destination, source, sector, state
 
+function report(A)
+	#display(A[1,1:5,end-1:end,1])
+	#sleep(1)
+end
+
 function expected_value(y)
-	return mean(y, 4)[:,:,:,1]
+	return mean(y, 4)
 end
 
 function rotate_sectors(A, y)
@@ -25,7 +30,7 @@ function rotate_sectors(A, y)
 	for m=1:M
 		for n=1:N
 			for t=1:T
-				B[m,n,:,t] = A * y[m,n,:,t] 
+				B[m,n,:,t] = A * y[m,n,:,t]
 			end
 		end
 	end
@@ -53,22 +58,10 @@ function free_trade_sector_shares!(parameters)
 	parameters[:sector_shares] = revenue_shares
 end
 
-function input_price_index(sectoral_prices_j, globals)
-	gamma_jk = globals[:gamma_jk]
-	return prod(sectoral_prices_j .^ gamma_jk, 1)
-end
-
 function input_price_index!(random_variables, parameters)
 	P = random_variables[:P_njs]
-	_, N, J, S = size(P)
-	random_variables[:input_price_njs] = Array{Float64}(1,N,J,S)
-	rho = random_variables[:input_price_njs]
-	for n in 1:N
-		for s in 1:S
-			p = P[1,n,:,s]
-			rho[1,n,:,s] = input_price_index(p, parameters)
-		end
-	end
+	# FIXME: gamma or gamma'?
+	random_variables[:input_price_njs] = exp.(rotate_sectors(parameters[:gamma_jk]', log.(P)))
 end
 
 function compute_price!(random_variables, parameters, t)
@@ -122,14 +115,14 @@ function free_trade_prices!(random_variables, parameters, t)
 	beta_j = parameters[:beta_j]
 	theta = parameters[:theta]
 	d_njs = random_variables[:d_njs_free]
-	L_njs = random_variables[:L_njs]
+	report(d_njs)
+	w_njs = random_variables[:w_njs]
 	xi = parameters[:xi]
 	B_j = parameters[:B_j]
 	A_njs = random_variables[:A_njs]
-	E_wt = non_random_variable(parameters[:sector_shares], t) .* non_random_variable(parameters[:nominal_world_expenditure], t)
-	gamma_jk = parameters[:gamma_jk]
+	gamma_jk = parameters[:gamma_jk]'
 
-	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(beta_j+1/theta) .* B_j .* (E_wt ./ L_njs) .^(beta_j) ./ A_njs)))
+	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(1/theta) .* B_j .* w_njs .^beta_j ./ A_njs)))
 	random_variables[:rho_njs] = random_variables[:P_njs] ./ d_njs .^(1/theta)
 end
 
@@ -188,7 +181,7 @@ function compute_real_gdp!(random_variables, parameters, t)
 end
 
 function fixed_expenditure_shares!(random_variables, parameters, t)
-	R_mjs = array_transpose(random_variables[:R_njs])	
+	R_mjs = array_transpose(random_variables[:R_njs])
 	expenditure = sum(R_mjs, 3) .- array_transpose(non_random_variable(parameters[:S_nt], t))
 	random_variables[:E_mjs] = random_variables[:e_mjs] .* expenditure
 end
@@ -200,7 +193,7 @@ function shadow_price_step(random_variables, parameters, t)
 	kappa_mnjt = non_random_variable(parameters[:kappa_mnjt], t)
 	P_mjs = array_transpose(random_variables[:P_njs])
 
-	return sum( (kappa_mnjt .* P_mjs) .^ theta .* E_mjs ./ R_njs, 1) .^ (1/theta)  
+	return sum( (kappa_mnjt .* P_mjs) .^ theta .* E_mjs ./ R_njs, 1) .^ (1/theta)
 end
 
 function starting_values!(random_variables, parameters, t)
@@ -221,14 +214,11 @@ function inner_loop!(random_variables, parameters, t)
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = distance(new_rho, random_variables[:rho_njs])
 		debug("-------- Inner ", k, ": ", dist)
-		if (dist > parameters[:inner_tolerance])
-			# do not update unless necessary
-			random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
-			compute_price!(random_variables, parameters, t)
-			compute_wage!(random_variables, parameters)
-			compute_revenue!(random_variables, parameters)
-			fixed_expenditure_shares!(random_variables, parameters, t)
-		end
+		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
+		compute_price!(random_variables, parameters, t)
+		compute_wage!(random_variables, parameters)
+		compute_revenue!(random_variables, parameters)
+		fixed_expenditure_shares!(random_variables, parameters, t)
 		k = k+1
 	end
 	#warn("inner: ", k-1)
@@ -246,10 +236,7 @@ function middle_loop!(random_variables, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
 		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
 
-		if (dist > parameters[:middle_tolerance])
-			# do not update unless necessary
-			random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
-		end
+		random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
 		info("------ Middle ", k, ": ", dist)
 
 		old_expenditure_shares = random_variables[:e_mjs]
@@ -359,7 +346,11 @@ end
 function outer_loop!(random_variables, parameters, t)
 	N, J = parameters[:N], parameters[:J]
 	lambda = parameters[:outer_step_size]
-	L_nj_star = ones(1,N,J,1) / J
+	L_nj_star = zeros(1,N,J,1)
+	for n=1:N
+		# start from expenditure labor weights, not equal
+		L_nj_star[1,n,:,1] = parameters[:importance_weight]
+	end
 	random_variables[:L_njs] = L_nj_star
 	starting_values!(random_variables, parameters, t)
 
@@ -371,13 +362,15 @@ function outer_loop!(random_variables, parameters, t)
 		old_wage_share = L_nj_star ./ sum(L_nj_star, 3)
 		adjustment_loop!(random_variables, L_nj_star, parameters, t)
 		wage_share = expected_wage_share(random_variables)
+		report(random_variables[:w_njs])
+		report(wage_share)
+		@test sum(wage_share, 3) ≈ ones(1,N,1,1) atol=1e-9
 
 		dist = distance(wage_share, old_wage_share)
 		info("-- Outer ", k, ": ", dist)
 
-		L_nj_star = ((1-lambda)*old_wage_share + lambda*wage_share)
+		L_nj_star = ((1-lambda)*old_wage_share .+ lambda*wage_share)
 		k = k+1
-		debug(sum(random_variables[:R_njs][:,:,:,1]))
 	end
 	#warn("outer: ", k-1)
 	debug("END Outer loop")
@@ -388,9 +381,10 @@ function period_wrapper(parameters, t)
 	info("--- Period ", t, " ---")
 	A_njs = parameters[:A_njs][t]
 	random_variables = Dict{Symbol, Any}()
-	random_variables[:A_njs] = A_njs 
+	random_variables[:A_njs] = A_njs
 	L_nj_star = outer_loop!(random_variables, parameters, t)
 	compute_real_gdp!(random_variables, parameters, t)
+	info("Nominal world expenditure: ", sum(random_variables[:real_GDP][:,:,:,1]./parameters[:beta_j][:,:,:,1]))
 	return random_variables
 end
 

@@ -20,6 +20,9 @@ module CalibrateParameters
 
 		parameters[:gamma_jk] = compute_gamma(parameters, data)
 		@test size(parameters[:gamma_jk]) == (J,J)
+		C = diagm(parameters[:beta_j][1,1,:,1])+parameters[:gamma_jk]'-eye(J)
+		@test sum(C, 2) ≈ zeros(J,1) atol=1e-9
+
 		parameters[:S_nt] = zeros(1,N,1,T)
 		parameters[:S_nt_data] = data["trade_balance"] .- mean(data["trade_balance"],2)
 		@test size(parameters[:S_nt_data]) == (1,N,1,T)
@@ -73,14 +76,14 @@ module CalibrateParameters
 
 		# global, all-time average of sector final expenditure shares
 		importance_weight = mean(parameters[:nu_njt], (1, 2, 4))
+		parameters[:importance_weight] = importance_weight
 		decompose_shocks!(parameters, importance_weight)
 		draw_productivity_shocks!(parameters)
 		@test size(parameters[:A_njs]) == (T,)
 		@test size(parameters[:A_njs][1]) == (1,N,J,1)
 		@test size(parameters[:A_njs][2]) == (1,N,J,parameters[:S])
 
-		#positive(final_expenditure_shares, parameters[:nu_njt], parameters[:z])
-		# parameters[:A_njs][2]), parameters[:p_sectoral], parameters[:A], parameters[:kappa_mnjt], parameters[:d])
+		positive(final_expenditure_shares, parameters[:nu_njt], parameters[:z], parameters[:A_njs][2], parameters[:p_sectoral], parameters[:A])
 	end
 
 	function compute_gamma(parameters, data)
@@ -196,7 +199,7 @@ module CalibrateParameters
 
 		import_shares = data["import_shares"]
 		n_zero = parameters[:numerical_zero]
-		
+
 		d = import_shares
 
 		share = d ./ repeat(sum(d,2), outer = [1,N,1,1])
@@ -307,6 +310,12 @@ module CalibrateParameters
 		beta = squeeze(beta,(1,2,4))
 
 		z = zeros(1, N, J, T)
+
+		# use eq 15 in paper November 8 2017.pdf
+		#input_price_index = exp.(rotate_sectors(theta*gamma, log.(p_sectoral)))
+		#zeta_mnjt = log.((xi .* B) .^ theta .* d .* (kappa .^ (-theta)) .* (p_sectoral .* va ./ psi) .^ (theta * beta) .* input_price_index)
+		#info(size(zeta_mnjt))
+		#log_z = mean(zeta_mnjt .- theta*log.(array_transpose(p_sectoral)), 1)
 
 		for n in 1:N
 			for t in 1:T
@@ -440,10 +449,10 @@ module CalibrateParameters
 		parameters[:country_shock_njs] = draw_random_realizations(parameters[:country_shock], S)
 		parameters[:idiosyncratic_shock_njs] = draw_random_realizations(parameters[:idiosyncratic_shock], S)
 
-		parameters[:A_njs] = map(t -> 
-			exp.(non_random_variable(parameters[:productivity_trend], t) 
-				.+ parameters[:global_sectoral_shock_njs][t] 
-				.+ parameters[:country_shock_njs][t] 
+		parameters[:A_njs] = map(t ->
+			exp.(non_random_variable(parameters[:productivity_trend], t)
+				.+ parameters[:global_sectoral_shock_njs][t]
+				.+ parameters[:country_shock_njs][t]
 				.+ parameters[:idiosyncratic_shock_njs][t]),
 				 1:T)
 	end
@@ -490,4 +499,3 @@ module CalibrateParameters
 		return file["results"]
 	end
 end
-
