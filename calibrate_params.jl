@@ -65,10 +65,10 @@ module CalibrateParameters
 		parameters[:z] = calculate_z(parameters, data)
 		@test size(parameters[:z]) == (1, N, J, T)
 
-		A_US = calculate_US_A(parameters, data)
-		A_relative = calculate_A(parameters)
-		parameters[:A] = A_relative .* A_US
+		parameters[:A] = calculate_A(parameters)
 		@test size(parameters[:A]) == (1, N, J, T)
+
+		info("US wage rate: ", sum(data["va"], 3)[1,end,1,1])
 
 		# total world expenditure in the data - needed to get reasonable starting values
 		parameters[:nominal_world_expenditure] = sum(data["va"] ./ parameters[:beta_j], (1,2,3))
@@ -335,50 +335,6 @@ module CalibrateParameters
 		theta = parameters[:theta]
 
 		return z .^ (1/theta)
-	end
-
-	function calculate_US_wages(parameters, data)
-		nulla = parameters[:numerical_zero]
-		weights = parameters[:bp_weights]
-		value_added_shares = data["va"] ./ sum(data["va"], 3)
-		V_c, V_t = DetrendUtilities.detrend(value_added_shares, weights)
-		if parameters[:one_over_rho]>0.0
-			rho = 1/parameters[:one_over_rho]
-
-			deviation = max.(nulla, 1+4*rho*V_c)
-			wage_ratio = 0.5 + 0.5 * deviation .^ 0.5
-			info("Unweighted wage ratio should be 1: ", mean(wage_ratio))
-			# FIXME: if not, do one more loop?
-		else
-			# if no labor adjustment, the ratio of value added = the ratio of wages
-			wage_ratio = value_added_shares ./ V_t
-		end
-
-		nominal_GDP = sum(data["va"], 3)
-		wage = nominal_GDP .* wage_ratio
-		return wage[1:1,end:end,:,:]
-	end
-
-	function calculate_US_A(parameters, data)
-		N, J, T = parameters[:N], parameters[:J], parameters[:T]
-
-		p_sectoral = parameters[:p_sectoral]
-		beta = parameters[:beta_j]
-		gamma = parameters[:gamma_jk]
-		kappa = parameters[:kappa_mnjt]
-		psi = parameters[:psi]
-		B = parameters[:B_j]
-		d = parameters[:d]
-		xi = parameters[:xi]
-		theta = parameters[:theta]
-
-		own_market_share = zeros(1,N,J,T)
-		wage = calculate_US_wages(parameters, data)
-		for n=1:N
-			own_market_share[1,n,:,:] = d[n,n,:,:]
-		end
-	    A = xi * B .* own_market_share .^ theta .* wage .^ beta .* exp.(rotate_sectors(gamma, log.(p_sectoral))) ./ p_sectoral
-	    return A[1:1,end:end,:,:]
 	end
 
 	function calculate_expenditure_shares(parameters, data)

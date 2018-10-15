@@ -115,15 +115,23 @@ function free_trade_prices!(random_variables, parameters, t)
 	beta_j = parameters[:beta_j]
 	theta = parameters[:theta]
 	d_njs = random_variables[:d_njs_free]
-	report(d_njs)
 	w_njs = random_variables[:w_njs]
 	xi = parameters[:xi]
 	B_j = parameters[:B_j]
 	A_njs = random_variables[:A_njs]
 	gamma_jk = parameters[:gamma_jk]'
 
-	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(1/theta) .* B_j .* w_njs .^beta_j ./ A_njs)))
+	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(1/theta) .* B_j .* (w_njs .^beta_j) ./ A_njs)))
 	random_variables[:rho_njs] = random_variables[:P_njs] ./ d_njs .^(1/theta)
+end
+
+function compute_trade_shares!(random_variables, parameters, t)
+	theta = parameters[:theta]
+	kappa = non_random_variable(parameters[:kappa_mnjt], t)
+	rho_njs = random_variables[:rho_njs]
+	P_mjs = array_transpose(random_variables[:P_njs])
+
+	random_variables[:d_mnjs] = (rho_njs ./ kappa ./ P_mjs) .^ (-theta)
 end
 
 function compute_wage!(random_variables, parameters)
@@ -168,7 +176,6 @@ function compute_expenditure_shares!(random_variables, parameters, t)
 	wagebill_ns = rotate_sectors(beta_j[:]', R_nks)
 	intermediate_njs = rotate_sectors(gamma_jk, R_nks)
 	random_variables[:e_mjs] = array_transpose((alpha_njt .* wagebill_ns .+ intermediate_njs .- alpha_njt .* S_nt) ./ expenditure)
-	debug(alpha_njt[1,1,1:2,1])
 end
 
 function compute_real_gdp!(random_variables, parameters, t)
@@ -343,14 +350,9 @@ function expected_wage_share(random_variables)
 	return expected_value(wage_share)
 end
 
-function outer_loop!(random_variables, parameters, t)
+function outer_loop!(random_variables, parameters, t, L_nj_star)
 	N, J = parameters[:N], parameters[:J]
 	lambda = parameters[:outer_step_size]
-	L_nj_star = zeros(1,N,J,1)
-	for n=1:N
-		# start from expenditure labor weights, not equal
-		L_nj_star[1,n,:,1] = parameters[:importance_weight]
-	end
 	random_variables[:L_njs] = L_nj_star
 	starting_values!(random_variables, parameters, t)
 
@@ -362,8 +364,6 @@ function outer_loop!(random_variables, parameters, t)
 		old_wage_share = L_nj_star ./ sum(L_nj_star, 3)
 		adjustment_loop!(random_variables, L_nj_star, parameters, t)
 		wage_share = expected_wage_share(random_variables)
-		report(random_variables[:w_njs])
-		report(wage_share)
 		@test sum(wage_share, 3) ≈ ones(1,N,1,1) atol=1e-9
 
 		dist = distance(wage_share, old_wage_share)
@@ -378,13 +378,41 @@ function outer_loop!(random_variables, parameters, t)
 end
 
 function period_wrapper(parameters, t)
+	N, J = parameters[:N], parameters[:J]
+
 	info("--- Period ", t, " ---")
 	A_njs = parameters[:A_njs][t]
 	random_variables = Dict{Symbol, Any}()
 	random_variables[:A_njs] = A_njs
-	L_nj_star = outer_loop!(random_variables, parameters, t)
+
+	stv = zeros(1,N,J,1)
+	for n=1:N
+		# start from expenditure labor weights, not equal
+		stv[1,n,:,1] = parameters[:importance_weight]
+	end
+	# first run without labor adjustment
+	Logging.configure(level=INFO)
+	actual_steps = parameters[:max_iter_adjustment]
+	parameters[:max_iter_adjustment] = 0
+	L_nj_star = outer_loop!(random_variables, parameters, t, stv)
+
+	# then run with labor adjustment, starting from reasonable labor allocation
+	#Logging.configure(level=DEBUG)
+	#parameters[:max_iter_adjustment] = actual_steps
+	#_ = outer_loop!(random_variables, parameters, t, L_nj_star)
+	compute_trade_shares!(random_variables, parameters, t)
+	info("Model trade shares: ", random_variables[:d_mnjs][end,end,1:5,1])
+	info("Data trade shares: ", parameters[:d][end,end,1:5,1])
+	sleep(10)
+
+	info("US prices: ", random_variables[:P_njs][1,end,1:5,1])
+	info("in the data: ", parameters[:p_sectoral][1,end,1:5,1])
+	sleep(0)
+
 	compute_real_gdp!(random_variables, parameters, t)
-	info("Nominal world expenditure: ", sum(random_variables[:real_GDP][:,:,:,1]./parameters[:beta_j][:,:,:,1]))
+	info("Nominal world expenditure: ", sum(random_variables[:E_mjs][:,:,:,1]))
+	info("--------------In the data: ", parameters[:nominal_world_expenditure][:,:,:,1])
+	sleep(0)
 	return random_variables
 end
 
