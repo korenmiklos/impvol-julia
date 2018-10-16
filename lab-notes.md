@@ -96,3 +96,23 @@ Model captures trade shares pretty well, so this is not the cause for price leve
 15-Oct 11:58:33:INFO:root:US prices: [0.451145, 0.451288, 0.451569, 0.450765, 0.450904]
 15-Oct 11:58:33:INFO:root:in the data: [1.0, 1.0, 1.0, 1.0, 1.0]
 ```
+
+# 2018-10-16
+
+## Simulate model in sterile environment
+
+Opened an [issue](https://github.com/korenmiklos/impvol-julia/issues/18). The formula y/psi is only a good approximation of wages if labor cannot readjust.
+
+Calibrated a minimal, 2x3 economy.
+```
+WARNING: replacing module CalibrateParameters
+WARNING: using ImpvolEquilibrium.array_transpose in module CalibrateParameters conflicts with an existing identifier.
+2×3 Array{Float64,2}:
+ 0.899504  1.11172  1.03593
+ 1.0       1.0      1.0
+2×3 Array{Float64,2}:
+ 13.0891  10.2124  11.8764
+ 11.1547  11.878   12.195
+16-Oct 11:21:45:INFO:root:US wage rate: 3.0
+Test Passed
+```
