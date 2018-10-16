@@ -1,6 +1,7 @@
 include("calibrate_params.jl")
 using .CalibrateParameters
 using Base.Test
+using Logging
 
 function test_data!(parameters, data)
     N, J, T = parameters[:N], parameters[:J], parameters[:T]

@@ -116,3 +116,24 @@ WARNING: using ImpvolEquilibrium.array_transpose in module CalibrateParameters c
 16-Oct 11:21:45:INFO:root:US wage rate: 3.0
 Test Passed
 ```
+
+Prices have diverged from original 1.0:
+```
+16-Oct 16:44:33:INFO:root:Model trade shares: [0.725587, 0.910351, 1.0]
+16-Oct 16:44:33:INFO:root:Data trade shares: [0.7, 0.9, 1.0]
+16-Oct 16:44:43:INFO:root:US prices: [2.61974, 2.60394, 2.59458]
+16-Oct 16:44:43:INFO:root:in the data: [1.0, 1.0, 1.0]
+16-Oct 16:44:43:INFO:root:Nominal world expenditure: 10.549620676278591
+```
+
+Equation (15) in "paper November 8 2017" has Pnt, not p_sectoral. This seems wrong in line 323. Redoing now using eq (15) in "algorithm.pdf".
+
+Fixed calculation of `A`. We are closer to the prices, not not fully there:
+```
+16-Oct 18:05:16:INFO:root:Model trade shares: [0.725587, 0.910351, 1.0]
+16-Oct 18:05:16:INFO:root:Data trade shares: [0.7, 0.9, 1.0]
+16-Oct 18:05:26:INFO:root:US prices: [0.873248, 0.86798, 0.86486]
+16-Oct 18:05:26:INFO:root:in the data: [1.0, 1.0, 1.0]
+16-Oct 18:05:26:INFO:root:Nominal world expenditure: 10.549620676278582
+16-Oct 18:05:26:INFO:root:--------------In the data: [12.0]
+```

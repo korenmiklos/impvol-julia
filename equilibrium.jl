@@ -14,8 +14,8 @@ parameters = Dict{Symbol, Any}()
 # mnjs: destination, source, sector, state
 
 function report(A)
-	#display(A[1,1:5,end-1:end,1])
-	#sleep(1)
+	display(A[1,1:2,end-1:end,1])
+	sleep(1)
 end
 
 function expected_value(y)
@@ -401,12 +401,12 @@ function period_wrapper(parameters, t)
 	#parameters[:max_iter_adjustment] = actual_steps
 	#_ = outer_loop!(random_variables, parameters, t, L_nj_star)
 	compute_trade_shares!(random_variables, parameters, t)
-	info("Model trade shares: ", random_variables[:d_mnjs][end,end,1:5,1])
-	info("Data trade shares: ", parameters[:d][end,end,1:5,1])
+	info("Model trade shares: ", random_variables[:d_mnjs][end,end,1:3,1])
+	info("Data trade shares: ", parameters[:d][end,end,1:3,1])
 	sleep(10)
 
-	info("US prices: ", random_variables[:P_njs][1,end,1:5,1])
-	info("in the data: ", parameters[:p_sectoral][1,end,1:5,1])
+	info("US prices: ", random_variables[:P_njs][1,end,1:3,1])
+	info("in the data: ", parameters[:p_sectoral][1,end,1:3,1])
 	sleep(0)
 
 	compute_real_gdp!(random_variables, parameters, t)

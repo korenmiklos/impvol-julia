@@ -17,6 +17,7 @@ module CalibrateParameters
 		_, N, J, T = size(data["beta"])
 		parameters[:N], parameters[:J], parameters[:T] = N, J, T
 		parameters[:beta_j] = mean(data["beta"],(1,2,4))
+		@test size(parameters[:beta_j]) == (1,1,J,1)
 
 		parameters[:gamma_jk] = compute_gamma(parameters, data)
 		@test size(parameters[:gamma_jk]) == (J,J)
@@ -62,10 +63,7 @@ module CalibrateParameters
 		parameters[:xi] = calculate_xi(parameters)
 		@test typeof(parameters[:xi]) == Float64
 
-		parameters[:z] = calculate_z(parameters, data)
-		@test size(parameters[:z]) == (1, N, J, T)
-
-		parameters[:A] = calculate_A(parameters)
+		parameters[:A] = calculate_A(parameters, data)
 		@test size(parameters[:A]) == (1, N, J, T)
 
 		info("US wage rate: ", sum(data["va"], 3)[1,end,1,1])
@@ -293,48 +291,35 @@ module CalibrateParameters
 		parameters[:p_sectoral] = p_sectoral
 	end
 
-	function calculate_z(parameters, data)
+	function calculate_A(parameters, data)
 		N, J, T = parameters[:N], parameters[:J], parameters[:T]
 
-		p_sectoral = array_transpose(parameters[:p_sectoral])
-		beta = parameters[:beta_j]
+		p_njt = parameters[:p_sectoral]
+		p_mjt = array_transpose(p_njt)
+		beta_j = parameters[:beta_j]
 		gamma = parameters[:gamma_jk]
-		kappa = parameters[:kappa_mnjt]
+		kappa_mnjt = parameters[:kappa_mnjt]
 		psi = parameters[:psi]
 		B = parameters[:B_j]
-		d = parameters[:d]
+		d_mnjt = parameters[:d]
 		va = data["va"]
 		xi = parameters[:xi]
 		theta = parameters[:theta]
 
-		beta = squeeze(beta,(1,2,4))
+		# FIXME: wages should be calculated by #18
+		w_njt = sum(va, 3) .* va ./ psi
 
 		z = zeros(1, N, J, T)
 
-		# use eq 15 in paper November 8 2017.pdf
-		#input_price_index = exp.(rotate_sectors(theta*gamma, log.(p_sectoral)))
-		#zeta_mnjt = log.((xi .* B) .^ theta .* d .* (kappa .^ (-theta)) .* (p_sectoral .* va ./ psi) .^ (theta * beta) .* input_price_index)
-		#info(size(zeta_mnjt))
-		#log_z = mean(zeta_mnjt .- theta*log.(array_transpose(p_sectoral)), 1)
+		# use eq 15 in algorithm.pdf
+		rho_mnjt = kappa_mnjt .* p_mjt .* d_mnjt .^ (-1/theta)
+		rho_njt = exp.(mean(log.(rho_mnjt),1))
+		# nontradable input price equals output price
+		rho_njt[1,:,end,:] = p_njt[1,:,end,:]
+		input_price_index = exp.(rotate_sectors(gamma, log.(p_njt)))
 
-		for n in 1:N
-			for t in 1:T
-				# Sectors except services
-				z[1, n, :, t] = exp.( theta * log.(xi * B[1,1,:,1]) + theta * beta .* (log.(va[1,n,:,t]) - log.(psi[1,n,:,t])) + reshape(transpose(mean(log.(d[:,n,:,t]) - theta * log.(kappa[:,n,:,t]),1)) - theta * transpose(mean(log.(p_sectoral[:,1,:,t]),1)),J) + transpose(gamma[:,:,1,1]) * theta * log.(p_sectoral[n,1,:,t]) )
-
-				# Services
-				z[1,n,end,t]  = xi^theta * B[1,1,end,1]^theta * (va[1,n,end,t] / psi[1,n,end,t])^(theta * beta[end]) * prod(p_sectoral[n,1,:,t].^(gamma[:,end]))^theta * p_sectoral[n,1,end,t]^(-theta)
-			end
-		end
-
-		return z
-	end
-
-	function calculate_A(parameters)
-		z = parameters[:z]
-		theta = parameters[:theta]
-
-		return z .^ (1/theta)
+		A_njt = xi .* B ./ rho_njt .* w_njt .^ beta_j .* input_price_index
+		return A_njt
 	end
 
 	function calculate_expenditure_shares(parameters, data)
