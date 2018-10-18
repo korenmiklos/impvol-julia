@@ -1,5 +1,3 @@
-module Environment
-	export parameters
 	## these are needed for data -> parameters mapping
 	parameters = Dict{Symbol, Any}()
 
@@ -23,4 +21,3 @@ module Environment
 	using FileIO
 	data = load("../../../data/impvol_data.jld2")
 	parameters[:nu_njt] = CalibrateParameters.compute_alpha(parameters, data)
-end

@@ -1,9 +1,7 @@
 
 module CalibrateParameters
 	include("calibration_utils.jl")
-	include("utils.jl")
-	include("equilibrium.jl")
-	using JLD2, FileIO, .ImpvolEquilibrium, Base.Test
+	using JLD2, FileIO, ImpvolEquilibrium, Base.Test
 
 	function positive(args...)
 		for item in args
@@ -81,7 +79,7 @@ module CalibrateParameters
 		@test size(parameters[:A_njs][1]) == (1,N,J,1)
 		@test size(parameters[:A_njs][2]) == (1,N,J,parameters[:S])
 
-		positive(final_expenditure_shares, parameters[:nu_njt], parameters[:z], parameters[:A_njs][2], parameters[:p_sectoral], parameters[:A])
+		positive(final_expenditure_shares, parameters[:nu_njt], parameters[:A_njs][2], parameters[:p_sectoral], parameters[:A])
 	end
 
 	function compute_gamma(parameters, data)
@@ -391,7 +389,7 @@ module CalibrateParameters
 		parameters[:idiosyncratic_shock_njs] = draw_random_realizations(parameters[:idiosyncratic_shock], S)
 
 		parameters[:A_njs] = map(t ->
-			exp.(non_random_variable(parameters[:productivity_trend], t)
+			exp.(ImpvolEquilibrium.non_random_variable(parameters[:productivity_trend], t)
 				.+ parameters[:global_sectoral_shock_njs][t]
 				.+ parameters[:country_shock_njs][t]
 				.+ parameters[:idiosyncratic_shock_njs][t]),
@@ -404,11 +402,11 @@ module CalibrateParameters
 		constant, rho, sigma = estimate_AR1(data)
 
 		draws = Array{Array{Float64, 4}}(T)
-		draws[1] = non_random_variable(data, 1)
+		draws[1] = ImpvolEquilibrium.non_random_variable(data, 1)
 		for t=2:T
 			innovation = sigma .* randn(1,N,J,S - 1)
-			random_realization = non_random_variable(data, t)
-			past_productivity = non_random_variable(data, t-1)
+			random_realization = ImpvolEquilibrium.non_random_variable(data, t)
+			past_productivity = ImpvolEquilibrium.non_random_variable(data, t-1)
 			# reversion towards mean
 			draws[t] = cat(4, random_realization, constant .* (1-rho) .+ past_productivity .* rho .+ innovation)
 		end

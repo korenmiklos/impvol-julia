@@ -1,5 +1,3 @@
-module Environment
-	export parameters
 	## these are needed for data -> parameters mapping
 	parameters = Dict{Symbol, Any}()
 
@@ -19,4 +17,3 @@ module Environment
 		parameters[:kappa_mnjt][5,:,:,t] = parameters[:kappa_mnjt][5,:,:,1]
 		parameters[:kappa_mnjt][:,5,:,t] = parameters[:kappa_mnjt][:,5,:,1]
 	end
-end

@@ -1,5 +1,3 @@
-module Environment
-	export parameters
 	## these are needed for data -> parameters mapping
 	parameters = Dict{Symbol, Any}()
 
@@ -15,4 +13,3 @@ module Environment
 
 	include("../config.jl")
 	# change parameters after reading data, but common across scenarios
-end

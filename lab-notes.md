@@ -152,3 +152,72 @@ Our current choice of numeraire is that we start the free-trade initialization f
 18-Oct 10:14:04:INFO:root:Nominal world expenditure: 12.158414061090557
 18-Oct 10:14:04:INFO:root:--------------In the data: [12.0]
 ``` 
+
+## Dependencies and name space
+
+`scenario.jl` loads `init_parameters.jl`. This defines a module `Environment` and within that module, loads `config.jl`. This loads `calibrate_params.jl`. This defines a module `CalibrateParameters`. (The absolute name of this module seems to be `Environment.CalibrateParameters`.) This loads `equilibriu.jl`, defining the module `ImpvolEquilibrium` (`Environment.CalibrateParameters.ImpvolEquilibrium`).
+
+New workflow:
+`scenario.jl` loads `equilibrium.jl`, defining module `ImpvolEquilibrium`. It also loads `init_parameters.jl`, which loads `config.jl`. The latter loads `calibrate_params.jl`, which defines module `CalibrateParameters`. init and config define no other modules, `parameters` is simply a global. At this point, there are two modules defined, `ImpvolEquilibrium` and `CalibrateParameters`. `scenario.jl` further loads `change_parameters.jl`, which has to change the global `parameters` and can access the functions exported by the two modules.
+
+
+## Nominal prices in simulation
+
+Prices move around too much over time. Already in 1973, US sectoral prices are:
+```
+24-element Array{Float64,1}:
+ 1.00258
+ 1.24319
+ 1.39467
+ 1.19452
+ 1.23191
+ 1.15468
+ 1.30421
+ 1.21179
+ 1.25413
+ 1.27171
+ 1.12897
+ 1.15808
+ 1.19688
+ 1.14249
+ 1.2054
+ 1.19571
+ 1.08363
+ 1.1775
+ 1.08566
+ 1.16241
+ 1.11747
+ 1.12605
+ 1.18582
+ 0.859164
+ ```
+ (Remember that 1972 prices are normalized to 1.0). In 2007, they are
+ ```
+ 24-element Array{Float64,1}:
+  3.62405
+ 13.8792
+ 41.2767
+ 20.1324
+ 27.1493
+ 27.3631
+ 25.1278
+ 34.7121
+ 46.1475
+ 22.5707
+ 15.9228
+ 36.1945
+ 41.1135
+ 23.7509
+ 43.9461
+ 46.6444
+  5.08522
+  7.71534
+  6.52232
+  7.26517
+ 44.5359
+ 45.7468
+ 38.4647
+  0.280734
+ ```
+
+ There is something off with nontradable productivity/price dynamics.

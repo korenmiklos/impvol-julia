@@ -46,7 +46,7 @@ end
 
 function deflate_all_nominal_variables!(random_variables, parameters, t)
 	compute_price_index!(random_variables, parameters, t)
-	US_price_index = random_variables[:P_ns][1,end,1,:]
+	US_price_index = random_variables[:P_ns][1:1,end:end,1:1,:]
 	for variable in [:R_njs, :rho_njs, :w_njs, :P_ns, :input_price_njs, :P_njs, :E_mjs]
 		random_variables[variable] = random_variables[variable] ./ US_price_index
 	end

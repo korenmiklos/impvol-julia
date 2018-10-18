@@ -1,7 +1,7 @@
 using Logging
 Logging.configure(level=DEBUG)
 include("../calibrate_params.jl")
-using .CalibrateParameters
+using CalibrateParameters
 
 parameters[:S] = 100
 

@@ -1,5 +1,3 @@
-module Environment
-	export parameters
 	## these are needed for data -> parameters mapping
 	parameters = Dict{Symbol, Any}()
 
@@ -17,4 +15,3 @@ module Environment
 	# change parameters after reading data, but common across scenarios
 	## Trade imbalance
 	parameters[:S_nt] = parameters[:S_nt_data]
-end
