@@ -190,9 +190,10 @@ Prices move around too much over time. Already in 1973, US sectoral prices are:
  1.12605
  1.18582
  0.859164
- ```
- (Remember that 1972 prices are normalized to 1.0). In 2007, they are
- ```
+```
+
+(Remember that 1972 prices are normalized to 1.0). In 2007, they are
+```
  24-element Array{Float64,1}:
   3.62405
  13.8792
@@ -218,6 +219,78 @@ Prices move around too much over time. Already in 1973, US sectoral prices are:
  45.7468
  38.4647
   0.280734
- ```
+```
 
- There is something off with nontradable productivity/price dynamics.
+There is something off with nontradable productivity/price dynamics.
+
+Nontradable productivity is calibrate to go up by a huge amount (see last row)
+```
+ julia> [A1[1,end,:,1] A36[1,end,:,1]]
+24×2 Array{Float64,2}:
+ . . .
+      3.80674e5  871490.0
+      4.80477e5       8.99647e5
+      2.86229e8       3.59988e11
+```
+
+Nominal US value added increases gradually:
+```
+julia> sum(data["va"][1,end,:,:], 1)
+1×36 Array{Float64,2}:
+ 1.12031e6  1.25371e6  1.35986e6  1.4886e6  1.6613e6  …  1.0998e7  1.1712e7  1.2409e7  1.2997e7
+```
+Estimated sectoral prices are also smooth:
+```
+julia> parameters[:p_sectoral][1,end,end-2:end,:]
+3×36 Array{Float64,2}:
+ 1.0  1.02114  1.11355  1.25773  1.34228  1.43614  …  2.88145  2.93181  2.97346  2.99878  3.03941
+ 1.0  1.06523  1.2077   1.33567  1.39121  1.42458     3.08848  3.13912  3.23314  3.32482  3.4055
+ 1.0  1.02928  1.07685  1.21017  1.30383  1.38651     4.67841  4.79941  4.90868  4.56207  4.00687
+```
+
+Fixed an apparent bug on line 309, but now prices and trade shares are both off
+```
+18-Oct 13:07:50:INFO:root:Model trade shares: [0.839914, 0.81171, 0.979848]
+18-Oct 13:07:50:INFO:root:Data trade shares: [0.970499, 0.941882, 0.994321]
+18-Oct 13:08:00:INFO:root:US prices: [3.46751, 13.2969, 41.1655]
+```
+Nontradable productiviy still blows up
+```
+  3866.28    3098.45
+ 59285.3        1.67605e7
+```
+Input prices are off!
+```
+18-Oct 13:16:31:INFO:root:Calibrated input prices:
+18-Oct 13:16:31:INFO:root:[1.0, 1.0, 1.0]
+18-Oct 13:16:31:INFO:root:[1.26707, 1.18481, 254.632]
+```
+
+It is `gamma'` to calculate the sectoral price index, not `gamma`. Now productivity growth looks normal
+```
+julia> (A36 ./ A1)[1,end,:,1]
+24-element Array{Float64,1}:
+ 1.50131
+ 1.48263
+ 1.63589
+ 1.74895
+ 1.53929
+ 1.17424
+ 1.54995
+ 1.24335
+ 1.42291
+ 0.650903
+ 1.15389
+ ⋮
+ 1.27075
+ 1.36602
+ 1.25941
+ 3.98871
+ 8.16857
+ 5.21963
+ 7.53213
+ 1.30153
+ 1.63239
+ 1.58981
+ 1.87969
+ ```

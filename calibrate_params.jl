@@ -300,12 +300,13 @@ module CalibrateParameters
 		psi = parameters[:psi]
 		B = parameters[:B_j]
 		d_mnjt = parameters[:d]
-		va = data["va"]
+		nominal_gdp = sum(data["va"], 3)
+		va_shares = data["va"] ./ sum(data["va"], 3)
 		xi = parameters[:xi]
 		theta = parameters[:theta]
 
 		# FIXME: wages should be calculated by #18
-		w_njt = sum(va, 3) .* va ./ psi
+		w_njt = nominal_gdp .* va_shares ./ psi
 
 		z = zeros(1, N, J, T)
 
@@ -314,7 +315,7 @@ module CalibrateParameters
 		rho_njt = exp.(mean(log.(rho_mnjt),1))
 		# nontradable input price equals output price
 		rho_njt[1,:,end,:] = p_njt[1,:,end,:]
-		input_price_index = exp.(rotate_sectors(gamma, log.(p_njt)))
+		input_price_index = exp.(rotate_sectors(gamma', log.(p_njt)))
 
 		A_njt = xi .* B ./ rho_njt .* w_njt .^ beta_j .* input_price_index
 		return A_njt
