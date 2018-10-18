@@ -137,3 +137,18 @@ Fixed calculation of `A`. We are closer to the prices, not not fully there:
 16-Oct 18:05:26:INFO:root:Nominal world expenditure: 10.549620676278582
 16-Oct 18:05:26:INFO:root:--------------In the data: [12.0]
 ```
+
+# 2018-10-18
+
+## Code choice of numeraire
+
+Our current choice of numeraire is that we start the free-trade initialization from a given nominal world expenditure. However, after trade costs are reclibrated, world nominal expenditure is not an exact match. (See above.) Propose: Set US aggregate price index to 1.0 in each time period.
+
+```
+18-Oct 10:13:54:INFO:root:Model trade shares: [0.725587, 0.910351, 1.0]
+18-Oct 10:13:54:INFO:root:Data trade shares: [0.7, 0.9, 1.0]
+18-Oct 10:14:04:INFO:root:US prices: [1.00642, 1.00035, 0.99675]
+18-Oct 10:14:04:INFO:root:in the data: [1.0, 1.0, 1.0]
+18-Oct 10:14:04:INFO:root:Nominal world expenditure: 12.158414061090557
+18-Oct 10:14:04:INFO:root:--------------In the data: [12.0]
+``` 

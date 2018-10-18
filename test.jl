@@ -56,10 +56,7 @@ function test_data!(parameters, data)
     parameters[:xi] = CalibrateParameters.calculate_xi(parameters)
     @test typeof(parameters[:xi]) == Float64
 
-    parameters[:z] = CalibrateParameters.calculate_z(parameters, data)
-    @test size(parameters[:z]) == (1, N, J, T)
-
-    parameters[:A] = CalibrateParameters.calculate_A(parameters)
+    parameters[:A] = CalibrateParameters.calculate_A(parameters, data)
     @test size(parameters[:A]) == (1, N, J, T)
     display(parameters[:A][1,:,:,1])
 
@@ -132,3 +129,9 @@ end
 parameters = init_parameters()
 data = init_data(parameters)
 test_data!(parameters, data)
+
+include("equilibrium.jl")
+using ImpvolEquilibrium
+Logging.configure(level=INFO)
+
+results = ImpvolEquilibrium.period_wrapper(parameters, 1)

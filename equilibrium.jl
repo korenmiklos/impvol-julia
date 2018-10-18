@@ -44,6 +44,14 @@ function distance(p1, p2)
 	return mean(((log.(normalized_p1) .- log.(normalized_p2)) .^ 2)[:], 1)[1] .^ 0.5
 end
 
+function deflate_all_nominal_variables!(random_variables, parameters, t)
+	compute_price_index!(random_variables, parameters, t)
+	US_price_index = random_variables[:P_ns][1,end,1,:]
+	for variable in [:R_njs, :rho_njs, :w_njs, :P_ns, :input_price_njs, :P_njs, :E_mjs]
+		random_variables[variable] = random_variables[variable] ./ US_price_index
+	end
+end
+
 function free_trade_sector_shares!(parameters)
 	N, J, T = parameters[:N], parameters[:J], parameters[:T]
 	gamma_jk = parameters[:gamma_jk]
@@ -123,6 +131,7 @@ function free_trade_prices!(random_variables, parameters, t)
 
 	random_variables[:P_njs] = exp.(rotate_sectors(inv(eye(gamma_jk)-gamma_jk), log.(xi * d_njs .^(1/theta) .* B_j .* (w_njs .^beta_j) ./ A_njs)))
 	random_variables[:rho_njs] = random_variables[:P_njs] ./ d_njs .^(1/theta)
+	input_price_index!(random_variables, parameters)
 end
 
 function compute_trade_shares!(random_variables, parameters, t)
@@ -209,6 +218,12 @@ function starting_values!(random_variables, parameters, t)
 	compute_revenue!(random_variables, parameters)
 	compute_expenditure_shares!(random_variables, parameters, t)
 	fixed_expenditure_shares!(random_variables, parameters, t)
+	deflate_all_nominal_variables!(random_variables, parameters, t)
+	info("US wages: ", random_variables[:w_njs][1,end,1:3,1])
+	info("Average   ", sum((random_variables[:w_njs].*random_variables[:L_njs])[1,end,:,1]))
+	info("US prices: ", random_variables[:P_njs][1,end,1:3,1])
+	info("in the data: ", parameters[:p_sectoral][1,end,1:3,1])
+	sleep(10)
 end
 
 function inner_loop!(random_variables, parameters, t)
@@ -226,6 +241,9 @@ function inner_loop!(random_variables, parameters, t)
 		compute_wage!(random_variables, parameters)
 		compute_revenue!(random_variables, parameters)
 		fixed_expenditure_shares!(random_variables, parameters, t)
+		deflate_all_nominal_variables!(random_variables, parameters, t)
+		info("Total expenditure in the model: ", sum(random_variables[:E_mjs], (1,2,3))[1])
+		#sleep(1)
 		k = k+1
 	end
 	#warn("inner: ", k-1)
