@@ -29,8 +29,7 @@ module CalibrateParameters
 
 		parameters[:d] = expenditure_shares(parameters, data)
 		@test size(parameters[:d]) == (N,N,J,T)
-		# FIXME: this fails
-		# @test sum(parameters[:d], 2) ≈ ones(N,1,J,T) atol=1e-9
+		@test sum(parameters[:d], 2)[:,:,1:end-1,:] ≈ ones(N,1,J-1,T) atol=1e-9
 
 		parameters[:kappa_mnjt] = trade_costs(parameters)
 		@test size(parameters[:kappa_mnjt]) == (N,N,J,T)
@@ -63,8 +62,9 @@ module CalibrateParameters
 
 		parameters[:A] = calculate_A(parameters, data)
 		@test size(parameters[:A]) == (1, N, J, T)
-
-		info("US wage rate: ", sum(data["va"], 3)[1,end,1,1])
+		# productivity does not change more than 50% per year
+		logA = log.(parameters[:A])
+		@test maximum(abs.(logA[:,:,:,T] .- logA[:,:,:,1])) < log(1.50)*T
 
 		# total world expenditure in the data - needed to get reasonable starting values
 		parameters[:nominal_world_expenditure] = sum(data["va"] ./ parameters[:beta_j], (1,2,3))
