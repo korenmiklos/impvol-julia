@@ -492,6 +492,26 @@ E_{A}\frac
 \subsection{Flexible labor equilibrium}
 To get a starting point or direction of iteration, it is useful to calculate the flexible labor equilibrium, where wages are equal across sectors.
 
+When wages are constant across sectors, we can write expenditure shares as
+\begin{equation}\label{eq:sectoral_share:2}
+e_{mjt} = \frac
+	{w_{mt}\sum_{k=1}^J(\alpha_{mjt}(\mathbf P_t)\beta_k+\gamma_{jk}) L_{mkt}/\beta_k - S_{mt}}
+	{w_{mt}\sum_{k=1}^J L_{mkt}/\beta_k-S_{mt}}.
+\end{equation}
+If $S_{mt}=0$ and demand is Cobb-Douglas, this can be precalculated in the outer loop, without knowing anything about wages. The inner loop (without the need for a middle loop) then solves for prices and wages.
+\[
+	\varrho_{njt} = w_{nt}^{-1/\theta}(L_{njt}/\beta_j)^{-1/\theta}
+	\left[
+	\sum_{m=1}^N
+		(\kappa_{mnjt} P_{mjt})^{\theta}
+		w_{mt}\sum_{k=1}^J(\alpha_{mjt}(\mathbf P_t)+\gamma_{jk}/\beta_k) L_{mkt} - S_{mt}
+	\right]^{1/\theta}.
+\]
+We also know that 
+\begin{equation}\label{eq:varrho:2}
+	\varrho_{njt} = w_{nt}^{\beta_j} \xi B_j A_{njt}^{-1}  \prod_{k=1}^J P_{nkt}^{\gamma_{kj}}.
+\end{equation}
+
 
 \section{Calibration}
 \subsection{Calibrating the CES model}

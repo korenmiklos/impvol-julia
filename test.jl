@@ -4,7 +4,7 @@ using Base.Test
 using Logging
 
 function test_data!(parameters, data)
-    N, J, T = parameters[:N], parameters[:J], parameters[:T]
+    N, J, T, S = parameters[:N], parameters[:J], parameters[:T], parameters[:S]
     parameters[:beta_j] = zeros(1,1,J,1)
     parameters[:beta_j][1,1,:,1] = 0.5
 
@@ -69,9 +69,10 @@ function test_data!(parameters, data)
     # global, all-time average of sector final expenditure shares
     importance_weight = mean(parameters[:nu_njt], (1, 2, 4))
     parameters[:importance_weight] = importance_weight
-    parameters[:A_njs] = CalibrateParameters.draw_random_realizations(parameters[:A], 1)
+    parameters[:A_njs] = Array{Array{Float64, 4}}(T)
+    parameters[:A_njs][1] = parameters[:A] .* exp.(0.2*randn(1,N,J,S))
     @test size(parameters[:A_njs]) == (T,)
-    @test size(parameters[:A_njs][1]) == (1,N,J,1)
+    @test size(parameters[:A_njs][1]) == (1,N,J,S)
 
 end
 
@@ -87,7 +88,7 @@ function init_parameters()
 	########## parameters common across scenarios
 	## these are function of data
 	# inverse of adjustment cost, 0 if cannot readjust
-	parameters[:one_over_rho] = 0.0
+	parameters[:one_over_rho] = 0.1
     parameters[:S] = 100
 
     parameters[:numerical_zero] = 1e-12
@@ -104,13 +105,13 @@ function init_parameters()
     # this is log points of average input price differences
     parameters[:inner_tolerance]  = 0.001
     parameters[:middle_tolerance] = 0.001
-    parameters[:adjustment_tolerance] = 0.001
+    parameters[:adjustment_tolerance] = 0.0005
     parameters[:outer_tolerance] = 0.001
 
     # maximum number of iterations in each loop
     parameters[:max_iter_inner] = 1000
     parameters[:max_iter_middle] = 50
-    parameters[:max_iter_adjustment] = 10
+    parameters[:max_iter_adjustment] = 50
     parameters[:max_iter_outer] = 50
     return parameters
 end
@@ -125,6 +126,8 @@ function init_data(parameters)
 
     return data
 end
+
+srand(7094)
 
 parameters = init_parameters()
 data = init_data(parameters)

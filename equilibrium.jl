@@ -96,6 +96,7 @@ function compute_price_index!(random_variables, parameters, t)
 end
 
 function free_trade_country_shares!(random_variables, parameters)
+	free_trade_sector_shares!(parameters)
 	A_njs = random_variables[:A_njs]
 	L_njs = random_variables[:L_njs]
 	theta = parameters[:theta]
@@ -105,9 +106,20 @@ function free_trade_country_shares!(random_variables, parameters)
 	random_variables[:d_njs_free] = d_njs ./ sum(d_njs,2)
 end
 
+function free_trade_labor_shares!(random_variables, parameters, t)
+	free_trade_country_shares!(random_variables, parameters)
+
+	d_njs = random_variables[:d_njs_free]
+	beta_j = parameters[:beta_j]
+	E_jt = non_random_variable(parameters[:sector_shares], t)
+
+	y_njs = beta_j .* d_njs .* E_jt
+
+	random_variables[:L_njs_free] = y_njs ./ sum(y_njs, 3)
+end
+
 function free_trade_wages!(random_variables, parameters, t)
 	free_trade_country_shares!(random_variables, parameters)
-	free_trade_sector_shares!(parameters)
 
 	d_njs = random_variables[:d_njs_free]
 	L_njs = random_variables[:L_njs]
@@ -119,7 +131,6 @@ end
 
 function free_trade_prices!(random_variables, parameters, t)
 	free_trade_country_shares!(random_variables, parameters)
-	free_trade_sector_shares!(parameters)
 	beta_j = parameters[:beta_j]
 	theta = parameters[:theta]
 	d_njs = random_variables[:d_njs_free]
@@ -215,15 +226,11 @@ end
 function starting_values!(random_variables, parameters, t)
 	free_trade_wages!(random_variables, parameters, t)
 	free_trade_prices!(random_variables, parameters, t)
+	free_trade_labor_shares!(random_variables, parameters, t)
 	compute_revenue!(random_variables, parameters)
 	compute_expenditure_shares!(random_variables, parameters, t)
 	fixed_expenditure_shares!(random_variables, parameters, t)
 	deflate_all_nominal_variables!(random_variables, parameters, t)
-	info("US wages: ", random_variables[:w_njs][1,end,1:3,1])
-	info("Average   ", sum((random_variables[:w_njs].*random_variables[:L_njs])[1,end,:,1]))
-	info("US prices: ", random_variables[:P_njs][1,end,1:3,1])
-	info("in the data: ", parameters[:p_sectoral][1,end,1:3,1])
-	sleep(10)
 end
 
 function inner_loop!(random_variables, parameters, t)
@@ -242,8 +249,6 @@ function inner_loop!(random_variables, parameters, t)
 		compute_revenue!(random_variables, parameters)
 		fixed_expenditure_shares!(random_variables, parameters, t)
 		deflate_all_nominal_variables!(random_variables, parameters, t)
-		info("Total expenditure in the model: ", sum(random_variables[:E_mjs], (1,2,3))[1])
-		#sleep(1)
 		k = k+1
 	end
 	#warn("inner: ", k-1)
@@ -281,80 +286,92 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 
 		w_ns = sum(random_variables[:w_njs] .* random_variables[:L_njs], 3)
 		wage_gap = random_variables[:w_njs] ./ w_ns
-		return sum(log.(w_ns) .- 0.5/parameters[:one_over_rho]*sum((random_variables[:L_njs] .- L_nj_star).^2, 3))
+		return sum(parameters[:one_over_rho]*log.(w_ns) .- 0.5*sum((random_variables[:L_njs] .- L_nj_star).^2, 3))
 	end
 
 	function calculate_derivative(random_variables, L_nj_star, parameters)
 		w_njs = random_variables[:w_njs]
 		L_njs = random_variables[:L_njs]
-		rho = 1/parameters[:one_over_rho]
 		w_ns = sum(w_njs .* random_variables[:L_njs], 3)
 		wage_gap = w_njs ./ w_ns
-		gradient = wage_gap .- (rho * (L_njs .- L_nj_star))
+		gradient = parameters[:one_over_rho]*wage_gap .- (L_njs .- L_nj_star)
+
 		# ensure that steps sum to zero: we can only reallocate labor across sectors
 		return gradient .- mean(gradient, 3)
 	end
 
 	debug("-- BEGIN Adjustment loop")
 	random_variables[:L_njs] = L_nj_star
-	dist = 999
+	free_trade_labor_shares!(random_variables, parameters, t)
+	L_njs_free = random_variables[:L_njs_free]
 	k = 1
-	one_over_rho = parameters[:one_over_rho]
-	if one_over_rho==0
-		# FIXME: break loop
-	else
-		rho = 1/one_over_rho
-	end
 
 	nulla = ones(1,1,1,1)*parameters[:numerical_zero]
+	bounds = 0.5
 	# initisal step size converts a 10-fold wage gap into a 100pp increase in labor share
 
 	utility = evaluate_utility(random_variables, L_nj_star, parameters, t)
 	gradient = calculate_derivative(random_variables, L_nj_star, parameters)
+	dist = mean(gradient .^ 2) .^ 0.5
+	info("Starting from $dist")
 
-	step_size = one_over_rho/10.0
 	while (dist > parameters[:adjustment_tolerance]) && (k <= parameters[:max_iter_adjustment])
-		snapshot = random_variables
+		step_size = 0.1
+		snapshot = copy(random_variables)
 
 		previous_utility = utility
 		previous_L = random_variables[:L_njs]
-		snapshot[:L_njs] = previous_L .+ (gradient*step_size)
+
+		biggest_step = maximum(gradient)
+		smallest_step = -minimum(gradient)
+
+		min_allowed = exp(-bounds) * L_njs_free
+		max_allowed = exp(+bounds) * L_njs_free
+
+		max_step_size = min.(minimum(max_allowed .- previous_L)/biggest_step, minimum(previous_L .- min_allowed)/smallest_step)
+		info("max step size: ", max_step_size)
+
+		snapshot[:L_njs] = previous_L .+ gradient*max.(step_size,max_step_size)
 
 		utility = evaluate_utility(snapshot, L_nj_star, parameters, t)
 		gradient = calculate_derivative(snapshot, L_nj_star, parameters)
-		difference = utility - previous_utility 
+		dist = mean(gradient .^ 2) .^ 0.5
+		info("Gradient: $dist")
+
+		difference = utility - previous_utility
 		proportional_increase = difference / sum(gradient .^ 2) / step_size
-		debug("Difference: ", difference)
+		info("Difference: ", difference)
 		info("Proportional increase: ", proportional_increase)
 
 		kk = 1
 
 		# find small-enough step size
-		while (proportional_increase < 0.25) && (kk <= parameters[:max_iter_adjustment])
+		while false & (proportional_increase < 0.25) && (kk <= parameters[:max_iter_adjustment])
 			snapshot = copy(random_variables)
 			# optimal backtracking for quadratic functions
 			correction = max.(0.1, min.(0.8, 0.5*1/(1-proportional_increase)))
 			step_size = correction*step_size
-			debug("Backtracking: ", correction)
+			info("Backtracking: ", correction)
 			debug("Step size: ", step_size)
 			snapshot[:L_njs] = previous_L .+ gradient*step_size
-			utility = evaluate_utility(snapshot, L_nj_star, parameters, t)
-			difference = utility - previous_utility 
-			proportional_increase = difference / sum(gradient .^ 2) / step_size
-			debug("Difference: ", difference)
-			debug("Proportional increase: ", proportional_increase)
 
-			# give up after a number of iterations
-			kk += 1
+			utility = evaluate_utility(snapshot, L_nj_star, parameters, t)
+			inner_gradient = calculate_derivative(snapshot, L_nj_star, parameters)
+			info("Gradient: ", mean(inner_gradient .^ 2) .^ 0.5)
+			difference = utility - previous_utility
+			proportional_increase = difference / sum(gradient .^ 2) / step_size
+
+			debug("Difference: ", difference)
+			info("Proportional increase: ", proportional_increase)
+			sleep(1)
 		end
 
-		dist = mean(gradient .^ 2) .^ 0.5 / rho
-		info("---- Adjustment $k--$kk: $dist")
+		info("---- Adjustment $k: $dist")
+		sleep(0)
 
 		k = k+1
 		random_variables = snapshot
 	end
-	#warn("adjustmenet: ", k-1)
 	debug("-- END Adjustment loop")
 end
 
@@ -371,10 +388,11 @@ end
 function outer_loop!(random_variables, parameters, t, L_nj_star)
 	N, J = parameters[:N], parameters[:J]
 	lambda = parameters[:outer_step_size]
-	random_variables[:L_njs] = L_nj_star
-	starting_values!(random_variables, parameters, t)
+	random_variables[:L_njs] = copy(L_nj_star)
 
 	debug("BEGIN Outer loop")
+	starting_values!(random_variables, parameters, t)
+
 	dist = 999
 	k = 1
 
@@ -403,15 +421,16 @@ function period_wrapper(parameters, t)
 	random_variables = Dict{Symbol, Any}()
 	random_variables[:A_njs] = A_njs
 
-	stv = zeros(1,N,J,1)
+	random_variables[:L_njs] = zeros(1,N,J,1)
 	for n=1:N
 		# start from expenditure labor weights, not equal
-		stv[1,n,:,1] = parameters[:importance_weight]
+		random_variables[:L_njs][1,n,:,1] = parameters[:importance_weight]
 	end
+	free_trade_labor_shares!(random_variables, parameters, t)
+	stv = random_variables[:L_njs_free]
 	# first run without labor adjustment
-	Logging.configure(level=INFO)
 	actual_steps = parameters[:max_iter_adjustment]
-	parameters[:max_iter_adjustment] = 0
+	#parameters[:max_iter_adjustment] = 0
 	L_nj_star = outer_loop!(random_variables, parameters, t, stv)
 
 	# then run with labor adjustment, starting from reasonable labor allocation

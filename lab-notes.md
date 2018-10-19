@@ -293,4 +293,121 @@ julia> (A36 ./ A1)[1,end,:,1]
  1.63239
  1.58981
  1.87969
- ```
+```
+
+## Back to adjustment loop
+
+As long as wage gap is small, algo seems to converge:
+```
+18-Oct 17:02:16:INFO:root:Mean absolute wage gap: 0.33467752623816616
+18-Oct 17:02:16:INFO:root:Gradient: 0.0008632666889728881
+18-Oct 17:02:16:INFO:root:Difference: -1.7866160602952874e-5
+18-Oct 17:02:16:INFO:root:Proportional increase: -0.3995673719477588
+18-Oct 17:02:16:INFO:root:---- Adjustment 11: 0.0008632666889728881
+```
+
+But then wage gap blows up:
+```
+18-Oct 17:02:20:INFO:root:Mean absolute wage gap: 0.06710612235301563
+18-Oct 17:02:20:INFO:root:Starting from 0.0011696159608411702
+18-Oct 17:02:20:INFO:root:------ Middle 1: 0.0018415561136925984
+18-Oct 17:02:20:INFO:root:------ Middle 2: 0.0004696180190675084
+18-Oct 17:02:20:INFO:root:Mean absolute wage gap: 5.14264715222008
+18-Oct 17:02:20:INFO:root:Gradient: 1.2187102768125433
+18-Oct 17:02:20:INFO:root:Difference: -0.0005269412387152173
+18-Oct 17:02:20:INFO:root:Proportional increase: -5.9130287546716004e-6
+18-Oct 17:02:20:INFO:root:---- Adjustment 1: 1.2187102768125433
+18-Oct 17:02:21:INFO:root:------ Middle 1: 0.2154776298323131
+18-Oct 17:02:22:INFO:root:------ Middle 2: 0.040436994183319114
+18-Oct 17:02:22:INFO:root:------ Middle 3: 0.010356126020335758
+18-Oct 17:02:22:INFO:root:------ Middle 4: 0.006033075579390297
+18-Oct 17:02:22:INFO:root:------ Middle 5: 0.001665137520795596
+18-Oct 17:02:22:INFO:root:------ Middle 6: 0.0012098033085186535
+18-Oct 17:02:22:INFO:root:------ Middle 7: 0.0005212181457145956
+18-Oct 17:02:22:INFO:root:Mean absolute wage gap: 70825.42096895793
+18-Oct 17:02:22:INFO:root:Gradient: 8957.330061518034
+```
+
+# 2018-10-19
+
+## Testing the adjustment loop in the test environment
+
+In `test.jl`, even with `one_over_rho=0.1`, the adjustment loop converges. Curiously, the gradient decreases even after a negative difference.
+```
+19-Oct 09:30:52:INFO:root:---- Adjustment 1: 0.0023589792249189443
+19-Oct 09:30:53:INFO:root:------ Middle 1: 0.00011191856902462655
+19-Oct 09:30:53:INFO:root:Mean absolute wage gap: 0.020973740549026548
+19-Oct 09:30:53:INFO:root:Gradient: 0.002074178005398289
+19-Oct 09:30:53:INFO:root:Difference: -2.618292490889863e-5
+19-Oct 09:30:53:INFO:root:Proportional increase: -10.143197001291403
+19-Oct 09:30:53:INFO:root:---- Adjustment 2: 0.002074178005398289
+19-Oct 09:30:54:INFO:root:------ Middle 1: 9.194374672958078e-5
+19-Oct 09:30:54:INFO:root:Mean absolute wage gap: 0.020559640891600024
+19-Oct 09:30:54:INFO:root:Gradient: 0.0018238077156721327
+19-Oct 09:30:54:INFO:root:Difference: -2.4434405946142414e-5
+19-Oct 09:30:54:INFO:root:Proportional increase: -12.243129328302281
+19-Oct 09:30:54:INFO:root:---- Adjustment 3: 0.0018238077156721327
+```
+
+Trying to blow up the loop to reproduce the error. With `step_size=0.5` the convergence is even faster. `step_size=0.01` also converged.
+
+Going in the wrong direction (`step_size=-0.1`) managed to blow it up:
+```
+19-Oct 09:44:51:INFO:root:Mean absolute wage gap: 1.3396099092278523e11
+19-Oct 09:44:51:INFO:root:Gradient: 1.9055211199800068e10
+19-Oct 09:44:51:INFO:root:Difference: 5.298608375392533e-5
+19-Oct 09:44:51:INFO:root:Proportional increase: -2.432109017164174e-25
+19-Oct 09:44:51:INFO:root:---- Adjustment 10: 1.9055211199800068e10
+```
+
+This is associated with a sector totally disappearing:
+```
+19-Oct 09:48:24:INFO:root:Wage gap:
+2×3 Array{Float64,2}:
+ 0.673761  3.5846e11   0.967779
+ 0.582594  4.45306e11  0.9721
+19-Oct 09:48:24:INFO:root:Labor shares:
+2×3 Array{Float64,2}:
+ 0.5  5.0e-13  0.5
+ 0.5  5.0e-13  0.5
+```
+
+Back to normal step size. Low adjustment cost ensures constant wages:
+
+```
+19-Oct 09:51:12:INFO:root:Wage gap:
+2×3 Array{Float64,2}:
+ 1.0004    1.00015  0.999654
+ 0.999067  1.00071  1.00013
+19-Oct 09:51:12:INFO:root:Labor shares:
+2×3 Array{Float64,2}:
+ 0.366299  0.148274  0.485427
+ 0.260195  0.254087  0.485718
+19-Oct 09:51:12:INFO:root:Deviations:
+2×3 Array{Float64,2}:
+ 5.55112e-17  2.77556e-17  5.55112e-17
+ 5.55112e-17  5.55112e-17  5.55112e-17
+```
+
+This cannot be tested with `S=1`. Expected labor will by definition be equal to actual labor.
+
+There is a deviation from `L_njs_star` even with no adjustment costs. I set log productivity shocks with standard deviation of 0.2 and a low adjustment cost (`one_over_rho=2.0`) to enforce equal wages across sectors. Still, labor shares do not vary by more than 1.3 percentage point.
+```
+ 2×3 Array{Float64,2}:
+ 0.883334  0.844817  1.00436
+ 1.16359   1.11103   1.54041
+19-Oct 10:49:11:INFO:root:Wage gap:
+2×3 Array{Float64,2}:
+ 1.00441  0.992284  0.998666
+ 1.0065   0.992997  0.999957
+19-Oct 10:49:11:INFO:root:Labor shares:
+2×3 Array{Float64,2}:
+ 0.380304  0.133281  0.486416
+ 0.268211  0.246088  0.4857
+19-Oct 10:49:11:INFO:root:Deviations:
+2×3 Array{Float64,2}:
+ 0.0119963  -0.0124865  0.000490195
+ 0.0132756  -0.0133582  8.2596e-5
+```
+
+It seems important to stay within the range of admissible labor shares and not wander towards the edges of the simplex. 
