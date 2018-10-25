@@ -1,5 +1,5 @@
 using Logging
-Logging.configure(level=DEBUG)
+Logging.configure(level=INFO)
 include("../calibrate_params.jl")
 using CalibrateParameters
 
@@ -22,10 +22,10 @@ parameters[:outer_step_size] = exp(-0.5*abs(log(parameters[:sigma])))
 parameters[:inner_tolerance]  = 0.001
 parameters[:middle_tolerance] = 0.001
 parameters[:adjustment_tolerance] = 0.001
-parameters[:outer_tolerance] = 0.005
+parameters[:outer_tolerance] = 0.001
 
 # maximum number of iterations in each loop
-parameters[:max_iter_inner] = 100
+parameters[:max_iter_inner] = 1000
 parameters[:max_iter_middle] = 50
 parameters[:max_iter_adjustment] = 50
 parameters[:max_iter_outer] = 50

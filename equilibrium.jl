@@ -1,6 +1,6 @@
 module ImpvolEquilibrium
 
-export period_wrapper, coerce_parameters!, rotate_sectors, CES_price_index, array_transpose
+export period_wrapper, coerce_parameters!, rotate_sectors, CES_price_index, array_transpose, remove_shock!
 
 using Logging, Base.Test
 
@@ -16,6 +16,11 @@ parameters = Dict{Symbol, Any}()
 function report(A)
 	display(A[1,1:2,end-1:end,1])
 	sleep(1)
+end
+
+function where_in_simplex(labor_share, n, s)
+	l = labor_share[1,n,:,s]
+	return (minimum(l), ind2sub(l,indmin(l)))
 end
 
 function expected_value(y)
@@ -62,7 +67,6 @@ function free_trade_sector_shares!(parameters)
 	for t=1:T
 		revenue_shares[1,1,:,t] = eigen_share(alpha_jt[1,1,:,t]*beta_j[1,1,:,1]' + gamma_jk)
 	end
-	# FIXME: choose units such that world expenditure equals that in data
 	parameters[:sector_shares] = revenue_shares
 end
 
@@ -278,8 +282,14 @@ end
 
 function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 
+	function max_step_size(x0, direction)
+		nulla = parameters[:numerical_zero]
+		negative_entries = min.(direction, -nulla)
+		return minimum(nulla - x0 ./ negative_entries, 3)
+	end
+
 	function evaluate_utility(random_variables, L_nj_star, parameters, t)
-		random_variables[:L_njs] = max.(parameters[:numerical_zero], min.(1.0, random_variables[:L_njs]))
+		random_variables[:L_njs] = max.(parameters[:numerical_zero], random_variables[:L_njs])
 		random_variables[:L_njs] = random_variables[:L_njs] ./ sum(random_variables[:L_njs], 3)
 
 		middle_loop!(random_variables, parameters, t)
@@ -307,8 +317,6 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 	k = 1
 
 	nulla = ones(1,1,1,1)*parameters[:numerical_zero]
-	bounds = 0.5
-	# initisal step size converts a 10-fold wage gap into a 100pp increase in labor share
 
 	utility = evaluate_utility(random_variables, L_nj_star, parameters, t)
 	gradient = calculate_derivative(random_variables, L_nj_star, parameters)
@@ -316,58 +324,24 @@ function adjustment_loop!(random_variables, L_nj_star, parameters, t)
 	info("Starting from $dist")
 
 	while (dist > parameters[:adjustment_tolerance]) && (k <= parameters[:max_iter_adjustment])
-		step_size = 0.1
 		snapshot = copy(random_variables)
 
 		previous_utility = utility
 		previous_L = random_variables[:L_njs]
+		step_size = min.(0.33*max_step_size(previous_L, gradient), 0.1)
 
-		biggest_step = maximum(gradient)
-		smallest_step = -minimum(gradient)
-
-		min_allowed = exp(-bounds) * L_njs_free
-		max_allowed = exp(+bounds) * L_njs_free
-
-		max_step_size = min.(minimum(max_allowed .- previous_L)/biggest_step, minimum(previous_L .- min_allowed)/smallest_step)
-		info("max step size: ", max_step_size)
-
-		snapshot[:L_njs] = previous_L .+ gradient*max.(step_size,max_step_size)
+		snapshot[:L_njs] = previous_L .+ gradient .* step_size
 
 		utility = evaluate_utility(snapshot, L_nj_star, parameters, t)
 		gradient = calculate_derivative(snapshot, L_nj_star, parameters)
 		dist = mean(gradient .^ 2) .^ 0.5
-		info("Gradient: $dist")
 
 		difference = utility - previous_utility
-		proportional_increase = difference / sum(gradient .^ 2) / step_size
-		info("Difference: ", difference)
-		info("Proportional increase: ", proportional_increase)
-
-		kk = 1
-
-		# find small-enough step size
-		while false & (proportional_increase < 0.25) && (kk <= parameters[:max_iter_adjustment])
-			snapshot = copy(random_variables)
-			# optimal backtracking for quadratic functions
-			correction = max.(0.1, min.(0.8, 0.5*1/(1-proportional_increase)))
-			step_size = correction*step_size
-			info("Backtracking: ", correction)
-			debug("Step size: ", step_size)
-			snapshot[:L_njs] = previous_L .+ gradient*step_size
-
-			utility = evaluate_utility(snapshot, L_nj_star, parameters, t)
-			inner_gradient = calculate_derivative(snapshot, L_nj_star, parameters)
-			info("Gradient: ", mean(inner_gradient .^ 2) .^ 0.5)
-			difference = utility - previous_utility
-			proportional_increase = difference / sum(gradient .^ 2) / step_size
-
-			debug("Difference: ", difference)
-			info("Proportional increase: ", proportional_increase)
-			sleep(1)
-		end
+		proportional_increase = difference / sum(gradient .^ 2 .* step_size)
+		debug("Difference: ", difference)
+		debug("Proportional increase: ", proportional_increase)
 
 		info("---- Adjustment $k: $dist")
-		sleep(0)
 
 		k = k+1
 		random_variables = snapshot
@@ -440,11 +414,9 @@ function period_wrapper(parameters, t)
 	compute_trade_shares!(random_variables, parameters, t)
 	info("Model trade shares: ", random_variables[:d_mnjs][end,end,1:3,1])
 	info("Data trade shares: ", parameters[:d][end,end,1:3,1])
-	sleep(10)
 
 	info("US prices: ", random_variables[:P_njs][1,end,1:3,1])
 	info("in the data: ", parameters[:p_sectoral][1,end,1:3,1])
-	sleep(0)
 
 	compute_real_gdp!(random_variables, parameters, t)
 	info("Nominal world expenditure: ", sum(random_variables[:E_mjs][:,:,:,1]))
