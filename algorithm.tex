@@ -1,59 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 \begin{document}
-Solving a simple Armington-endowment model.
-
-Let $Q_n = A_NL_n$, with $L_n$ completely inelastic. Demand is CES:
-\[
-C_n^{1-1/\theta} = \sum_m Q_m^{1-1/\theta}.
-\]
-Trade costs are $\tau_{ij}$ and we denote $\kappa_{ij} = \tau_{ij}^{-\theta}$.
-
-This model has the following equilibrium equations.
-\[
-d_{nm} = 
-	\frac
-	{(\tau_{nm}w_m)^{1-\theta}}
-	{\sum_k (\tau_{nk} w_k)^{1-\theta}}
-\]
-\[
-w_m \cdot L_m = \sum_n d_{nm} w_n \cdot L_n
-\]
-where $w_m$ is the unit cost of labor $L_m$.
-\[
-w_m L_m = w_m^{1-\theta}
-\sum_n 	\frac
-	{\tau_{nm}^{1-\theta}}
-	{\sum_k (\tau_{nk} w_k)^{1-\theta}}
- w_n L_n
-\]
-Let $\Phi_n = \sum_k (\tau_{nk} w_k)^{1-\theta}$ 
-\[
-w_m^\theta L_m = 
-\sum_n 	
-	{\tau_{nm}^{1-\theta}}
- w_n L_n/\Phi_n.
-\]
-This leads to a better iteration: Pick $w_n$ and calculate corresponding $\Phi_n$. Calculate new $w_n$ from LHS. 
-
-\begin{enumerate}
-	\item Pick $\alpha_m^{(0)} = w_mL_m/\Phi_m$ from some previous equilibrium (or data).
-	\item Solve for
-	\[
-	w_m^{(k+1)} = L_m^{-1/\theta} 
-		\left[
-		\sum_n \alpha_n^{(k)} \tau_{nm}^{1-\theta}
-		\right]^{1/\theta}
-	\]
-	\item Set 
-	\[
-	\alpha_m^{(k+1)} = w_m^{(k)} L_m/\Phi_m(w^{(k)})
-	\]
-	and repeat.
-\end{enumerate}
-This should converge fast, in 3-4 steps, because (i) we start from a close guess, (ii) $\theta$ is large so that $1/\theta$ is small, resulting in dampening, (iii) $\alpha$ has limited impact on wages, only due to destination-country variation in $\tau$, dampening feedback.
-
-\section{Full model}
+\section{Model solution}
 Introduce a new variable for the factory-gate price of intermediate goods,
 \begin{equation}\label{eq:varrho}
 	\varrho_{njt} = \xi B_j T_{nj}^{-1/\theta} A_{njt}^{-1} w_{njt}^{\beta_j} \prod_{k=1}^J P_{nkt}^{\gamma_{kj}}.
@@ -363,19 +311,38 @@ d_{njt} = c_{jt}A_{njt}^{\theta/(1+\beta_j\theta)}L_{njt}^{\beta_j\theta/(1+\bet
 \]
 where the $c_{jt}$ constant is such that import shares add up to 1 for all $j$ and all $t$.
 
-Given $d_{njt}$ and the precomputed $E_{wjt}$, we can calculate wages in all sectors. Prices can be calculated from
+Given $d_{njt}$ and the precomputed $E_{wjt}$, we can calculate wages in all sectors. 
 \[
-\ln\mathbf P_{t} = 
-(\mathbf I-\Gamma)^{-1}[\text{diag}(\beta+1/\theta) \ln\mathbf d_{0t}  
-+\ln\xi
+-\frac1\theta \ln\mathbf d_{nt} = 
+\ln\xi
 	+ \ln\mathbf B
-	- \ln\mathbf A_{0t}
-+
-\text{diag}(\beta)(\ln\mathbf E_{wt}-\ln\mathbf L_{0t})]
- .  
+	- \ln\mathbf A_{nt}
++\text{diag}(\beta)(\ln\mathbf w_{nt}-\ln\mathbf P_{t})
++ \mathbf C \ln\mathbf P_{t}  
 \]
+\[
+[\text{diag}(\beta)
+- \mathbf C] \ln\mathbf P_{t} =  
+\frac1\theta \ln\mathbf d_{nt} +
+\ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
++\text{diag}(\beta)\ln\mathbf w_{nt}
+\]
+Prices can be calculated from
+\[
+\ln\mathbf P_{t} =  
+(\mathbf I - \Gamma)^{1}
+[\frac1\theta \ln\mathbf d_{nt} +
+\ln\xi
+	+ \ln\mathbf B
+	- \ln\mathbf A_{nt}
++\text{diag}(\beta)\ln\mathbf w_{nt}]
+\]
+\textbf{Note: This gamma matrix is the transpose of gammajk in the code.}
 
-\section{Expectations and outer loop}
+
+\subsection{Expectations and outer loop}
 An equilibrium condition states
 \begin{equation}
 	\frac 
@@ -390,7 +357,7 @@ We calculate the expected wage share as follows. Given past productivities $A_{n
 
 Start from a candidate labor allocation $L_{njt}^{(0)}$. Calculate expected wage share as the simple average of wage shares across the $S$ realizations. Set $L_{njt}^{(n+1)} = L_{nt}\eta_{njt}^{(n)}$, where $\eta_{njt}^{(n)}$ is the wage share in iteration $n$. This may be dampened, but in practice, it convergence in a handful of steps.
 
-\subsection{Time series}
+\subsubsection{Time series}
 Given the autoregressive nature of productivity, the vector of $A_{jnt}$s is a state variable. The problem is drastically simplified by the fact that no decision variable affects the state. The representative agent solves
 % FIXME: we have already used varrho
 \[
@@ -521,6 +488,32 @@ E_{A}\frac
 	{\tilde w_{nt}(\mathbf A_{t}, \mathbf L_{t}^*)}
 = \lambda L_{nt}.
 \]
+
+\subsection{Flexible labor equilibrium}
+To get a starting point or direction of iteration, it is useful to calculate the flexible labor equilibrium, where wages are equal across sectors.
+
+When wages are constant across sectors, we can write expenditure shares as
+\begin{equation}\label{eq:sectoral_share:2}
+e_{mjt} = \frac
+	{w_{mt}\sum_{k=1}^J(\alpha_{mjt}(\mathbf P_t)\beta_k+\gamma_{jk}) L_{mkt}/\beta_k - S_{mt}}
+	{w_{mt}\sum_{k=1}^J L_{mkt}/\beta_k-S_{mt}}.
+\end{equation}
+If $S_{mt}=0$ and demand is Cobb-Douglas, this can be precalculated in the outer loop, without knowing anything about wages. The inner loop (without the need for a middle loop) then solves for prices and wages.
+\[
+	\varrho_{njt} = w_{nt}^{-1/\theta}(L_{njt}/\beta_j)^{-1/\theta}
+	\left[
+	\sum_{m=1}^N
+		(\kappa_{mnjt} P_{mjt})^{\theta}
+		w_{mt}\sum_{k=1}^J(\alpha_{mjt}(\mathbf P_t)+\gamma_{jk}/\beta_k) L_{mkt} - S_{mt}
+	\right]^{1/\theta}.
+\]
+We also know that 
+\begin{equation}\label{eq:varrho:2}
+	\varrho_{njt} = w_{nt}^{\beta_j} \xi B_j A_{njt}^{-1}  \prod_{k=1}^J P_{nkt}^{\gamma_{kj}}.
+\end{equation}
+
+
+\section{Calibration}
 \subsection{Calibrating the CES model}
 To calibrate the CES demand shifters $\nu$, we need data on how final expenditure is split across sectors in each country. We will recover this from the split of revenue, subtracting intermediate expenditure.
 

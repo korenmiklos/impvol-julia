@@ -1,50 +1,85 @@
 
 module CalibrateParameters
 	include("calibration_utils.jl")
-	include("utils.jl")
-	include("equilibrium.jl")
-	using JLD2, FileIO, .ImpvolEquilibrium
-	
+	using JLD2, FileIO, ImpvolEquilibrium, Base.Test
+
+	function positive(args...)
+		for item in args
+			@test minimum(item) > 0.0
+		end
+	end
+
 	function calibrate_parameters!(parameters)
 		data = load("../../../data/impvol_data.jld2")
 
 		_, N, J, T = size(data["beta"])
 		parameters[:N], parameters[:J], parameters[:T] = N, J, T
 		parameters[:beta_j] = mean(data["beta"],(1,2,4))
+		@test size(parameters[:beta_j]) == (1,1,J,1)
 
 		parameters[:gamma_jk] = compute_gamma(parameters, data)
-		# CD case
-		parameters[:nu_njt] = compute_alpha(parameters, data)
+		@test size(parameters[:gamma_jk]) == (J,J)
+		C = diagm(parameters[:beta_j][1,1,:,1])+parameters[:gamma_jk]'-eye(J)
+		@test sum(C, 2) ≈ zeros(J,1) atol=1e-9
+
 		parameters[:S_nt] = zeros(1,N,1,T)
 		parameters[:S_nt_data] = data["trade_balance"] .- mean(data["trade_balance"],2)
+		@test size(parameters[:S_nt_data]) == (1,N,1,T)
+		@test sum(parameters[:S_nt_data], 2) ≈ zeros(1,1,1,T) atol=1e-9
 
 		parameters[:d] = expenditure_shares(parameters, data)
+		@test size(parameters[:d]) == (N,N,J,T)
+		@test sum(parameters[:d], 2)[:,:,1:end-1,:] ≈ ones(N,1,J-1,T) atol=1e-9
 
 		parameters[:kappa_mnjt] = trade_costs(parameters)
+		@test size(parameters[:kappa_mnjt]) == (N,N,J,T)
 
 		final_expenditure_shares = calculate_expenditure_shares(parameters, data)
-		calculate_p_and_nu!(parameters, data, final_expenditure_shares)
+		parameters[:final_expenditure_shares] = final_expenditure_shares
+		@test size(final_expenditure_shares) == (1,N,J,T)
+		@test sum(final_expenditure_shares, 3) ≈ ones(1,N,1,T) atol=1e-9
+
+		# broad country weights for final expenditure
+		country_weights = sum(data["va"], (1,3,4))
+		country_weights = country_weights ./ sum(country_weights, 2)
+
+		calculate_p_and_nu!(parameters, data, final_expenditure_shares, country_weights)
+		# FIXME: rename nu_njt to nu_jt everywhere
+		@test size(parameters[:nu_njt]) == (1,1,J,T)
+		@test sum(parameters[:nu_njt], 3) ≈ ones(1,1,1,T) atol=1e-9
+		@test size(parameters[:p_sectoral]) == (1,N,J,T)
+		@test any(isnan.(parameters[:p_sectoral])) == false
+		@test parameters[:p_sectoral][1,end,:,1] ≈ ones(J) atol=1e-9
+
 		parameters[:psi] = calculate_psi(parameters, data)
+		@test size(parameters[:psi]) == (1,N,J,T)
+
 		parameters[:B_j] = calculate_B(parameters)
+		@test size(parameters[:B_j]) == (1,1,J,1)
+
 		parameters[:xi] = calculate_xi(parameters)
+		@test typeof(parameters[:xi]) == Float64
 
-		parameters[:z] = calculate_z(parameters, data)
-
-		A_US = calculate_US_A(parameters, data)
-		A_relative = calculate_A(parameters) 
-		parameters[:A] = A_relative .* A_US
+		parameters[:A] = calculate_A(parameters, data)
+		@test size(parameters[:A]) == (1, N, J, T)
+		# productivity does not change more than 50% per year
+		logA = log.(parameters[:A])
+		@test maximum(abs.(logA[:,:,:,T] .- logA[:,:,:,1])) < log(1.50)*T
 
 		# total world expenditure in the data - needed to get reasonable starting values
 		parameters[:nominal_world_expenditure] = sum(data["va"] ./ parameters[:beta_j], (1,2,3))
-		info(size(parameters[:nominal_world_expenditure]))
+		@test size(parameters[:nominal_world_expenditure]) == (1,1,1,T)
 
 		# global, all-time average of sector final expenditure shares
-		importance_weight = mean(parameters[:nu_njt], [1, 2, 4])
+		importance_weight = mean(parameters[:nu_njt], (1, 2, 4))
+		parameters[:importance_weight] = importance_weight
 		decompose_shocks!(parameters, importance_weight)
 		draw_productivity_shocks!(parameters)
-		info(size(parameters[:A]))
-		info(size(parameters[:A_njs][1]))
-		info(size(parameters[:A_njs][2]))
+		@test size(parameters[:A_njs]) == (T,)
+		@test size(parameters[:A_njs][1]) == (1,N,J,1)
+		@test size(parameters[:A_njs][2]) == (1,N,J,parameters[:S])
+
+		positive(final_expenditure_shares, parameters[:nu_njt], parameters[:A_njs][2], parameters[:p_sectoral], parameters[:A])
 	end
 
 	function compute_gamma(parameters, data)
@@ -160,7 +195,7 @@ module CalibrateParameters
 
 		import_shares = data["import_shares"]
 		n_zero = parameters[:numerical_zero]
-		
+
 		d = import_shares
 
 		share = d ./ repeat(sum(d,2), outer = [1,N,1,1])
@@ -201,11 +236,14 @@ module CalibrateParameters
 		return psi_t
 	end
 
-	function calculate_p_and_nu!(parameters, data, final_expenditure_shares)
+	function calculate_p_and_nu!(parameters, data, final_expenditure_shares, country_weights)
+		N = parameters[:N]
+		J = parameters[:J]
+		T = parameters[:T]
+
 		p_sectoral_data = data["p_sectoral_data"]
 		d = parameters[:d]
 		kappa = parameters[:kappa_mnjt]
-		alpha =  parameters[:nu_njt] # Only in case of CD, CES should be different!
 		theta = parameters[:theta]
 		sigma = parameters[:sigma]
 		nulla = parameters[:numerical_zero]
@@ -213,110 +251,74 @@ module CalibrateParameters
 		p_sectoral_base = p_sectoral_data ./ p_sectoral_data[:,:,:,1]
 
 		# step 1: calculate nu and price index for base country
+		# NB: US as the last country in the matrix
 		p_sectoral_US = p_sectoral_base[:,end:end,:,:]
 		nu_US = final_expenditure_shares[:,end:end,:,:] .* p_sectoral_US .^ (sigma-1)
 		nu_US = nu_US ./ sum(nu_US, 3)
 		P_US = CES_price_index(nu_US, p_sectoral_US, sigma)
+		@test p_sectoral_US[1,1,:,1] ≈ ones(J) atol=1e-9
+		@test P_US[1,1,1,1] ≈ 1.0 atol=1e-9
 
 		# step 2: calculate sectoral prices from market shares relative to US
 		# US is assumed to be chosen as a base country (US = end), else pwt should be used to do the conversion
 		# normalization: p_sectoral[1,end,:,1] = 1.0
-		p_sectoral = exp.( mean(1 / theta * log.(d ./ permutedims(cat(ndims(d),d[end,:,:,:]),[4,1,2,3])) - log.(kappa ./ permutedims(cat(ndims(kappa),kappa[end,:,:,:]),[4,1,2,3])), 2) + repeat(permutedims(cat(ndims(p_sectoral_base),log.(p_sectoral_base[:,end,:,:])), [1,4,2,3]), outer = [size(d,1),1,1,1]) )
-
+		p_sectoral = array_transpose(exp.( mean(1 / theta * log.(d ./ permutedims(cat(ndims(d),d[end,:,:,:]),[4,1,2,3])) - log.(kappa ./ permutedims(cat(ndims(kappa),kappa[end,:,:,:]),[4,1,2,3])), 2) + repeat(permutedims(cat(ndims(p_sectoral_base),log.(p_sectoral_base[:,end,:,:])), [1,4,2,3]), outer = [size(d,1),1,1,1]) ))
+		@test any(isnan, p_sectoral[:,:,1:end-1,:]) == false
 		# step 3: calculate tradable nu and infer nontradable nu
 		nu = final_expenditure_shares .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (sigma-1)
+		@test any(isnan, nu[:,:,1:end-1,:]) == false
+
 		nontradable_nu = max.(nulla, 1 .- sum(nu[:,:,1:end-1,:], 3))
 		nu[:,:,end:end,:] = nontradable_nu
 		nu = nu ./ sum(nu, 3)
+		@test any(isnan, nu) == false
+		@test nu[1,end,:,1] ≈ final_expenditure_shares[1,end,:,1] atol=1e-9
+
+		# demand shifter only varies across sectors and over time, not across countries
+		parameters[:nu_njt] = sum(country_weights .* nu, (1,2))
+
+		# enforce comformity of model with data
+		final_expenditure_shares = parameters[:nu_njt] .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (1-sigma)
+		nontradable_nu = max.(nulla, 1 .- sum(final_expenditure_shares[:,:,1:end-1,:], 3))
+		final_expenditure_shares[:,:,end:end,:] = nontradable_nu
+		final_expenditure_shares = final_expenditure_shares ./ sum(final_expenditure_shares, 3)
 
 		# step 4: calculate nontradable prices
-		# NB: if nu changed, we recalibrate also tradable prices
-		p_sectoral = data["pwt"] .* P_US .* (nu ./ final_expenditure_shares) .^ (1/(sigma-1))
+		# NB: DO NOT recalibrate tradable prices, expenditure_shares are very noisy for small sectors
+		p_sectoral[:,:,end:end,:] = data["pwt"] .* P_US .* (parameters[:nu_njt][:,:,end:end,:] ./ final_expenditure_shares[:,:,end:end,:]) .^ (1/(sigma-1))
 		parameters[:p_sectoral] = p_sectoral
-		# demand shifter only varies across sectors and over time, not across countries
-		parameters[:nu_njt] = mean(nu, (1,2))
 	end
 
-	function calculate_z(parameters, data)
+	function calculate_A(parameters, data)
 		N, J, T = parameters[:N], parameters[:J], parameters[:T]
 
-		p_sectoral = parameters[:p_sectoral]
-		beta = parameters[:beta_j]
+		p_njt = parameters[:p_sectoral]
+		p_mjt = array_transpose(p_njt)
+		beta_j = parameters[:beta_j]
 		gamma = parameters[:gamma_jk]
-		kappa = parameters[:kappa_mnjt]
+		kappa_mnjt = parameters[:kappa_mnjt]
 		psi = parameters[:psi]
 		B = parameters[:B_j]
-		d = parameters[:d]
-		va = data["va"]
+		d_mnjt = parameters[:d]
+		nominal_gdp = sum(data["va"], 3)
+		va_shares = data["va"] ./ sum(data["va"], 3)
 		xi = parameters[:xi]
 		theta = parameters[:theta]
 
-		beta = squeeze(beta,(1,2,4))
+		# FIXME: wages should be calculated by #18
+		w_njt = nominal_gdp .* va_shares ./ psi
 
 		z = zeros(1, N, J, T)
 
-		for n in 1:N
-			for t in 1:T
-				# Sectors except services
-				z[1, n, :, t] = exp.( theta * log.(xi * B[1,1,:,1]) + theta * beta .* (log.(va[1,n,:,t]) - log.(psi[1,n,:,t])) + reshape(transpose(mean(log.(d[:,n,:,t]) - theta * log.(kappa[:,n,:,t]),1)) - theta * transpose(mean(log.(p_sectoral[:,1,:,t]),1)),J) + transpose(gamma[:,:,1,1]) * theta * log.(p_sectoral[n,1,:,t]) )
+		# use eq 15 in algorithm.pdf
+		rho_mnjt = kappa_mnjt .* p_mjt .* d_mnjt .^ (-1/theta)
+		rho_njt = exp.(mean(log.(rho_mnjt),1))
+		# nontradable input price equals output price
+		rho_njt[1,:,end,:] = p_njt[1,:,end,:]
+		input_price_index = exp.(rotate_sectors(gamma', log.(p_njt)))
 
-				# Services
-				z[1,n,end,t]  = xi^theta * B[1,1,end,1]^theta * (va[1,n,end,t] / psi[1,n,end,t])^(theta * beta[end]) * prod(p_sectoral[n,1,:,t].^(gamma[:,end]))^theta * p_sectoral[n,1,end,t]^(-theta)
-			end
-		end
-
-		return z
-	end
-
-	function calculate_A(parameters)
-		z = parameters[:z]
-		theta = parameters[:theta]
-
-		return z .^ (1/theta)
-	end
-
-	function calculate_US_wages(parameters, data)
-		nulla = parameters[:numerical_zero]
-		weights = parameters[:bp_weights]
-		value_added_shares = data["va"] ./ sum(data["va"], 3)
-		V_c, V_t = DetrendUtilities.detrend(value_added_shares, weights)
-		if parameters[:one_over_rho]>0.0
-			rho = 1/parameters[:one_over_rho]
-
-			deviation = max.(nulla, 1+4*rho*V_c)
-			wage_ratio = 0.5 + 0.5 * deviation .^ 0.5
-			info("Unweighted wage ratio should be 1: ", mean(wage_ratio))
-			# FIXME: if not, do one more loop?
-		else
-			# if no labor adjustment, the ratio of value added = the ratio of wages
-			wage_ratio = value_added_shares ./ V_t
-		end
-
-		nominal_GDP = sum(data["va"], 3)
-		wage = nominal_GDP .* wage_ratio
-		return wage[1:1,end:end,:,:]
-	end
-
-	function calculate_US_A(parameters, data)
-		N, J, T = parameters[:N], parameters[:J], parameters[:T]
-
-		p_sectoral = parameters[:p_sectoral]
-		beta = parameters[:beta_j]
-		gamma = parameters[:gamma_jk]
-		kappa = parameters[:kappa_mnjt]
-		psi = parameters[:psi]
-		B = parameters[:B_j]
-		d = parameters[:d]
-		xi = parameters[:xi]
-		theta = parameters[:theta]
-
-		own_market_share = zeros(1,N,J,T)
-		wage = calculate_US_wages(parameters, data)
-		for n=1:N
-			own_market_share[1,n,:,:] = d[n,n,:,:]
-		end
-	    A = xi * B .* own_market_share .^ theta .* wage .^ beta .* exp.(rotate_sectors(gamma, log.(p_sectoral))) ./ p_sectoral
-	    return A[1:1,end:end,:,:]
+		A_njt = xi .* B ./ rho_njt .* w_njt .^ beta_j .* input_price_index
+		return A_njt
 	end
 
 	function calculate_expenditure_shares(parameters, data)
@@ -347,10 +349,8 @@ module CalibrateParameters
 		# FIXME: adjust for trade imbalance here
 
 		nu = final_expenditure ./ sum(final_expenditure, 3)
-
 		# Replace negative elements with 0
-		nu = (nu + abs.(nu)) / 2
-
+		nu = max.(parameters[:numerical_zero], nu)
 		# Smooth the series
 		nu_c, nu_t = DetrendUtilities.detrend(nu, weights)
 
@@ -389,10 +389,10 @@ module CalibrateParameters
 		parameters[:country_shock_njs] = draw_random_realizations(parameters[:country_shock], S)
 		parameters[:idiosyncratic_shock_njs] = draw_random_realizations(parameters[:idiosyncratic_shock], S)
 
-		parameters[:A_njs] = map(t -> 
-			exp.(non_random_variable(parameters[:productivity_trend], t) 
-				.+ parameters[:global_sectoral_shock_njs][t] 
-				.+ parameters[:country_shock_njs][t] 
+		parameters[:A_njs] = map(t ->
+			exp.(ImpvolEquilibrium.non_random_variable(parameters[:productivity_trend], t)
+				.+ parameters[:global_sectoral_shock_njs][t]
+				.+ parameters[:country_shock_njs][t]
 				.+ parameters[:idiosyncratic_shock_njs][t]),
 				 1:T)
 	end
@@ -403,11 +403,11 @@ module CalibrateParameters
 		constant, rho, sigma = estimate_AR1(data)
 
 		draws = Array{Array{Float64, 4}}(T)
-		draws[1] = non_random_variable(data, 1)
+		draws[1] = ImpvolEquilibrium.non_random_variable(data, 1)
 		for t=2:T
 			innovation = sigma .* randn(1,N,J,S - 1)
-			random_realization = non_random_variable(data, t)
-			past_productivity = non_random_variable(data, t-1)
+			random_realization = ImpvolEquilibrium.non_random_variable(data, t)
+			past_productivity = ImpvolEquilibrium.non_random_variable(data, t-1)
 			# reversion towards mean
 			draws[t] = cat(4, random_realization, constant .* (1-rho) .+ past_productivity .* rho .+ innovation)
 		end
@@ -439,4 +439,3 @@ module CalibrateParameters
 		return file["results"]
 	end
 end
-

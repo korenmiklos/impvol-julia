@@ -1,7 +1,7 @@
 using Logging
 Logging.configure(level=DEBUG)
 include("../calibrate_params.jl")
-using .CalibrateParameters
+using CalibrateParameters
 
 parameters[:S] = 100
 
@@ -19,10 +19,10 @@ parameters[:adjustment_step_size] = 0.25
 # any deviation from sigma=1 needs more dampening
 parameters[:outer_step_size] = exp(-0.5*abs(log(parameters[:sigma])))
 # this is log points of average input price differences
-parameters[:inner_tolerance] = 0.001
-parameters[:middle_tolerance] = 0.003
-parameters[:adjustment_tolerance] = 0.003
-parameters[:outer_tolerance] = 0.005
+parameters[:inner_tolerance]  = 0.001
+parameters[:middle_tolerance] = 0.001
+parameters[:adjustment_tolerance] = 0.001
+parameters[:outer_tolerance] = 0.001
 
 # maximum number of iterations in each loop
 parameters[:max_iter_inner] = 1000

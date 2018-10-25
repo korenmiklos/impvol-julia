@@ -1,5 +1,3 @@
-module Environment
-	export parameters
 	## these are needed for data -> parameters mapping
 	parameters = Dict{Symbol, Any}()
 
@@ -18,4 +16,3 @@ module Environment
 	parameters[:kappa_mnjt][5,:,:,:] = ones(size(parameters[:kappa_mnjt][5,:,:,:])) ./ 100000
 	parameters[:kappa_mnjt][:,5,:,:] = ones(size(parameters[:kappa_mnjt][:,5,:,:])) ./ 100000
 	parameters[:kappa_mnjt][5,5,:,:] = ones(size(parameters[:kappa_mnjt][5,5,:,:]))
-end
