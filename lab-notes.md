@@ -537,3 +537,12 @@ Prices and trad shares are ok in Period 1, but off in Period 2.
 27-Oct 18:00:14:INFO:root:US prices: [0.247416, 1.19084, 0.858142]
 27-Oct 18:00:14:INFO:root:in the data: [1.21921, 1.17859, 1.17859]
 ```
+
+Puzzle: some US prices go down in the model
+```
+27-Oct 18:05:50:INFO:root:US prices: [0.546038, 1.02751, 0.888753]
+27-Oct 18:05:50:INFO:root:in the data: [1.21921, 1.17859, 1.17859]
+27-Oct 18:05:50:INFO:root:Nominal world expenditure: 6.693994194508271e6
+27-Oct 18:05:50:INFO:root:--------------In the data: [1.02443e7]
+```
+This may be because of deflation and expressing prices relative to US price index? Looks excessive for that, would require world inflation of 50% or so.
