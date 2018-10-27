@@ -51,8 +51,8 @@ module CalibrateParameters
 		@test any(isnan.(parameters[:p_sectoral])) == false
 		@test parameters[:p_sectoral][1,end,:,1] ≈ ones(J) atol=1e-9
 
-		parameters[:psi] = calculate_psi(parameters, data)
-		@test size(parameters[:psi]) == (1,N,J,T)
+		parameters[:w_njt] = calculate_nominal_wages(parameters, data)
+		@test size(parameters[:w_njt]) == (1,N,J,T)
 
 		parameters[:B_j] = calculate_B(parameters)
 		@test size(parameters[:B_j]) == (1,1,J,1)
@@ -227,14 +227,27 @@ module CalibrateParameters
 		return B = (beta .^ -beta) .* prod(gamma .^ -gamma, 1)
 	end
 
-	function calculate_psi(parameters, data)
-		va = data["va"]
+	function calculate_nominal_wages(parameters, data)
+		nulla = parameters[:numerical_zero]
 		weights = parameters[:bp_weights]
+		value_added_shares = data["va"] ./ sum(data["va"], 3)
+		V_c, V_t = DetrendUtilities.detrend(value_added_shares, weights)
 
-		va_shares = va ./ repeat(sum(va, 3), outer = [1,1,size(va,3),1])
-		_, psi_t = DetrendUtilities.detrend(va_shares, weights)
-		return psi_t
+		if parameters[:one_over_rho]>0.0
+			rho = 1/parameters[:one_over_rho]
+
+			deviation = max.(nulla, 1+4*rho*V_c)
+			wage_ratio = 0.5 + 0.5 * deviation .^ 0.5
+			info("Unweighted wage ratio should be 1: ", mean(wage_ratio))
+			# FIXME: if not, do one more loop?
+		else
+			# if no labor adjustment, the ratio of value added = the ratio of wages
+			wage_ratio = value_added_shares ./ V_t
+		end
+		nominal_GDP = sum(data["va"], 3)
+		return nominal_GDP .* wage_ratio
 	end
+
 
 	function calculate_p_and_nu!(parameters, data, final_expenditure_shares, country_weights)
 		N = parameters[:N]
@@ -297,16 +310,11 @@ module CalibrateParameters
 		beta_j = parameters[:beta_j]
 		gamma = parameters[:gamma_jk]
 		kappa_mnjt = parameters[:kappa_mnjt]
-		psi = parameters[:psi]
+		w_njt = parameters[:w_njt]
 		B = parameters[:B_j]
 		d_mnjt = parameters[:d]
-		nominal_gdp = sum(data["va"], 3)
-		va_shares = data["va"] ./ sum(data["va"], 3)
 		xi = parameters[:xi]
 		theta = parameters[:theta]
-
-		# FIXME: wages should be calculated by #18
-		w_njt = nominal_gdp .* va_shares ./ psi
 
 		z = zeros(1, N, J, T)
 
