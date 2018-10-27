@@ -47,7 +47,7 @@ Emjs and Rnjs do not match up in the model:
 13-Oct 10:34:09:INFO:root:Nominal world expenditure: 3.726180697148625e15
 ```
 
-No, second line is REAL output. 
+No, second line is REAL output.
 
 # 2018-10-15
 
@@ -73,7 +73,7 @@ WARNING: using ImpvolEquilibrium.array_transpose in module Main conflicts with a
 Apparently, `relative_A` is not 1.0 for US:
 
 ```
-15-Oct 10:58:35:INFO:root:[7165.76 7131.23 6239.92 6359.79 6353.39 6465.62 6446.54 6460.09 5606.42 
+15-Oct 10:58:35:INFO:root:[7165.76 7131.23 6239.92 6359.79 6353.39 6465.62 6446.54 6460.09 5606.42
 ```
 
 Bug: `calculate_A` already calculates level of A, not relative to US. It was only the price that needed a level pin down. My calculation and Balazs's calculation of US productivity is the same.
@@ -151,7 +151,7 @@ Our current choice of numeraire is that we start the free-trade initialization f
 18-Oct 10:14:04:INFO:root:in the data: [1.0, 1.0, 1.0]
 18-Oct 10:14:04:INFO:root:Nominal world expenditure: 12.158414061090557
 18-Oct 10:14:04:INFO:root:--------------In the data: [12.0]
-``` 
+```
 
 ## Dependencies and name space
 
@@ -519,3 +519,21 @@ Where do we enforce labor shares are in the simplex? In line 286 in `evaluate_ut
 ```
 
 Introducing additional dampening (`0.33*max_step_size`) seems to help.
+
+# 2018-10-27
+
+## Resolve remaining issues
+
+Issue #18 closed.
+
+No IO linkages. Recalculated A. Outer loop does not seem to converge.
+
+Can outer loop leave simplex? No, because wage share is by defintion (0,1). Reducing step size helps. 
+
+Prices and trad shares are ok in Period 1, but off in Period 2. 
+```
+27-Oct 18:00:14:INFO:root:Model trade shares: [0.984066, 0.681995, 0.994389]
+27-Oct 18:00:14:INFO:root:Data trade shares: [0.970394, 0.938128, 0.99445]
+27-Oct 18:00:14:INFO:root:US prices: [0.247416, 1.19084, 0.858142]
+27-Oct 18:00:14:INFO:root:in the data: [1.21921, 1.17859, 1.17859]
+```

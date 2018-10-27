@@ -9,7 +9,7 @@
 	########## parameters common across scenarios
 	## these are function of data
 	# inverse of adjustment cost, 0 if cannot readjust
-	parameters[:one_over_rho] = 0.01
+	parameters[:one_over_rho] = 0.001
 
 	include("../config.jl")
 	# change parameters after reading data, but common across scenarios

@@ -379,7 +379,7 @@ function outer_loop!(random_variables, parameters, t, L_nj_star)
 		dist = distance(wage_share, old_wage_share)
 		info("-- Outer ", k, ": ", dist)
 
-		L_nj_star = ((1-lambda)*old_wage_share .+ lambda*wage_share)
+		L_nj_star = (1-lambda)*old_wage_share .+ lambda*wage_share
 		k = k+1
 	end
 	#warn("outer: ", k-1)
@@ -402,25 +402,18 @@ function period_wrapper(parameters, t)
 	end
 	free_trade_labor_shares!(random_variables, parameters, t)
 	stv = random_variables[:L_njs_free]
-	# first run without labor adjustment
-	actual_steps = parameters[:max_iter_adjustment]
-	#parameters[:max_iter_adjustment] = 0
 	L_nj_star = outer_loop!(random_variables, parameters, t, stv)
 
-	# then run with labor adjustment, starting from reasonable labor allocation
-	#Logging.configure(level=DEBUG)
-	#parameters[:max_iter_adjustment] = actual_steps
-	#_ = outer_loop!(random_variables, parameters, t, L_nj_star)
 	compute_trade_shares!(random_variables, parameters, t)
 	info("Model trade shares: ", random_variables[:d_mnjs][end,end,1:3,1])
-	info("Data trade shares: ", parameters[:d][end,end,1:3,1])
+	info("Data trade shares: ", parameters[:d][end,end,1:3,t])
 
 	info("US prices: ", random_variables[:P_njs][1,end,1:3,1])
-	info("in the data: ", parameters[:p_sectoral][1,end,1:3,1])
+	info("in the data: ", parameters[:p_sectoral][1,end,1:3,t])
 
 	compute_real_gdp!(random_variables, parameters, t)
 	info("Nominal world expenditure: ", sum(random_variables[:E_mjs][:,:,:,1]))
-	info("--------------In the data: ", parameters[:nominal_world_expenditure][:,:,:,1])
+	info("--------------In the data: ", parameters[:nominal_world_expenditure][:,:,:,t])
 	sleep(0)
 	return random_variables
 end
