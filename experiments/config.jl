@@ -17,7 +17,7 @@ parameters[:inner_step_size] = exp(-0.10*(parameters[:J]-1)^0.75)
 parameters[:middle_step_size] = exp(-0.275*max(1,parameters[:sigma]))
 parameters[:adjustment_step_size] = 0.25
 # any deviation from sigma=1 needs more dampening
-parameters[:outer_step_size] = exp(-0.5*abs(log(parameters[:sigma])))
+parameters[:outer_step_size] = exp(-0.5*(1+abs(log(parameters[:sigma]))))
 # this is log points of average input price differences
 parameters[:inner_tolerance]  = 0.001
 parameters[:middle_tolerance] = 0.001
@@ -28,4 +28,4 @@ parameters[:outer_tolerance] = 0.001
 parameters[:max_iter_inner] = 1000
 parameters[:max_iter_middle] = 50
 parameters[:max_iter_adjustment] = 50
-parameters[:max_iter_outer] = 50
+parameters[:max_iter_outer] = 100
