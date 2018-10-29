@@ -8,7 +8,7 @@ PROCS = -p10
 tables: $(foreach table,$(TABLES),experiments/$(table)/output_table.csv) 
 
 define run_experiment
-experiments/$(1)/%/results.jld2: experiments/$(1)/init_parameters.jl experiments/$(1)/%/scenario.jl experiments/$(1)/%/change_parameters.jl $(UTILS)  data/impvol_data.jld2 
+experiments/$(1)/%/results.jld2: $(UTILS) experiments/$(1)/init_parameters.jl experiments/$(1)/%/scenario.jl experiments/$(1)/%/change_parameters.jl $(UTILS)  data/impvol_data.jld2 
 	@echo " + Compiling '$$@'"
 	cd $$(dir $$@) && julia $(PROCS) scenario.jl
 endef

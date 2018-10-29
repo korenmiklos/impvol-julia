@@ -3,41 +3,24 @@ module CalibrateParameters
 	include("calibration_utils.jl")
 	using JLD2, FileIO, ImpvolEquilibrium, Base.Test
 
-	function positive(args...)
-		for item in args
-			@test minimum(item) > 0.0
-		end
-	end
-
-	function calibrate_parameters!(parameters)
-		data = load("../../../data/impvol_data.jld2")
+	function calibrate_parameters!(parameters, fname="../../../data/impvol_data.jld2")
+		data = load(fname)
 
 		_, N, J, T = size(data["beta"])
 		parameters[:N], parameters[:J], parameters[:T] = N, J, T
 		parameters[:beta_j] = mean(data["beta"],(1,2,4))
-		@test size(parameters[:beta_j]) == (1,1,J,1)
 
 		parameters[:gamma_jk] = compute_gamma(parameters, data)
-		@test size(parameters[:gamma_jk]) == (J,J)
-		C = diagm(parameters[:beta_j][1,1,:,1])+parameters[:gamma_jk]'-eye(J)
-		@test sum(C, 2) ≈ zeros(J,1) atol=1e-9
 
 		parameters[:S_nt] = zeros(1,N,1,T)
 		parameters[:S_nt_data] = data["trade_balance"] .- mean(data["trade_balance"],2)
-		@test size(parameters[:S_nt_data]) == (1,N,1,T)
-		@test sum(parameters[:S_nt_data], 2) ≈ zeros(1,1,1,T) atol=1e-9
 
 		parameters[:d] = expenditure_shares(parameters, data)
-		@test size(parameters[:d]) == (N,N,J,T)
-		@test sum(parameters[:d], 2)[:,:,1:end-1,:] ≈ ones(N,1,J-1,T) atol=1e-9
 
 		parameters[:kappa_mnjt] = trade_costs(parameters)
-		@test size(parameters[:kappa_mnjt]) == (N,N,J,T)
 
 		final_expenditure_shares = calculate_expenditure_shares(parameters, data)
 		parameters[:final_expenditure_shares] = final_expenditure_shares
-		@test size(final_expenditure_shares) == (1,N,J,T)
-		@test sum(final_expenditure_shares, 3) ≈ ones(1,N,1,T) atol=1e-9
 
 		# broad country weights for final expenditure
 		country_weights = sum(data["va"], (1,3,4))
@@ -45,41 +28,23 @@ module CalibrateParameters
 
 		calculate_p_and_nu!(parameters, data, final_expenditure_shares, country_weights)
 		# FIXME: rename nu_njt to nu_jt everywhere
-		@test size(parameters[:nu_njt]) == (1,1,J,T)
-		@test sum(parameters[:nu_njt], 3) ≈ ones(1,1,1,T) atol=1e-9
-		@test size(parameters[:p_sectoral]) == (1,N,J,T)
-		@test any(isnan.(parameters[:p_sectoral])) == false
-		@test parameters[:p_sectoral][1,end,:,1] ≈ ones(J) atol=1e-9
 
 		parameters[:w_njt] = calculate_nominal_wages(parameters, data)
-		@test size(parameters[:w_njt]) == (1,N,J,T)
 
 		parameters[:B_j] = calculate_B(parameters)
-		@test size(parameters[:B_j]) == (1,1,J,1)
 
 		parameters[:xi] = calculate_xi(parameters)
-		@test typeof(parameters[:xi]) == Float64
 
 		parameters[:A] = calculate_A(parameters, data)
-		@test size(parameters[:A]) == (1, N, J, T)
-		# productivity does not change more than 50% per year
-		logA = log.(parameters[:A])
-		@test maximum(abs.(logA[:,:,:,T] .- logA[:,:,:,1])) < log(1.50)*T
 
 		# total world expenditure in the data - needed to get reasonable starting values
 		parameters[:nominal_world_expenditure] = sum(data["va"] ./ parameters[:beta_j], (1,2,3))
-		@test size(parameters[:nominal_world_expenditure]) == (1,1,1,T)
 
 		# global, all-time average of sector final expenditure shares
 		importance_weight = mean(parameters[:nu_njt], (1, 2, 4))
 		parameters[:importance_weight] = importance_weight
 		decompose_shocks!(parameters, importance_weight)
 		draw_productivity_shocks!(parameters)
-		@test size(parameters[:A_njs]) == (T,)
-		@test size(parameters[:A_njs][1]) == (1,N,J,1)
-		@test size(parameters[:A_njs][2]) == (1,N,J,parameters[:S])
-
-		positive(final_expenditure_shares, parameters[:nu_njt], parameters[:A_njs][2], parameters[:p_sectoral], parameters[:A])
 	end
 
 	function compute_gamma(parameters, data)
