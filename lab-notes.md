@@ -546,3 +546,83 @@ Puzzle: some US prices go down in the model
 27-Oct 18:05:50:INFO:root:--------------In the data: [1.02443e7]
 ```
 This may be because of deflation and expressing prices relative to US price index? Looks excessive for that, would require world inflation of 50% or so.
+
+# 2018-1030
+## Check output
+There is a non-positive expenditure share in one of the scenarios:
+```
+29-Oct 11:31:57:INFO:root:--------------In the data: [2.31824e7]
+ERROR: LoadError: On worker 3:
+DomainError:
+log will only return a complex result if called with a complex argument. Try log(complex(x)).
+nan_dom_err at ./math.jl:300 [inlined]
+log at ./math.jl:419 [inlined]
+...
+distance at /home/koren/projects/impvol-julia/experiments/trade_imbalance/kappa1972/../../../equilibrium.jl:49
+middle_loop! at /home/koren/projects/impvol-julia/experiments/trade_imbalance/kappa1972/../../../equilibrium.jl:271
+```
+
+I added a lower bound for numerical zero, but then middle loop oscillates
+```
+30-Oct 17:38:27:INFO:root:------ Middle 44: 0.028858571230919443
+30-Oct 17:38:27:DEBUG:root:------ BEGIN Inner loop
+30-Oct 17:38:27:DEBUG:root:-------- Inner 1: 0.006595752733840549
+30-Oct 17:38:27:DEBUG:root:-------- Inner 2: 0.00534547637915506
+30-Oct 17:38:27:DEBUG:root:-------- Inner 3: 0.0034377046310015936
+30-Oct 17:38:28:DEBUG:root:-------- Inner 4: 0.002160947679340457
+30-Oct 17:38:28:DEBUG:root:-------- Inner 5: 0.0013469907958464184
+30-Oct 17:38:28:DEBUG:root:-------- Inner 6: 0.0008475161457900738
+30-Oct 17:38:28:DEBUG:root:------ END Inner loop
+30-Oct 17:38:28:INFO:root:------ Middle 45: 0.7411762538111589
+30-Oct 17:38:28:DEBUG:root:------ BEGIN Inner loop
+30-Oct 17:38:28:DEBUG:root:-------- Inner 1: 0.0005468679924894514
+30-Oct 17:38:28:DEBUG:root:------ END Inner loop
+30-Oct 17:38:28:INFO:root:------ Middle 46: 0.7087367860040116
+30-Oct 17:38:28:DEBUG:root:------ BEGIN Inner loop
+30-Oct 17:38:28:DEBUG:root:-------- Inner 1: 0.003475341346266561
+30-Oct 17:38:29:DEBUG:root:-------- Inner 2: 0.0055330339781147425
+30-Oct 17:38:29:DEBUG:root:-------- Inner 3: 0.004031365631101054
+30-Oct 17:38:29:DEBUG:root:-------- Inner 4: 0.0028935406483291707
+30-Oct 17:38:29:DEBUG:root:-------- Inner 5: 0.0021044124450564734
+30-Oct 17:38:29:DEBUG:root:-------- Inner 6: 0.001535315468523144
+30-Oct 17:38:29:DEBUG:root:-------- Inner 7: 0.0011230838106543845
+30-Oct 17:38:30:DEBUG:root:-------- Inner 8: 0.0008229403237599034
+30-Oct 17:38:30:DEBUG:root:------ END Inner loop
+30-Oct 17:38:30:INFO:root:------ Middle 47: 0.17211336901095803
+30-Oct 17:38:30:DEBUG:root:------ BEGIN Inner loop
+30-Oct 17:38:30:DEBUG:root:-------- Inner 1: 0.0006039731566345187
+30-Oct 17:38:30:DEBUG:root:------ END Inner loop
+30-Oct 17:38:30:INFO:root:------ Middle 48: 0.028858410790122604
+```
+
+Middle loop is looking for expenditure shares, so should also remain in simplex. Both components are inside simplex, maybe reduce step size?
+
+Around numerical zero, a log distance measure is very sensitive. For shares, I would switch to percentage point distance.
+
+Inner loop gets stuck
+```
+30-Oct 18:44:12:DEBUG:root:-------- Inner 113: 0.0029659561893971872
+30-Oct 18:44:12:DEBUG:root:-------- Inner 114: 0.002395913356269078
+30-Oct 18:44:12:DEBUG:root:-------- Inner 115: 0.0029574539028234077
+30-Oct 18:44:12:DEBUG:root:-------- Inner 116: 0.002382642240396397
+30-Oct 18:44:12:DEBUG:root:-------- Inner 117: 0.0029511202077374702
+30-Oct 18:44:13:DEBUG:root:-------- Inner 118: 0.0023721295794866238
+30-Oct 18:44:13:DEBUG:root:-------- Inner 119: 0.0029465367901150377
+30-Oct 18:44:13:DEBUG:root:-------- Inner 120: 0.0023638847092739496
+30-Oct 18:44:13:DEBUG:root:-------- Inner 121: 0.002943349924611318
+30-Oct 18:44:13:DEBUG:root:-------- Inner 122: 0.0023574894971424335
+30-Oct 18:44:13:DEBUG:root:-------- Inner 123: 0.0029412650265131994
+30-Oct 18:44:14:DEBUG:root:-------- Inner 124: 0.0023525918811992917
+30-Oct 18:44:14:DEBUG:root:-------- Inner 125: 0.0029400399887136866
+30-Oct 18:44:14:DEBUG:root:-------- Inner 126: 0.0023488985536536918
+30-Oct 18:44:14:DEBUG:root:-------- Inner 127: 0.002939477364985182
+30-Oct 18:44:14:DEBUG:root:-------- Inner 128: 0.0023461670243482267
+30-Oct 18:44:15:DEBUG:root:-------- Inner 129: 0.002939417249673482
+30-Oct 18:44:15:DEBUG:root:-------- Inner 130: 0.0023441981457784913
+30-Oct 18:44:15:DEBUG:root:-------- Inner 131: 0.002939731173711331
+30-Oct 18:44:15:DEBUG:root:-------- Inner 132: 0.0023428294201043474
+```
+
+Log distance is not a good measure for prices, either, use difference in predicted country shares.
+
+

@@ -18,9 +18,14 @@ function report(A)
 	sleep(1)
 end
 
-function where_in_simplex(labor_share, n, s)
-	l = labor_share[1,n,:,s]
+function where_in_simplex(labor_share, s)
+	l = labor_share[:,:,:,s]
 	return (minimum(l), ind2sub(l,indmin(l)))
+end
+
+function biggest_gap(x1, x2, s)
+	y = (x1 .- x2)[:,:,:,1] .^ 2
+	return (maximum(y), ind2sub(y,indmax(y)))
 end
 
 function expected_value(y)
@@ -42,11 +47,14 @@ function rotate_sectors(A, y)
 	return B
 end
 
-function distance(p1, p2)
-	# distance should only depend on real prices, not on nominal
-	normalized_p1 = p1 ./ mean(p1, (1, 2, 3))
-	normalized_p2 = p2 ./ mean(p2, (1, 2, 3))
-	return mean(((log.(normalized_p1) .- log.(normalized_p2)) .^ 2)[:], 1)[1] .^ 0.5
+function p_distance(p1, p2, theta)
+	s1 = p1 .^ theta ./ sum(p1 .^ theta, 2)
+	s2 = p2 .^ theta ./ sum(p2 .^ theta, 2)
+	return share_distance(s1, s2)
+end
+
+function share_distance(p1, p2)
+	return mean((p1 .- p2) .^ 2) .^ 0.5
 end
 
 function deflate_all_nominal_variables!(random_variables, parameters, t)
@@ -199,7 +207,10 @@ function compute_expenditure_shares!(random_variables, parameters, t)
 
 	wagebill_ns = rotate_sectors(beta_j[:]', R_nks)
 	intermediate_njs = rotate_sectors(gamma_jk, R_nks)
-	random_variables[:e_mjs] = array_transpose((alpha_njt .* wagebill_ns .+ intermediate_njs .- alpha_njt .* S_nt) ./ expenditure)
+	e_njs = alpha_njt .* wagebill_ns .+ intermediate_njs .- alpha_njt .* S_nt
+	# trade imbalanc may make it negative
+	e_njs = max.(parameters[:numerical_zero], e_njs)
+	random_variables[:e_mjs] = array_transpose(e_njs ./ sum(e_njs, 3))
 end
 
 function compute_real_gdp!(random_variables, parameters, t)
@@ -214,7 +225,7 @@ end
 function fixed_expenditure_shares!(random_variables, parameters, t)
 	R_mjs = array_transpose(random_variables[:R_njs])
 	expenditure = sum(R_mjs, 3) .- array_transpose(non_random_variable(parameters[:S_nt], t))
-	random_variables[:E_mjs] = random_variables[:e_mjs] .* expenditure
+	random_variables[:E_mjs] = random_variables[:e_mjs] .* max.(parameters[:numerical_zero], expenditure)
 end
 
 function shadow_price_step(random_variables, parameters, t)
@@ -245,7 +256,7 @@ function inner_loop!(random_variables, parameters, t)
 
 	while (dist > parameters[:inner_tolerance]) && (k <= parameters[:max_iter_inner])
 		new_rho = shadow_price_step(random_variables, parameters, t)
-		dist = distance(new_rho, random_variables[:rho_njs])
+		dist = p_distance(new_rho, random_variables[:rho_njs], parameters[:theta])
 		debug("-------- Inner ", k, ": ", dist)
 		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
 		compute_price!(random_variables, parameters, t)
@@ -268,7 +279,8 @@ function middle_loop!(random_variables, parameters, t)
 	while (dist > parameters[:middle_tolerance]) && (k <= parameters[:max_iter_middle])
 		inner_loop!(random_variables, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
-		dist = distance(random_variables[:e_mjs], old_expenditure_shares)
+
+		dist = share_distance(random_variables[:e_mjs], old_expenditure_shares)
 
 		random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
 		info("------ Middle ", k, ": ", dist)
@@ -276,7 +288,6 @@ function middle_loop!(random_variables, parameters, t)
 		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1
 	end
-	#warn("middle: ", k-1)
 	debug("---- END Middle loop")
 end
 
@@ -376,7 +387,7 @@ function outer_loop!(random_variables, parameters, t, L_nj_star)
 		wage_share = expected_wage_share(random_variables)
 		@test sum(wage_share, 3) ≈ ones(1,N,1,1) atol=1e-9
 
-		dist = distance(wage_share, old_wage_share)
+		dist = share_distance(wage_share, old_wage_share)
 		info("-- Outer ", k, ": ", dist)
 
 		L_nj_star = (1-lambda)*old_wage_share .+ lambda*wage_share
