@@ -24,7 +24,7 @@ function where_in_simplex(labor_share, s)
 end
 
 function biggest_gap(x1, x2, s)
-	y = (x1 .- x2)[:,:,:,1] .^ 2
+	y = (x1 .- x2)[:,:,:,:] .^ 2
 	return (maximum(y), ind2sub(y,indmax(y)))
 end
 
@@ -48,8 +48,8 @@ function rotate_sectors(A, y)
 end
 
 function p_distance(p1, p2, theta)
-	s1 = p1 .^ theta ./ sum(p1 .^ theta, 2)
-	s2 = p2 .^ theta ./ sum(p2 .^ theta, 2)
+	s1 = p1 .^ (-theta) ./ sum(p1 .^ (-theta), 2)
+	s2 = p2 .^ (-theta) ./ sum(p2 .^ (-theta), 2)
 	return share_distance(s1, s2)
 end
 
@@ -280,10 +280,12 @@ function middle_loop!(random_variables, parameters, t)
 		inner_loop!(random_variables, parameters, t)
 		compute_expenditure_shares!(random_variables, parameters, t)
 
-		dist = share_distance(random_variables[:e_mjs], old_expenditure_shares)
+		dist = share_distance(random_variables[:e_mjs][:,:,1:end-1,:], old_expenditure_shares[:,:,1:end-1,:])
 
 		random_variables[:e_mjs] = parameters[:middle_step_size]*random_variables[:e_mjs]+(1-parameters[:middle_step_size])*old_expenditure_shares
 		info("------ Middle ", k, ": ", dist)
+		#info(biggest_gap(random_variables[:e_mjs], old_expenditure_shares, 1))
+		#info(random_variables[:e_mjs][5,1,:,84])
 
 		old_expenditure_shares = random_variables[:e_mjs]
 		k = k+1

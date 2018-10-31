@@ -1,8 +1,8 @@
 .PHONY: data install tables
-.PRECIOUS: experiments/*/*/results.jld2
 UTILS = calibrate_params.jl calibration_utils.jl utils.jl equilibrium.jl experiments/config.jl
 COLUMNS = actual kappa1972 nosectoral nosectoral_kappa1972
 TABLES = baseline CES china_1972 no_china no_io_linkages no_labor_adjustment trade_imbalance
+.PRECIOUS: $(foreach table,$(TABLES),$(foreach column,$(COLUMNS),experiments/$(table)/$(column)/results.jld2))
 PROCS = -p10
 
 tables: $(foreach table,$(TABLES),experiments/$(table)/output_table.csv) 

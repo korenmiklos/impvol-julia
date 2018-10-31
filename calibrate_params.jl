@@ -13,7 +13,6 @@ module CalibrateParameters
 		parameters[:gamma_jk] = compute_gamma(parameters, data)
 
 		parameters[:S_nt] = zeros(1,N,1,T)
-		parameters[:S_nt_data] = data["trade_balance"] .- mean(data["trade_balance"],2)
 
 		parameters[:d] = expenditure_shares(parameters, data)
 
@@ -39,6 +38,11 @@ module CalibrateParameters
 
 		# total world expenditure in the data - needed to get reasonable starting values
 		parameters[:nominal_world_expenditure] = sum(data["va"] ./ parameters[:beta_j], (1,2,3))
+		# deflate trade imbalance to 1972 dollars
+		deflator = CES_price_index(parameters[:nu_njt][:,end:end,:,:], parameters[:p_sectoral][:,end:end,:,:], parameters[:sigma])
+		info(deflator[:])
+
+		parameters[:S_nt_data] = (data["trade_balance"] .- mean(data["trade_balance"],2)) ./ deflator
 
 		# global, all-time average of sector final expenditure shares
 		importance_weight = mean(parameters[:nu_njt], (1, 2, 4))

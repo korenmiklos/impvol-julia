@@ -623,6 +623,55 @@ Inner loop gets stuck
 30-Oct 18:44:15:DEBUG:root:-------- Inner 132: 0.0023428294201043474
 ```
 
-Log distance is not a good measure for prices, either, use difference in predicted country shares.
+Log distance is not a good measure for prices, either, use difference in predicted country shares. With price to (-theta), middle loop still oscillates
+```
+30-Oct 20:41:19:INFO:root:------ Middle 96: 0.0014719370573773188
+30-Oct 20:41:19:INFO:root:------ Middle 97: 0.0008296230463568038
+30-Oct 20:41:20:INFO:root:------ Middle 98: 0.0014006377369308487
+30-Oct 20:41:20:INFO:root:------ Middle 99: 0.0007991132846278228
+30-Oct 20:41:21:INFO:root:------ Middle 100: 0.0014624854880997877
+```
+# 2018-10-31
 
+## Debug middle loop for trade imbalance case
 
+`experiments/baseline/actual` running fine. In `trade_imbalance`, distance reduces up to a point, at which oscillation starts.
+```
+31-Oct 10:42:33:INFO:root:------ Middle 1: 0.020087978317916387
+31-Oct 10:42:36:INFO:root:------ Middle 2: 0.011652563694581347
+31-Oct 10:42:36:INFO:root:------ Middle 3: 0.006437027036450518
+31-Oct 10:42:40:INFO:root:------ Middle 4: 0.004150244550192232
+31-Oct 10:42:40:INFO:root:------ Middle 5: 0.0023019164014744034
+31-Oct 10:42:42:INFO:root:------ Middle 6: 0.002043543946662378
+31-Oct 10:42:42:INFO:root:------ Middle 7: 0.0011459547865934937
+31-Oct 10:42:44:INFO:root:------ Middle 8: 0.0014189201742071077
+31-Oct 10:42:44:INFO:root:------ Middle 9: 0.0007939137525280888
+31-Oct 10:42:45:INFO:root:------ Middle 10: 0.0014162449268553495
+31-Oct 10:42:45:INFO:root:------ Middle 11: 0.0008199946488115949
+31-Oct 10:42:46:INFO:root:------ Middle 12: 0.0013745745781782964
+31-Oct 10:42:47:INFO:root:------ Middle 13: 0.0007632439102759337
+31-Oct 10:42:48:INFO:root:------ Middle 14: 0.001207056069492887
+31-Oct 10:42:48:INFO:root:------ Middle 15: 0.000696214758000288
+```
+Reduce inner tolerance to 0.0001 to see if it affects where oscillation occurs. The answer is no.
+```
+31-Oct 10:46:10:INFO:root:------ Middle 1: 0.020087978317916387
+31-Oct 10:46:15:INFO:root:------ Middle 2: 0.01181989324586644
+31-Oct 10:46:15:INFO:root:------ Middle 3: 0.006516140887436318
+31-Oct 10:46:20:INFO:root:------ Middle 4: 0.004190241006031715
+31-Oct 10:46:21:INFO:root:------ Middle 5: 0.0023140470379854855
+31-Oct 10:46:24:INFO:root:------ Middle 6: 0.002124708958196941
+31-Oct 10:46:24:INFO:root:------ Middle 7: 0.0011761832113734727
+31-Oct 10:46:26:INFO:root:------ Middle 8: 0.0014420729253306187
+31-Oct 10:46:26:INFO:root:------ Middle 9: 0.0007999099736026548
+31-Oct 10:46:28:INFO:root:------ Middle 10: 0.0014572418746174375
+31-Oct 10:46:28:INFO:root:------ Middle 11: 0.0008216580045495448
+31-Oct 10:46:29:INFO:root:------ Middle 12: 0.0014267370777544227
+31-Oct 10:46:30:INFO:root:------ Middle 13: 0.0007886929002944327
+31-Oct 10:46:31:INFO:root:------ Middle 14: 0.0013339401942805069
+31-Oct 10:46:31:INFO:root:------ Middle 15: 0.0007497840098704164
+```
+
+CES works fine.
+
+After deflating Snt, we again have convergence.
