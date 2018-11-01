@@ -675,3 +675,17 @@ Reduce inner tolerance to 0.0001 to see if it affects where oscillation occurs. 
 CES works fine.
 
 After deflating Snt, we again have convergence.
+
+# 2018-11-01
+
+## Compare model to data
+
+Model GDP exhibits huge volatility. Is it some data artifact? No, real GDP summed in simulation results fluctuates wildly. For USA, for example,
+```
+36-element Array{Float64,1}:
+ 1.1344e6 
+ 8.55546e5
+ 7.81789e5
+ 2.28051e6
+ ...
+ ```
