@@ -3,11 +3,13 @@
 @everywhere using ImpvolEquilibrium, Logging
 @everywhere Logging.configure(level=INFO)
 
-@everywhere using FileIO
+@everywhere using FileIO, JLD2
 @everywhere parameters = load("../common_parameters.jld2")["parameters"]
 
 # parameters that govern counterfactual
 @everywhere include("change_parameters.jl")
 
 @time results = pmap(t -> (t, ImpvolEquilibrium.period_wrapper(parameters, t)), 1:parameters[:T])
-CalibrateParameters.jld_saver(results)
+jldopen("results.jld2", "w") do file
+		file["results"] = results
+end

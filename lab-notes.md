@@ -688,4 +688,58 @@ Model GDP exhibits huge volatility. Is it some data artifact? No, real GDP summe
  7.81789e5
  2.28051e6
  ...
- ```
+```
+
+In the data, productivity growth is normal, +- 4-5% each year. However, from period 2 onwards, productivity in State 1 is not = productivity in the data.
+```
+[results[2][2][:A_njs][1,end,:,1] parameters[:A][1,end,:,2]]
+24×2 Array{Float64,2}:
+ 11167.3     7131.23 
+   468.8      549.146
+  4153.15    4206.29 
+  2457.03    2347.47 
+  2678.18    2773.51 
+  1786.46    1787.4  
+  1550.43    1460.16 
+  1435.31    1502.05 
+  6761.0     9071.16 
+   104.712    103.896
+  1565.77    1932.88 
+  3420.29    3282.29 
+  5284.93    5389.49 
+  1859.35    1726.08 
+  3422.0     3449.72 
+  3899.27    3651.91 
+  1549.28    1525.91 
+  4631.08    4155.96 
+  3161.06    2991.72 
+  7984.78    7968.36 
+  1709.28    1468.59 
+  3664.7     3475.8  
+  3824.77    3901.97 
+ 41172.0    62202.5  
+```
+Productivities also match for period 36.
+```
+results[36][2][:A_njs][1,end,:,1] ≈ parameters[:A][1,end,:,36]
+true
+```
+Can this be related to detrending? The match still holds for parameters, added unit tests for this. However, results seem to have a different Anjs.
+
+In test run (`experiments/baseline/actual/test.jl`), US GDP seems to grow smoothly,
+```
+3-element Array{Float64,1}:
+ 1.1344e6 
+ 1.20329e6
+ 1.18642e6
+```
+
+This is inconsistent with results file from server run:
+```
+3-element Array{Float64,1}:
+ 1.1344e6 
+ 8.55546e5
+ 7.81789e5
+```
+
+Local run has good GDP numbers, see notebook.

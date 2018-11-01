@@ -92,6 +92,10 @@ function test_parameters(parameters)
     @test size(parameters[:A_njs][1]) == (1,N,J,1)
     @test size(parameters[:A_njs][2]) == (1,N,J,parameters[:S])
 
+    for t=1:T
+        @test parameters[:A_njs][t][:,:,:,1] ≈ parameters[:A][:,:,:,t]
+    end
+
     positive(parameters[:final_expenditure_shares], parameters[:nu_njt], parameters[:A_njs][2], parameters[:p_sectoral], parameters[:A])
     end
 end

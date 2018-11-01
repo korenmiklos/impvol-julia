@@ -103,7 +103,7 @@ module ImpvolOutput
 		#gdp_d = gdp_d ./ pwt
 
 		# normalization: model(1972) = data(1972)
-		#gdp_m = gdp_m .* (gdp_d[:,1] ./ gdp_m[:,1])
+		gdp_m = gdp_m .* (gdp_d[:,1] ./ gdp_m[:,1])
 
 		return log.(gdp_d), log.(gdp_m), country_names
 	end
