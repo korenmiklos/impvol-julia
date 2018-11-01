@@ -10,6 +10,4 @@
 @everywhere include("change_parameters.jl")
 
 @time results = pmap(t -> (t, ImpvolEquilibrium.period_wrapper(parameters, t)), 1:parameters[:T])
-jldopen("results.jld2", "w") do file
-		file["results"] = results
-end
+include("../../../save.jl")
