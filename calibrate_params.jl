@@ -3,7 +3,7 @@ module CalibrateParameters
 	include("calibration_utils.jl")
 	using JLD2, FileIO, ImpvolEquilibrium, Base.Test
 
-	function calibrate_parameters!(parameters, fname="../../../data/impvol_data.jld2")
+	function calibrate_parameters!(parameters, fname="../../data/impvol_data.jld2")
 		data = load(fname)
 
 		_, N, J, T = size(data["beta"])
