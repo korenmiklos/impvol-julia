@@ -151,10 +151,10 @@ module ImpvolOutput
 		stats[:trade_barriers] = 100 * (stats[:actual] - stats[:kappa1972]) ./ stats[:kappa1972]
 
 		# Diversification
-		stats[:diversification] = 100 * (stats[:actual] - stats[:kappa1972] - stats[:nosectoral] + stats[:nosectoral_kappa1972]) ./ stats[:kappa1972]
+		stats[:diversification] = 100 * (stats[:nosectoral] - stats[:nosectoral_kappa1972]) ./ stats[:kappa1972]
 
 		# Specialization
-		stats[:specialization] = 100 * (stats[:nosectoral] - stats[:nosectoral_kappa1972]) ./ stats[:kappa1972]
+		stats[:specialization] = 100 * (stats[:actual] - stats[:kappa1972] - stats[:nosectoral] + stats[:nosectoral_kappa1972]) ./ stats[:kappa1972]
 
 		CSV.write(rootpath * "/output_table.csv", stats)
 	end
