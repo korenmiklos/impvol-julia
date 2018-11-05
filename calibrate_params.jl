@@ -203,10 +203,9 @@ module CalibrateParameters
 		V_c, V_t = DetrendUtilities.detrend(value_added_shares, weights)
 
 		if parameters[:one_over_rho]>0.0
-			rho = 1/parameters[:one_over_rho]
-
-			deviation = max.(nulla, 1+4*rho*V_c)
-			wage_ratio = 0.5 + 0.5 * deviation .^ 0.5
+			trend = 0.5*(V_t - parameters[:one_over_rho])
+			labor_share = trend .+ (trend .^2 .+ parameters[:one_over_rho]*value_added_shares) .^ 0.5
+			wage_ratio = value_added_shares ./ labor_share
 			info("Unweighted wage ratio should be 1: ", mean(wage_ratio))
 			# FIXME: if not, do one more loop?
 		else

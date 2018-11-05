@@ -743,3 +743,25 @@ This is inconsistent with results file from server run:
 ```
 
 Local run has good GDP numbers, see notebook.
+
+# 2018-11-05
+## Debug labor adjustment scenario
+All scenarios not involving labor adjustment have regular volatilities [3451744ebea18560491614ca94e013cb5c53402c]. Those with labor adjustment have 10x, 30x fluctuationa. Likely wage calibration is at fault. Indeed, there are huge fluctuations in calibrate wages
+```
+ 1.12031e6  1.1735e6   6.79931e5     1.13751e7  1.23575e7  1.2997e7
+ 1.12031e6  6.26857e5  6.79931e5     5.85601e6  2.09113e7  1.2997e7
+```
+Recovering the labor shares consistent with these wage ratios, some of them are greater than one. Last two sectors for US,
+```
+ 0.00765139  0.00758658  0.0130356   0.0122568      0.0051943   0.0048989  
+ 0.71855     1.41978     1.44574     0.239047       0.504511    0.850966   
+```
+
+While wage ratio may be approximately 1 across all periods and countries, this is not true per period per country. For example, USA:
+```
+mean(wage_ratio[1,end,:,:], 1)
+1×36 Array{Float64,2}:
+ 1.0  1.12633  0.901342  0.887479  …  1.02272  0.957281  0.971533  1.0
+```
+
+Expressing labor shares from trend deviations gives smooth fluctuations. See algorithm.tex.

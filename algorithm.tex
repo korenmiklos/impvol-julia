@@ -593,33 +593,30 @@ Using \eqref{eq:varepsilon} to express sectoral wages in the US,
 \[
 w_{njt} = w_{nt}
 \left[
-\frac {\varrho(L_{njt}-L_{njt}^*)}
-	{L_{nt}}
-+\lambda L_{nt}
-\right].
+ {\varrho(L_{njt}-L_{njt}^*)}
++\lambda_{nt}
+\right],
 \]
-How do we calibrate this without observing $L_{njt}$? Multiply by $w_{njt}/w_{nt}$,
+with the normalization that $L_{nt}=1$.
+How do we calibrate this without observing $L_{njt}$? Multiply by $L_{njt}$,
 \[
-\left(\frac {w_{njt}} {w_{nt}}\right)^2
-= 
-\varrho\frac {w_{njt}L_{njt}-w_{njt}L_{njt}^*}
-	{w_{nt}L_{nt}}
-+\lambda L_{nt}\frac {w_{njt}} {w_{nt}}
-=\varrho (V_{njt} - V_{njt}^*)
-+\lambda L_{nt}\frac {w_{njt}} {w_{nt}}.
+L_{njt}^2 + (\lambda_{nt}/\varrho-L_{njt}^*) L_{njt} - \frac1\varrho
+\frac{w_{njt}L_{njt}} {w_nt} = 0.
 \]
-The first term is value added share at current and at expected allocations, denoted $V_{njt}$ and $V_{njt}^*$, respectively. Solving this quadratic equation,
+Solving this quadratic equation,
 \[
-\frac {w_{njt}} {w_{nt}} = \frac12 \lambda L_{nt}
-+\frac12 \sqrt{\lambda^2 L_{nt}^2 + 4\varrho (V_{njt}-V_{njt}^*)}.
+L_{njt} = \frac12 (L_{njt}^* - \lambda_{nt}/\varrho)
++ \sqrt{\frac14 (L_{njt}^* - \lambda_{nt}/\varrho)^2 + \frac1\varrho V_{njt}},
 \]
-Recall that $\lambda L_{nt}$ equals the unweighted average wage ratio across sectors, and is approximately one, ignoring Jensen inequality terms. This helps us calibrate the sectoral wage rate as
+where $V_{njt}$ is the value added share in sector $j$. Recall that $\lambda_{nt}$ equals the unweighted average wage ratio across sectors, and is approximately one, ignoring Jensen inequality terms. Also, in equilibrium $L_{njt}^*$ is the expected value added share, which can be approximated by the long-run trend.
+
+This helps us calibrate the sectoral labor share as
 \[
-w_{njt} \approx w_{nt} \left[
+L_{njt} \approx (L_{njt}^* - 1/\varrho) \left[
 \frac12
-+\frac12 \sqrt{1 + 4\varrho (V_{njt}-V_{njt}^*)}
++\frac12 \sqrt{1 + \frac1\varrho \frac{V_{njt}}{L_{njt}^* - 1/\varrho}}
 \right].
 \]
-We measure $V_{njt}$ as value added share in the data, and approximate $V_{njt}^*$ as the trend of value added shares.
+Given a set of labor shares, we can calculate wages as $w_{njt} = Y_{njt}/L_{njt}$.
 
 \end{document}

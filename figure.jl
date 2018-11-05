@@ -1,5 +1,5 @@
 include("output.jl")
-plt_dta = ImpvolOutput.plot_data() # with the desired arguments if needed
+plt_dta = ImpvolOutput.plot_data("experiments/labor_adjustment/actual/results.jld2") # with the desired arguments if needed
 
 Base.print_matrix(IOContext(STDOUT, :limit => false), plt_dta[3]) # to check the countries' position
 idx = zeros(length(plt_dta[3]))
