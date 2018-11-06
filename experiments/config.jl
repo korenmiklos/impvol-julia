@@ -3,7 +3,9 @@ Logging.configure(level=INFO)
 include("../calibrate_params.jl")
 using CalibrateParameters
 
-parameters[:S] = 100
+if not haskey(parameters, :S)
+	parameters[:S] = 100
+end
 
 parameters[:numerical_zero] = 1e-12
 
