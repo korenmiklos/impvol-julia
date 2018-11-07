@@ -19,7 +19,7 @@ As an example, consider the following two scenarios: `experiments/CES2/actual/sc
 
 The `actual` scenario does not change any of the calibrated parameters. The `kappa1972` scenario replaces all `kappa` with the 1972 values in the same country and sector (see `experiments/CES2/kappa1972/change_parameters.jl`).
 
-The results of each run in save in `results.jld2` (a JLD2 Julia file format) in the _scenario_ folder, such as `experiments/CES2/kappa1972/results.jld2`. Most of our tables require comparisons of four scenarios (with and without trade cost changes, with and without sectoral shocks). These tables are saved in the _experiment_ folder, such as `experiments/CES2/output_table.csv`.
+The results of each run are saved in `results.jld2` (a JLD2 Julia file format) in the _scenario_ folder, such as `experiments/CES2/kappa1972/results.jld2`. Most of our tables require comparisons of four scenarios (with and without trade cost changes, with and without sectoral shocks). These tables are saved in the _experiment_ folder, such as `experiments/CES2/output_table.csv`.
 
 ## Technical details
 The calibration algorithm is described in Section [] in the paper. The equilibrium solution algorithm is described in Section []. The basic outline of the equilibrium solution can be described by four nested loops.

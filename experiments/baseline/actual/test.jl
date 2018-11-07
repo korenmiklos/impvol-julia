@@ -8,7 +8,6 @@
 
 # parameters that govern counterfactual
 @everywhere include("change_parameters.jl")
-@everywhere parameters[:S] = 2
 
 @everywhere srand(7094)
 

@@ -765,3 +765,7 @@ mean(wage_ratio[1,end,:,:], 1)
 ```
 
 Expressing labor shares from trend deviations gives smooth fluctuations. See algorithm.tex.
+
+# 2018-11-07
+## Evaluate S=1000
+Estimate volatilities differ by 1% on average. Maybe set S=100 by default and test agains S=10000?
