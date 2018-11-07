@@ -4,7 +4,7 @@ include("../calibrate_params.jl")
 using CalibrateParameters
 
 if !haskey(parameters, :S)
-	parameters[:S] = 100
+	parameters[:S] = 101
 end
 
 parameters[:numerical_zero] = 1e-12

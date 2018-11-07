@@ -29,7 +29,8 @@ function biggest_gap(x1, x2, s)
 end
 
 function expected_value(y)
-	return mean(y, 4)
+	# ignore first realization of S
+	return mean(y[:,:,:,2:end], 4)
 end
 
 function rotate_sectors(A, y)

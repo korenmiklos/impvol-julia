@@ -1,6 +1,14 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 \begin{document}
+\subsection*{Normalizations and changes in notation}
+I set $L_{nt}=1$ for all country and time. This is just a normalization, as the level of producitivity can pick up the slack.
+
+I drop $T_n$. There is no need to carry a time invariant productivity around.
+
+I use $A_{njt}$ rather than $Z_{njt}$. Because $L_{nt}=1$, the difference is only the exponent.
+
+We used to have $y_{njt}/\psi_{njt}$ in the equation for productivity. This is only needed to express wages, so I just write out $w_{njt}$ explicitly in the formulas below.
 \section{Model solution}
 Introduce a new variable for the factory-gate price of intermediate goods,
 \begin{equation}\label{eq:varrho}
@@ -489,29 +497,24 @@ E_{A}\frac
 = \lambda L_{nt}.
 \]
 
-\subsection{Flexible labor equilibrium}
-To get a starting point or direction of iteration, it is useful to calculate the flexible labor equilibrium, where wages are equal across sectors.
-
-When wages are constant across sectors, we can write expenditure shares as
-\begin{equation}\label{eq:sectoral_share:2}
-e_{mjt} = \frac
-	{w_{mt}\sum_{k=1}^J(\alpha_{mjt}(\mathbf P_t)\beta_k+\gamma_{jk}) L_{mkt}/\beta_k - S_{mt}}
-	{w_{mt}\sum_{k=1}^J L_{mkt}/\beta_k-S_{mt}}.
+\subsection{Calculating expectations}
+Agents have rational expectations. The DGP of producitivities is as follows
+\begin{equation}
+	\ln A_{njt} = a_{njt}+\lambda_{jt} + \mu_{nt} +  \varepsilon_{njt}.
 \end{equation}
-If $S_{mt}=0$ and demand is Cobb-Douglas, this can be precalculated in the outer loop, without knowing anything about wages. The inner loop (without the need for a middle loop) then solves for prices and wages.
-\[
-	\varrho_{njt} = w_{nt}^{-1/\theta}(L_{njt}/\beta_j)^{-1/\theta}
-	\left[
-	\sum_{m=1}^N
-		(\kappa_{mnjt} P_{mjt})^{\theta}
-		w_{mt}\sum_{k=1}^J(\alpha_{mjt}(\mathbf P_t)+\gamma_{jk}/\beta_k) L_{mkt} - S_{mt}
-	\right]^{1/\theta}.
-\]
-We also know that 
-\begin{equation}\label{eq:varrho:2}
-	\varrho_{njt} = w_{nt}^{\beta_j} \xi B_j A_{njt}^{-1}  \prod_{k=1}^J P_{nkt}^{\gamma_{kj}}.
-\end{equation}
+The first term $a_{njt}$ is a deterministic trend, perfectly foreseen by agents. The second term $\lambda_{jt}$ is a global sectoral shock as in Koren and Tenreyro (2007). The third term $\mu_{nt}$ is a country shock, and $\varepsilon_{njt}$ is the idiosyncratic shock.
 
+These shocks have the following DGP
+\begin{align}
+ 	\lambda_{jt} &= \rho_{j}\lambda_{jt-1}+\sigma_{j}u_{jt}\\
+ 	\mu_{nt} &= \rho_{n}\mu_{nt-1}+\sigma_{n}u_{nt}\\
+ 	\varepsilon_{njt} &= \rho_{nj}\varepsilon_{njt-1}+\sigma_{nj}u_{njt}
+\end{align} 
+where the $u$s are serially and cross-sectionally independent standard normal variables. That is, each shock component follows an independent AR(1) process.
+
+Expectations are taken conditional on $(a_{njt}, \lambda_{jt-1}, \mu_{nt-1})$, that is, over realizations of $(u_{jt}, u_{nt}, u_{njt})$. In practice we draw $S=100$ realizations of the innovations to compute the expected wage share. 
+
+Numerically integrating the expected wage shares over $u$s converges fast, and hence relatively low $S$ is sufficient, because wage shares are bounded between 0 and 1
 
 \section{Calibration}
 \subsection{Calibrating the CES model}
@@ -619,4 +622,12 @@ L_{njt} \approx (L_{njt}^* - 1/\varrho) \left[
 \]
 Given a set of labor shares, we can calculate wages as $w_{njt} = Y_{njt}/L_{njt}$.
 
+\subsection{Decomposing productivity shocks}
+Given a series of productivities calibrated to the data, we decompose productivity into these four components:
+\begin{equation}
+	\ln A_{njt} = a_{njt}+\lambda_{jt} + \mu_{nt} +  \varepsilon_{njt}.
+\end{equation}
+The first term is a Baxter-King trend. The second is a global sector shock, calculated as the $(j,t)$ average of productivity deviations across countries. The third term is calculated as a weighted average of remaining shocks within a country-year. (Weighting is necessary because otherwise idiosyncratic shock of services, the larges sector, would dominate fluctuations in all countries.) The last term is a residual.
+
+The parameter vector $\rho$ and $\sigma$ is estimate using simple OLS. Shocks $u$ are drawn for iid standard normal distribution.
 \end{document}
