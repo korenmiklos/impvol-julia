@@ -29,8 +29,13 @@ function biggest_gap(x1, x2, s)
 end
 
 function expected_value(y)
-	# ignore first realization of S
-	return mean(y[:,:,:,2:end], 4)
+	_, _, _, S = size(y)
+	if S==1
+		return y[:,:,:,1]
+	else
+		# ignore first realization of S
+		return mean(y[:,:,:,2:end], 4)
+	end
 end
 
 function rotate_sectors(A, y)
@@ -378,7 +383,7 @@ function outer_loop!(random_variables, parameters, t, L_nj_star)
 	lambda = parameters[:outer_step_size]
 	random_variables[:L_njs] = copy(L_nj_star)
 
-	debug("BEGIN Outer loop")
+	info("BEGIN Outer loop")
 	starting_values!(random_variables, parameters, t)
 
 	dist = 999
@@ -396,8 +401,7 @@ function outer_loop!(random_variables, parameters, t, L_nj_star)
 		L_nj_star = (1-lambda)*old_wage_share .+ lambda*wage_share
 		k = k+1
 	end
-	#warn("outer: ", k-1)
-	debug("END Outer loop")
+	info("END Outer loop")
 	return L_nj_star
 end
 
