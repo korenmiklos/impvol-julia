@@ -35,7 +35,7 @@ module ImpvolOutput
 		return series
 	end
 
-	function calculate_volatilities(x, parameters, bool_detrend::Bool)
+	function calculate_volatilities(x, parameters, bool_detrend::Bool, range=:)
 		if bool_detrend
 			x_c, x_t = DetrendUtilities.detrend(log.(x),parameters[:bp_weights])
 		else
@@ -43,7 +43,7 @@ module ImpvolOutput
 		end
 
 		# time is the last dimension
-		return var(x_c,ndims(x_c))
+		return var(x_c[:,:,:,range],ndims(x_c))
 	end
 
 	function plot_model_vs_data(plot_data::Tuple, title::String)
