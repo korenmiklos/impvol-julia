@@ -4,7 +4,7 @@ using ImpvolEquilibrium, FileIO, JLD2
 
 ## these are needed for data -> parameters mapping
 parameters = Dict{Symbol, Any}()
-parameters[:S] = 1000
+parameters[:S] = 1001
 
 # CES parameters
 parameters[:sigma] = 0.999
@@ -18,6 +18,6 @@ parameters[:one_over_rho] = 0.0
 
 include("../config.jl")
 # change parameters after reading data, but common across scenarios
-jldopen("common_parameters.jld2", "w") do file
+jldopen("common_parameters.jld2", true, true, true, IOStream) do file
 	file["parameters"] = parameters
 end
