@@ -8,7 +8,8 @@ parameters = Dict{Symbol, Any}()
 # CES parameters
 parameters[:sigma] = 0.999
 parameters[:theta] = 2.0
-parameters[:eta] = 4.0
+# we also have to change eta so that Gamma function is finite. eta only affects overall level of productivity
+parameters[:eta] = 2.0
 
 ########## parameters common across scenarios
 ## these are function of data
