@@ -1,5 +1,5 @@
 using Logging
-Logging.configure(level=INFO)
+Logging.configure(level=DEBUG)
 include("../calibrate_params.jl")
 using CalibrateParameters
 
