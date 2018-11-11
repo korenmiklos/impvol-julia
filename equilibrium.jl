@@ -264,12 +264,15 @@ function inner_loop!(random_variables, parameters, t)
 		new_rho = shadow_price_step(random_variables, parameters, t)
 		dist = p_distance(new_rho, random_variables[:rho_njs], parameters[:theta])
 		debug("-------- Inner ", k, ": ", dist)
-		random_variables[:rho_njs] = lambda*new_rho + (1-lambda)*random_variables[:rho_njs]
+		random_variables[:rho_njs] = new_rho
 		compute_price!(random_variables, parameters, t)
 		compute_wage!(random_variables, parameters)
+		old_R = random_variables[:R_njs]
 		compute_revenue!(random_variables, parameters)
+		random_variables[:R_njs] = lambda*random_variables[:R_njs] + (1-lambda)*old_R
 		fixed_expenditure_shares!(random_variables, parameters, t)
 		deflate_all_nominal_variables!(random_variables, parameters, t)
+
 		k = k+1
 	end
 	#warn("inner: ", k-1)
