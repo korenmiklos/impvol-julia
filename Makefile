@@ -4,9 +4,14 @@ EQULIBRIUM = utils.jl equilibrium.jl experiments/config.jl
 COLUMNS = actual kappa1972 nosectoral nosectoral_kappa1972
 TABLES = baseline CES05 CES2 china_1972 no_china no_io_linkages labor_adjustment trade_imbalance theta2 theta8 rho002 rho0005
 .PRECIOUS: $(foreach table,$(TABLES),$(foreach column,$(COLUMNS),experiments/$(table)/$(column)/results.jld2))
-PROCS = -p12
+
+# default number of Julia threads to use. otherwise `make tables PROCS=12`
+PROCS = 2
 
 tables: $(foreach table,$(TABLES),experiments/$(table)/output_table.csv) 
+
+# this takes too long to run, only run if explicitly asked `make S500`
+S500: experiments/S500/output_table.csv
 
 calibrate: $(foreach table,$(TABLES),experiments/$(table)/common_parameters.jld2) 
 
@@ -16,10 +21,10 @@ experiments/%/common_parameters.jld2: experiments/%/init_parameters.jl $(CALIBRA
 define run_experiment
 experiments/$(1)/%/results.jld2: $(EQULIBRIUM) experiments/$(1)/common_parameters.jld2 experiments/$(1)/%/scenario.jl experiments/$(1)/%/change_parameters.jl 
 	@echo " + Compiling '$$@'"
-	cd $$(dir $$@) && julia $(PROCS) scenario.jl &> errors.log
+	cd $$(dir $$@) && julia -p$(PROCS) scenario.jl &> errors.log
 endef
 
-$(foreach experiment,$(TABLES),$(eval $(call run_experiment,$(experiment))))
+$(foreach experiment,$(TABLES) S500,$(eval $(call run_experiment,$(experiment))))
 
 experiments/%/output_table.csv: $(foreach column,$(COLUMNS),experiments/%/$(column)/results.jld2) output.jl table.jl
 	julia table.jl $(dir $@)
