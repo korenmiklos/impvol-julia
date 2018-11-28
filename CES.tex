@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{equation}
+	\frac \sigma{\sigma-1}
+	E \ln\left[
+	 \sum C_i^{1-1/\sigma}
+	 \right] \to \max
+\end{equation}
+\[
+\text{s.t. }
+C_i = A_i L_i 
+\]
+The expectation is over productivity shocks, taking labor allocation as given. Labor demand across sectors has to add up to total fixed labor supply. We are in autarky.
+
+Let $w=1$. Then real income is $P^{-1}$ and $P_i=A_i^{-1}$. How do productivity shocks affect the CES price index $P$?
+\[
+P = \left[\sum_i P_i^{1-\sigma}
+\right]^{1/(1-\sigma)}
+\]
+so that
+\[
+U = \left[\sum_i A_i^{\sigma-1}
+\right]^{1/(\sigma-1)}.
+\]
+Do a log-linear approximation so that we can apply the delta method for calculating variance
+\[
+d\ln U \approx
+\sum_i U^{1-\sigma}
+ A_i^{\sigma-1}
+d\ln A_i=
+\]
+\[
+\sum_i\frac{A_i^{\sigma-1}}
+	{\sum_j A_j^{\sigma-1}}
+d\ln A_i
+\]
+Suppose variance of $d\ln A_i=\Sigma$, iid across sectors. Then, by the delta method,
+\[
+\text{Var d}\ln U \approx \Sigma \sum_i s_i^2,
+\]
+where 
+\[
+s_i = \frac{A_i^{\sigma-1}}
+	{\sum_j A_j^{\sigma-1}}.
+\]
+Clearly, when $\sigma=1$, $\sum s_i^2 = 1/n$ ,the lowest possible value for a Herfindahl index. If $\sigma>1$ or $\sigma<1$, the volatility is larger, because the cost share of sectors is more unequal. It also means there is more response of volatility to changes in the parameters across sectors.  
+\end{document}
