@@ -46,6 +46,11 @@ module CalibrateParameters
 
 		# global, all-time average of sector final expenditure shares
 		importance_weight = mean(parameters[:nu_njt], (1, 2, 4))
+		# special-case CES, when nu does not have direct meaning
+		if abs(parameters[:sigma]-1)>0.1
+			share = data["va"] ./ sum(data["va"], 3)
+			importance_weight = mean(share, (1, 2, 4))
+		end
 		parameters[:importance_weight] = importance_weight
 		decompose_shocks!(parameters, importance_weight)
 		draw_productivity_shocks!(parameters)

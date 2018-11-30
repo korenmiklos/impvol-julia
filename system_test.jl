@@ -1,7 +1,10 @@
+include("equilibrium.jl")
+using ImpvolEquilibrium
 include("calibrate_params.jl")
 using .CalibrateParameters
 using Base.Test
 using Logging
+Logging.configure(level=INFO)
 
 function test_data!(parameters, data)
     N, J, T, S = parameters[:N], parameters[:J], parameters[:T], parameters[:S]
@@ -23,7 +26,6 @@ function test_data!(parameters, data)
     parameters[:d][:,:,2,1] = [0.7 0.3; 0.1 0.9]
     parameters[:d][:,:,3,1] = [1.0 0.0; 0.0 1.0]
     @test size(parameters[:d]) == (N,N,J,T)
-    # FIXME: this fails
     @test sum(parameters[:d], 2) ≈ ones(N,1,J,T) atol=1e-9
 
     parameters[:kappa_mnjt] = CalibrateParameters.trade_costs(parameters)
@@ -46,9 +48,7 @@ function test_data!(parameters, data)
     @test parameters[:p_sectoral][1,end,:,1] ≈ ones(J) atol=1e-9
 
     display(parameters[:p_sectoral][1,:,:,1])
-
-    parameters[:psi] = data["va"]
-    @test size(parameters[:psi]) == (1,N,J,T)
+    parameters[:w_njt] = CalibrateParameters.calculate_nominal_wages(parameters, data)
 
     parameters[:B_j] = CalibrateParameters.calculate_B(parameters)
     @test size(parameters[:B_j]) == (1,1,J,1)
@@ -132,9 +132,5 @@ srand(7094)
 parameters = init_parameters()
 data = init_data(parameters)
 test_data!(parameters, data)
-
-include("equilibrium.jl")
-using ImpvolEquilibrium
-Logging.configure(level=INFO)
 
 results = ImpvolEquilibrium.period_wrapper(parameters, 1)
