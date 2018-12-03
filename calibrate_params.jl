@@ -250,21 +250,26 @@ module CalibrateParameters
 		# normalization: p_sectoral[1,end,:,1] = 1.0
 		p_sectoral = array_transpose(exp.( mean(1 / theta * log.(d ./ permutedims(cat(ndims(d),d[end,:,:,:]),[4,1,2,3])) - log.(kappa ./ permutedims(cat(ndims(kappa),kappa[end,:,:,:]),[4,1,2,3])), 2) + repeat(permutedims(cat(ndims(p_sectoral_base),log.(p_sectoral_base[:,end,:,:])), [1,4,2,3]), outer = [size(d,1),1,1,1]) ))
 		@test any(isnan, p_sectoral[:,:,1:end-1,:]) == false
+
 		# step 3: calculate tradable nu and infer nontradable nu
 		nu = final_expenditure_shares .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (sigma-1)
-		@test any(isnan, nu[:,:,1:end-1,:]) == false
 
 		nontradable_nu = max.(nulla, 1 .- sum(nu[:,:,1:end-1,:], 3))
 		nu[:,:,end:end,:] = nontradable_nu
 		nu = nu ./ sum(nu, 3)
 		@test any(isnan, nu) == false
-		@test nu[1,end,:,1] ≈ final_expenditure_shares[1,end,:,1] atol=1e-9
 
 		# demand shifter only varies across sectors and over time, not across countries
 		parameters[:nu_njt] = sum(country_weights .* nu, (1,2))
 
 		# enforce comformity of model with data
+		# special case South Korea where nontradable sector would disappear
+		South_Korea = final_expenditure_shares[1,end-4,:,:]
 		final_expenditure_shares = parameters[:nu_njt] .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (1-sigma)
+		if parameters[:sigma]<1
+			final_expenditure_shares[1,end-4,:,:] = South_Korea
+		end
+
 		nontradable_nu = max.(nulla, 1 .- sum(final_expenditure_shares[:,:,1:end-1,:], 3))
 		final_expenditure_shares[:,:,end:end,:] = nontradable_nu
 		final_expenditure_shares = final_expenditure_shares ./ sum(final_expenditure_shares, 3)
