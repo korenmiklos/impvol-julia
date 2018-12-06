@@ -331,14 +331,17 @@ module CalibrateParameters
 			end
 		end
 		intermediate = rotate_sectors(gamma, revenue)
-		final_expenditure = max.(nulla, expenditure - intermediate)
+		final_expenditure = expenditure - intermediate
 		# FIXME: adjust for trade imbalance here
 
-		nu = final_expenditure ./ sum(final_expenditure, 3)
-		# Replace negative elements with 0
-		nu = max.(parameters[:numerical_zero], nu)
+		nu_guess = final_expenditure ./ sum(final_expenditure, 3)
+		# Replace negative elements with smallest positive
+		for j = 1:J, t=1:T
+			vector = nu_guess[1,:,j,t]
+			nu_guess[1,vector .<= 0,j,t] = minimum(vector[vector .> 0])
+		end
 		# Smooth the series
-		nu_c, nu_t = DetrendUtilities.detrend(nu, weights)
+		nu_c, nu_t = DetrendUtilities.detrend(nu_guess, weights)
 
 		# Normalization
 		return nu_t ./ sum(nu_t, 3)
