@@ -9,6 +9,7 @@ TABLES = baseline CES05 CES2 china_1972 no_china no_io_linkages labor_adjustment
 PROCS = 2
 
 tables: $(foreach table,$(TABLES),experiments/$(table)/output_table.csv) 
+ces_tables: experiments/CES05/output_table.csv experiments/baseline/output_table.csv experiments/CES2/output_table.csv
 
 # this takes too long to run, only run if explicitly asked `make S500`
 S500: experiments/S500/output_table.csv
