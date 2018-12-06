@@ -330,7 +330,10 @@ module CalibrateParameters
 		# Replace negative elements with smallest positive
 		for j = 1:J, t=1:T
 			vector = nu_guess[1,:,j,t]
-			nu_guess[1,vector .<= 0,j,t] = minimum(vector[vector .> 0])
+			smallest = sort(vector[vector .> 0])[2]
+			largest = sort(vector[vector .< 1])[end-1]
+			nu_guess[1,vector .< smallest,j,t] = smallest
+			nu_guess[1,vector .> largest,j,t] = largest
 		end
 		# Smooth the series
 		nu_c, nu_t = DetrendUtilities.detrend(nu_guess, weights)
