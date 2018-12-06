@@ -262,18 +262,6 @@ module CalibrateParameters
 		# demand shifter only varies across sectors and over time, not across countries
 		parameters[:nu_njt] = sum(country_weights .* nu, (1,2))
 
-		# enforce comformity of model with data
-		# special case South Korea where nontradable sector would disappear
-		South_Korea = final_expenditure_shares[1,end-4,:,:]
-		final_expenditure_shares = parameters[:nu_njt] .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (1-sigma)
-		if parameters[:sigma]<1
-			final_expenditure_shares[1,end-4,:,:] = South_Korea
-		end
-
-		nontradable_nu = max.(nulla, 1 .- sum(final_expenditure_shares[:,:,1:end-1,:], 3))
-		final_expenditure_shares[:,:,end:end,:] = nontradable_nu
-		final_expenditure_shares = final_expenditure_shares ./ sum(final_expenditure_shares, 3)
-
 		# step 4: calculate nontradable prices
 		# NB: DO NOT recalibrate tradable prices, expenditure_shares are very noisy for small sectors
 		p_sectoral[:,:,end:end,:] = data["pwt"] .* P_US .* (parameters[:nu_njt][:,:,end:end,:] ./ final_expenditure_shares[:,:,end:end,:]) .^ (1/(sigma-1))
