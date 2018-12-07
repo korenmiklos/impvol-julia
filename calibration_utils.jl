@@ -1,5 +1,19 @@
 module DetrendUtilities
 
+	function winsorize(data, trim=1)
+		M, N, J, T = size(data)
+
+		nu_guess = copy(data)
+		for m = 1:M, j = 1:J, t = 1:T
+			vector = nu_guess[m,:,j,t]
+			smallest = sort(vector[vector .> 0])[1+trim]
+			largest = sort(vector[vector .< 1])[end-trim]
+			nu_guess[m,vector .< smallest,j,t] = smallest
+			nu_guess[m,vector .> largest,j,t] = largest
+		end
+	    return nu_guess
+	end
+
 	function detrend(X, weights::Array{Float64,1})
 		(ndims(X) == 2 || ndims(X) == 4) || error("The function 'detrend' can only be applied to 2 or 4-dimensional arrays")
 		
