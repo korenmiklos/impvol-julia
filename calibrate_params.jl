@@ -18,13 +18,14 @@ module CalibrateParameters
 
 		parameters[:kappa_mnjt] = trade_costs(parameters)
 
-		calculate_expenditure_shares!(parameters, data)
+		final_expenditure_shares = calculate_expenditure_shares(parameters, data)
+		parameters[:final_expenditure_shares] = final_expenditure_shares
 
 		# broad country weights for final expenditure
 		country_weights = sum(data["va"], (1,3,4))
 		country_weights = country_weights ./ sum(country_weights, 2)
 
-		calculate_p_and_nu!(parameters, data, country_weights)
+		calculate_p_and_nu!(parameters, data, final_expenditure_shares, country_weights)
 		# FIXME: rename nu_njt to nu_jt everywhere
 
 		parameters[:w_njt] = calculate_nominal_wages(parameters, data)
@@ -221,7 +222,7 @@ module CalibrateParameters
 	end
 
 
-	function calculate_p_and_nu!(parameters, data, country_weights)
+	function calculate_p_and_nu!(parameters, data, final_expenditure_shares, country_weights)
 		N = parameters[:N]
 		J = parameters[:J]
 		T = parameters[:T]
@@ -234,19 +235,12 @@ module CalibrateParameters
 		nulla = parameters[:numerical_zero]
 
 		p_sectoral_base = p_sectoral_data ./ p_sectoral_data[:,:,:,1]
-		# NB: use world_expenditure_shares for inferring nu, as they are more smooth 
-		final_expenditure_shares = parameters[:world_expenditure_shares]
 
 		# step 1: calculate nu and price index for base country
 		# NB: US as the last country in the matrix
 		p_sectoral_US = p_sectoral_base[:,end:end,:,:]
 		nu_US = final_expenditure_shares[:,end:end,:,:] .* p_sectoral_US .^ (sigma-1)
-		
-		nu_US = max.(nulla, nu_US ./ sum(nu_US, 3))
-		_, nu_US = DetrendUtilities.detrend(nu_US, parameters[:bp_weights])
 		nu_US = nu_US ./ sum(nu_US, 3)
-		parameters[:nu_njt] = nu_US
-
 		P_US = CES_price_index(nu_US, p_sectoral_US, sigma)
 		@test p_sectoral_US[1,1,:,1] ≈ ones(J) atol=1e-9
 		@test P_US[1,1,1,1] ≈ 1.0 atol=1e-9
@@ -256,14 +250,28 @@ module CalibrateParameters
 		# normalization: p_sectoral[1,end,:,1] = 1.0
 		p_sectoral = array_transpose(exp.( mean(1 / theta * log.(d ./ permutedims(cat(ndims(d),d[end,:,:,:]),[4,1,2,3])) - log.(kappa ./ permutedims(cat(ndims(kappa),kappa[end,:,:,:]),[4,1,2,3])), 2) + repeat(permutedims(cat(ndims(p_sectoral_base),log.(p_sectoral_base[:,end,:,:])), [1,4,2,3]), outer = [size(d,1),1,1,1]) ))
 		@test any(isnan, p_sectoral[:,:,1:end-1,:]) == false
+		# step 3: calculate tradable nu and infer nontradable nu
+		nu = final_expenditure_shares .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (sigma-1)
+		@test any(isnan, nu[:,:,1:end-1,:]) == false
+
+		nontradable_nu = max.(nulla, 1 .- sum(nu[:,:,1:end-1,:], 3))
+		nu[:,:,end:end,:] = nontradable_nu
+		nu = nu ./ sum(nu, 3)
+		@test any(isnan, nu) == false
+		@test nu[1,end,:,1] ≈ final_expenditure_shares[1,end,:,1] atol=1e-9
+
+		# demand shifter only varies across sectors and over time, not across countries
+		parameters[:nu_njt] = sum(country_weights .* nu, (1,2))
+
+		# enforce comformity of model with data
+		final_expenditure_shares = parameters[:nu_njt] .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (1-sigma)
+		nontradable_nu = max.(nulla, 1 .- sum(final_expenditure_shares[:,:,1:end-1,:], 3))
+		final_expenditure_shares[:,:,end:end,:] = nontradable_nu
+		final_expenditure_shares = final_expenditure_shares ./ sum(final_expenditure_shares, 3)
 
 		# step 4: calculate nontradable prices
 		# NB: DO NOT recalibrate tradable prices, expenditure_shares are very noisy for small sectors
-		if abs(sigma-1)>0.1
-			p_sectoral[:,:,end:end,:] = data["pwt"] .* P_US .* (parameters[:nu_njt][:,:,end:end,:] ./ final_expenditure_shares[:,:,end:end,:]) .^ (1/(sigma-1))
-		else
-			p_sectoral[:,:,end:end,:] = (data["pwt"] .* P_US ./ (prod(p_sectoral[:,:,1:end-1,:] .^ parameters[:nu_njt][:,:,1:end-1,:], 3))) .^ parameters[:nu_njt][:,:,end:end,:]
-		end
+		p_sectoral[:,:,end:end,:] = data["pwt"] .* P_US .* (parameters[:nu_njt][:,:,end:end,:] ./ final_expenditure_shares[:,:,end:end,:]) .^ (1/(sigma-1))
 		parameters[:p_sectoral] = p_sectoral
 	end
 
@@ -294,7 +302,7 @@ module CalibrateParameters
 		return A_njt
 	end
 
-	function calculate_expenditure_shares!(parameters, data)
+	function calculate_expenditure_shares(parameters, data)
 		N, J, T = parameters[:N], parameters[:J], parameters[:T]
 
 		nulla = parameters[:numerical_zero]
@@ -302,41 +310,34 @@ module CalibrateParameters
 
 		beta = parameters[:beta_j]
 		gamma = parameters[:gamma_jk]
-		# smooth trade shares before matrix inversion
-		_, d = DetrendUtilities.detrend(parameters[:d], parameters[:bp_weights])
+		d = parameters[:d]
 		# service import shares are NaN
 		for t=1:T
 			d[:,:,J,t] = eye(N)
 		end
 		va = data["va"]
 
+		#beta = squeeze(beta,(1,2,4))
 		revenue = va ./ beta
-		world_revenue = sum(revenue, 2)
-		world_intermediate = rotate_sectors(gamma, world_revenue)
-		world_final_expenditure = world_revenue .- world_intermediate
-		world_expenditure_shares = world_final_expenditure ./ sum(world_final_expenditure, 3)
-
-		exp_share = zeros(revenue)
-		# shares across source countries
-		rev_share = DetrendUtilities.winsorize(revenue ./ sum(revenue, 2))
-		rev_share = rev_share ./ sum(rev_share, 2)
+		expenditure = zeros(revenue)
 		for j=1:J
 			for t=1:T
-				exp_share[1,:,j,t]  = rev_share[1,:,j,t]' * inv(d[:,:,j,t])
+				expenditure[1,:,j,t]  = revenue[1,:,j,t]' * inv(d[:,:,j,t])
 			end
 		end
-		exp_share = DetrendUtilities.winsorize(exp_share)
-		exp_share = exp_share ./ sum(exp_share, 2)
-
-		intermediate = rotate_sectors(gamma, world_revenue .* rev_share)
-		final_expenditure = world_revenue .* rev_share .- intermediate
+		intermediate = rotate_sectors(gamma, revenue)
+		final_expenditure = expenditure - intermediate
 		# FIXME: adjust for trade imbalance here
 
+		nu_guess = final_expenditure ./ sum(final_expenditure, 3)
+		# Replace negative elements with smallest positive
 		nu_guess = DetrendUtilities.winsorize(final_expenditure ./ sum(final_expenditure, 3))
+		# Smooth the series
+		nu_c, nu_t = DetrendUtilities.detrend(nu_guess, weights)
+
 		# Normalization
-		parameters[:final_expenditure_shares] = nu_guess ./ sum(nu_guess, 3)
-		parameters[:world_expenditure_shares] = world_expenditure_shares
-	end
+		return nu_t ./ sum(nu_t, 3)	
+end
 
 	function estimate_AR1(data)
 		# data is M,N,J,T
