@@ -777,3 +777,8 @@ Removing sectoral shocks results in even higher volatility.
 South Korea 0.0030050596714052257 0.002944000329299149  7.611564497864669 7.712889346155691 2.074026334114317 -3441.7403857812665 3443.8144121153773
 Spain 0.00047496319368355895  0.0012767659599013084 0.024062947713052854  0.024488399211282888  -62.79950996498429  -33.32259095182335  -29.47691901316096
 ```
+
+# 2018-12-10
+## Winsorizing and CES vs CD results
+
+Cobb-Douglas formula for service price index seems off. Trend deviation from data and actual CES formula. (Service prices do not grow as fast as in the data.)
