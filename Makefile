@@ -22,7 +22,7 @@ experiments/%/common_parameters.jld2: experiments/%/init_parameters.jl $(CALIBRA
 define run_experiment
 experiments/$(1)/%/results.jld2: $(EQULIBRIUM) experiments/$(1)/common_parameters.jld2 experiments/$(1)/%/scenario.jl experiments/$(1)/%/change_parameters.jl 
 	@echo " + Compiling '$$@'"
-	cd $$(dir $$@) && julia -p$(PROCS) scenario.jl &> errors.log
+	cd $$(dir $$@) && julia -p$(PROCS) scenario.jl > errors.log 2>&1
 endef
 
 $(foreach experiment,$(TABLES) S500,$(eval $(call run_experiment,$(experiment))))
