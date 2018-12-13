@@ -125,7 +125,7 @@ module ImpvolOutput
 		# Create 'stats' array to store volatilities
 		stats = DataFrame([String, Real, Real, Real, Real, Real, Real, Real], [:country_names, :actual, :kappa1972, :nosectoral, :nosectoral_kappa1972, :trade_barriers, :diversification, :specialization], 25)
 
-		stats[:country_names] = CSV.read("data/country_name.txt", header = false, types = [String])[1]
+		stats[:country_names] = CSV.read("data/country_name.txt", header = false, types = [String], nullable=false)[1]
 
 		# Fill 'stats' array
 		for (root, dirs, files) in walkdir(dirname(rootpath))
