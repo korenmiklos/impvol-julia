@@ -327,9 +327,11 @@ module CalibrateParameters
 		final_expenditure = expenditure - intermediate
 		# FIXME: adjust for trade imbalance here
 
-		nu_guess = final_expenditure ./ sum(final_expenditure, 3)
+		# Smooth the series
+		_, nu_guess = DetrendUtilities.detrend(final_expenditure, weights)
+
 		# Replace negative elements with smallest positive
-		nu_guess = DetrendUtilities.winsorize(final_expenditure ./ sum(final_expenditure, 3))
+		nu_guess .= DetrendUtilities.winsorize(nu_guess ./ sum(nu_guess, 3), 0)
 		# Smooth the series
 		nu_c, nu_t = DetrendUtilities.detrend(nu_guess, weights)
 

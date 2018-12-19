@@ -788,3 +788,10 @@ Cobb-Douglas formula for service price index seems off. Trend deviation from dat
 After winsorizing, there is a bump in calibrated global GDP in years 21-27 and 31-35. See Compar scenarions.ipynb. 
 
 ## Check new trimming
+Not trimming from upwards (>1), makes bump even worse.
+
+Still large bump if we winsorize to 0+epsilon and 1-epsilon.
+
+Smoothing before winsorizing removes the 21-27 bump, but not the 31-35 bump.
+
+Winsorizing at highest/lowest (as opposed to second highest, second lowest) results in smooth series.
