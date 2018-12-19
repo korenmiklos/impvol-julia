@@ -781,4 +781,10 @@ Spain 0.00047496319368355895  0.0012767659599013084 0.024062947713052854  0.0244
 # 2018-12-10
 ## Winsorizing and CES vs CD results
 
-Cobb-Douglas formula for service price index seems off. Trend deviation from data and actual CES formula. (Service prices do not grow as fast as in the data.)
+Cobb-Douglas formula for service price index seems off. Trend deviation from data and actual CES formula. (Service prices do not grow as fast as in the data.) This was a bug: 1/nu vs nu in the exponent.
+
+# 2018-12-19
+## Large volatility in winsorized calibrations
+After winsorizing, there is a bump in calibrated global GDP in years 21-27 and 31-35. See Compar scenarions.ipynb. 
+
+## Check new trimming
