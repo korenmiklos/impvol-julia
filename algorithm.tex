@@ -1,5 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
+\usepackage{graphicx}
+
 \begin{document}
 \subsection*{Normalizations and changes in notation}
 I set $L_{nt}=1$ for all country and time. This is just a normalization, as the level of producitivity can pick up the slack.
@@ -517,7 +519,7 @@ Expectations are taken conditional on $(a_{njt}, \lambda_{jt-1}, \mu_{nt-1})$, t
 Numerically integrating the expected wage shares over $u$s converges fast, and hence relatively low $S$ is sufficient, because wage shares are bounded between 0 and 1
 
 \section{Calibration}
-\subsection{Calibrating the CES model}
+\subsection{Calibrating the CES model*}
 To calibrate the CES demand shifters $\nu$, we need data on how final expenditure is split across sectors in each country. We will recover this from the split of revenue, subtracting intermediate expenditure.
 
 Let
@@ -565,6 +567,28 @@ Computing the price index for US, 1972,
  =1,
 \end{equation}
 so we are measuring all nominal quantities in 1972 US dollars. We then average across countries to get $\nu_{jt}$.
+
+However, calibrating nontradable prices this way relies on our estimates of final expenditure shares. These tend to be particularly noisy as they involve a matrix inversion and the subtraction of intermediate expenditure, which, in reality, may not be drive by the same technology matrix across countries. Hence our price estimates and productivity estimates are very noisy. This leads to GDP volatility that is much higher than in the data (Figure 1).
+
+\begin{figure}
+\includegraphics[width=\linewidth]{CES2-model-data.pdf}
+\caption{GDP volatility in the data and in the model calibrated to $\sigma=2$}
+\end{figure}
+
+As an alternative calibration, we use the price index formula for the Cobb-Douglas specification,
+\[
+P_{nJt} = (P_{0t}PWT_{nt}/P_{n.t})^{1/\nu_{Jt}}
+\]
+with
+\[
+P_{n.t} \equiv \prod_{j=1}^{J-1}P_{njt}^{\nu_{jt}}.
+\]
+The benefit of this formula is that it does not depend on the noisily measured country-specific expenditure shares. This leads to the same calibrated productivity process as under the Cobb-Douglas scenario ($\sigma=1$). This provides a much better fit with the data (Figure 2).
+
+\begin{figure}
+\includegraphics[width=\linewidth]{EOS2-model-data.pdf}
+\caption{GDP volatility in the data and in the model with $\sigma=2$ but productivity calibrated to Cobb-Douglas case}
+\end{figure}
 
 \subsection{Calibrating US productivity}
 Import shares are only informative about relative productivities. For a benchmark country, the US, we calibrate productivity to match observed value added data. Using \eqref{eq:wage}, we can express productivity as a function of sectoral wages,
@@ -629,5 +653,5 @@ Given a series of productivities calibrated to the data, we decompose productivi
 \end{equation}
 The first term is a Baxter-King trend. The second is a global sector shock, calculated as the $(j,t)$ average of productivity deviations across countries. The third term is calculated as a weighted average of remaining shocks within a country-year. (Weighting is necessary because otherwise idiosyncratic shock of services, the larges sector, would dominate fluctuations in all countries.) The last term is a residual.
 
-The parameter vector $\rho$ and $\sigma$ is estimate using simple OLS. Shocks $u$ are drawn for iid standard normal distribution.
+The parameter vector $\rho$ and $\sigma$ is estimated using simple OLS. Shocks $u$ are drawn for iid standard normal distribution.
 \end{document}
