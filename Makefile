@@ -10,7 +10,7 @@ PROCS = 2
 
 tables: $(foreach table,$(TABLES),experiments/$(table)/output_table.csv) 
 ces_tables: experiments/EOS05/output_table.csv experiments/baseline/output_table.csv experiments/EOS2/output_table.csv
-
+infinite: experiments/EOS10/output_table.csv
 # this takes too long to run, only run if explicitly asked `make S500`
 S500: experiments/S500/output_table.csv
 
@@ -25,7 +25,11 @@ experiments/$(1)/%/results.jld2: $(EQULIBRIUM) experiments/$(1)/common_parameter
 	cd $$(dir $$@) && julia -p$(PROCS) scenario.jl > errors.log 2>&1
 endef
 
-$(foreach experiment,$(TABLES) S500 EOS05 EOS2,$(eval $(call run_experiment,$(experiment))))
+$(foreach experiment,$(TABLES) S500 EOS05 EOS2 EOS10 EOS1.5 EOS1.2 ,$(eval $(call run_experiment,$(experiment))))
+
+# special experiments for large EOS
+experiments/EOS10/output_table.csv: experiments/EOS10/actual/results.jld2 experiments/EOS10/autarky/results.jld2 experiments/EOS10/nosectoral/results.jld2 experiments/EOS10/nosectoral_autarky/results.jld2output.jl table.jl
+	julia table.jl $(dir $@)
 
 experiments/%/output_table.csv: $(foreach column,$(COLUMNS),experiments/%/$(column)/results.jld2) output.jl table.jl
 	julia table.jl $(dir $@)

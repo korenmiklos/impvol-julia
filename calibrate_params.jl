@@ -151,17 +151,27 @@ module CalibrateParameters
 		theta = parameters[:theta]
 		n_zero = parameters[:numerical_zero]
 
+		# smooth kappa over time so that it does not introduce shocks
+		weights = parameters[:bp_weights]
+		_, share_trend = DetrendUtilities.detrend(d, weights)
+		# DEBUG: undo all this
+		share_trend = d
+
 		kappa = zeros(size(d))
 		for j in 1:(J-1)
 			for t = 1:T
-				kappa[:,:,j,t] = ((d[:,:,j,t] .* transpose(d[:,:,j,t])) ./ (diag(d[:,:,j,t]) * transpose(diag(d[:,:,j,t])))).^(1 / (2 * theta))
+				kappa[:,:,j,t] = ((share_trend[:,:,j,t] .* transpose(share_trend[:,:,j,t])) ./ (diag(share_trend[:,:,j,t]) * transpose(diag(share_trend[:,:,j,t])))).^(1 / (2 * theta))
 			end
 		end
 
 		kappa[kappa .< n_zero] = n_zero
 		kappa[:,:,end,:] = repeat(eye(N), outer = [1,1,1,T]) # Services
 
-		return kappa = min.(kappa,1)
+		kappa = min.(kappa,1)
+		# smooth kappa over time so that it does not introduce shocks
+		_, kappa_trend = DetrendUtilities.detrend(kappa, weights)
+		# DEBUG: return kappa, not kappa_trend
+		return kappa
 	end
 
 	function expenditure_shares(parameters, data)
@@ -172,10 +182,10 @@ module CalibrateParameters
 
 		d = import_shares
 
-		share = d ./ repeat(sum(d,2), outer = [1,N,1,1])
-		d_share = 1./repeat(sum(d,2), outer = [1,N,1,1]) - 1
-		d_share[d_share .< n_zero] = n_zero
-		d = share ./ (1 + d_share)
+		within_import = d ./ sum(d, 2)
+		domestic_per_import = 1 ./ sum(d, 2) - 1
+		domestic_per_import[domestic_per_import .< n_zero] = n_zero
+		d = within_import ./ (1 + domestic_per_import)
 
 		for n in 1:N
 			d[n,n,:,:] = ones(J,T) - squeeze(sum(d[n,:,:,:],1),1)
@@ -183,7 +193,7 @@ module CalibrateParameters
 
 		d[d .< n_zero] = n_zero
 
-		return d
+		return d ./ sum(d, 2)
 	end
 
 	function calculate_xi(parameters)

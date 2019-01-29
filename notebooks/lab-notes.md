@@ -795,3 +795,66 @@ Still large bump if we winsorize to 0+epsilon and 1-epsilon.
 Smoothing before winsorizing removes the 21-27 bump, but not the 31-35 bump.
 
 Winsorizing at highest/lowest (as opposed to second highest, second lowest) results in smooth series.
+
+# 2019-01-21
+## Check EOS=2 volatility
+
+There are some large swings in nosectoral global GDP in period 30:T-1.
+
+## Check sectoral reallocation when EOS=2
+# 2019-01-22
+## Check EOS=2 volatility
+
+With EOS=10, kappa=free trade, algorithm does not converge. Even when kappa=actual, middle loop does not converge. I suppose there are large sector-to-sector swings.
+
+But with EOS=2, middle loop did converge, so this is not the (only) problem.
+
+# 2019-01-25
+## Compare EOS values
+
+The following countries have negative diversification change with sigma=1, but large positive with sigma=2. Belgium, Portugal, Spain, UK.
+
+When kappa=kappa1972 and we remove sectoral shocks, the EOS does not matter for volatility. Volatilities for different values of sigma = 1, 1.2, 1.5, 2.
+```
+Belgium:
+0.004350030563551881
+0.0043431075707876
+0.004355221982294681
+0.004422306639046646
+```
+
+```
+Portugal:
+0.0027154587008125296
+0.002637876401277143
+0.0026180879755125963
+0.0026756363579999855
+```
+
+```
+0.0007930006047321249
+0.0008007041924229509
+0.0008414374525658467
+0.0009513892364179129
+```
+
+```
+UK:
+0.0003622910128266623
+0.00034900802722716984
+0.00034125439006452314
+0.000360265606003205
+```
+
+But when kappa = estimated, the nosectoral volatilities drasctially increase with sigma.
+```
+Portugal:
+0.0017108325429144933
+0.0019311028488814097
+0.0028629377081867487
+0.006878788764302931
+```
+
+It seems there are *shocks* to kappa, which get magnified with sigma. How do we compute kappa?
+- we winsorize it at numerical zero and 1
+- formula for d is good.
