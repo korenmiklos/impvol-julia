@@ -264,20 +264,20 @@ module CalibrateParameters
 		nu = final_expenditure_shares .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (sigma-1)
 		@test any(isnan, nu[:,:,1:end-1,:]) == false
 
-		nontradable_nu = max.(nulla, 1 .- sum(nu[:,:,1:end-1,:], 3))
-		nu[:,:,end:end,:] = nontradable_nu
-		nu = nu ./ sum(nu, 3)
-		@test any(isnan, nu) == false
-		@test nu[1,end,:,1] ≈ final_expenditure_shares[1,end,:,1] atol=1e-9
+		nontradable_nu = 1 .- sum(final_expenditure_shares[:,:,1:end-1,:], 3)
+		# Replace negative elements with second smallest positive
+		nu[:,:,end:end,:] .= DetrendUtilities.winsorize(nontradable_nu, 1)
+		nu .= nu ./ sum(nu, 3)
 
 		# demand shifter only varies across sectors and over time, not across countries
 		parameters[:nu_njt] = sum(country_weights .* nu, (1,2))
 
 		# enforce comformity of model with data
 		final_expenditure_shares = parameters[:nu_njt] .* (p_sectoral ./ (data["pwt"] .* P_US)) .^ (1-sigma)
-		nontradable_nu = max.(nulla, 1 .- sum(final_expenditure_shares[:,:,1:end-1,:], 3))
-		final_expenditure_shares[:,:,end:end,:] = nontradable_nu
-		final_expenditure_shares = final_expenditure_shares ./ sum(final_expenditure_shares, 3)
+		nontradable_nu = 1 .- sum(final_expenditure_shares[:,:,1:end-1,:], 3)
+		# Replace negative elements with second smallest positive
+		final_expenditure_shares[:,:,end:end,:] .= DetrendUtilities.winsorize(nontradable_nu, 1)
+		final_expenditure_shares .= final_expenditure_shares ./ sum(final_expenditure_shares, 3)
 
 		# step 4: calculate nontradable prices
 		# NB: DO NOT recalibrate tradable prices, expenditure_shares are very noisy for small sectors
@@ -287,6 +287,7 @@ module CalibrateParameters
 			p_sectoral[:,:,end:end,:] = (data["pwt"] .* P_US ./ (prod(p_sectoral[:,:,1:end-1,:] .^ parameters[:nu_njt][:,:,1:end-1,:], 3))) .^ (1 ./ parameters[:nu_njt][:,:,end:end,:])
 		end
 		parameters[:p_sectoral] = p_sectoral
+		parameters[:final_expenditure_shares] = final_expenditure_shares
 	end
 
 	function calculate_A(parameters, data)
