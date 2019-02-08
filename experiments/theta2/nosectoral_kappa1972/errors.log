@@ -2,1435 +2,1446 @@ WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritte
 WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition WARNING: Method definition warn(warnAny(...Any)... in module Base) at util.jl:589 in module Base overwritten at util.jl:589 in module Logging overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115 at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-.
-WARNING: Method definition infoWARNING: Method definition (infoAny(...Any)... in module Base) at util.jl:534 in module Base overwritten at util.jl:534 in module Logging overwritten at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115 in module Logging.
+WARNING: Method definition warn(Any...) in module Base at util.jl:589WARNING: Method definition  overwritten in module Loggingwarn at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115(.
+Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition WARNING: Method definition infowarn((AnyAny......)) in module Base in module Base at util.jl:534 at util.jl:589 overwritten overwritten in module Logging in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
  at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition WARNING: Method definition warn(warnAny(...)Any in module Base... at util.jl:589) overwritten in module Base in module Logging at util.jl:589 overwritten at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115 in module Logging.
+ at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+WARNING: Method definition WARNING: Method definition infoinfo((AnyAny......)) in module Base in module Base at util.jl:534 at util.jl:534 overwritten overwritten in module Logging in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115 at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
+.
 WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
 WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition warn(Any...) in module Base at util.jl:589 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-WARNING: Method definition info(Any...) in module Base at util.jl:534 overwritten in module Logging at //////////////////////////////////////////////////////////home/ubuntu/JuliaPro-0.6.2.1/JuliaPro/pkgs-0.6.2.1/v0.6/Logging/src/Logging.jl:115.
-07-Feb 16:07:27:INFO:root:--- Period 2 ---
-07-Feb 16:07:27:INFO:root:--- Period 3 ---
-07-Feb 16:07:27:INFO:root:--- Period 1 ---
-07-Feb 16:07:27:INFO:root:--- Period 4 ---
-07-Feb 16:07:27:INFO:root:--- Period 5 ---
-07-Feb 16:07:27:INFO:root:--- Period 6 ---
-07-Feb 16:07:27:INFO:root:--- Period 7 ---
-07-Feb 16:07:27:INFO:root:--- Period 8 ---
-07-Feb 16:07:27:INFO:root:--- Period 9 ---
-07-Feb 16:07:27:INFO:root:--- Period 10 ---
-07-Feb 16:07:27:INFO:root:--- Period 11 ---
-07-Feb 16:07:27:INFO:root:--- Period 12 ---
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:29:INFO:root:BEGIN Outer loop
-07-Feb 16:07:32:INFO:root:------ Middle 1: 0.005362548424558053
-07-Feb 16:07:32:INFO:root:------ Middle 2: 0.0029530407885768432
-07-Feb 16:07:32:INFO:root:------ Middle 3: 0.0022684882449912347
-07-Feb 16:07:32:INFO:root:------ Middle 4: 0.0012511530188748247
-07-Feb 16:07:32:INFO:root:------ Middle 5: 0.0009831259163197122
-07-Feb 16:07:32:INFO:root:------ Middle 6: 0.0005511885856806829
-07-Feb 16:07:32:INFO:root:------ Middle 7: 0.00046297535166304067
-07-Feb 16:07:32:INFO:root:------ Middle 8: 0.0002767955723558015
-07-Feb 16:07:32:INFO:root:Starting from 1.2259928991620966e-17
-07-Feb 16:07:33:INFO:root:-- Outer 1: 0.04051071052799782
-07-Feb 16:07:33:INFO:root:------ Middle 1: 0.0025877042381453903
-07-Feb 16:07:33:INFO:root:------ Middle 2: 0.0008528528868584382
-07-Feb 16:07:33:INFO:root:------ Middle 3: 0.0004787549506251229
-07-Feb 16:07:33:INFO:root:------ Middle 4: 0.00037326412254911766
-07-Feb 16:07:33:INFO:root:------ Middle 5: 0.00020025689219032962
-07-Feb 16:07:33:INFO:root:Starting from 7.686703552333889e-18
-07-Feb 16:07:33:INFO:root:-- Outer 2: 0.017548679219341695
-07-Feb 16:07:33:INFO:root:------ Middle 1: 0.0005532016968204065
-07-Feb 16:07:33:INFO:root:------ Middle 2: 0.00032460933930741654
-07-Feb 16:07:33:INFO:root:------ Middle 3: 0.00019427684150959352
-07-Feb 16:07:33:INFO:root:Starting from 1.0715224150767198e-17
-07-Feb 16:07:33:INFO:root:-- Outer 3: 0.007355360590281257
-07-Feb 16:07:33:INFO:root:------ Middle 1: 0.00016663004762074496
-07-Feb 16:07:33:INFO:root:Starting from 9.833604200726e-18
-07-Feb 16:07:33:INFO:root:-- Outer 4: 0.007260247783691575
-07-Feb 16:07:33:INFO:root:------ Middle 1: 0.0002079671666878766
-07-Feb 16:07:33:INFO:root:Starting from 1.1652753076718817e-17
-07-Feb 16:07:33:INFO:root:-- Outer 5: 0.0015009564194664654
-07-Feb 16:07:33:INFO:root:------ Middle 1: 0.0001859668522822566
-07-Feb 16:07:33:INFO:root:Starting from 8.737312709375408e-18
-07-Feb 16:07:33:INFO:root:-- Outer 6: 0.0016509507049936932
-07-Feb 16:07:33:INFO:root:------ Middle 1: 0.00011177124942570948
-07-Feb 16:07:33:INFO:root:Starting from 8.779267774351166e-18
-07-Feb 16:07:33:INFO:root:-- Outer 7: 0.00021727067596240547
-07-Feb 16:07:33:INFO:root:END Outer loop
-07-Feb 16:07:33:INFO:root:Model trade shares: [0.971381, 0.942086, 0.995657]
-07-Feb 16:07:33:INFO:root:Data trade shares: [0.970499, 0.941882, 0.994321]
-07-Feb 16:07:33:INFO:root:US prices: [1.01728, 1.01627, 1.01573]
-07-Feb 16:07:33:INFO:root:in the data: [1.0, 1.0, 1.0]
-07-Feb 16:07:34:INFO:root:Nominal world expenditure: 8.242752977021232e6
-07-Feb 16:07:34:INFO:root:--------------In the data: [8.33469e6]
-07-Feb 16:07:34:INFO:root:--- Period 13 ---
-07-Feb 16:07:34:INFO:root:BEGIN Outer loop
-07-Feb 16:07:55:INFO:root:------ Middle 1: 0.0051101856279083336
-07-Feb 16:07:56:INFO:root:------ Middle 2: 0.0031767922217528434
-07-Feb 16:07:57:INFO:root:------ Middle 3: 0.0017557003769606019
-07-Feb 16:07:57:INFO:root:------ Middle 1: 0.0037525875792351164
-07-Feb 16:07:58:INFO:root:------ Middle 4: 0.0013741550669096525
-07-Feb 16:07:58:INFO:root:------ Middle 5: 0.0007710891162984722
-07-Feb 16:07:59:INFO:root:------ Middle 2: 0.002363359145700474
-07-Feb 16:07:59:INFO:root:------ Middle 1: 0.004533878224504168
-07-Feb 16:07:59:INFO:root:------ Middle 6: 0.000619842860029289
-07-Feb 16:07:59:INFO:root:------ Middle 7: 0.00034507080409240865
-07-Feb 16:08:00:INFO:root:------ Middle 3: 0.001518853328317299
-07-Feb 16:08:00:INFO:root:------ Middle 8: 0.00030053644603344007
-07-Feb 16:08:00:INFO:root:------ Middle 4: 0.0008418670045679055
-07-Feb 16:08:00:INFO:root:------ Middle 9: 0.00016687202328277177
-07-Feb 16:08:00:INFO:root:Starting from 1.2218829356679612e-17
-07-Feb 16:08:01:INFO:root:------ Middle 1: 0.004040928149491415
-07-Feb 16:08:01:INFO:root:-- Outer 1: 0.03785333384916017
-07-Feb 16:08:01:INFO:root:------ Middle 2: 0.002849611156013196
-07-Feb 16:08:01:INFO:root:------ Middle 3: 0.0015680064648863387
-07-Feb 16:08:01:INFO:root:------ Middle 1: 0.0022747044371014356
-07-Feb 16:08:01:INFO:root:------ Middle 5: 0.0006891139191741586
-07-Feb 16:08:02:INFO:root:------ Middle 6: 0.00038796346474291
-07-Feb 16:08:02:INFO:root:------ Middle 4: 0.001227447220769005
-07-Feb 16:08:02:INFO:root:------ Middle 2: 0.0025224618242631227
-07-Feb 16:08:02:INFO:root:------ Middle 5: 0.0006843285284676518
-07-Feb 16:08:03:INFO:root:------ Middle 7: 0.0003473620052115597
-07-Feb 16:08:03:INFO:root:------ Middle 8: 0.00018186401297499036
-07-Feb 16:08:03:INFO:root:------ Middle 6: 0.0005787565987419146
-07-Feb 16:08:03:INFO:root:Starting from 1.2144275206503129e-17
-07-Feb 16:08:03:INFO:root:------ Middle 7: 0.00034341844925002527
-07-Feb 16:08:03:INFO:root:-- Outer 1: 0.02670851299805487
-07-Feb 16:08:04:INFO:root:------ Middle 8: 0.0002063526037516647
-07-Feb 16:08:04:INFO:root:------ Middle 1: 0.004813164509372547
-07-Feb 16:08:04:INFO:root:------ Middle 1: 0.003909344312139724
-07-Feb 16:08:04:INFO:root:------ Middle 3: 0.001614102955827512
-07-Feb 16:08:04:INFO:root:------ Middle 1: 0.004152296613538622
-07-Feb 16:08:04:INFO:root:Starting from 1.2667504163203355e-17
-07-Feb 16:08:04:INFO:root:------ Middle 4: 0.0008930390047234382
-07-Feb 16:08:04:INFO:root:------ Middle 2: 0.0026578034797988584
-07-Feb 16:08:04:INFO:root:-- Outer 1: 0.032887873536472344
-07-Feb 16:08:05:INFO:root:------ Middle 2: 0.0007823732507400843
-07-Feb 16:08:05:INFO:root:------ Middle 5: 0.0007186801554555719
-07-Feb 16:08:05:INFO:root:------ Middle 3: 0.00043987671737899997
-07-Feb 16:08:05:INFO:root:------ Middle 1: 0.004347778160420391
-07-Feb 16:08:05:INFO:root:------ Middle 6: 0.0003990308123594923
-07-Feb 16:08:05:INFO:root:------ Middle 1: 0.0007301707894756062
-07-Feb 16:08:06:INFO:root:------ Middle 1: 0.00422417427644836
-07-Feb 16:08:06:INFO:root:------ Middle 1: 0.003611422830953156
-07-Feb 16:08:06:INFO:root:------ Middle 1: 0.003517355151055717
-07-Feb 16:08:06:INFO:root:------ Middle 7: 0.0003524799444727764
-07-Feb 16:08:06:INFO:root:------ Middle 4: 0.0003498233184571256
-07-Feb 16:08:06:INFO:root:------ Middle 2: 0.0004476439173985033
-07-Feb 16:08:06:INFO:root:------ Middle 5: 0.0001995221367930514
-07-Feb 16:08:06:INFO:root:Starting from 1.751282427214845e-17
-07-Feb 16:08:06:INFO:root:-- Outer 2: 0.01646667801203789
-07-Feb 16:08:06:INFO:root:------ Middle 8: 0.0001947766377419256
-07-Feb 16:08:06:INFO:root:------ Middle 3: 0.00024413911240854695
-07-Feb 16:08:06:INFO:root:Starting from 1.9803409530884044e-17
-07-Feb 16:08:06:INFO:root:-- Outer 2: 0.012188898224698964
-07-Feb 16:08:06:INFO:root:------ Middle 3: 0.0020439320849842697
-07-Feb 16:08:06:INFO:root:------ Middle 1: 0.0005296902652030955
-07-Feb 16:08:06:INFO:root:Starting from 1.1488095854550014e-17
-07-Feb 16:08:06:INFO:root:------ Middle 4: 0.0011288130899953087
-07-Feb 16:08:07:INFO:root:------ Middle 2: 0.0026204212106654165
-07-Feb 16:08:07:INFO:root:-- Outer 1: 0.027858435433882934
-07-Feb 16:08:07:INFO:root:------ Middle 1: 0.0008094006789293695
-07-Feb 16:08:07:INFO:root:------ Middle 1: 0.003960670245704532
-07-Feb 16:08:07:INFO:root:------ Middle 2: 0.00044385864244614245
-07-Feb 16:08:07:INFO:root:------ Middle 2: 0.002601315831522452
-07-Feb 16:08:08:INFO:root:------ Middle 2: 0.002279390535445623
-07-Feb 16:08:08:INFO:root:------ Middle 1: 0.003528774202437335
-07-Feb 16:08:08:INFO:root:------ Middle 3: 0.0003047439203530833
-07-Feb 16:08:08:INFO:root:------ Middle 5: 0.0008881607916676267
-07-Feb 16:08:08:INFO:root:------ Middle 4: 0.00016617487722246372
-07-Feb 16:08:08:INFO:root:Starting from 1.8751791029864168e-17
-07-Feb 16:08:08:INFO:root:-- Outer 2: 0.014448126467185025
-07-Feb 16:08:08:INFO:root:------ Middle 2: 0.002662636485352953
-07-Feb 16:08:08:INFO:root:------ Middle 6: 0.000492417852898724
-07-Feb 16:08:08:INFO:root:------ Middle 1: 0.0009160700570148529
-07-Feb 16:08:08:INFO:root:------ Middle 3: 0.0016478826300259707
-07-Feb 16:08:08:INFO:root:------ Middle 1: 0.0004091383870220747
-07-Feb 16:08:08:INFO:root:------ Middle 2: 0.0003152278883989475
-07-Feb 16:08:08:INFO:root:------ Middle 2: 0.00021989378514105206
-07-Feb 16:08:08:INFO:root:------ Middle 4: 0.0009068773513525268
-07-Feb 16:08:08:INFO:root:Starting from 1.813885937969134e-17
-07-Feb 16:08:08:INFO:root:-- Outer 3: 0.00542683692894534
-07-Feb 16:08:08:INFO:root:------ Middle 7: 0.00042929634572243524
-07-Feb 16:08:08:INFO:root:------ Middle 3: 0.00018820837788167458
-07-Feb 16:08:08:INFO:root:Starting from 1.4219028608614123e-17
-07-Feb 16:08:08:INFO:root:-- Outer 3: 0.006831305584984426
-07-Feb 16:08:09:INFO:root:------ Middle 1: 0.00016181073800834034
-07-Feb 16:08:09:INFO:root:Starting from 1.6576794969233045e-17
-07-Feb 16:08:09:INFO:root:-- Outer 4: 0.006756235632457988
-07-Feb 16:08:09:INFO:root:------ Middle 2: 0.0009407418875825403
-07-Feb 16:08:09:INFO:root:------ Middle 8: 0.00023658635394581382
-07-Feb 16:08:09:INFO:root:------ Middle 3: 0.0015871759283460757
-07-Feb 16:08:09:INFO:root:------ Middle 3: 0.0014783816682781394
-07-Feb 16:08:09:INFO:root:Starting from 1.2456119388561301e-17
-07-Feb 16:08:09:INFO:root:------ Middle 4: 0.0008232244368136101
-07-Feb 16:08:09:INFO:root:-- Outer 1: 0.03516363077721921
-07-Feb 16:08:09:INFO:root:------ Middle 2: 0.0002092182773000186
-07-Feb 16:08:09:INFO:root:Starting from 1.485521854176281e-17
-07-Feb 16:08:09:INFO:root:-- Outer 3: 0.0070371318308008165
-07-Feb 16:08:09:INFO:root:------ Middle 3: 0.0005326296909779418
-07-Feb 16:08:09:INFO:root:------ Middle 3: 0.0016891107304445518
-07-Feb 16:08:10:INFO:root:------ Middle 4: 0.00028474430349420836
-07-Feb 16:08:10:INFO:root:Starting from 1.7812474988599766e-17
-07-Feb 16:08:10:INFO:root:-- Outer 2: 0.01374812116641069
-07-Feb 16:08:10:INFO:root:------ Middle 5: 0.0007272658292977491
-07-Feb 16:08:10:INFO:root:------ Middle 1: 0.00039600052987415614
-07-Feb 16:08:10:INFO:root:------ Middle 1: 0.0025509495595477443
-07-Feb 16:08:10:INFO:root:------ Middle 2: 0.002742804080134529
-07-Feb 16:08:10:INFO:root:------ Middle 1: 0.0008008412574705264
-07-Feb 16:08:10:INFO:root:------ Middle 6: 0.00040264906587486913
-07-Feb 16:08:10:INFO:root:------ Middle 4: 0.0010110822882134212
-07-Feb 16:08:10:INFO:root:------ Middle 1: 0.00021414545466682863
-07-Feb 16:08:10:INFO:root:------ Middle 5: 0.000588450284002237
-07-Feb 16:08:10:INFO:root:Starting from 1.3915844613398563e-17
-07-Feb 16:08:10:INFO:root:-- Outer 5: 0.0014205899360720641
-07-Feb 16:08:10:INFO:root:------ Middle 1: 0.00028309717897541007
-07-Feb 16:08:10:INFO:root:Starting from 1.8285093815955128e-17
-07-Feb 16:08:10:INFO:root:-- Outer 4: 0.0025263222619180217
-07-Feb 16:08:10:INFO:root:------ Middle 7: 0.0003560859491977465
-07-Feb 16:08:10:INFO:root:------ Middle 5: 0.0006649740676463614
-07-Feb 16:08:11:INFO:root:------ Middle 1: 0.00018911961531660967
-07-Feb 16:08:11:INFO:root:Starting from 1.6472298107089562e-17
-07-Feb 16:08:11:INFO:root:-- Outer 6: 0.0015584794681638495
-07-Feb 16:08:11:INFO:root:------ Middle 1: 0.0003066895610025689
-07-Feb 16:08:11:INFO:root:------ Middle 6: 0.00037105036981885495
-07-Feb 16:08:11:INFO:root:------ Middle 8: 0.00019610136415976838
-07-Feb 16:08:11:INFO:root:------ Middle 2: 0.00018951990178891505
-07-Feb 16:08:11:INFO:root:Starting from 1.8673380497325748e-17
-07-Feb 16:08:11:INFO:root:-- Outer 4: 0.002944615177434177
-07-Feb 16:08:11:INFO:root:------ Middle 2: 0.0022795774684378923
-07-Feb 16:08:11:INFO:root:------ Middle 1: 0.0002076911362351297
-07-Feb 16:08:11:INFO:root:Starting from 1.626146784405609e-17
-07-Feb 16:08:11:INFO:root:-- Outer 5: 0.0030497466636144346
-07-Feb 16:08:11:INFO:root:Starting from 1.241060430607781e-17
-07-Feb 16:08:11:INFO:root:------ Middle 4: 0.0010843737111904757
-07-Feb 16:08:11:INFO:root:------ Middle 2: 0.0003640518473164018
-07-Feb 16:08:11:INFO:root:------ Middle 2: 0.00013554885959085762
-07-Feb 16:08:11:INFO:root:Starting from 1.5118521609449027e-17
-07-Feb 16:08:11:INFO:root:-- Outer 5: 0.0011740739437893209
-07-Feb 16:08:11:INFO:root:------ Middle 3: 0.00021741168227323493
-07-Feb 16:08:11:INFO:root:Starting from 1.459973557613878e-17
-07-Feb 16:08:11:INFO:root:------ Middle 7: 0.00032737344924499905
-07-Feb 16:08:11:INFO:root:-- Outer 3: 0.005877157380403475
-07-Feb 16:08:11:INFO:root:------ Middle 1: 0.00011918896304687887
-07-Feb 16:08:11:INFO:root:Starting from 1.3373428002535527e-17
-07-Feb 16:08:11:INFO:root:-- Outer 7: 0.00015444891101174714
-07-Feb 16:08:11:INFO:root:END Outer loop
-07-Feb 16:08:11:INFO:root:------ Middle 3: 0.001731281766375669
-07-Feb 16:08:11:INFO:root:-- Outer 1: 0.028764471723857196
-07-Feb 16:08:12:INFO:root:------ Middle 6: 0.0005063800134113792
-07-Feb 16:08:12:INFO:root:------ Middle 1: 0.00028860412679860246
-07-Feb 16:08:12:INFO:root:Starting from 1.9709528821479327e-17
-07-Feb 16:08:12:INFO:root:-- Outer 4: 0.006219479530902356
-07-Feb 16:08:12:INFO:root:------ Middle 4: 0.0009530886480604933
-07-Feb 16:08:12:INFO:root:------ Middle 7: 0.0003017213601850766
-07-Feb 16:08:12:INFO:root:------ Middle 8: 0.00018592716669039102
-07-Feb 16:08:12:INFO:root:------ Middle 1: 0.003994322734919321
-07-Feb 16:08:12:INFO:root:------ Middle 1: 0.00013454736823600028
-07-Feb 16:08:12:INFO:root:Starting from 1.720898758918921e-17
-07-Feb 16:08:12:INFO:root:-- Outer 6: 0.0007115363626525947
-07-Feb 16:08:12:INFO:root:END Outer loop
-07-Feb 16:08:12:INFO:root:Starting from 1.22101087230714e-17
-07-Feb 16:08:12:INFO:root:Model trade shares: [0.972668, 0.94161, 0.994961]
-07-Feb 16:08:12:INFO:root:Data trade shares: [0.970394, 0.938128, 0.99445]
-07-Feb 16:08:12:INFO:root:US prices: [1.08576, 1.06214, 1.06522]
-07-Feb 16:08:12:INFO:root:in the data: [1.21921, 1.17859, 1.17859]
-07-Feb 16:08:12:INFO:root:------ Middle 8: 0.00025075074890009395
-07-Feb 16:08:12:INFO:root:Nominal world expenditure: 8.303860685959757e6
-07-Feb 16:08:12:INFO:root:-- Outer 1: 0.026629148827920678
-07-Feb 16:08:12:INFO:root:------ Middle 1: 0.00018362525421546937
-07-Feb 16:08:12:INFO:root:Starting from 1.4025481396419863e-17
-07-Feb 16:08:12:INFO:root:-- Outer 6: 0.000709936425223912
-07-Feb 16:08:12:INFO:root:END Outer loop
-07-Feb 16:08:13:INFO:root:------ Middle 2: 0.0007256177067160555
-07-Feb 16:08:13:INFO:root:Starting from 1.2352499543552415e-17
-07-Feb 16:08:13:INFO:root:------ Middle 1: 0.0036548094122983935
-07-Feb 16:08:13:INFO:root:------ Middle 5: 0.0006946756693110802
-07-Feb 16:08:13:INFO:root:Model trade shares: [0.970695, 0.93159, 0.990398]
-07-Feb 16:08:13:INFO:root:Data trade shares: [0.976496, 0.933524, 0.973934]
-07-Feb 16:08:13:INFO:root:US prices: [1.43131, 1.01926, 1.0296]
-07-Feb 16:08:13:INFO:root:in the data: [2.96155, 2.01858, 2.01858]
-07-Feb 16:08:13:INFO:root:------ Middle 3: 0.0004069372684709023
-07-Feb 16:08:13:INFO:root:-- Outer 1: 0.027483137009711455
-07-Feb 16:08:13:INFO:root:Model trade shares: [0.970518, 0.93385, 0.9936]
-07-Feb 16:08:13:INFO:root:Data trade shares: [0.975035, 0.947136, 0.993826]
-07-Feb 16:08:13:INFO:root:US prices: [1.20538, 1.10944, 1.11521]
-07-Feb 16:08:13:INFO:root:in the data: [1.5623, 1.46271, 1.46271]
-07-Feb 16:08:13:INFO:root:Nominal world expenditure: 1.0749568914993083e7
-07-Feb 16:08:13:INFO:root:------ Middle 6: 0.0003826404422001711
-07-Feb 16:08:13:INFO:root:Nominal world expenditure: 9.185234509137154e6
-07-Feb 16:08:12:INFO:root:--------------In the data: [1.02443e7]
-07-Feb 16:08:13:INFO:root:------ Middle 1: 0.00391523531312295
-07-Feb 16:08:13:INFO:root:--- Period 14 ---
-07-Feb 16:08:13:INFO:root:------ Middle 4: 0.0002648423758636367
-07-Feb 16:08:13:INFO:root:Starting from 1.6742941737547377e-17
-07-Feb 16:08:13:INFO:root:-- Outer 2: 0.015670550106932073
-07-Feb 16:08:13:INFO:root:BEGIN Outer loop
-07-Feb 16:08:13:INFO:root:------ Middle 5: 0.0007616120065194104
-07-Feb 16:08:13:INFO:root:------ Middle 3: 0.0014634031637877133
-07-Feb 16:08:13:INFO:root:--------------In the data: [1.27847e7]
-07-Feb 16:08:13:INFO:root:--------------In the data: [2.33649e7]
-07-Feb 16:08:14:INFO:root:------ Middle 1: 0.0005731520963388706
-07-Feb 16:08:14:INFO:root:--- Period 15 ---
-07-Feb 16:08:14:INFO:root:BEGIN Outer loop
-07-Feb 16:08:14:INFO:root:------ Middle 6: 0.0004229390135364632
-07-Feb 16:08:14:INFO:root:------ Middle 7: 0.0003288905445698689
-07-Feb 16:08:14:INFO:root:--- Period 16 ---
-07-Feb 16:08:14:INFO:root:BEGIN Outer loop
-07-Feb 16:08:14:INFO:root:------ Middle 1: 0.00025648491787243585
-07-Feb 16:08:14:INFO:root:Starting from 1.6482709276670307e-17
-07-Feb 16:08:14:INFO:root:-- Outer 5: 0.0014156934000602722
-07-Feb 16:08:14:INFO:root:------ Middle 1: 0.00020945721731833073
-07-Feb 16:08:14:INFO:root:------ Middle 8: 0.00017987325035842888
-07-Feb 16:08:14:INFO:root:Starting from 1.5777169950056297e-17
-07-Feb 16:08:14:INFO:root:-- Outer 6: 0.0014926370490705445
-07-Feb 16:08:14:INFO:root:------ Middle 2: 0.0009413067383561239
-07-Feb 16:08:14:INFO:root:------ Middle 7: 0.0003690781540285014
-07-Feb 16:08:14:INFO:root:------ Middle 2: 0.0008295711890302327
-07-Feb 16:08:14:INFO:root:Starting from 1.22477098362594e-17
-07-Feb 16:08:15:INFO:root:-- Outer 1: 0.029948011754134283
-07-Feb 16:08:15:INFO:root:------ Middle 8: 0.00020323706023296647
-07-Feb 16:08:15:INFO:root:------ Middle 2: 0.0009487610979621017
-07-Feb 16:08:15:INFO:root:------ Middle 3: 0.00048646628710722023
-07-Feb 16:08:15:INFO:root:------ Middle 1: 0.004023764746267912
-07-Feb 16:08:15:INFO:root:------ Middle 4: 0.00028593185228221617
-07-Feb 16:08:15:INFO:root:------ Middle 1: 0.00013140239904173536
-07-Feb 16:08:15:INFO:root:Starting from 2.2564655790689297e-17
-07-Feb 16:08:15:INFO:root:-- Outer 2: 0.013246874952773144
-07-Feb 16:08:15:INFO:root:Starting from 1.5389111735694167e-17
-07-Feb 16:08:15:INFO:root:-- Outer 7: 0.00019041363982650716
-07-Feb 16:08:15:INFO:root:END Outer loop
-07-Feb 16:08:15:INFO:root:------ Middle 2: 0.00034760584055404164
-07-Feb 16:08:15:INFO:root:------ Middle 1: 0.0007091536096885552
-07-Feb 16:08:15:INFO:root:------ Middle 3: 0.0005359221856935326
-07-Feb 16:08:15:INFO:root:Starting from 1.21713298611408e-17
-07-Feb 16:08:15:INFO:root:------ Middle 4: 0.0009461937478129717
-07-Feb 16:08:15:INFO:root:------ Middle 3: 0.00020411834425496567
-07-Feb 16:08:15:INFO:root:Starting from 1.5546221088386243e-17
-07-Feb 16:08:15:INFO:root:-- Outer 3: 0.006670222900126751
-07-Feb 16:08:15:INFO:root:------ Middle 4: 0.000286879675181507
-07-Feb 16:08:15:INFO:root:Model trade shares: [0.97187, 0.937806, 0.992441]
-07-Feb 16:08:15:INFO:root:Data trade shares: [0.966266, 0.92464, 0.992831]
-07-Feb 16:08:15:INFO:root:US prices: [1.36057, 1.05433, 1.06745]
-07-Feb 16:08:15:INFO:root:in the data: [2.27198, 1.79075, 1.79075]
-07-Feb 16:08:15:INFO:root:Starting from 1.740268277709398e-17
-07-Feb 16:08:15:INFO:root:-- Outer 2: 0.014069769240428166
-07-Feb 16:08:16:INFO:root:------ Middle 1: 0.000245847970753176
-07-Feb 16:08:16:INFO:root:Nominal world expenditure: 1.0806641575884474e7
-07-Feb 16:08:16:INFO:root:Starting from 1.4873362769114037e-17
-07-Feb 16:08:16:INFO:root:-- Outer 4: 0.006821047348729771
-07-Feb 16:08:16:INFO:root:------ Middle 3: 0.0005416787545793366
-07-Feb 16:08:16:INFO:root:------ Middle 1: 0.0008188836724138217
-07-Feb 16:08:16:INFO:root:-- Outer 1: 0.03132756639415138
-07-Feb 16:08:16:INFO:root:------ Middle 4: 0.0002899460374301854
-07-Feb 16:08:16:INFO:root:Starting from 1.8935850857773323e-17
-07-Feb 16:08:16:INFO:root:-- Outer 2: 0.013403590716939542
-07-Feb 16:08:16:INFO:root:--------------In the data: [2.07618e7]
-07-Feb 16:08:16:INFO:root:--- Period 17 ---
-07-Feb 16:08:16:INFO:root:------ Middle 1: 0.004037382881420458
-07-Feb 16:08:16:INFO:root:BEGIN Outer loop
-07-Feb 16:08:16:INFO:root:------ Middle 1: 0.0007578712462408572
-07-Feb 16:08:16:INFO:root:------ Middle 2: 0.0003541300700425968
-07-Feb 16:08:17:INFO:root:------ Middle 2: 0.000933784712994699
-07-Feb 16:08:17:INFO:root:------ Middle 3: 0.0002103575121879624
-07-Feb 16:08:17:INFO:root:Starting from 1.3851643085232397e-17
-07-Feb 16:08:17:INFO:root:-- Outer 3: 0.005591754566325686
-07-Feb 16:08:17:INFO:root:------ Middle 1: 0.00024949900026763724
-07-Feb 16:08:17:INFO:root:Starting from 1.7951280882634547e-17
-07-Feb 16:08:17:INFO:root:-- Outer 4: 0.00584999804990624
-07-Feb 16:08:17:INFO:root:------ Middle 1: 0.00028277065759633975
-07-Feb 16:08:17:INFO:root:Starting from 1.39434875100352e-17
-07-Feb 16:08:17:INFO:root:-- Outer 5: 0.0015004342560937345
-07-Feb 16:08:17:INFO:root:------ Middle 1: 0.0002293608125954002
-07-Feb 16:08:17:INFO:root:Starting from 1.3843551763756136e-17
-07-Feb 16:08:17:INFO:root:-- Outer 6: 0.0016213428005986807
-07-Feb 16:08:17:INFO:root:------ Middle 3: 0.0005464163719221706
-07-Feb 16:08:17:INFO:root:------ Middle 4: 0.0002972051195412633
-07-Feb 16:08:17:INFO:root:Starting from 1.933971194202268e-17
-07-Feb 16:08:17:INFO:root:-- Outer 2: 0.014430604093788912
-07-Feb 16:08:18:INFO:root:------ Middle 5: 0.0006197551003617779
-07-Feb 16:08:18:INFO:root:------ Middle 2: 0.00036367232019442127
-07-Feb 16:08:18:INFO:root:------ Middle 1: 0.0008223310990504488
-07-Feb 16:08:18:INFO:root:------ Middle 3: 0.00021553694701031067
-07-Feb 16:08:18:INFO:root:Starting from 1.2848915468932392e-17
-07-Feb 16:08:18:INFO:root:-- Outer 3: 0.006028460080619323
-07-Feb 16:08:18:INFO:root:------ Middle 1: 0.00029713542421879314
-07-Feb 16:08:18:INFO:root:Starting from 1.585629647687442e-17
-07-Feb 16:08:18:INFO:root:-- Outer 4: 0.006382632708271953
-07-Feb 16:08:18:INFO:root:------ Middle 1: 0.0001406794442179076
-07-Feb 16:08:18:INFO:root:Starting from 1.2813601375655339e-17
-07-Feb 16:08:18:INFO:root:-- Outer 7: 0.00016544693987930972
-07-Feb 16:08:18:INFO:root:END Outer loop
-07-Feb 16:08:18:INFO:root:------ Middle 2: 0.00036422303257028826
-07-Feb 16:08:18:INFO:root:------ Middle 3: 0.00021564759062384773
-07-Feb 16:08:18:INFO:root:Starting from 1.7061132719975518e-17
-07-Feb 16:08:18:INFO:root:-- Outer 3: 0.005668034945812025
-07-Feb 16:08:18:INFO:root:------ Middle 1: 0.00023943901736949623
-07-Feb 16:08:18:INFO:root:Starting from 1.7529808437167864e-17
-07-Feb 16:08:18:INFO:root:-- Outer 5: 0.0013617120995193237
-07-Feb 16:08:18:INFO:root:Model trade shares: [0.973433, 0.939376, 0.994201]
-07-Feb 16:08:18:INFO:root:Data trade shares: [0.973362, 0.938447, 0.994052]
-07-Feb 16:08:18:INFO:root:US prices: [1.14754, 1.08886, 1.09701]
-07-Feb 16:08:18:INFO:root:in the data: [1.46789, 1.34924, 1.34924]
-07-Feb 16:08:19:INFO:root:Nominal world expenditure: 8.999180096580856e6
-07-Feb 16:08:19:INFO:root:------ Middle 1: 0.0002729223112177136
-07-Feb 16:08:19:INFO:root:Starting from 1.2974217117968146e-17
-07-Feb 16:08:19:INFO:root:-- Outer 4: 0.005970128952533866
-07-Feb 16:08:19:INFO:root:------ Middle 1: 0.00019920542890006912
-07-Feb 16:08:19:INFO:root:Starting from 1.4805449241248896e-17
-07-Feb 16:08:19:INFO:root:-- Outer 6: 0.0014375179223851233
-07-Feb 16:08:19:INFO:root:------ Middle 6: 0.000419709956761385
-07-Feb 16:08:19:INFO:root:------ Middle 2: 0.0009030428484661479
-07-Feb 16:08:19:INFO:root:--------------In the data: [1.15794e7]
-07-Feb 16:08:19:INFO:root:------ Middle 3: 0.0004942269390840215
-07-Feb 16:08:19:INFO:root:------ Middle 2: 0.00036504338047635535
-07-Feb 16:08:19:INFO:root:--- Period 18 ---
-07-Feb 16:08:19:INFO:root:BEGIN Outer loop
-07-Feb 16:08:19:INFO:root:------ Middle 3: 0.00021644089405152932
-07-Feb 16:08:19:INFO:root:Starting from 1.4090863706035383e-17
-07-Feb 16:08:19:INFO:root:-- Outer 3: 0.006154880620214474
-07-Feb 16:08:19:INFO:root:------ Middle 1: 0.00012877765620821207
-07-Feb 16:08:19:INFO:root:Starting from 1.5758942453586267e-17
-07-Feb 16:08:19:INFO:root:-- Outer 7: 0.00018800191725092298
-07-Feb 16:08:19:INFO:root:END Outer loop
-07-Feb 16:08:19:INFO:root:------ Middle 4: 0.0003182504664783841
-07-Feb 16:08:19:INFO:root:------ Middle 1: 0.00030057846239550233
-07-Feb 16:08:19:INFO:root:------ Middle 1: 0.00026159025113081457
-07-Feb 16:08:19:INFO:root:Starting from 1.8330419335247064e-17
-07-Feb 16:08:19:INFO:root:-- Outer 5: 0.0014453726264357866
-07-Feb 16:08:19:INFO:root:------ Middle 5: 0.0002185329410313632
-07-Feb 16:08:19:INFO:root:Starting from 1.4706431789008033e-17
-07-Feb 16:08:19:INFO:root:-- Outer 2: 0.014582508663427229
-07-Feb 16:08:20:INFO:root:------ Middle 7: 0.0002707212606330457
-07-Feb 16:08:20:INFO:root:------ Middle 1: 0.00021225871470388215
-07-Feb 16:08:20:INFO:root:Starting from 1.6691194688845917e-17
-07-Feb 16:08:20:INFO:root:-- Outer 6: 0.0015262754627863022
-07-Feb 16:08:20:INFO:root:------ Middle 1: 0.0008466603287021556
-07-Feb 16:08:20:INFO:root:Model trade shares: [0.971532, 0.933623, 0.990765]
-07-Feb 16:08:20:INFO:root:Data trade shares: [0.97676, 0.939693, 0.972749]
-07-Feb 16:08:20:INFO:root:US prices: [1.43727, 1.00145, 1.00334]
-07-Feb 16:08:20:INFO:root:in the data: [3.07991, 2.04761, 2.04761]
-07-Feb 16:08:20:INFO:root:Nominal world expenditure: 1.0697117732605211e7
-07-Feb 16:08:20:INFO:root:Starting from 1.2039193337056405e-17
-07-Feb 16:08:20:INFO:root:------ Middle 1: 0.00024853791179594984
-07-Feb 16:08:20:INFO:root:Starting from 1.6804457249793297e-17
-07-Feb 16:08:20:INFO:root:-- Outer 5: 0.0013791889231606926
-07-Feb 16:08:20:INFO:root:-- Outer 1: 0.026712194041022038
-07-Feb 16:08:20:INFO:root:--------------In the data: [2.31824e7]
-07-Feb 16:08:20:INFO:root:------ Middle 1: 0.000203520629486675
-07-Feb 16:08:20:INFO:root:Starting from 1.436540747905738e-17
-07-Feb 16:08:20:INFO:root:-- Outer 6: 0.0014522057427257624
-07-Feb 16:08:20:INFO:root:--- Period 19 ---
-07-Feb 16:08:20:INFO:root:BEGIN Outer loop
-07-Feb 16:08:20:INFO:root:------ Middle 1: 0.0001321520751438558
-07-Feb 16:08:20:INFO:root:Starting from 1.6852171343408187e-17
-07-Feb 16:08:20:INFO:root:-- Outer 7: 0.00019052899890602794
-07-Feb 16:08:20:INFO:root:END Outer loop
-07-Feb 16:08:21:INFO:root:------ Middle 2: 0.0002026633710659755
-07-Feb 16:08:21:INFO:root:Starting from 1.5235797894622008e-17
-07-Feb 16:08:21:INFO:root:-- Outer 4: 0.0025091419762127937
-07-Feb 16:08:21:INFO:root:------ Middle 1: 0.0036155415668503795
-07-Feb 16:08:21:INFO:root:------ Middle 1: 0.00017319722487263268
-07-Feb 16:08:21:INFO:root:Starting from 1.3207622995537466e-17
-07-Feb 16:08:21:INFO:root:-- Outer 5: 0.002582472240139608
-07-Feb 16:08:21:INFO:root:------ Middle 1: 0.00012924690477448227
-07-Feb 16:08:21:INFO:root:Starting from 1.8601651857317256e-17
-07-Feb 16:08:21:INFO:root:-- Outer 7: 0.00018582854765348473
-07-Feb 16:08:21:INFO:root:END Outer loop
-07-Feb 16:08:21:INFO:root:Model trade shares: [0.970749, 0.938605, 0.993224]
-07-Feb 16:08:21:INFO:root:Data trade shares: [0.961487, 0.929057, 0.992737]
-07-Feb 16:08:21:INFO:root:US prices: [1.30839, 1.06119, 1.0706]
-07-Feb 16:08:21:INFO:root:in the data: [1.96012, 1.64035, 1.64035]
-07-Feb 16:08:21:INFO:root:Nominal world expenditure: 1.0499722579744706e7
-07-Feb 16:08:21:INFO:root:------ Middle 2: 0.00030952099455327635
-07-Feb 16:08:21:INFO:root:Model trade shares: [0.97242, 0.935146, 0.991211]
-07-Feb 16:08:21:INFO:root:Data trade shares: [0.971471, 0.927429, 0.989384]
-07-Feb 16:08:21:INFO:root:US prices: [1.41003, 1.03832, 1.05326]
-07-Feb 16:08:21:INFO:root:in the data: [2.72526, 1.92631, 1.92631]
-07-Feb 16:08:21:INFO:root:Nominal world expenditure: 1.1131573831997884e7
-07-Feb 16:08:22:INFO:root:------ Middle 3: 0.00018497142385188268
-07-Feb 16:08:22:INFO:root:Starting from 1.4296135060074345e-17
-07-Feb 16:08:22:INFO:root:-- Outer 3: 0.006511614228761689
-07-Feb 16:08:22:INFO:root:------ Middle 1: 0.00030829658648952774
-07-Feb 16:08:22:INFO:root:--------------In the data: [2.2953e7]
-07-Feb 16:08:21:INFO:root:--------------In the data: [1.80704e7]
-07-Feb 16:08:22:INFO:root:------ Middle 1: 0.00016899307421511554
-07-Feb 16:08:22:INFO:root:Starting from 1.8946325030883095e-17
-07-Feb 16:08:22:INFO:root:-- Outer 6: 0.0007170325184342118
-07-Feb 16:08:22:INFO:root:END Outer loop
-07-Feb 16:08:22:INFO:root:--- Period 20 ---
-07-Feb 16:08:22:INFO:root:BEGIN Outer loop
-07-Feb 16:08:22:INFO:root:--- Period 21 ---
-07-Feb 16:08:22:INFO:root:BEGIN Outer loop
-07-Feb 16:08:23:INFO:root:Model trade shares: [0.969376, 0.935417, 0.993266]
-07-Feb 16:08:23:INFO:root:Data trade shares: [0.959721, 0.934044, 0.992669]
-07-Feb 16:08:23:INFO:root:US prices: [1.27915, 1.08918, 1.09036]
-07-Feb 16:08:23:INFO:root:in the data: [1.70549, 1.50868, 1.50868]
-07-Feb 16:08:23:INFO:root:------ Middle 2: 0.0008157317204400602
-07-Feb 16:08:23:INFO:root:Nominal world expenditure: 9.973763664675111e6
-07-Feb 16:08:24:INFO:root:------ Middle 3: 0.0005001989009683142
-07-Feb 16:08:23:INFO:root:--------------In the data: [1.54393e7]
-07-Feb 16:08:24:INFO:root:------ Middle 2: 0.00019029700781869594
-07-Feb 16:08:24:INFO:root:Starting from 1.8710177224588038e-17
-07-Feb 16:08:24:INFO:root:-- Outer 4: 0.002699697141075249
-07-Feb 16:08:24:INFO:root:------ Middle 4: 0.000278230888605417
-07-Feb 16:08:24:INFO:root:Starting from 1.634387411570497e-17
-07-Feb 16:08:24:INFO:root:-- Outer 2: 0.013206996613906974
-07-Feb 16:08:24:INFO:root:--- Period 22 ---
-07-Feb 16:08:24:INFO:root:BEGIN Outer loop
-07-Feb 16:08:24:INFO:root:------ Middle 1: 0.00016790792756173168
-07-Feb 16:08:24:INFO:root:Starting from 1.4803733139836194e-17
-07-Feb 16:08:24:INFO:root:-- Outer 5: 0.002765130853251588
-07-Feb 16:08:24:INFO:root:------ Middle 1: 0.0006968417035630351
-07-Feb 16:08:25:INFO:root:------ Middle 2: 0.0003484187883238284
-07-Feb 16:08:25:INFO:root:------ Middle 3: 0.00020750151246790976
-07-Feb 16:08:25:INFO:root:Starting from 1.984952604016056e-17
-07-Feb 16:08:25:INFO:root:-- Outer 3: 0.005555837385881925
-07-Feb 16:08:26:INFO:root:------ Middle 1: 0.0002542430790698315
-07-Feb 16:08:26:INFO:root:Starting from 1.7753675267755473e-17
-07-Feb 16:08:26:INFO:root:-- Outer 4: 0.005827919653229332
-07-Feb 16:08:26:INFO:root:------ Middle 1: 0.0001658460594259524
-07-Feb 16:08:26:INFO:root:Starting from 1.47924459878162e-17
-07-Feb 16:08:26:INFO:root:-- Outer 6: 0.0007387108798349071
-07-Feb 16:08:26:INFO:root:END Outer loop
-07-Feb 16:08:26:INFO:root:Model trade shares: [0.970259, 0.93569, 0.993364]
-07-Feb 16:08:26:INFO:root:Data trade shares: [0.967429, 0.940539, 0.992695]
-07-Feb 16:08:26:INFO:root:US prices: [1.2441, 1.10431, 1.10517]
-07-Feb 16:08:26:INFO:root:in the data: [1.63396, 1.43854, 1.43854]
-07-Feb 16:08:27:INFO:root:Nominal world expenditure: 9.466511236986184e6
-07-Feb 16:08:27:INFO:root:------ Middle 1: 0.00024184742382480913
-07-Feb 16:08:27:INFO:root:Starting from 1.3316841679458435e-17
-07-Feb 16:08:27:INFO:root:-- Outer 5: 0.0013557371267929924
-07-Feb 16:08:27:INFO:root:--------------In the data: [1.37348e7]
-07-Feb 16:08:27:INFO:root:------ Middle 1: 0.00019957787603605911
-07-Feb 16:08:27:INFO:root:Starting from 1.9566911731350353e-17
-07-Feb 16:08:27:INFO:root:-- Outer 6: 0.0014324928401891173
-07-Feb 16:08:27:INFO:root:--- Period 23 ---
-07-Feb 16:08:28:INFO:root:BEGIN Outer loop
-07-Feb 16:08:29:INFO:root:------ Middle 1: 0.00012450687453116995
-07-Feb 16:08:29:INFO:root:Starting from 1.5818777018901602e-17
-07-Feb 16:08:29:INFO:root:-- Outer 7: 0.00023201409293939452
-07-Feb 16:08:29:INFO:root:END Outer loop
-07-Feb 16:08:29:INFO:root:Model trade shares: [0.97078, 0.934627, 0.991913]
-07-Feb 16:08:29:INFO:root:Data trade shares: [0.972765, 0.936372, 0.980463]
-07-Feb 16:08:29:INFO:root:US prices: [1.37945, 0.979383, 0.975339]
-07-Feb 16:08:29:INFO:root:in the data: [3.02084, 2.07936, 2.07936]
-07-Feb 16:08:29:INFO:root:Nominal world expenditure: 1.0668778938439982e7
-07-Feb 16:08:30:INFO:root:--------------In the data: [2.36221e7]
-07-Feb 16:08:30:INFO:root:--- Period 24 ---
-07-Feb 16:08:30:INFO:root:BEGIN Outer loop
-07-Feb 16:08:46:INFO:root:------ Middle 1: 0.003813294934006031
-07-Feb 16:08:49:INFO:root:------ Middle 2: 0.0022733737093812312
-07-Feb 16:08:53:INFO:root:------ Middle 1: 0.0036639266116026636
-07-Feb 16:08:55:INFO:root:------ Middle 1: 0.003918189299656472
-07-Feb 16:08:56:INFO:root:------ Middle 1: 0.003945738425279713
-07-Feb 16:08:58:INFO:root:------ Middle 2: 0.002513957966846624
-07-Feb 16:08:58:INFO:root:------ Middle 3: 0.0013832985915139084
-07-Feb 16:08:59:INFO:root:------ Middle 2: 0.0025112763324616283
-07-Feb 16:09:00:INFO:root:------ Middle 4: 0.001102773543125019
-07-Feb 16:09:00:INFO:root:------ Middle 5: 0.0006112940402933464
-07-Feb 16:09:01:INFO:root:------ Middle 1: 0.003843160320787849
-07-Feb 16:09:01:INFO:root:------ Middle 1: 0.003936328769527345
-07-Feb 16:09:01:INFO:root:------ Middle 3: 0.0015992486503402035
-07-Feb 16:09:01:INFO:root:------ Middle 4: 0.0009232383115929423
-07-Feb 16:09:01:INFO:root:------ Middle 1: 0.003950226629401834
-07-Feb 16:09:02:INFO:root:------ Middle 6: 0.0005272232474650651
-07-Feb 16:09:02:INFO:root:------ Middle 7: 0.00029512069643135145
-07-Feb 16:09:02:INFO:root:Starting from 1.2349444642467557e-17
-07-Feb 16:09:02:INFO:root:-- Outer 1: 0.025565503209960424
-07-Feb 16:09:03:INFO:root:------ Middle 2: 0.002434412296734317
-07-Feb 16:09:03:INFO:root:------ Middle 5: 0.0007444995095909331
-07-Feb 16:09:03:INFO:root:------ Middle 6: 0.00042247195278831054
-07-Feb 16:09:04:INFO:root:------ Middle 1: 0.0038762641147826503
-07-Feb 16:09:04:INFO:root:------ Middle 7: 0.0004250228934444787
-07-Feb 16:09:04:INFO:root:------ Middle 1: 0.0007598412892317912
-07-Feb 16:09:05:INFO:root:------ Middle 8: 0.00019474769480604814
-07-Feb 16:09:05:INFO:root:Starting from 1.2208329788857639e-17
-07-Feb 16:09:05:INFO:root:-- Outer 1: 0.02662918936915188
-07-Feb 16:09:05:INFO:root:------ Middle 3: 0.0015758884697090682
-07-Feb 16:09:05:INFO:root:------ Middle 2: 0.002502267448067932
-07-Feb 16:09:05:INFO:root:------ Middle 2: 0.0025184263104015216
-07-Feb 16:09:06:INFO:root:------ Middle 2: 0.0004483983111779176
-07-Feb 16:09:06:INFO:root:------ Middle 3: 0.0002427795423205407
-07-Feb 16:09:06:INFO:root:Starting from 1.7201667563786393e-17
-07-Feb 16:09:06:INFO:root:-- Outer 2: 0.011887461570980529
-07-Feb 16:09:07:INFO:root:------ Middle 1: 0.003956108969710511
-07-Feb 16:09:07:INFO:root:------ Middle 2: 0.002178143967490326
-07-Feb 16:09:07:INFO:root:------ Middle 3: 0.001614763142922742
-07-Feb 16:09:07:INFO:root:------ Middle 4: 0.0010279715679021222
-07-Feb 16:09:07:INFO:root:------ Middle 4: 0.0008894721511767088
-07-Feb 16:09:07:INFO:root:------ Middle 1: 0.0007396230643942951
-07-Feb 16:09:07:INFO:root:------ Middle 3: 0.0016111567486168422
-07-Feb 16:09:07:INFO:root:------ Middle 2: 0.00040483453449883394
-07-Feb 16:09:07:INFO:root:------ Middle 4: 0.0008892246611381556
-07-Feb 16:09:08:INFO:root:------ Middle 1: 0.0004254123837075845
-07-Feb 16:09:08:INFO:root:------ Middle 3: 0.0002753651350131571
-07-Feb 16:09:08:INFO:root:Starting from 1.5840242203844007e-17
-07-Feb 16:09:08:INFO:root:-- Outer 2: 0.012125333554626886
-07-Feb 16:09:08:INFO:root:------ Middle 1: 0.0037962078647772327
-07-Feb 16:09:08:INFO:root:------ Middle 1: 0.0009606904428409537
-07-Feb 16:09:08:INFO:root:------ Middle 2: 0.00022691482486192336
-07-Feb 16:09:08:INFO:root:Starting from 1.474090753576007e-17
-07-Feb 16:09:08:INFO:root:-- Outer 3: 0.005403590043085438
-07-Feb 16:09:09:INFO:root:------ Middle 5: 0.0007150185780182997
-07-Feb 16:09:09:INFO:root:------ Middle 3: 0.0017018358966594128
-07-Feb 16:09:09:INFO:root:------ Middle 5: 0.0007167039482743026
-07-Feb 16:09:09:INFO:root:------ Middle 6: 0.00039734867779685895
-07-Feb 16:09:09:INFO:root:------ Middle 4: 0.0009513251961147962
-07-Feb 16:09:09:INFO:root:------ Middle 6: 0.0003967876669617679
-07-Feb 16:09:09:INFO:root:------ Middle 1: 0.003994819014742489
-07-Feb 16:09:09:INFO:root:------ Middle 7: 0.00035656120271258335
-07-Feb 16:09:09:INFO:root:------ Middle 5: 0.0006745670284304458
-07-Feb 16:09:09:INFO:root:------ Middle 2: 0.00018863827250428582
-07-Feb 16:09:09:INFO:root:Starting from 1.5044072296738023e-17
-07-Feb 16:09:09:INFO:root:-- Outer 3: 0.005994307178682537
-07-Feb 16:09:10:INFO:root:------ Middle 7: 0.00036058224632212185
-07-Feb 16:09:10:INFO:root:------ Middle 8: 0.00020092345292987464
-07-Feb 16:09:10:INFO:root:------ Middle 1: 0.00039892149332536764
-07-Feb 16:09:10:INFO:root:Starting from 1.2037901629862105e-17
-07-Feb 16:09:10:INFO:root:-- Outer 1: 0.025361203950882316
-07-Feb 16:09:10:INFO:root:------ Middle 1: 0.0036876756423072196
-07-Feb 16:09:10:INFO:root:------ Middle 8: 0.00020360106296877367
-07-Feb 16:09:10:INFO:root:Starting from 1.1276555668199283e-17
-07-Feb 16:09:10:INFO:root:-- Outer 1: 0.026528771430864788
-07-Feb 16:09:10:INFO:root:------ Middle 1: 0.00028964971864662675
-07-Feb 16:09:10:INFO:root:Starting from 2.102018782164174e-17
-07-Feb 16:09:10:INFO:root:-- Outer 4: 0.002487290783146509
-07-Feb 16:09:10:INFO:root:------ Middle 1: 0.003394812830066908
-07-Feb 16:09:11:INFO:root:------ Middle 1: 0.0003239257886512627
-07-Feb 16:09:11:INFO:root:------ Middle 5: 0.0007753780978816691
-07-Feb 16:09:11:INFO:root:------ Middle 6: 0.00043465037924269066
-07-Feb 16:09:11:INFO:root:------ Middle 2: 0.0001714363360996622
-07-Feb 16:09:11:INFO:root:Starting from 1.6656198880229176e-17
-07-Feb 16:09:11:INFO:root:-- Outer 4: 0.0025940016596509253
-07-Feb 16:09:11:INFO:root:------ Middle 1: 0.0002079243007315316
-07-Feb 16:09:11:INFO:root:Starting from 1.7217573987527767e-17
-07-Feb 16:09:11:INFO:root:-- Outer 5: 0.002691280179103334
-07-Feb 16:09:11:INFO:root:------ Middle 2: 0.00013632327940639718
-07-Feb 16:09:11:INFO:root:Starting from 1.691052373720619e-17
-07-Feb 16:09:11:INFO:root:-- Outer 5: 0.0011984001405550583
-07-Feb 16:09:11:INFO:root:------ Middle 2: 0.0024143482754143365
-07-Feb 16:09:11:INFO:root:------ Middle 2: 0.0008997530228511773
-07-Feb 16:09:12:INFO:root:------ Middle 6: 0.0004446862420326625
-07-Feb 16:09:12:INFO:root:------ Middle 7: 0.0003711623335989564
-07-Feb 16:09:12:INFO:root:------ Middle 1: 0.0001401799384765998
-07-Feb 16:09:12:INFO:root:Starting from 1.835308143013669e-17
-07-Feb 16:09:12:INFO:root:-- Outer 6: 0.0007352113415395422
-07-Feb 16:09:12:INFO:root:END Outer loop
-07-Feb 16:09:12:INFO:root:------ Middle 8: 0.00020628405538426862
-07-Feb 16:09:12:INFO:root:Starting from 1.2109592910129682e-17
-07-Feb 16:09:12:INFO:root:-- Outer 1: 0.02536379056820843
-07-Feb 16:09:12:INFO:root:Model trade shares: [0.967292, 0.94165, 0.994321]
-07-Feb 16:09:12:INFO:root:Data trade shares: [0.960962, 0.931588, 0.993893]
-07-Feb 16:09:12:INFO:root:US prices: [0.987632, 0.91412, 0.912474]
-07-Feb 16:09:12:INFO:root:in the data: [2.50767, 2.31742, 2.31742]
-07-Feb 16:09:12:INFO:root:Nominal world expenditure: 1.4150919853475459e7
-07-Feb 16:09:12:INFO:root:--------------In the data: [3.61928e7]
-07-Feb 16:09:12:INFO:root:------ Middle 1: 0.0001837371190950567
-07-Feb 16:09:12:INFO:root:Starting from 1.5316517535255266e-17
-07-Feb 16:09:12:INFO:root:-- Outer 6: 0.0008792030510838763
-07-Feb 16:09:12:INFO:root:END Outer loop
-07-Feb 16:09:12:INFO:root:--- Period 25 ---
-07-Feb 16:09:12:INFO:root:BEGIN Outer loop
-07-Feb 16:09:12:INFO:root:------ Middle 3: 0.0005497613678658742
-07-Feb 16:09:12:INFO:root:Model trade shares: [0.966675, 0.939893, 0.994223]
-07-Feb 16:09:12:INFO:root:Data trade shares: [0.958317, 0.928046, 0.993489]
-07-Feb 16:09:12:INFO:root:US prices: [1.04805, 0.932317, 0.93847]
-07-Feb 16:09:12:INFO:root:in the data: [2.43661, 2.20422, 2.20422]
-07-Feb 16:09:12:INFO:root:Nominal world expenditure: 1.3231666417609109e7
-07-Feb 16:09:12:INFO:root:--------------In the data: [3.25615e7]
-07-Feb 16:09:12:INFO:root:--- Period 26 ---
-07-Feb 16:09:12:INFO:root:BEGIN Outer loop
-07-Feb 16:09:13:INFO:root:------ Middle 4: 0.00030605186407865856
-07-Feb 16:09:13:INFO:root:------ Middle 2: 0.0024681893916747165
-07-Feb 16:09:13:INFO:root:------ Middle 5: 0.00017785970123587158
-07-Feb 16:09:13:INFO:root:Starting from 2.06842823473852e-17
-07-Feb 16:09:13:INFO:root:-- Outer 2: 0.012310247181843599
-07-Feb 16:09:13:INFO:root:------ Middle 7: 0.000296808401224302
-07-Feb 16:09:13:INFO:root:Starting from 1.1796603237179563e-17
-07-Feb 16:09:13:INFO:root:-- Outer 1: 0.024871973466193964
-07-Feb 16:09:13:INFO:root:------ Middle 3: 0.0013657882115449625
-07-Feb 16:09:13:INFO:root:------ Middle 1: 0.0007745185873121197
-07-Feb 16:09:14:INFO:root:------ Middle 3: 0.001563751119895432
-07-Feb 16:09:14:INFO:root:------ Middle 2: 0.0008895764042636067
-07-Feb 16:09:14:INFO:root:------ Middle 2: 0.0003160944931028593
-07-Feb 16:09:14:INFO:root:------ Middle 4: 0.0010820925191397154
-07-Feb 16:09:14:INFO:root:------ Middle 3: 0.00019092087256427314
-07-Feb 16:09:14:INFO:root:Starting from 1.4792705386824433e-17
-07-Feb 16:09:14:INFO:root:-- Outer 3: 0.005312541836368785
-07-Feb 16:09:14:INFO:root:------ Middle 3: 0.0004944748746414658
-07-Feb 16:09:14:INFO:root:------ Middle 5: 0.0006068561399360231
-07-Feb 16:09:15:INFO:root:------ Middle 1: 0.0002785297953088305
-07-Feb 16:09:15:INFO:root:Starting from 1.6574978681953706e-17
-07-Feb 16:09:15:INFO:root:-- Outer 4: 0.005515838771398133
-07-Feb 16:09:15:INFO:root:------ Middle 1: 0.0007981933369831769
-07-Feb 16:09:15:INFO:root:------ Middle 4: 0.00036987025604478337
-07-Feb 16:09:15:INFO:root:------ Middle 2: 0.00043774867636320677
-07-Feb 16:09:15:INFO:root:------ Middle 5: 0.00021142096496999232
-07-Feb 16:09:15:INFO:root:Starting from 1.8207203772712287e-17
-07-Feb 16:09:15:INFO:root:-- Outer 2: 0.01234967109425123
-07-Feb 16:09:15:INFO:root:------ Middle 1: 0.0008001885080456538
-07-Feb 16:09:15:INFO:root:------ Middle 1: 0.0007752992217013927
-07-Feb 16:09:16:INFO:root:------ Middle 6: 0.000521485248984149
-07-Feb 16:09:16:INFO:root:------ Middle 3: 0.0003060892726252012
-07-Feb 16:09:16:INFO:root:------ Middle 7: 0.0002838365984817223
-07-Feb 16:09:16:INFO:root:Starting from 1.1578311966234411e-17
-07-Feb 16:09:16:INFO:root:-- Outer 1: 0.02522817120941879
-07-Feb 16:09:16:INFO:root:------ Middle 4: 0.00016312881377298868
-07-Feb 16:09:16:INFO:root:Starting from 2.0036521408040488e-17
-07-Feb 16:09:16:INFO:root:-- Outer 2: 0.011660251363751371
-07-Feb 16:09:16:INFO:root:------ Middle 1: 0.00023472186002172207
-07-Feb 16:09:16:INFO:root:Starting from 1.58606555461538e-17
-07-Feb 16:09:16:INFO:root:------ Middle 4: 0.0010165944345078217
-07-Feb 16:09:16:INFO:root:-- Outer 5: 0.0012592084607038543
-07-Feb 16:09:16:INFO:root:------ Middle 1: 0.0009068804502259164
-07-Feb 16:09:16:INFO:root:------ Middle 1: 0.0001974967387702064
-07-Feb 16:09:16:INFO:root:Starting from 2.2338273471576156e-17
-07-Feb 16:09:16:INFO:root:-- Outer 6: 0.0013368599622339084
-07-Feb 16:09:17:INFO:root:------ Middle 2: 0.000472270132478517
-07-Feb 16:09:17:INFO:root:------ Middle 2: 0.0002892987161363427
-07-Feb 16:09:17:INFO:root:Starting from 1.567640501536341e-17
-07-Feb 16:09:17:INFO:root:-- Outer 3: 0.005749220327133201
-07-Feb 16:09:17:INFO:root:------ Middle 3: 0.00025636876504502937
-07-Feb 16:09:17:INFO:root:Starting from 2.2033770216633882e-17
-07-Feb 16:09:17:INFO:root:-- Outer 2: 0.011048220211764229
-07-Feb 16:09:17:INFO:root:------ Middle 1: 0.00032685067007917114
-07-Feb 16:09:17:INFO:root:------ Middle 1: 0.00012528040798028375
-07-Feb 16:09:17:INFO:root:Starting from 1.5990299159370203e-17
-07-Feb 16:09:17:INFO:root:-- Outer 7: 0.0002222528642065603
-07-Feb 16:09:17:INFO:root:END Outer loop
-07-Feb 16:09:17:INFO:root:Model trade shares: [0.967519, 0.942238, 0.994131]
-07-Feb 16:09:17:INFO:root:Data trade shares: [0.961578, 0.934257, 0.993842]
-07-Feb 16:09:17:INFO:root:US prices: [0.962308, 0.908236, 0.900771]
-07-Feb 16:09:17:INFO:root:in the data: [2.5813, 2.43608, 2.43608]
-07-Feb 16:09:17:INFO:root:Nominal world expenditure: 1.4641774969177341e7
-07-Feb 16:09:17:INFO:root:--------------In the data: [3.7723e7]
-07-Feb 16:09:17:INFO:root:--- Period 27 ---
-07-Feb 16:09:17:INFO:root:BEGIN Outer loop
-07-Feb 16:09:17:INFO:root:------ Middle 2: 0.00018953499042327065
-07-Feb 16:09:17:INFO:root:Starting from 1.4054688392331148e-17
-07-Feb 16:09:17:INFO:root:-- Outer 3: 0.005974609919792437
-07-Feb 16:09:18:INFO:root:------ Middle 1: 0.0004244013491355701
-07-Feb 16:09:18:INFO:root:------ Middle 5: 0.0006758780093655996
-07-Feb 16:09:18:INFO:root:------ Middle 1: 0.000774074333275955
-07-Feb 16:09:18:INFO:root:------ Middle 2: 0.0002317397055411499
-07-Feb 16:09:18:INFO:root:Starting from 1.497699698813823e-17
-07-Feb 16:09:18:INFO:root:-- Outer 4: 0.002341645204763249
-07-Feb 16:09:18:INFO:root:------ Middle 1: 0.0002097033133884842
-07-Feb 16:09:18:INFO:root:Starting from 1.6908265586780482e-17
-07-Feb 16:09:18:INFO:root:-- Outer 5: 0.00241809177985056
-07-Feb 16:09:18:INFO:root:------ Middle 2: 0.0004618699256349689
-07-Feb 16:09:19:INFO:root:------ Middle 3: 0.00024868361257282334
-07-Feb 16:09:19:INFO:root:Starting from 1.53434812337304e-17
-07-Feb 16:09:19:INFO:root:-- Outer 2: 0.011515824968771007
-07-Feb 16:09:19:INFO:root:------ Middle 2: 0.00017568600456616452
-07-Feb 16:09:19:INFO:root:Starting from 1.5991502773860652e-17
-07-Feb 16:09:19:INFO:root:-- Outer 4: 0.0027267610482367907
-07-Feb 16:09:19:INFO:root:------ Middle 1: 0.00043524406564379817
-07-Feb 16:09:19:INFO:root:------ Middle 1: 0.00023554046860445408
-07-Feb 16:09:19:INFO:root:Starting from 1.6214248810023127e-17
-07-Feb 16:09:19:INFO:root:-- Outer 5: 0.0028557582725305453
-07-Feb 16:09:19:INFO:root:------ Middle 2: 0.00023383495313668163
-07-Feb 16:09:19:INFO:root:Starting from 1.2686238293671449e-17
-07-Feb 16:09:19:INFO:root:-- Outer 3: 0.004973965234804753
-07-Feb 16:09:19:INFO:root:------ Middle 1: 0.00019724657483472066
-07-Feb 16:09:19:INFO:root:Starting from 1.3732167820177705e-17
-07-Feb 16:09:19:INFO:root:-- Outer 6: 0.0009301477982059057
-07-Feb 16:09:19:INFO:root:END Outer loop
-07-Feb 16:09:19:INFO:root:Model trade shares: [0.959284, 0.934458, 0.992531]
-07-Feb 16:09:19:INFO:root:Data trade shares: [0.959588, 0.937566, 0.971212]
-07-Feb 16:09:19:INFO:root:US prices: [0.904954, 0.894609, 0.899784]
-07-Feb 16:09:19:INFO:root:in the data: [2.70826, 2.57595, 2.57595]
-07-Feb 16:09:19:INFO:root:Nominal world expenditure: 1.5369849287932038e7
-07-Feb 16:09:19:INFO:root:--------------In the data: [4.5848e7]
-07-Feb 16:09:19:INFO:root:------ Middle 6: 0.0004398774314610956
-07-Feb 16:09:19:INFO:root:--- Period 28 ---
-07-Feb 16:09:19:INFO:root:BEGIN Outer loop
-07-Feb 16:09:20:INFO:root:------ Middle 1: 0.00020541416292096522
-07-Feb 16:09:20:INFO:root:Starting from 1.65249842044097e-17
-07-Feb 16:09:20:INFO:root:-- Outer 6: 0.0009651335195564696
-07-Feb 16:09:20:INFO:root:END Outer loop
-07-Feb 16:09:20:INFO:root:Model trade shares: [0.958635, 0.936995, 0.992064]
-07-Feb 16:09:20:INFO:root:Data trade shares: [0.950579, 0.929714, 0.991388]
-07-Feb 16:09:20:INFO:root:US prices: [0.896287, 0.881464, 0.91216]
-07-Feb 16:09:20:INFO:root:in the data: [2.71827, 2.64842, 2.64842]
-07-Feb 16:09:20:INFO:root:Nominal world expenditure: 1.5808046266627422e7
-07-Feb 16:09:20:INFO:root:--------------In the data: [5.43532e7]
-07-Feb 16:09:20:INFO:root:--- Period 29 ---
-07-Feb 16:09:20:INFO:root:BEGIN Outer loop
-07-Feb 16:09:20:INFO:root:------ Middle 7: 0.0002881921399756538
-07-Feb 16:09:20:INFO:root:Starting from 1.172610234707619e-17
-07-Feb 16:09:20:INFO:root:-- Outer 1: 0.02505207099858263
-07-Feb 16:09:20:INFO:root:------ Middle 1: 0.003551579549533324
-07-Feb 16:09:21:INFO:root:------ Middle 1: 0.00043726161783289784
-07-Feb 16:09:21:INFO:root:------ Middle 2: 0.00023661687030533633
-07-Feb 16:09:21:INFO:root:Starting from 1.4801223621372815e-17
-07-Feb 16:09:21:INFO:root:-- Outer 3: 0.00518570422126294
-07-Feb 16:09:21:INFO:root:------ Middle 1: 0.0002910444187469152
-07-Feb 16:09:21:INFO:root:Starting from 1.3191842850281018e-17
-07-Feb 16:09:21:INFO:root:-- Outer 4: 0.0022557878659004173
-07-Feb 16:09:22:INFO:root:------ Middle 1: 0.00031947103234703184
-07-Feb 16:09:22:INFO:root:------ Middle 2: 0.00013539616754178736
-07-Feb 16:09:22:INFO:root:Starting from 1.925278253181638e-17
-07-Feb 16:09:22:INFO:root:-- Outer 5: 0.0010597310731627816
-07-Feb 16:09:22:INFO:root:------ Middle 2: 0.002447777379891631
-07-Feb 16:09:23:INFO:root:------ Middle 2: 0.0009242634390279864
-07-Feb 16:09:23:INFO:root:------ Middle 1: 0.0001382666304804195
-07-Feb 16:09:23:INFO:root:Starting from 1.2848066759157252e-17
-07-Feb 16:09:23:INFO:root:-- Outer 6: 0.0006606669487704786
-07-Feb 16:09:23:INFO:root:------ Middle 1: 0.00030140134890264616
-07-Feb 16:09:23:INFO:root:END Outer loop
-07-Feb 16:09:23:INFO:root:Model trade shares: [0.967067, 0.942537, 0.993864]
-07-Feb 16:09:23:INFO:root:Data trade shares: [0.963666, 0.934551, 0.994086]
-07-Feb 16:09:23:INFO:root:US prices: [0.935231, 0.90364, 0.887509]
-07-Feb 16:09:23:INFO:root:in the data: [2.67778, 2.5352, 2.5352]
-07-Feb 16:09:23:INFO:root:Nominal world expenditure: 1.4465276290112399e7
-07-Feb 16:09:23:INFO:root:--------------In the data: [4.12361e7]
-07-Feb 16:09:23:INFO:root:--- Period 30 ---
-07-Feb 16:09:23:INFO:root:------ Middle 2: 0.00016520981342086087
-07-Feb 16:09:23:INFO:root:BEGIN Outer loop
-07-Feb 16:09:23:INFO:root:Starting from 1.5057158235332926e-17
-07-Feb 16:09:23:INFO:root:-- Outer 4: 0.002281779247338843
-07-Feb 16:09:24:INFO:root:------ Middle 1: 0.000256241818206236
-07-Feb 16:09:24:INFO:root:Starting from 1.4770235776739076e-17
-07-Feb 16:09:24:INFO:root:-- Outer 5: 0.002375900917177969
-07-Feb 16:09:24:INFO:root:------ Middle 3: 0.0005559977135177153
-07-Feb 16:09:24:INFO:root:------ Middle 4: 0.00031142524554248245
-07-Feb 16:09:24:INFO:root:------ Middle 5: 0.00020746259159214764
-07-Feb 16:09:24:INFO:root:Starting from 1.9661781844060162e-17
-07-Feb 16:09:24:INFO:root:-- Outer 2: 0.011474468688048026
-07-Feb 16:09:24:INFO:root:------ Middle 1: 0.00019202940431824748
-07-Feb 16:09:24:INFO:root:Starting from 1.7907961169144815e-17
-07-Feb 16:09:24:INFO:root:-- Outer 6: 0.0006519054936217088
-07-Feb 16:09:24:INFO:root:END Outer loop
-07-Feb 16:09:25:INFO:root:------ Middle 1: 0.0007194713320384659
-07-Feb 16:09:25:INFO:root:Model trade shares: [0.962986, 0.938788, 0.993241]
-07-Feb 16:09:25:INFO:root:Data trade shares: [0.960491, 0.93458, 0.986591]
-07-Feb 16:09:25:INFO:root:US prices: [0.910305, 0.888959, 0.890841]
-07-Feb 16:09:25:INFO:root:in the data: [2.52256, 2.5595, 2.5595]
-07-Feb 16:09:25:INFO:root:Nominal world expenditure: 1.5871627688480644e7
-07-Feb 16:09:25:INFO:root:--------------In the data: [4.55098e7]
-07-Feb 16:09:25:INFO:root:--- Period 31 ---
-07-Feb 16:09:25:INFO:root:BEGIN Outer loop
-07-Feb 16:09:26:INFO:root:------ Middle 2: 0.00028081521813769065
-07-Feb 16:09:26:INFO:root:Starting from 1.5947188383093792e-17
-07-Feb 16:09:26:INFO:root:-- Outer 3: 0.005344730351216545
-07-Feb 16:09:26:INFO:root:------ Middle 1: 0.0002913239008318137
-07-Feb 16:09:26:INFO:root:Starting from 1.6573933154696568e-17
-07-Feb 16:09:26:INFO:root:-- Outer 4: 0.005622296230987754
-07-Feb 16:09:28:INFO:root:------ Middle 3: 0.0014737465328952721
-07-Feb 16:09:28:INFO:root:------ Middle 1: 0.0002717335339939429
-07-Feb 16:09:28:INFO:root:Starting from 1.8557478481907095e-17
-07-Feb 16:09:28:INFO:root:-- Outer 5: 0.0013411474670846197
-07-Feb 16:09:29:INFO:root:------ Middle 1: 0.00022089773614129352
-07-Feb 16:09:29:INFO:root:Starting from 1.3671499200528364e-17
-07-Feb 16:09:29:INFO:root:-- Outer 6: 0.0014303118699430272
-07-Feb 16:09:30:INFO:root:------ Middle 1: 0.0001409343637208264
-07-Feb 16:09:30:INFO:root:Starting from 1.5849754633095973e-17
-07-Feb 16:09:30:INFO:root:-- Outer 7: 0.0002414763279283122
-07-Feb 16:09:30:INFO:root:END Outer loop
-07-Feb 16:09:30:INFO:root:Model trade shares: [0.966183, 0.942184, 0.99363]
-07-Feb 16:09:30:INFO:root:Data trade shares: [0.960926, 0.936095, 0.990604]
-07-Feb 16:09:30:INFO:root:US prices: [0.920255, 0.900074, 0.885058]
-07-Feb 16:09:30:INFO:root:in the data: [2.54462, 2.53886, 2.53886]
-07-Feb 16:09:30:INFO:root:Nominal world expenditure: 1.49112726986525e7
-07-Feb 16:09:30:INFO:root:--------------In the data: [4.29516e7]
-07-Feb 16:09:30:INFO:root:--- Period 32 ---
-07-Feb 16:09:30:INFO:root:BEGIN Outer loop
-07-Feb 16:09:38:INFO:root:------ Middle 2: 0.0023455277115680424
-07-Feb 16:09:40:INFO:root:------ Middle 1: 0.0035677671282795397
-07-Feb 16:09:41:INFO:root:------ Middle 3: 0.0015097104715370063
-07-Feb 16:09:42:INFO:root:------ Middle 1: 0.003660214958766762
-07-Feb 16:09:43:INFO:root:------ Middle 2: 0.0022559907356981593
-07-Feb 16:09:43:INFO:root:------ Middle 4: 0.0009787101028938014
-07-Feb 16:09:44:INFO:root:------ Middle 2: 0.0023100089689644106
-07-Feb 16:09:44:INFO:root:------ Middle 3: 0.0012800567589061381
-07-Feb 16:09:44:INFO:root:------ Middle 3: 0.0014441845785747834
-07-Feb 16:09:44:INFO:root:------ Middle 4: 0.0008032418422036779
-07-Feb 16:09:45:INFO:root:------ Middle 4: 0.0010122930299302066
-07-Feb 16:09:45:INFO:root:------ Middle 5: 0.0005673175933098189
-07-Feb 16:09:45:INFO:root:------ Middle 5: 0.0006544251815284623
-07-Feb 16:09:45:INFO:root:------ Middle 5: 0.0006420848065027305
-07-Feb 16:09:46:INFO:root:------ Middle 6: 0.00036147053585340973
-07-Feb 16:09:46:INFO:root:------ Middle 6: 0.0004981243272493645
-07-Feb 16:09:47:INFO:root:------ Middle 7: 0.0002663046072389608
-07-Feb 16:09:47:INFO:root:Starting from 1.3052994862325191e-17
-07-Feb 16:09:47:INFO:root:-- Outer 1: 0.02014884965732168
-07-Feb 16:09:47:INFO:root:------ Middle 7: 0.0003162024029074911
-07-Feb 16:09:47:INFO:root:------ Middle 8: 0.00020189541093683808
-07-Feb 16:09:47:INFO:root:Starting from 1.3005934415763227e-17
-07-Feb 16:09:47:INFO:root:-- Outer 1: 0.02013891047933449
-07-Feb 16:09:48:INFO:root:------ Middle 6: 0.0004236898120754626
-07-Feb 16:09:48:INFO:root:------ Middle 1: 0.0042008943267440434
-07-Feb 16:09:49:INFO:root:------ Middle 2: 0.002309445627617387
-07-Feb 16:09:49:INFO:root:------ Middle 7: 0.0002801704339732198
-07-Feb 16:09:49:INFO:root:Starting from 1.2211836791802567e-17
-07-Feb 16:09:49:INFO:root:-- Outer 1: 0.02701156999015708
-07-Feb 16:09:49:INFO:root:------ Middle 2: 0.0025812914540817174
-07-Feb 16:09:50:INFO:root:------ Middle 1: 0.003859658424950727
-07-Feb 16:09:50:INFO:root:------ Middle 3: 0.0017609252012297427
-07-Feb 16:09:51:INFO:root:------ Middle 4: 0.0009938914994905542
-07-Feb 16:09:51:INFO:root:------ Middle 1: 0.0007315356047834707
-07-Feb 16:09:51:INFO:root:------ Middle 1: 0.004503055440917636
-07-Feb 16:09:52:INFO:root:------ Middle 2: 0.0004364286215585354
-07-Feb 16:09:52:INFO:root:------ Middle 5: 0.0008035868628044876
-07-Feb 16:09:53:INFO:root:------ Middle 6: 0.00045152131301755884
-07-Feb 16:09:53:INFO:root:------ Middle 7: 0.0003918008458538198
-07-Feb 16:09:53:INFO:root:------ Middle 3: 0.00026144541767246575
-07-Feb 16:09:53:INFO:root:Starting from 1.7201589571789976e-17
-07-Feb 16:09:53:INFO:root:-- Outer 2: 0.009643575192598102
-07-Feb 16:09:53:INFO:root:------ Middle 1: 0.000755203431161045
-07-Feb 16:09:54:INFO:root:------ Middle 8: 0.00021775469523350872
-07-Feb 16:09:54:INFO:root:Starting from 1.1797558972014968e-17
-07-Feb 16:09:54:INFO:root:-- Outer 1: 0.02331793468509804
-07-Feb 16:09:54:INFO:root:------ Middle 1: 0.003607677203662985
-07-Feb 16:09:54:INFO:root:------ Middle 1: 0.0034218904578799786
-07-Feb 16:09:54:INFO:root:------ Middle 2: 0.002817210208653305
-07-Feb 16:09:54:INFO:root:------ Middle 1: 0.00371739328334266
-07-Feb 16:09:54:INFO:root:------ Middle 3: 0.0015525054664273818
-07-Feb 16:09:54:INFO:root:------ Middle 1: 0.003912514107640595
-07-Feb 16:09:54:INFO:root:------ Middle 2: 0.000447147979782245
-07-Feb 16:09:55:INFO:root:------ Middle 2: 0.0021615594837765496
-07-Feb 16:09:55:INFO:root:------ Middle 1: 0.0006413920536715974
-07-Feb 16:09:56:INFO:root:------ Middle 1: 0.0004378502183681668
-07-Feb 16:09:56:INFO:root:------ Middle 3: 0.000269291203502039
-07-Feb 16:09:56:INFO:root:Starting from 1.6390187819966544e-17
-07-Feb 16:09:56:INFO:root:-- Outer 2: 0.011965630885673957
-07-Feb 16:09:56:INFO:root:------ Middle 2: 0.0003870111847788333
-07-Feb 16:09:56:INFO:root:------ Middle 2: 0.00024452758240866846
-07-Feb 16:09:56:INFO:root:Starting from 1.4237929732535038e-17
-07-Feb 16:09:56:INFO:root:-- Outer 3: 0.004577392961205731
-07-Feb 16:09:56:INFO:root:------ Middle 4: 0.0011944239404603025
-07-Feb 16:09:56:INFO:root:------ Middle 5: 0.0006691314948495346
-07-Feb 16:09:56:INFO:root:------ Middle 3: 0.0016594846400812822
-07-Feb 16:09:57:INFO:root:------ Middle 4: 0.000934531826913166
-07-Feb 16:09:57:INFO:root:------ Middle 3: 0.00023483011392050744
-07-Feb 16:09:57:INFO:root:Starting from 2.661251945295011e-17
-07-Feb 16:09:57:INFO:root:-- Outer 2: 0.009222232464918947
-07-Feb 16:09:58:INFO:root:------ Middle 6: 0.0005461970658284632
-07-Feb 16:09:58:INFO:root:------ Middle 7: 0.00030502826781789573
-07-Feb 16:09:58:INFO:root:------ Middle 1: 0.00031137734837541526
-07-Feb 16:09:58:INFO:root:------ Middle 1: 0.0004336325385037492
-07-Feb 16:09:58:INFO:root:------ Middle 2: 0.002367978090458598
-07-Feb 16:09:58:INFO:root:------ Middle 2: 0.00016850218795909448
-07-Feb 16:09:58:INFO:root:Starting from 1.785444887195334e-17
-07-Feb 16:09:58:INFO:root:-- Outer 4: 0.0022616299924719135
-07-Feb 16:09:58:INFO:root:------ Middle 5: 0.0007589789836131252
-07-Feb 16:09:59:INFO:root:------ Middle 1: 0.00027233551607644017
-07-Feb 16:09:59:INFO:root:Starting from 2.019384412322559e-17
-07-Feb 16:09:59:INFO:root:-- Outer 5: 0.0024315891290248607
-07-Feb 16:09:59:INFO:root:------ Middle 6: 0.0004258017719686988
-07-Feb 16:09:59:INFO:root:------ Middle 8: 0.00027108072263255366
-07-Feb 16:09:59:INFO:root:Starting from 1.129088042050198e-17
-07-Feb 16:09:59:INFO:root:-- Outer 1: 0.0245708718531638
-07-Feb 16:09:59:INFO:root:------ Middle 2: 0.00025076451559073796
-07-Feb 16:09:59:INFO:root:Starting from 1.5100600343894255e-17
-07-Feb 16:09:59:INFO:root:-- Outer 3: 0.0053943432534453795
-07-Feb 16:09:59:INFO:root:------ Middle 1: 0.00040339238538799813
-07-Feb 16:09:59:INFO:root:------ Middle 1: 0.00020887472804890548
-07-Feb 16:09:59:INFO:root:Starting from 1.5260811874646047e-17
-07-Feb 16:10:00:INFO:root:-- Outer 6: 0.0006446914753414057
-07-Feb 16:10:00:INFO:root:END Outer loop
-07-Feb 16:10:00:INFO:root:Model trade shares: [0.953853, 0.940986, 0.989265]
-07-Feb 16:10:00:INFO:root:Data trade shares: [0.949239, 0.924453, 0.987338]
-07-Feb 16:10:00:INFO:root:US prices: [0.851923, 0.810591, 0.865183]
-07-Feb 16:10:00:INFO:root:in the data: [2.95883, 2.79593, 2.79593]
-07-Feb 16:10:00:INFO:root:Nominal world expenditure: 1.593622414723666e7
-07-Feb 16:10:00:INFO:root:--------------In the data: [5.8302e7]
-07-Feb 16:10:00:INFO:root:--- Period 33 ---
-07-Feb 16:10:00:INFO:root:BEGIN Outer loop
-07-Feb 16:10:00:INFO:root:------ Middle 7: 0.00037793791737216766
-07-Feb 16:10:00:INFO:root:------ Middle 2: 0.00023929853493452976
-07-Feb 16:10:00:INFO:root:Starting from 1.8388126542783925e-17
-07-Feb 16:10:00:INFO:root:-- Outer 3: 0.004395300571072297
-07-Feb 16:10:00:INFO:root:------ Middle 8: 0.00020486110688092002
-07-Feb 16:10:00:INFO:root:Starting from 1.2342455698569258e-17
-07-Feb 16:10:00:INFO:root:-- Outer 1: 0.021672963647166834
-07-Feb 16:10:01:INFO:root:------ Middle 1: 0.0004473604840826994
-07-Feb 16:10:01:INFO:root:------ Middle 2: 0.0009343378555035879
-07-Feb 16:10:01:INFO:root:------ Middle 3: 0.0015167171956558451
-07-Feb 16:10:01:INFO:root:------ Middle 4: 0.0008360373378925247
-07-Feb 16:10:01:INFO:root:------ Middle 1: 0.0002923936222052583
-07-Feb 16:10:01:INFO:root:Starting from 1.7513017528144e-17
-07-Feb 16:10:01:INFO:root:-- Outer 4: 0.0024673393449189413
-07-Feb 16:10:02:INFO:root:------ Middle 3: 0.0005746490251667347
-07-Feb 16:10:02:INFO:root:------ Middle 2: 0.00013548525358727455
-07-Feb 16:10:02:INFO:root:Starting from 1.6277163420699856e-17
-07-Feb 16:10:02:INFO:root:-- Outer 4: 0.0022876336799888064
-07-Feb 16:10:03:INFO:root:------ Middle 5: 0.0006699032568916444
-07-Feb 16:10:03:INFO:root:------ Middle 1: 0.00022857009713657555
-07-Feb 16:10:03:INFO:root:Starting from 1.41812000473877e-17
-07-Feb 16:10:03:INFO:root:-- Outer 5: 0.0024314366347820337
-07-Feb 16:10:03:INFO:root:------ Middle 6: 0.0003709936222696614
-07-Feb 16:10:03:INFO:root:------ Middle 4: 0.00035655231583197076
-07-Feb 16:10:03:INFO:root:------ Middle 7: 0.00033482575580595734
-07-Feb 16:10:04:INFO:root:------ Middle 8: 0.0001898510758183862
-07-Feb 16:10:04:INFO:root:Starting from 1.2225716292536836e-17
-07-Feb 16:10:04:INFO:root:-- Outer 1: 0.022370582214542942
-07-Feb 16:10:04:INFO:root:------ Middle 1: 0.00018004088948309386
-07-Feb 16:10:04:INFO:root:Starting from 2.120090397252533e-17
-07-Feb 16:10:04:INFO:root:-- Outer 6: 0.0007084617363880234
-07-Feb 16:10:04:INFO:root:END Outer loop
-07-Feb 16:10:04:INFO:root:------ Middle 1: 0.0002522953711833466
-07-Feb 16:10:04:INFO:root:Starting from 1.849982499535796e-17
-07-Feb 16:10:04:INFO:root:-- Outer 5: 0.001164357255454653
-07-Feb 16:10:04:INFO:root:------ Middle 1: 0.0031270979195024877
-07-Feb 16:10:04:INFO:root:Model trade shares: [0.956001, 0.942581, 0.990559]
-07-Feb 16:10:04:INFO:root:Data trade shares: [0.943324, 0.928045, 0.988948]
-07-Feb 16:10:04:INFO:root:US prices: [0.863558, 0.817569, 0.864678]
-07-Feb 16:10:04:INFO:root:in the data: [2.94743, 2.7898, 2.7898]
-07-Feb 16:10:04:INFO:root:Nominal world expenditure: 1.5454911264885427e7
-07-Feb 16:10:04:INFO:root:--------------In the data: [5.65242e7]
-07-Feb 16:10:04:INFO:root:--- Period 34 ---
-07-Feb 16:10:04:INFO:root:BEGIN Outer loop
-07-Feb 16:10:04:INFO:root:------ Middle 5: 0.00022338356874976832
-07-Feb 16:10:04:INFO:root:------ Middle 1: 0.0007525977146195618
-07-Feb 16:10:04:INFO:root:Starting from 1.8906591803590045e-17
-07-Feb 16:10:04:INFO:root:-- Outer 2: 0.010973855751197024
-07-Feb 16:10:04:INFO:root:------ Middle 2: 0.0004146363137505088
-07-Feb 16:10:05:INFO:root:------ Middle 1: 0.00020244986653554498
-07-Feb 16:10:05:INFO:root:Starting from 1.8476708164993166e-17
-07-Feb 16:10:05:INFO:root:-- Outer 6: 0.0006440040608958925
-07-Feb 16:10:05:INFO:root:END Outer loop
-07-Feb 16:10:05:INFO:root:------ Middle 3: 0.0002880982464998668
-07-Feb 16:10:05:INFO:root:Starting from 1.8835185589795525e-17
-07-Feb 16:10:05:INFO:root:-- Outer 2: 0.010165323972460201
-07-Feb 16:10:05:INFO:root:Model trade shares: [0.9688, 0.938853, 0.994449]
-07-Feb 16:10:05:INFO:root:Data trade shares: [0.967576, 0.927756, 0.993556]
-07-Feb 16:10:05:INFO:root:US prices: [1.18416, 0.944685, 0.939552]
-07-Feb 16:10:05:INFO:root:in the data: [2.78451, 2.12334, 2.12334]
-07-Feb 16:10:05:INFO:root:Nominal world expenditure: 1.2121315692920191e7
-07-Feb 16:10:05:INFO:root:--------------In the data: [2.5209e7]
-07-Feb 16:10:05:INFO:root:--- Period 35 ---
-07-Feb 16:10:05:INFO:root:BEGIN Outer loop
-07-Feb 16:10:05:INFO:root:------ Middle 1: 0.0009487314630368095
-07-Feb 16:10:06:INFO:root:------ Middle 1: 0.00035479103048882
-07-Feb 16:10:06:INFO:root:------ Middle 3: 0.001580944750192453
-07-Feb 16:10:06:INFO:root:------ Middle 2: 0.00019581341010186802
-07-Feb 16:10:06:INFO:root:Starting from 1.551577871015078e-17
-07-Feb 16:10:06:INFO:root:-- Outer 3: 0.005070571138891477
-07-Feb 16:10:07:INFO:root:------ Middle 1: 0.00047011714660975834
-07-Feb 16:10:07:INFO:root:------ Middle 2: 0.00022011330304536912
-07-Feb 16:10:07:INFO:root:Starting from 1.789888543217002e-17
-07-Feb 16:10:07:INFO:root:-- Outer 3: 0.005247160483799848
-07-Feb 16:10:07:INFO:root:------ Middle 1: 0.00043196620648861477
-07-Feb 16:10:08:INFO:root:------ Middle 2: 0.0001678516277013962
-07-Feb 16:10:08:INFO:root:Starting from 1.5788781313662216e-17
-07-Feb 16:10:08:INFO:root:-- Outer 4: 0.0025609927202073415
-07-Feb 16:10:09:INFO:root:------ Middle 1: 0.0002648172814920438
-07-Feb 16:10:09:INFO:root:Starting from 1.3581781302938321e-17
-07-Feb 16:10:09:INFO:root:-- Outer 5: 0.002696819720876549
-07-Feb 16:10:09:INFO:root:------ Middle 1: 0.0007980022768425777
-07-Feb 16:10:09:INFO:root:------ Middle 2: 0.00017329208065931017
-07-Feb 16:10:09:INFO:root:Starting from 1.9848819348412677e-17
-07-Feb 16:10:09:INFO:root:-- Outer 4: 0.0024434704061016225
-07-Feb 16:10:09:INFO:root:------ Middle 4: 0.0009597628587311634
-07-Feb 16:10:09:INFO:root:------ Middle 1: 0.000241428302557407
-07-Feb 16:10:09:INFO:root:Starting from 1.7657151501793996e-17
-07-Feb 16:10:09:INFO:root:-- Outer 5: 0.0025946869472796264
-07-Feb 16:10:10:INFO:root:------ Middle 2: 0.002473863928737816
-07-Feb 16:10:10:INFO:root:------ Middle 2: 0.000482532880545516
-07-Feb 16:10:10:INFO:root:------ Middle 2: 0.000854037221016046
-07-Feb 16:10:10:INFO:root:------ Middle 1: 0.00020266126681196608
-07-Feb 16:10:11:INFO:root:Starting from 1.482332901617097e-17
-07-Feb 16:10:11:INFO:root:-- Outer 6: 0.0005849246473481701
-07-Feb 16:10:11:INFO:root:END Outer loop
-07-Feb 16:10:11:INFO:root:------ Middle 3: 0.0005287514536501937
-07-Feb 16:10:11:INFO:root:Model trade shares: [0.951559, 0.930464, 0.983596]
-07-Feb 16:10:11:INFO:root:Data trade shares: [0.946294, 0.923226, 0.982471]
-07-Feb 16:10:11:INFO:root:US prices: [0.875117, 0.861009, 0.950339]
-07-Feb 16:10:11:INFO:root:in the data: [2.69951, 2.89119, 2.89119]
-07-Feb 16:10:11:INFO:root:Nominal world expenditure: 1.7531347019790597e7
-07-Feb 16:10:11:INFO:root:--------------In the data: [5.96564e7]
-07-Feb 16:10:11:INFO:root:--- Period 36 ---
-07-Feb 16:10:11:INFO:root:BEGIN Outer loop
-07-Feb 16:10:11:INFO:root:------ Middle 3: 0.000292772074863591
-07-Feb 16:10:11:INFO:root:Starting from 2.0667259616295377e-17
-07-Feb 16:10:11:INFO:root:-- Outer 2: 0.010819840138492173
-07-Feb 16:10:11:INFO:root:------ Middle 1: 0.0001934478320430534
-07-Feb 16:10:11:INFO:root:Starting from 1.6232100351084418e-17
-07-Feb 16:10:11:INFO:root:-- Outer 6: 0.0005715731597968745
-07-Feb 16:10:11:INFO:root:END Outer loop
-07-Feb 16:10:11:INFO:root:Model trade shares: [0.952603, 0.936762, 0.986626]
-07-Feb 16:10:11:INFO:root:Data trade shares: [0.951781, 0.9268, 0.989231]
-07-Feb 16:10:11:INFO:root:US prices: [0.85346, 0.831797, 0.896564]
-07-Feb 16:10:11:INFO:root:in the data: [2.94894, 2.90959, 2.90959]
-07-Feb 16:10:11:INFO:root:Nominal world expenditure: 1.626677429478462e7
-07-Feb 16:10:11:INFO:root:--------------In the data: [5.76528e7]
-07-Feb 16:10:11:INFO:root:------ Middle 4: 0.00032633877066678654
-07-Feb 16:10:12:INFO:root:------ Middle 3: 0.0015750606275528514
-07-Feb 16:10:12:INFO:root:------ Middle 5: 0.00019885816539530338
-07-Feb 16:10:12:INFO:root:Starting from 2.1952814870679927e-17
-07-Feb 16:10:12:INFO:root:-- Outer 2: 0.010482791420924217
-07-Feb 16:10:12:INFO:root:------ Middle 1: 0.0007120030520717772
-07-Feb 16:10:13:INFO:root:------ Middle 1: 0.0005107065244281244
-07-Feb 16:10:14:INFO:root:------ Middle 2: 0.0002310796879784054
-07-Feb 16:10:14:INFO:root:------ Middle 4: 0.0010159946539186906
-07-Feb 16:10:14:INFO:root:Starting from 1.4968095491990083e-17
-07-Feb 16:10:14:INFO:root:-- Outer 3: 0.005209704799750321
-07-Feb 16:10:14:INFO:root:------ Middle 1: 0.0003282387425747261
-07-Feb 16:10:14:INFO:root:------ Middle 5: 0.0005551459896488527
-07-Feb 16:10:14:INFO:root:------ Middle 2: 0.0003060283825149583
-07-Feb 16:10:14:INFO:root:------ Middle 3: 0.00017313270198084652
-07-Feb 16:10:14:INFO:root:Starting from 2.1044259547698883e-17
-07-Feb 16:10:14:INFO:root:-- Outer 3: 0.005174283497585845
-07-Feb 16:10:14:INFO:root:------ Middle 1: 0.0004894952594681776
-07-Feb 16:10:15:INFO:root:------ Middle 2: 0.00019171293711014068
-07-Feb 16:10:15:INFO:root:Starting from 1.813573782965812e-17
-07-Feb 16:10:15:INFO:root:-- Outer 4: 0.0022986722021519175
-07-Feb 16:10:15:INFO:root:------ Middle 6: 0.0004603315083652984
-07-Feb 16:10:15:INFO:root:------ Middle 1: 0.0001977547458282661
-07-Feb 16:10:15:INFO:root:Starting from 1.9926580248441364e-17
-07-Feb 16:10:15:INFO:root:-- Outer 5: 0.0024156719318175163
-07-Feb 16:10:16:INFO:root:------ Middle 7: 0.0002550840297478294
-07-Feb 16:10:16:INFO:root:Starting from 1.2632971957782152e-17
-07-Feb 16:10:16:INFO:root:-- Outer 1: 0.023628232849342377
-07-Feb 16:10:16:INFO:root:------ Middle 2: 0.00013506253312289742
-07-Feb 16:10:16:INFO:root:Starting from 1.7959773773668715e-17
-07-Feb 16:10:16:INFO:root:-- Outer 4: 0.002795907267178113
-07-Feb 16:10:16:INFO:root:------ Middle 1: 0.00027539171490613136
-07-Feb 16:10:16:INFO:root:Starting from 1.917040575913015e-17
-07-Feb 16:10:16:INFO:root:-- Outer 5: 0.002956298913555792
-07-Feb 16:10:16:INFO:root:------ Middle 1: 0.0001832167978690509
-07-Feb 16:10:16:INFO:root:Starting from 1.8303987482217833e-17
-07-Feb 16:10:16:INFO:root:-- Outer 6: 0.0008406713512500454
-07-Feb 16:10:16:INFO:root:END Outer loop
-07-Feb 16:10:17:INFO:root:Model trade shares: [0.953908, 0.93623, 0.992536]
-07-Feb 16:10:17:INFO:root:Data trade shares: [0.951101, 0.932187, 0.983861]
-07-Feb 16:10:17:INFO:root:US prices: [0.887593, 0.853395, 0.896837]
-07-Feb 16:10:17:INFO:root:in the data: [2.96009, 2.78199, 2.78199]
-07-Feb 16:10:17:INFO:root:Nominal world expenditure: 1.6013841357097626e7
-07-Feb 16:10:17:INFO:root:--------------In the data: [5.49713e7]
-07-Feb 16:10:18:INFO:root:------ Middle 1: 0.00020190700043516355
-07-Feb 16:10:18:INFO:root:Starting from 1.90160046391055e-17
-07-Feb 16:10:18:INFO:root:-- Outer 6: 0.000532484743134642
-07-Feb 16:10:18:INFO:root:END Outer loop
-07-Feb 16:10:18:INFO:root:Model trade shares: [0.942082, 0.90871, 0.978541]
-07-Feb 16:10:18:INFO:root:Data trade shares: [0.95138, 0.919234, 0.983181]
-07-Feb 16:10:18:INFO:root:US prices: [0.912683, 0.890748, 1.01732]
-07-Feb 16:10:18:INFO:root:in the data: [3.11354, 3.01039, 3.01039]
-07-Feb 16:10:18:INFO:root:Nominal world expenditure: 1.830407923565084e7
-07-Feb 16:10:18:INFO:root:--------------In the data: [6.70931e7]
-07-Feb 16:10:19:INFO:root:------ Middle 1: 0.0007725091893254133
-07-Feb 16:10:19:INFO:root:------ Middle 2: 0.0004227054428192376
-07-Feb 16:10:20:INFO:root:------ Middle 3: 0.00029615636687199454
-07-Feb 16:10:20:INFO:root:Starting from 1.804058574277694e-17
-07-Feb 16:10:20:INFO:root:-- Outer 2: 0.011085862176612126
-07-Feb 16:10:20:INFO:root:------ Middle 1: 0.000933487196269063
-07-Feb 16:10:21:INFO:root:------ Middle 1: 0.004257300896469332
-07-Feb 16:10:22:INFO:root:------ Middle 2: 0.00019706351184307328
-07-Feb 16:10:22:INFO:root:Starting from 1.837840232331433e-17
-07-Feb 16:10:22:INFO:root:-- Outer 3: 0.005655260711729823
-07-Feb 16:10:23:INFO:root:------ Middle 1: 0.0004210237253822062
-07-Feb 16:10:24:INFO:root:------ Middle 2: 0.0026619731312437014
-07-Feb 16:10:24:INFO:root:------ Middle 2: 0.00016947347953485617
-07-Feb 16:10:24:INFO:root:Starting from 1.399180629954926e-17
-07-Feb 16:10:24:INFO:root:-- Outer 4: 0.0025920972769356595
-07-Feb 16:10:24:INFO:root:------ Middle 3: 0.0014635258707442415
-07-Feb 16:10:25:INFO:root:------ Middle 1: 0.0002292134692325548
-07-Feb 16:10:25:INFO:root:Starting from 1.5018290566002327e-17
-07-Feb 16:10:25:INFO:root:-- Outer 5: 0.0027169812933322394
-07-Feb 16:10:25:INFO:root:------ Middle 1: 0.0001976119822210851
-07-Feb 16:10:25:INFO:root:Starting from 1.859468918542543e-17
-07-Feb 16:10:25:INFO:root:-- Outer 6: 0.0009123327036874653
-07-Feb 16:10:25:INFO:root:END Outer loop
-07-Feb 16:10:25:INFO:root:Model trade shares: [0.95591, 0.935966, 0.992108]
-07-Feb 16:10:25:INFO:root:Data trade shares: [0.954902, 0.927282, 0.98849]
-07-Feb 16:10:25:INFO:root:US prices: [0.894034, 0.870393, 0.908382]
-07-Feb 16:10:25:INFO:root:in the data: [2.81662, 2.76323, 2.76323]
-07-Feb 16:10:25:INFO:root:Nominal world expenditure: 1.58752046544502e7
-07-Feb 16:10:25:INFO:root:--------------In the data: [5.52518e7]
-07-Feb 16:10:26:INFO:root:------ Middle 4: 0.0011202814926801871
-07-Feb 16:10:26:INFO:root:------ Middle 5: 0.0006150320893668543
-07-Feb 16:10:27:INFO:root:------ Middle 6: 0.0005017927876191675
-07-Feb 16:10:28:INFO:root:------ Middle 7: 0.0002747321828882328
-07-Feb 16:10:28:INFO:root:Starting from 1.1822318216383404e-17
-07-Feb 16:10:28:INFO:root:-- Outer 1: 0.020179499411753208
-07-Feb 16:10:30:INFO:root:------ Middle 3: 0.0016358425754206228
-07-Feb 16:10:31:INFO:root:------ Middle 1: 0.000870694144586924
-07-Feb 16:10:31:INFO:root:------ Middle 2: 0.0004790414601581043
-07-Feb 16:10:32:INFO:root:------ Middle 3: 0.00033271473457029664
-07-Feb 16:10:32:INFO:root:------ Middle 4: 0.00018499000135568523
-07-Feb 16:10:32:INFO:root:Starting from 2.018226738369207e-17
-07-Feb 16:10:32:INFO:root:-- Outer 2: 0.0099205612437929
-07-Feb 16:10:32:INFO:root:------ Middle 1: 0.0009568894184030972
-07-Feb 16:10:34:INFO:root:------ Middle 2: 0.000182076451731158
-07-Feb 16:10:34:INFO:root:Starting from 1.490271438327642e-17
-07-Feb 16:10:34:INFO:root:-- Outer 3: 0.005244661833357756
-07-Feb 16:10:34:INFO:root:------ Middle 1: 0.00045897843660728393
-07-Feb 16:10:36:INFO:root:------ Middle 2: 0.002302489787557004
-07-Feb 16:10:36:INFO:root:------ Middle 2: 0.00015856999674892166
-07-Feb 16:10:36:INFO:root:Starting from 1.6708797469222156e-17
-07-Feb 16:10:36:INFO:root:-- Outer 4: 0.0025991217754832447
-07-Feb 16:10:36:INFO:root:------ Middle 1: 0.0002546925922665202
-07-Feb 16:10:36:INFO:root:Starting from 1.3864750135899492e-17
-07-Feb 16:10:36:INFO:root:-- Outer 5: 0.0027231598924848926
-07-Feb 16:10:38:INFO:root:------ Middle 1: 0.00018958635421093215
-07-Feb 16:10:38:INFO:root:Starting from 1.3611741202304989e-17
-07-Feb 16:10:38:INFO:root:-- Outer 6: 0.0005634614273388363
-07-Feb 16:10:38:INFO:root:END Outer loop
-07-Feb 16:10:38:INFO:root:Model trade shares: [0.956859, 0.916903, 0.98029]
-07-Feb 16:10:38:INFO:root:Data trade shares: [0.954831, 0.902146, 0.983572]
-07-Feb 16:10:38:INFO:root:US prices: [1.133, 0.954681, 1.13329]
-07-Feb 16:10:38:INFO:root:in the data: [3.88449, 3.20236, 3.20236]
-07-Feb 16:10:38:INFO:root:Nominal world expenditure: 2.738057504886785e7
-07-Feb 16:10:38:INFO:root:--------------In the data: [8.8489e7]
-07-Feb 16:10:42:INFO:root:------ Middle 1: 0.004546173594904751
-07-Feb 16:10:43:INFO:root:------ Middle 1: 0.004605535367602029
-07-Feb 16:10:44:INFO:root:------ Middle 4: 0.001026307165256493
-07-Feb 16:10:47:INFO:root:------ Middle 5: 0.0006273348091852227
-07-Feb 16:10:50:INFO:root:------ Middle 1: 0.0037884379614115875
-07-Feb 16:10:54:INFO:root:------ Middle 2: 0.0023528531358500055
-07-Feb 16:10:55:INFO:root:------ Middle 3: 0.0014670696784313646
-07-Feb 16:10:57:INFO:root:------ Middle 4: 0.0009266242900648723
-07-Feb 16:10:58:INFO:root:------ Middle 5: 0.0005905698890686529
-07-Feb 16:10:59:INFO:root:------ Middle 6: 0.00038370380469321933
-07-Feb 16:11:00:INFO:root:------ Middle 7: 0.00024361598894506733
-07-Feb 16:11:00:INFO:root:Starting from 1.1897916944272631e-17
-07-Feb 16:11:00:INFO:root:-- Outer 1: 0.016907869721213553
-07-Feb 16:11:03:INFO:root:------ Middle 1: 0.0007937414096185041
-07-Feb 16:11:04:INFO:root:------ Middle 2: 0.0004657311175534008
-07-Feb 16:11:04:INFO:root:------ Middle 3: 0.0002634560956950565
-07-Feb 16:11:04:INFO:root:Starting from 1.9078868616858195e-17
-07-Feb 16:11:04:INFO:root:-- Outer 2: 0.008119186026419038
-07-Feb 16:11:05:INFO:root:------ Middle 1: 0.0009290691004758968
-07-Feb 16:11:06:INFO:root:------ Middle 2: 0.00017699623070713914
-07-Feb 16:11:06:INFO:root:Starting from 1.3898780495314832e-17
-07-Feb 16:11:06:INFO:root:-- Outer 3: 0.004512776747108295
-07-Feb 16:11:06:INFO:root:------ Middle 1: 0.00044530566646667125
-07-Feb 16:11:06:INFO:root:------ Middle 4: 0.0010556273075770332
-07-Feb 16:11:08:INFO:root:------ Middle 2: 0.0001407335162002392
-07-Feb 16:11:08:INFO:root:Starting from 1.8529140727175335e-17
-07-Feb 16:11:08:INFO:root:-- Outer 4: 0.0022364736604085036
-07-Feb 16:11:08:INFO:root:------ Middle 1: 0.0002344063672405205
-07-Feb 16:11:08:INFO:root:Starting from 2.274151979325946e-17
-07-Feb 16:11:08:INFO:root:-- Outer 5: 0.002349052554618032
-07-Feb 16:11:09:INFO:root:------ Middle 1: 0.00017429737733264233
-07-Feb 16:11:09:INFO:root:Starting from 2.1176604109905124e-17
-07-Feb 16:11:09:INFO:root:-- Outer 6: 0.0006783891820877505
-07-Feb 16:11:09:INFO:root:END Outer loop
-07-Feb 16:11:09:INFO:root:Model trade shares: [0.960514, 0.919837, 0.982641]
-07-Feb 16:11:09:INFO:root:Data trade shares: [0.955026, 0.900005, 0.981768]
-07-Feb 16:11:09:INFO:root:US prices: [1.23265, 1.00245, 1.15057]
-07-Feb 16:11:09:INFO:root:in the data: [4.23838, 3.41193, 3.41193]
-07-Feb 16:11:09:INFO:root:Nominal world expenditure: 2.9475840037501127e7
-07-Feb 16:11:09:INFO:root:--------------In the data: [9.98292e7]
-07-Feb 16:11:11:INFO:root:------ Middle 3: 0.0014797084825944092
-07-Feb 16:11:14:INFO:root:------ Middle 2: 0.002898159349695647
-07-Feb 16:11:16:INFO:root:------ Middle 5: 0.0006691518335311541
-07-Feb 16:11:19:INFO:root:------ Middle 2: 0.0028544767672870367
-07-Feb 16:11:24:INFO:root:------ Middle 6: 0.0004113059718507153
-07-Feb 16:11:46:INFO:root:------ Middle 3: 0.0018313797145800938
-07-Feb 16:11:47:INFO:root:------ Middle 6: 0.00043785987126781557
-07-Feb 16:11:47:INFO:root:------ Middle 5: 0.0006848605009278808
-07-Feb 16:11:47:INFO:root:------ Middle 4: 0.0009563914105897726
-07-Feb 16:11:57:INFO:root:------ Middle 3: 0.0017997700532683535
-07-Feb 16:11:59:INFO:root:------ Middle 7: 0.0002703238787336395
-07-Feb 16:11:59:INFO:root:Starting from 1.2180845939092638e-17
-07-Feb 16:11:59:INFO:root:-- Outer 1: 0.026936535201388126
-07-Feb 16:12:19:INFO:root:------ Middle 7: 0.0002873743141047918
-07-Feb 16:12:19:INFO:root:Starting from 1.185820859158593e-17
-07-Feb 16:12:19:INFO:root:-- Outer 1: 0.02719333503687783
-07-Feb 16:12:19:INFO:root:------ Middle 6: 0.00044648498860026754
-07-Feb 16:12:19:INFO:root:------ Middle 5: 0.0006213952182831743
-07-Feb 16:12:20:INFO:root:------ Middle 4: 0.0011620938734911183
-07-Feb 16:12:21:INFO:root:------ Middle 6: 0.00040849502402500506
-07-Feb 16:12:25:INFO:root:------ Middle 1: 0.0007620182165314124
-07-Feb 16:12:26:INFO:root:------ Middle 2: 0.0004549854430265724
-07-Feb 16:12:26:INFO:root:------ Middle 3: 0.00027561846582526144
-07-Feb 16:12:26:INFO:root:Starting from 1.442539131657257e-17
-07-Feb 16:12:26:INFO:root:-- Outer 2: 0.011929587481987755
-07-Feb 16:12:28:INFO:root:------ Middle 1: 0.0004484742105353196
-07-Feb 16:12:28:INFO:root:------ Middle 2: 0.00023985828435872607
-07-Feb 16:12:28:INFO:root:Starting from 1.6010135850797155e-17
-07-Feb 16:12:28:INFO:root:-- Outer 3: 0.005469763319118143
-07-Feb 16:12:29:INFO:root:------ Middle 1: 0.00031199491263682105
-07-Feb 16:12:29:INFO:root:------ Middle 2: 0.00016591057840999814
-07-Feb 16:12:29:INFO:root:Starting from 1.79932259216076e-17
-07-Feb 16:12:29:INFO:root:-- Outer 4: 0.002585732097549095
-07-Feb 16:12:30:INFO:root:------ Middle 1: 0.0002683608023597144
-07-Feb 16:12:30:INFO:root:Starting from 1.4547424841549366e-17
-07-Feb 16:12:30:INFO:root:-- Outer 5: 0.0027017850851163623
-07-Feb 16:12:30:INFO:root:------ Middle 1: 0.00020818954640794443
-07-Feb 16:12:30:INFO:root:Starting from 1.325928512857767e-17
-07-Feb 16:12:30:INFO:root:-- Outer 6: 0.0007223876226781152
-07-Feb 16:12:30:INFO:root:END Outer loop
-07-Feb 16:12:30:INFO:root:Model trade shares: [0.967247, 0.938816, 0.994285]
-07-Feb 16:12:30:INFO:root:Data trade shares: [0.953126, 0.923314, 0.993566]
-07-Feb 16:12:30:INFO:root:US prices: [1.11322, 0.94471, 0.948762]
-07-Feb 16:12:30:INFO:root:in the data: [2.3065, 2.15345, 2.15345]
-07-Feb 16:12:30:INFO:root:Nominal world expenditure: 1.246018435367614e7
-07-Feb 16:12:30:INFO:root:--------------In the data: [2.91447e7]
-07-Feb 16:12:32:INFO:root:------ Middle 4: 0.0011395732086148572
-07-Feb 16:12:32:INFO:root:------ Middle 1: 0.0006990752127454311
-07-Feb 16:12:51:INFO:root:------ Middle 7: 0.00029236741499486256
-07-Feb 16:12:51:INFO:root:Starting from 1.1343039763592801e-17
-07-Feb 16:12:51:INFO:root:-- Outer 1: 0.026556107486882797
-07-Feb 16:12:53:INFO:root:------ Middle 5: 0.0007404529271101065
-07-Feb 16:12:59:INFO:root:------ Middle 7: 0.000270000408444161
-07-Feb 16:12:59:INFO:root:Starting from 1.2891298954909955e-17
-07-Feb 16:12:59:INFO:root:-- Outer 1: 0.021095884701492162
-07-Feb 16:13:05:INFO:root:------ Middle 5: 0.0007245933448007543
-07-Feb 16:13:07:INFO:root:------ Middle 2: 0.00042513481970975225
-07-Feb 16:13:30:INFO:root:------ Middle 1: 0.0008001815441134056
-07-Feb 16:13:30:INFO:root:------ Middle 6: 0.0004737933473377694
-07-Feb 16:13:44:INFO:root:------ Middle 1: 0.0006462575985803499
-07-Feb 16:13:45:INFO:root:------ Middle 6: 0.0004644610569667973
-07-Feb 16:13:47:INFO:root:------ Middle 3: 0.00026004975395421817
-07-Feb 16:13:47:INFO:root:Starting from 2.2430031656513295e-17
-07-Feb 16:13:47:INFO:root:-- Outer 2: 0.011781251152908378
-07-Feb 16:14:10:INFO:root:------ Middle 2: 0.00048461869059630093
-07-Feb 16:14:15:INFO:root:------ Middle 7: 0.00030444641447481487
-07-Feb 16:14:26:INFO:root:------ Middle 7: 0.00029768469448273525
-07-Feb 16:14:26:INFO:root:Starting from 1.183300281021714e-17
-07-Feb 16:14:26:INFO:root:-- Outer 1: 0.023345566717709543
-07-Feb 16:14:29:INFO:root:------ Middle 1: 0.0008685179890754387
-07-Feb 16:14:29:INFO:root:------ Middle 2: 0.0005248776059120761
-07-Feb 16:14:30:INFO:root:------ Middle 3: 0.0002845613483787672
-07-Feb 16:14:30:INFO:root:Starting from 1.8818603499722626e-17
-07-Feb 16:14:30:INFO:root:-- Outer 2: 0.010577162762104122
-07-Feb 16:14:30:INFO:root:------ Middle 2: 0.00039168399715499983
-07-Feb 16:14:30:INFO:root:------ Middle 1: 0.001006426456395989
-07-Feb 16:14:30:INFO:root:------ Middle 1: 0.0003930594249639858
-07-Feb 16:14:31:INFO:root:------ Middle 2: 0.00022980638751130168
-07-Feb 16:14:31:INFO:root:Starting from 1.678311925252809e-17
-07-Feb 16:14:31:INFO:root:-- Outer 3: 0.005565642079077001
-07-Feb 16:14:32:INFO:root:------ Middle 1: 0.0004969095711326699
-07-Feb 16:14:33:INFO:root:------ Middle 2: 0.00018198526140139043
-07-Feb 16:14:33:INFO:root:Starting from 1.5465627396572407e-17
-07-Feb 16:14:33:INFO:root:-- Outer 4: 0.0027645653732686188
-07-Feb 16:14:33:INFO:root:------ Middle 1: 0.00027975939202209185
-07-Feb 16:14:33:INFO:root:Starting from 1.5257478061090925e-17
-07-Feb 16:14:33:INFO:root:-- Outer 5: 0.0028963277472671286
-07-Feb 16:14:35:INFO:root:------ Middle 1: 0.00021311773288812665
-07-Feb 16:14:35:INFO:root:Starting from 1.5447610120710592e-17
-07-Feb 16:14:35:INFO:root:-- Outer 6: 0.0006099216999154219
-07-Feb 16:14:35:INFO:root:END Outer loop
-07-Feb 16:14:35:INFO:root:Model trade shares: [0.955575, 0.920092, 0.978669]
-07-Feb 16:14:35:INFO:root:Data trade shares: [0.956446, 0.911974, 0.985299]
-07-Feb 16:14:35:INFO:root:US prices: [1.055, 0.925352, 1.11242]
-07-Feb 16:14:35:INFO:root:in the data: [3.74316, 3.20378, 3.20378]
-07-Feb 16:14:35:INFO:root:Nominal world expenditure: 2.5118924524323393e7
-07-Feb 16:14:35:INFO:root:--------------In the data: [8.18345e7]
-07-Feb 16:14:51:INFO:root:------ Middle 3: 0.0002950254754521201
-07-Feb 16:14:51:INFO:root:Starting from 1.9964313794842458e-17
-07-Feb 16:14:51:INFO:root:-- Outer 2: 0.011616654372826538
-07-Feb 16:14:59:INFO:root:------ Middle 8: 0.00019645133393698935
-07-Feb 16:14:59:INFO:root:Starting from 1.1253728025246264e-17
-07-Feb 16:14:59:INFO:root:-- Outer 1: 0.02468136314493954
-07-Feb 16:15:03:INFO:root:------ Middle 1: 0.0008223116576220658
-07-Feb 16:15:04:INFO:root:------ Middle 2: 0.0004922865599392651
-07-Feb 16:15:04:INFO:root:------ Middle 3: 0.0002655214213812768
-07-Feb 16:15:04:INFO:root:Starting from 2.087093064140527e-17
-07-Feb 16:15:04:INFO:root:-- Outer 2: 0.010958039476304925
-07-Feb 16:15:04:INFO:root:------ Middle 1: 0.0009814050095451209
-07-Feb 16:15:06:INFO:root:------ Middle 2: 0.0002348860211305473
-07-Feb 16:15:06:INFO:root:Starting from 1.2820823770684054e-17
-07-Feb 16:15:06:INFO:root:-- Outer 3: 0.005685608839283405
-07-Feb 16:15:06:INFO:root:------ Middle 1: 0.00048589962990843317
-07-Feb 16:15:07:INFO:root:------ Middle 3: 0.0002386519133239653
-07-Feb 16:15:07:INFO:root:Starting from 2.1144281602026294e-17
-07-Feb 16:15:07:INFO:root:-- Outer 2: 0.00934684265182785
-07-Feb 16:15:08:INFO:root:------ Middle 2: 0.00018993993684628176
-07-Feb 16:15:08:INFO:root:Starting from 1.518541908896606e-17
-07-Feb 16:15:08:INFO:root:-- Outer 4: 0.002793392400432951
-07-Feb 16:15:08:INFO:root:------ Middle 1: 0.0002783975143861624
-07-Feb 16:15:08:INFO:root:Starting from 2.1291480229647065e-17
-07-Feb 16:15:08:INFO:root:-- Outer 5: 0.0029317192970072636
-07-Feb 16:15:10:INFO:root:------ Middle 1: 0.00021872311070999584
-07-Feb 16:15:10:INFO:root:Starting from 1.5045041550309993e-17
-07-Feb 16:15:10:INFO:root:-- Outer 6: 0.0006310330085254361
-07-Feb 16:15:10:INFO:root:END Outer loop
-07-Feb 16:15:10:INFO:root:Model trade shares: [0.953001, 0.922898, 0.978866]
-07-Feb 16:15:10:INFO:root:Data trade shares: [0.95528, 0.914832, 0.982791]
-07-Feb 16:15:10:INFO:root:US prices: [0.97993, 0.90667, 1.07209]
-07-Feb 16:15:10:INFO:root:in the data: [3.32883, 3.15407, 3.15407]
-07-Feb 16:15:10:INFO:root:Nominal world expenditure: 2.173515792295722e7
-07-Feb 16:15:10:INFO:root:--------------In the data: [7.56745e7]
-07-Feb 16:15:13:INFO:root:------ Middle 2: 0.0002376852127585128
-07-Feb 16:15:13:INFO:root:Starting from 1.8019291760104495e-17
-07-Feb 16:15:13:INFO:root:-- Outer 3: 0.00513650940181654
-07-Feb 16:15:29:INFO:root:------ Middle 1: 0.00047328421459999265
-07-Feb 16:15:46:INFO:root:------ Middle 1: 0.0003882339746204871
-07-Feb 16:15:49:INFO:root:------ Middle 1: 0.00027323701685573996
-07-Feb 16:15:49:INFO:root:Starting from 1.5574843305884807e-17
-07-Feb 16:15:49:INFO:root:-- Outer 4: 0.0023301324180473987
-07-Feb 16:16:08:INFO:root:------ Middle 2: 0.0002869824356911656
-07-Feb 16:16:08:INFO:root:Starting from 2.1575226545050274e-17
-07-Feb 16:16:08:INFO:root:-- Outer 3: 0.005207061990994793
-07-Feb 16:16:22:INFO:root:------ Middle 2: 0.0002346251228356447
-07-Feb 16:16:22:INFO:root:Starting from 1.651006358778383e-17
-07-Feb 16:16:22:INFO:root:-- Outer 3: 0.0042414611800664906
-07-Feb 16:16:26:INFO:root:------ Middle 1: 0.00023917112496844718
-07-Feb 16:16:26:INFO:root:Starting from 1.3728819630470649e-17
-07-Feb 16:16:26:INFO:root:-- Outer 5: 0.0011460207583627428
-07-Feb 16:16:49:INFO:root:------ Middle 1: 0.000333683675995446
-07-Feb 16:16:56:INFO:root:------ Middle 1: 0.0002781637531009741
-07-Feb 16:16:56:INFO:root:Starting from 1.544190105181542e-17
-07-Feb 16:16:56:INFO:root:-- Outer 4: 0.0020487424836811824
-07-Feb 16:17:01:INFO:root:------ Middle 1: 0.00018909328762073025
-07-Feb 16:17:01:INFO:root:Starting from 2.106689189208578e-17
-07-Feb 16:17:01:INFO:root:-- Outer 6: 0.0006191838093137951
-07-Feb 16:17:01:INFO:root:END Outer loop
-07-Feb 16:17:01:INFO:root:Model trade shares: [0.971093, 0.940074, 0.993727]
-07-Feb 16:17:01:INFO:root:Data trade shares: [0.971404, 0.929028, 0.993445]
-07-Feb 16:17:01:INFO:root:US prices: [1.2757, 0.954038, 0.948601]
-07-Feb 16:17:01:INFO:root:in the data: [2.9591, 2.1512, 2.1512]
-07-Feb 16:17:01:INFO:root:Nominal world expenditure: 1.1393349538006691e7
-07-Feb 16:17:01:INFO:root:--------------In the data: [2.42511e7]
-07-Feb 16:17:23:INFO:root:------ Middle 2: 0.00020222641189408526
-07-Feb 16:17:23:INFO:root:Starting from 1.5937605962065415e-17
-07-Feb 16:17:23:INFO:root:-- Outer 4: 0.002510388184960912
-07-Feb 16:17:30:INFO:root:------ Middle 1: 0.00024672193848010384
-07-Feb 16:17:30:INFO:root:Starting from 1.7619538223198185e-17
-07-Feb 16:17:30:INFO:root:-- Outer 5: 0.0010870185614127378
-07-Feb 16:18:02:INFO:root:------ Middle 1: 0.00021692143519679426
-07-Feb 16:18:02:INFO:root:Starting from 1.7124393246767555e-17
-07-Feb 16:18:02:INFO:root:-- Outer 5: 0.001299114207961178
-07-Feb 16:18:10:INFO:root:------ Middle 1: 0.00019638692448880333
-07-Feb 16:18:10:INFO:root:Starting from 1.7539184246806374e-17
-07-Feb 16:18:10:INFO:root:-- Outer 6: 0.0006279992332493436
-07-Feb 16:18:10:INFO:root:END Outer loop
-07-Feb 16:18:10:INFO:root:Model trade shares: [0.958306, 0.94343, 0.992226]
-07-Feb 16:18:10:INFO:root:Data trade shares: [0.944757, 0.931965, 0.986375]
-07-Feb 16:18:10:INFO:root:US prices: [0.865476, 0.828012, 0.868001]
-07-Feb 16:18:10:INFO:root:in the data: [2.85731, 2.74066, 2.74066]
-07-Feb 16:18:10:INFO:root:Nominal world expenditure: 1.5902433810778532e7
-07-Feb 16:18:10:INFO:root:--------------In the data: [5.4623e7]
-07-Feb 16:18:43:INFO:root:------ Middle 1: 0.00018690643423020117
-07-Feb 16:18:43:INFO:root:Starting from 1.7525915252378504e-17
-07-Feb 16:18:43:INFO:root:-- Outer 6: 0.0007320755119070427
-07-Feb 16:18:43:INFO:root:END Outer loop
-07-Feb 16:18:43:INFO:root:Model trade shares: [0.960593, 0.93896, 0.99289]
-07-Feb 16:18:43:INFO:root:Data trade shares: [0.955615, 0.931697, 0.991754]
-07-Feb 16:18:43:INFO:root:US prices: [0.886208, 0.884723, 0.897472]
-07-Feb 16:18:43:INFO:root:in the data: [2.59006, 2.59665, 2.59665]
-07-Feb 16:18:43:INFO:root:Nominal world expenditure: 1.562086712087464e7
-07-Feb 16:18:43:INFO:root:--------------In the data: [4.90999e7]
-679.038356 seconds (908.40 k allocations: 735.443 MiB, 0.04% gc time)
+08-Feb 08:30:37:INFO:root:--- Period 3 ---
+08-Feb 08:30:37:INFO:root:--- Period 2 ---
+08-Feb 08:30:37:INFO:root:--- Period 1 ---
+08-Feb 08:30:37:INFO:root:--- Period 4 ---
+08-Feb 08:30:37:INFO:root:--- Period 5 ---
+08-Feb 08:30:37:INFO:root:--- Period 6 ---
+08-Feb 08:30:37:INFO:root:--- Period 7 ---
+08-Feb 08:30:37:INFO:root:--- Period 8 ---
+08-Feb 08:30:37:INFO:root:--- Period 9 ---
+08-Feb 08:30:37:INFO:root:--- Period 10 ---
+08-Feb 08:30:37:INFO:root:--- Period 12 ---
+08-Feb 08:30:38:INFO:root:--- Period 11 ---
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:39:INFO:root:BEGIN Outer loop
+08-Feb 08:30:42:INFO:root:------ Middle 1: 0.005354721993848949
+08-Feb 08:30:42:INFO:root:------ Middle 2: 0.003371592305151127
+08-Feb 08:30:42:INFO:root:------ Middle 3: 0.0018574582700246135
+08-Feb 08:30:42:INFO:root:------ Middle 4: 0.001437807849619338
+08-Feb 08:30:42:INFO:root:------ Middle 5: 0.0008013114284135679
+08-Feb 08:30:42:INFO:root:------ Middle 6: 0.0006317157913715987
+08-Feb 08:30:42:INFO:root:------ Middle 7: 0.00035171827710500425
+08-Feb 08:30:42:INFO:root:------ Middle 8: 0.0003042556573567272
+08-Feb 08:30:42:INFO:root:------ Middle 9: 0.00016898684220576987
+08-Feb 08:30:43:INFO:root:Starting from 1.110219423122857e-17
+08-Feb 08:30:43:INFO:root:-- Outer 1: 0.040660555273459124
+08-Feb 08:30:43:INFO:root:------ Middle 1: 0.002525021317480031
+08-Feb 08:30:43:INFO:root:------ Middle 2: 0.0008802392641466915
+08-Feb 08:30:43:INFO:root:------ Middle 3: 0.0004941004391289378
+08-Feb 08:30:43:INFO:root:------ Middle 4: 0.0003868144250785118
+08-Feb 08:30:43:INFO:root:------ Middle 5: 0.0002080650027609134
+08-Feb 08:30:43:INFO:root:Starting from 1.0664254268997725e-17
+08-Feb 08:30:43:INFO:root:-- Outer 2: 0.017473534754933285
+08-Feb 08:30:43:INFO:root:------ Middle 1: 0.0005505247809604041
+08-Feb 08:30:43:INFO:root:------ Middle 2: 0.0003309248880596393
+08-Feb 08:30:43:INFO:root:------ Middle 3: 0.00019751720902443594
+08-Feb 08:30:43:INFO:root:Starting from 8.758770182895064e-18
+08-Feb 08:30:43:INFO:root:-- Outer 3: 0.007310293298898168
+08-Feb 08:30:43:INFO:root:------ Middle 1: 0.00016536216338563662
+08-Feb 08:30:43:INFO:root:Starting from 1.1590036491652587e-17
+08-Feb 08:30:43:INFO:root:-- Outer 4: 0.007209539619925179
+08-Feb 08:30:43:INFO:root:------ Middle 1: 0.00021010479524363412
+08-Feb 08:30:43:INFO:root:Starting from 9.746525266743077e-18
+08-Feb 08:30:43:INFO:root:-- Outer 5: 0.00149680358892245
+08-Feb 08:30:43:INFO:root:------ Middle 1: 0.00018744748803008505
+08-Feb 08:30:43:INFO:root:Starting from 7.649792744504327e-18
+08-Feb 08:30:43:INFO:root:-- Outer 6: 0.0016454030761997908
+08-Feb 08:30:43:INFO:root:------ Middle 1: 0.00011237200394347898
+08-Feb 08:30:43:INFO:root:Starting from 1.0753277834859289e-17
+08-Feb 08:30:43:INFO:root:-- Outer 7: 0.00021800370710272902
+08-Feb 08:30:43:INFO:root:END Outer loop
+08-Feb 08:30:44:INFO:root:Model trade shares: [0.971358, 0.942021, 0.995651]
+08-Feb 08:30:44:INFO:root:Data trade shares: [0.970499, 0.941882, 0.994321]
+08-Feb 08:30:44:INFO:root:US prices: [1.01727, 1.01623, 1.01572]
+08-Feb 08:30:44:INFO:root:in the data: [1.0, 1.0, 1.0]
+08-Feb 08:30:44:INFO:root:Nominal world expenditure: 8.235542603681928e6
+08-Feb 08:30:44:INFO:root:--------------In the data: [8.33469e6]
+08-Feb 08:30:45:INFO:root:--- Period 13 ---
+08-Feb 08:30:45:INFO:root:BEGIN Outer loop
+08-Feb 08:31:00:INFO:root:------ Middle 1: 0.0037603059745455578
+08-Feb 08:31:01:INFO:root:------ Middle 2: 0.00235670436214483
+08-Feb 08:31:03:INFO:root:------ Middle 3: 0.0015186644160597364
+08-Feb 08:31:03:INFO:root:------ Middle 4: 0.0008375214776223017
+08-Feb 08:31:05:INFO:root:------ Middle 5: 0.0006873308316477495
+08-Feb 08:31:05:INFO:root:------ Middle 6: 0.00038257364825126396
+08-Feb 08:31:06:INFO:root:------ Middle 7: 0.00033883733112928446
+08-Feb 08:31:07:INFO:root:------ Middle 8: 0.00019076299562756924
+08-Feb 08:31:07:INFO:root:Starting from 1.2552192568827565e-17
+08-Feb 08:31:08:INFO:root:-- Outer 1: 0.02682597706094865
+08-Feb 08:31:08:INFO:root:------ Middle 1: 0.0037652134812800847
+08-Feb 08:31:10:INFO:root:------ Middle 2: 0.0008612401335659868
+08-Feb 08:31:10:INFO:root:------ Middle 3: 0.0004901185344681497
+08-Feb 08:31:10:INFO:root:------ Middle 4: 0.0002901590082878717
+08-Feb 08:31:10:INFO:root:Starting from 1.458611512526562e-17
+08-Feb 08:31:10:INFO:root:-- Outer 2: 0.013340865514122651
+08-Feb 08:31:11:INFO:root:------ Middle 1: 0.0007331922953585344
+08-Feb 08:31:11:INFO:root:------ Middle 1: 0.003619302308893438
+08-Feb 08:31:12:INFO:root:------ Middle 2: 0.002276234851129859
+08-Feb 08:31:12:INFO:root:------ Middle 2: 0.00035733775605133373
+08-Feb 08:31:13:INFO:root:------ Middle 3: 0.0002116944077361535
+08-Feb 08:31:13:INFO:root:Starting from 1.5739944446354372e-17
+08-Feb 08:31:13:INFO:root:-- Outer 3: 0.0056520410145142475
+08-Feb 08:31:13:INFO:root:------ Middle 1: 0.00025844200298661454
+08-Feb 08:31:13:INFO:root:Starting from 1.720310657095185e-17
+08-Feb 08:31:13:INFO:root:-- Outer 4: 0.005921446745672376
+08-Feb 08:31:14:INFO:root:------ Middle 3: 0.0014956391994672496
+08-Feb 08:31:15:INFO:root:------ Middle 1: 0.00024266892067459952
+08-Feb 08:31:15:INFO:root:Starting from 1.676656258577584e-17
+08-Feb 08:31:15:INFO:root:-- Outer 5: 0.0013713894182622926
+08-Feb 08:31:15:INFO:root:------ Middle 4: 0.0009864094598526871
+08-Feb 08:31:15:INFO:root:------ Middle 1: 0.00020154252558049265
+08-Feb 08:31:15:INFO:root:Starting from 1.835231260112558e-17
+08-Feb 08:31:15:INFO:root:-- Outer 6: 0.0014458296935892664
+08-Feb 08:31:16:INFO:root:------ Middle 1: 0.004530861352184266
+08-Feb 08:31:16:INFO:root:------ Middle 1: 0.005111649882129613
+08-Feb 08:31:16:INFO:root:------ Middle 1: 0.004045351385642373
+08-Feb 08:31:16:INFO:root:------ Middle 2: 0.002815149383050534
+08-Feb 08:31:16:INFO:root:------ Middle 5: 0.0006362514409609713
+08-Feb 08:31:16:INFO:root:------ Middle 1: 0.00012852613037177366
+08-Feb 08:31:16:INFO:root:Starting from 1.791643768820185e-17
+08-Feb 08:31:16:INFO:root:-- Outer 7: 0.00018703541155385507
+08-Feb 08:31:16:INFO:root:END Outer loop
+08-Feb 08:31:17:INFO:root:Model trade shares: [0.970825, 0.93236, 0.990524]
+08-Feb 08:31:17:INFO:root:Data trade shares: [0.976496, 0.933524, 0.973934]
+08-Feb 08:31:17:INFO:root:US prices: [1.44157, 1.02231, 1.0316]
+08-Feb 08:31:17:INFO:root:in the data: [2.96155, 2.01858, 2.01858]
+08-Feb 08:31:17:INFO:root:Nominal world expenditure: 1.079325349334323e7
+08-Feb 08:31:18:INFO:root:------ Middle 1: 0.003913560929181508
+08-Feb 08:31:18:INFO:root:------ Middle 3: 0.002128693906582537
+08-Feb 08:31:17:INFO:root:--------------In the data: [2.33649e7]
+08-Feb 08:31:18:INFO:root:------ Middle 4: 0.001194372269358823
+08-Feb 08:31:18:INFO:root:--- Period 14 ---
+08-Feb 08:31:18:INFO:root:BEGIN Outer loop
+08-Feb 08:31:18:INFO:root:------ Middle 6: 0.0008208963724488298
+08-Feb 08:31:19:INFO:root:------ Middle 1: 0.003518526389913818
+08-Feb 08:31:19:INFO:root:------ Middle 1: 0.004354637445478517
+08-Feb 08:31:20:INFO:root:------ Middle 5: 0.0009490004785645646
+08-Feb 08:31:20:INFO:root:------ Middle 2: 0.002856130494670286
+08-Feb 08:31:20:INFO:root:------ Middle 6: 0.0005280203795315299
+08-Feb 08:31:20:INFO:root:------ Middle 7: 0.0003347015787077348
+08-Feb 08:31:20:INFO:root:------ Middle 2: 0.0024775692183981834
+08-Feb 08:31:20:INFO:root:------ Middle 2: 0.0025560221940175046
+08-Feb 08:31:20:INFO:root:------ Middle 8: 0.00032407113709303576
+08-Feb 08:31:21:INFO:root:------ Middle 7: 0.00045670452446742733
+08-Feb 08:31:21:INFO:root:------ Middle 9: 0.00024415247308119263
+08-Feb 08:31:21:INFO:root:------ Middle 1: 0.0048232387790551
+08-Feb 08:31:21:INFO:root:------ Middle 1: 0.004152836138421873
+08-Feb 08:31:21:INFO:root:------ Middle 3: 0.0018153443049123714
+08-Feb 08:31:21:INFO:root:Starting from 1.2014934035658714e-17
+08-Feb 08:31:21:INFO:root:------ Middle 4: 0.000987978711473856
+08-Feb 08:31:21:INFO:root:------ Middle 8: 0.0002733495174542727
+08-Feb 08:31:21:INFO:root:-- Outer 1: 0.02705528582989114
+08-Feb 08:31:22:INFO:root:Starting from 1.2193511847341099e-17
+08-Feb 08:31:22:INFO:root:------ Middle 3: 0.0015659161545554603
+08-Feb 08:31:22:INFO:root:------ Middle 3: 0.0016087750938559996
+08-Feb 08:31:22:INFO:root:------ Middle 1: 0.0035339266368588263
+08-Feb 08:31:22:INFO:root:------ Middle 4: 0.0008664616186856627
+08-Feb 08:31:22:INFO:root:-- Outer 1: 0.037737172145504996
+08-Feb 08:31:22:INFO:root:------ Middle 4: 0.0008893561498954211
+08-Feb 08:31:22:INFO:root:------ Middle 5: 0.000794187853762728
+08-Feb 08:31:23:INFO:root:------ Middle 1: 0.0023531317956930944
+08-Feb 08:31:23:INFO:root:------ Middle 6: 0.00044816955296928364
+08-Feb 08:31:23:INFO:root:------ Middle 1: 0.004231933790093618
+08-Feb 08:31:23:INFO:root:------ Middle 7: 0.00038628904026483465
+08-Feb 08:31:23:INFO:root:------ Middle 2: 0.0030307524063780526
+08-Feb 08:31:23:INFO:root:------ Middle 5: 0.0006985448178989199
+08-Feb 08:31:24:INFO:root:------ Middle 6: 0.00038797692945741343
+08-Feb 08:31:24:INFO:root:------ Middle 8: 0.00021956896130623943
+08-Feb 08:31:24:INFO:root:------ Middle 5: 0.0007123378734450042
+08-Feb 08:31:24:INFO:root:------ Middle 2: 0.0026246525201368202
+08-Feb 08:31:24:INFO:root:------ Middle 1: 0.0007051445710079571
+08-Feb 08:31:24:INFO:root:------ Middle 6: 0.00039512631322071123
+08-Feb 08:31:24:INFO:root:------ Middle 2: 0.0003867312033302967
+08-Feb 08:31:24:INFO:root:------ Middle 7: 0.0003424822664259421
+08-Feb 08:31:24:INFO:root:Starting from 1.2218436922830431e-17
+08-Feb 08:31:24:INFO:root:------ Middle 8: 0.00019048294551988812
+08-Feb 08:31:25:INFO:root:------ Middle 3: 0.0002742370396415722
+08-Feb 08:31:25:INFO:root:Starting from 1.6566858136068263e-17
+08-Feb 08:31:25:INFO:root:-- Outer 2: 0.011867535903703012
+08-Feb 08:31:25:INFO:root:-- Outer 1: 0.03313812222464328
+08-Feb 08:31:25:INFO:root:------ Middle 7: 0.00034878858225871536
+08-Feb 08:31:25:INFO:root:------ Middle 1: 0.0008545061366585793
+08-Feb 08:31:25:INFO:root:Starting from 1.1857837298295332e-17
+08-Feb 08:31:25:INFO:root:------ Middle 3: 0.0019136165407146652
+08-Feb 08:31:25:INFO:root:------ Middle 1: 0.003827228768854599
+08-Feb 08:31:25:INFO:root:------ Middle 3: 0.0016498766450977324
+08-Feb 08:31:25:INFO:root:-- Outer 1: 0.02728672100625901
+08-Feb 08:31:25:INFO:root:------ Middle 4: 0.0009077979752313504
+08-Feb 08:31:25:INFO:root:------ Middle 8: 0.00019251830416101403
+08-Feb 08:31:25:INFO:root:------ Middle 1: 0.0038899511860539912
+08-Feb 08:31:26:INFO:root:Starting from 1.1487973724439703e-17
+08-Feb 08:31:26:INFO:root:------ Middle 2: 0.002262871252238512
+08-Feb 08:31:26:INFO:root:------ Middle 2: 0.002762327631047176
+08-Feb 08:31:26:INFO:root:------ Middle 2: 0.002260398441154728
+08-Feb 08:31:26:INFO:root:------ Middle 2: 0.0007580102857341462
+08-Feb 08:31:26:INFO:root:------ Middle 2: 0.00018904217484908803
+08-Feb 08:31:26:INFO:root:Starting from 1.8331500740408996e-17
+08-Feb 08:31:26:INFO:root:-- Outer 3: 0.005801572135097604
+08-Feb 08:31:26:INFO:root:-- Outer 1: 0.027910331674265702
+08-Feb 08:31:26:INFO:root:------ Middle 3: 0.0004265794032801088
+08-Feb 08:31:26:INFO:root:------ Middle 5: 0.0007277487186548373
+08-Feb 08:31:26:INFO:root:------ Middle 1: 0.00034834338785771386
+08-Feb 08:31:26:INFO:root:------ Middle 6: 0.0004028888021759517
+08-Feb 08:31:26:INFO:root:------ Middle 4: 0.0012246957194156404
+08-Feb 08:31:26:INFO:root:------ Middle 1: 0.00396202101821452
+08-Feb 08:31:27:INFO:root:------ Middle 4: 0.00028707127681208705
+08-Feb 08:31:27:INFO:root:Starting from 1.617359476635409e-17
+08-Feb 08:31:27:INFO:root:-- Outer 2: 0.016568204139232625
+08-Feb 08:31:27:INFO:root:------ Middle 2: 0.0026705667522000103
+08-Feb 08:31:27:INFO:root:------ Middle 1: 0.0004531840853735802
+08-Feb 08:31:27:INFO:root:------ Middle 7: 0.0003562126211980248
+08-Feb 08:31:27:INFO:root:------ Middle 3: 0.001725087296900168
+08-Feb 08:31:27:INFO:root:------ Middle 2: 0.00016196600417627317
+08-Feb 08:31:27:INFO:root:Starting from 1.6972401871969366e-17
+08-Feb 08:31:27:INFO:root:-- Outer 4: 0.0025154085127468235
+08-Feb 08:31:27:INFO:root:------ Middle 8: 0.0001961364242572878
+08-Feb 08:31:28:INFO:root:------ Middle 4: 0.0009534267247792315
+08-Feb 08:31:28:INFO:root:------ Middle 1: 0.00018175462839777477
+08-Feb 08:31:28:INFO:root:Starting from 1.4236883187999253e-17
+08-Feb 08:31:28:INFO:root:-- Outer 5: 0.0025932160938564566
+08-Feb 08:31:28:INFO:root:------ Middle 3: 0.0014595978615350954
+08-Feb 08:31:28:INFO:root:------ Middle 2: 0.0009153619142793107
+08-Feb 08:31:28:INFO:root:Starting from 1.2532361252206822e-17
+08-Feb 08:31:28:INFO:root:------ Middle 2: 0.0008805073839150407
+08-Feb 08:31:28:INFO:root:-- Outer 1: 0.028792603832470336
+08-Feb 08:31:28:INFO:root:------ Middle 3: 0.0014575566333127413
+08-Feb 08:31:28:INFO:root:------ Middle 2: 0.00035591830845757056
+08-Feb 08:31:28:INFO:root:------ Middle 3: 0.0004868529782997412
+08-Feb 08:31:29:INFO:root:------ Middle 5: 0.0007874066245340923
+08-Feb 08:31:29:INFO:root:------ Middle 3: 0.0002110896474617916
+08-Feb 08:31:29:INFO:root:Starting from 1.3823260423881044e-17
+08-Feb 08:31:29:INFO:root:------ Middle 3: 0.0005239259434940769
+08-Feb 08:31:29:INFO:root:-- Outer 3: 0.006946886593158879
+08-Feb 08:31:29:INFO:root:------ Middle 5: 0.0007567212389734555
+08-Feb 08:31:29:INFO:root:------ Middle 1: 0.0039959748093612215
+08-Feb 08:31:29:INFO:root:------ Middle 6: 0.00041915253350171145
+08-Feb 08:31:29:INFO:root:------ Middle 1: 0.00015673570576648938
+08-Feb 08:31:29:INFO:root:Starting from 1.556409963245192e-17
+08-Feb 08:31:29:INFO:root:-- Outer 4: 0.00685307151105885
+08-Feb 08:31:29:INFO:root:------ Middle 2: 0.0009426082526881048
+08-Feb 08:31:29:INFO:root:------ Middle 4: 0.00028280387340830215
+08-Feb 08:31:29:INFO:root:Starting from 1.7755770646972267e-17
+08-Feb 08:31:29:INFO:root:-- Outer 2: 0.013518321522345054
+08-Feb 08:31:29:INFO:root:------ Middle 1: 0.00015585893978135726
+08-Feb 08:31:29:INFO:root:Starting from 1.3511324670790011e-17
+08-Feb 08:31:29:INFO:root:-- Outer 6: 0.0006484277638850017
+08-Feb 08:31:29:INFO:root:END Outer loop
+08-Feb 08:31:29:INFO:root:------ Middle 3: 0.001690396948020828
+08-Feb 08:31:29:INFO:root:------ Middle 4: 0.0003149730619782021
+08-Feb 08:31:29:INFO:root:------ Middle 1: 0.0007681872133080222
+08-Feb 08:31:29:INFO:root:------ Middle 5: 0.00021453933936860237
+08-Feb 08:31:29:INFO:root:Starting from 1.4090059173658744e-17
+08-Feb 08:31:29:INFO:root:-- Outer 2: 0.015111789914386553
+08-Feb 08:31:29:INFO:root:------ Middle 4: 0.0009580668962015084
+08-Feb 08:31:29:INFO:root:------ Middle 7: 0.00036805552923753384
+08-Feb 08:31:29:INFO:root:Model trade shares: [0.97109, 0.933121, 0.990683]
+08-Feb 08:31:29:INFO:root:Data trade shares: [0.97676, 0.939693, 0.972749]
+08-Feb 08:31:29:INFO:root:US prices: [1.44625, 1.00392, 1.00852]
+08-Feb 08:31:29:INFO:root:in the data: [3.07991, 2.04761, 2.04761]
+08-Feb 08:31:29:INFO:root:Nominal world expenditure: 1.0699793963601725e7
+08-Feb 08:31:30:INFO:root:------ Middle 1: 0.0008278073650921567
+08-Feb 08:31:30:INFO:root:------ Middle 8: 0.00020238918777365709
+08-Feb 08:31:30:INFO:root:------ Middle 6: 0.0005114437017846072
+08-Feb 08:31:30:INFO:root:------ Middle 3: 0.0005341435527891961
+08-Feb 08:31:30:INFO:root:--------------In the data: [2.31824e7]
+08-Feb 08:31:30:INFO:root:Starting from 1.2370733840133018e-17
+08-Feb 08:31:30:INFO:root:------ Middle 4: 0.0009333889100294723
+08-Feb 08:31:30:INFO:root:------ Middle 4: 0.0002856107647309528
+08-Feb 08:31:30:INFO:root:Starting from 2.1540499024348114e-17
+08-Feb 08:31:30:INFO:root:-- Outer 2: 0.013754868655996363
+08-Feb 08:31:30:INFO:root:--- Period 15 ---
+08-Feb 08:31:30:INFO:root:BEGIN Outer loop
+08-Feb 08:31:30:INFO:root:------ Middle 5: 0.0005156177942697715
+08-Feb 08:31:30:INFO:root:-- Outer 1: 0.03135491684154626
+08-Feb 08:31:30:INFO:root:------ Middle 1: 0.0002256519680544122
+08-Feb 08:31:30:INFO:root:------ Middle 1: 0.0008005509822628353
+08-Feb 08:31:30:INFO:root:Starting from 1.3437118186608174e-17
+08-Feb 08:31:30:INFO:root:-- Outer 5: 0.0014887347036622789
+08-Feb 08:31:30:INFO:root:------ Middle 5: 0.0006224442442158642
+08-Feb 08:31:30:INFO:root:------ Middle 1: 0.004038522662819975
+08-Feb 08:31:31:INFO:root:------ Middle 1: 0.00019749668252474998
+08-Feb 08:31:31:INFO:root:Starting from 1.2135584740360298e-17
+08-Feb 08:31:31:INFO:root:-- Outer 6: 0.0016294289787928962
+08-Feb 08:31:31:INFO:root:------ Middle 4: 0.0010753173841239723
+08-Feb 08:31:31:INFO:root:------ Middle 6: 0.00034409285233946913
+08-Feb 08:31:31:INFO:root:------ Middle 5: 0.0005921421028395892
+08-Feb 08:31:31:INFO:root:------ Middle 7: 0.00032775418605417763
+08-Feb 08:31:31:INFO:root:------ Middle 6: 0.0004424254064832786
+08-Feb 08:31:31:INFO:root:------ Middle 2: 0.00036376831460448265
+08-Feb 08:31:31:INFO:root:------ Middle 2: 0.00094186042821072
+08-Feb 08:31:31:INFO:root:------ Middle 3: 0.0002152613113975687
+08-Feb 08:31:31:INFO:root:Starting from 1.672442369677004e-17
+08-Feb 08:31:31:INFO:root:-- Outer 3: 0.005737096848765334
+08-Feb 08:31:31:INFO:root:------ Middle 7: 0.0002990110883983242
+08-Feb 08:31:31:INFO:root:Starting from 1.1922114865498114e-17
+08-Feb 08:31:31:INFO:root:------ Middle 6: 0.0005041244605373623
+08-Feb 08:31:31:INFO:root:------ Middle 1: 0.00027459975548311735
+08-Feb 08:31:31:INFO:root:Starting from 1.8445871667467016e-17
+08-Feb 08:31:31:INFO:root:-- Outer 4: 0.006040574100286425
+08-Feb 08:31:31:INFO:root:------ Middle 2: 0.00030256817077515456
+08-Feb 08:31:31:INFO:root:------ Middle 1: 0.00012463445797842988
+08-Feb 08:31:31:INFO:root:Starting from 1.1518025020105299e-17
+08-Feb 08:31:31:INFO:root:-- Outer 7: 0.00015802589202051123
+08-Feb 08:31:31:INFO:root:END Outer loop
+08-Feb 08:31:31:INFO:root:-- Outer 1: 0.02689014569564366
+08-Feb 08:31:32:INFO:root:------ Middle 3: 0.00018116146463616328
+08-Feb 08:31:32:INFO:root:Starting from 1.9803974926460148e-17
+08-Feb 08:31:32:INFO:root:-- Outer 3: 0.00672573282582239
+08-Feb 08:31:32:INFO:root:------ Middle 7: 0.0002712898629737872
+08-Feb 08:31:32:INFO:root:------ Middle 1: 0.000310613097910784
+08-Feb 08:31:32:INFO:root:------ Middle 7: 0.0002975383422867534
+08-Feb 08:31:32:INFO:root:------ Middle 3: 0.0005362887453582039
+08-Feb 08:31:32:INFO:root:Model trade shares: [0.972653, 0.94156, 0.994955]
+08-Feb 08:31:32:INFO:root:Data trade shares: [0.970394, 0.938128, 0.99445]
+08-Feb 08:31:32:INFO:root:US prices: [1.08572, 1.06218, 1.06549]
+08-Feb 08:31:32:INFO:root:in the data: [1.21921, 1.17859, 1.17859]
+08-Feb 08:31:32:INFO:root:------ Middle 8: 0.00021154656860569487
+08-Feb 08:31:32:INFO:root:------ Middle 2: 0.00036470904787492994
+08-Feb 08:31:32:INFO:root:Starting from 1.2617876667056143e-17
+08-Feb 08:31:32:INFO:root:Nominal world expenditure: 8.301244363256277e6
+08-Feb 08:31:32:INFO:root:------ Middle 4: 0.00028706929526465863
+08-Feb 08:31:32:INFO:root:Starting from 1.9813930116203137e-17
+08-Feb 08:31:32:INFO:root:-- Outer 2: 0.014080439312175657
+08-Feb 08:31:32:INFO:root:Starting from 1.2156753951436899e-17
+08-Feb 08:31:32:INFO:root:------ Middle 3: 0.00021773641221651318
+08-Feb 08:31:32:INFO:root:Starting from 1.632797703330976e-17
+08-Feb 08:31:32:INFO:root:-- Outer 3: 0.005875824791968932
+08-Feb 08:31:33:INFO:root:------ Middle 1: 0.0008190698239736096
+08-Feb 08:31:33:INFO:root:Starting from 1.2027325223057458e-17
+08-Feb 08:31:33:INFO:root:-- Outer 1: 0.026518560123268014
+08-Feb 08:31:33:INFO:root:------ Middle 1: 0.00028866244748584126
+08-Feb 08:31:33:INFO:root:Starting from 1.6112077842173632e-17
+08-Feb 08:31:33:INFO:root:-- Outer 4: 0.006217497097346779
+08-Feb 08:31:33:INFO:root:-- Outer 1: 0.0297373710751036
+08-Feb 08:31:32:INFO:root:--------------In the data: [1.02443e7]
+08-Feb 08:31:33:INFO:root:------ Middle 1: 0.0002497286156804405
+08-Feb 08:31:33:INFO:root:Starting from 1.5891039627908712e-17
+08-Feb 08:31:33:INFO:root:-- Outer 5: 0.0013888490714785455
+08-Feb 08:31:33:INFO:root:------ Middle 1: 0.0036113459319896753
+08-Feb 08:31:33:INFO:root:-- Outer 1: 0.03552408365336993
+08-Feb 08:31:33:INFO:root:--- Period 16 ---
+08-Feb 08:31:33:INFO:root:BEGIN Outer loop
+08-Feb 08:31:33:INFO:root:------ Middle 1: 0.004050854698262733
+08-Feb 08:31:33:INFO:root:------ Middle 1: 0.00020533169358448664
+08-Feb 08:31:33:INFO:root:Starting from 1.3657343480690842e-17
+08-Feb 08:31:33:INFO:root:-- Outer 6: 0.0014631658338912017
+08-Feb 08:31:33:INFO:root:------ Middle 2: 0.0009036735827288551
+08-Feb 08:31:34:INFO:root:------ Middle 3: 0.0004945739355296562
+08-Feb 08:31:34:INFO:root:------ Middle 2: 0.0001974871609506069
+08-Feb 08:31:34:INFO:root:Starting from 1.2976712819149867e-17
+08-Feb 08:31:34:INFO:root:-- Outer 4: 0.0026825459226762064
+08-Feb 08:31:34:INFO:root:------ Middle 1: 0.00017197312762536363
+08-Feb 08:31:34:INFO:root:Starting from 1.346780655247058e-17
+08-Feb 08:31:34:INFO:root:-- Outer 5: 0.002757210921978595
+08-Feb 08:31:34:INFO:root:------ Middle 2: 0.00036386852149555756
+08-Feb 08:31:34:INFO:root:------ Middle 4: 0.0003185018580114549
+08-Feb 08:31:34:INFO:root:------ Middle 3: 0.00021564829504344747
+08-Feb 08:31:34:INFO:root:Starting from 1.7954945600377997e-17
+08-Feb 08:31:34:INFO:root:-- Outer 3: 0.0060323025220804
+08-Feb 08:31:34:INFO:root:------ Middle 1: 0.00012998843657211075
+08-Feb 08:31:34:INFO:root:Starting from 1.6213389162494877e-17
+08-Feb 08:31:34:INFO:root:-- Outer 7: 0.0001864593126050401
+08-Feb 08:31:34:INFO:root:END Outer loop
+08-Feb 08:31:34:INFO:root:------ Middle 5: 0.00021872646143818644
+08-Feb 08:31:34:INFO:root:Starting from 1.388322717409835e-17
+08-Feb 08:31:34:INFO:root:-- Outer 2: 0.014590374075490846
+08-Feb 08:31:34:INFO:root:------ Middle 1: 0.0002972167866009273
+08-Feb 08:31:34:INFO:root:Starting from 1.6592599384842102e-17
+08-Feb 08:31:34:INFO:root:-- Outer 4: 0.006386240181404894
+08-Feb 08:31:35:INFO:root:------ Middle 1: 0.0008467648008386045
+08-Feb 08:31:35:INFO:root:------ Middle 1: 0.0002567819027983957
+08-Feb 08:31:35:INFO:root:Starting from 2.0149785671091747e-17
+08-Feb 08:31:35:INFO:root:-- Outer 5: 0.0014169167090105643
+08-Feb 08:31:35:INFO:root:Model trade shares: [0.972418, 0.935157, 0.991213]
+08-Feb 08:31:35:INFO:root:Data trade shares: [0.971471, 0.927429, 0.989384]
+08-Feb 08:31:35:INFO:root:US prices: [1.41011, 1.03837, 1.05334]
+08-Feb 08:31:35:INFO:root:in the data: [2.72526, 1.92631, 1.92631]
+08-Feb 08:31:35:INFO:root:Nominal world expenditure: 1.1134280677853115e7
+08-Feb 08:31:35:INFO:root:------ Middle 1: 0.0002096456690429329
+08-Feb 08:31:35:INFO:root:Starting from 1.8000823766507752e-17
+08-Feb 08:31:35:INFO:root:-- Outer 6: 0.0014938408948641756
+08-Feb 08:31:35:INFO:root:------ Middle 1: 0.0007287707848086421
+08-Feb 08:31:35:INFO:root:------ Middle 2: 0.0009258208138014981
+08-Feb 08:31:35:INFO:root:------ Middle 2: 0.0003989872616890693
+08-Feb 08:31:35:INFO:root:------ Middle 2: 0.0008009990395731485
+08-Feb 08:31:35:INFO:root:--------------In the data: [2.2953e7]
+08-Feb 08:31:36:INFO:root:------ Middle 3: 0.00027601966090412175
+08-Feb 08:31:36:INFO:root:Starting from 1.888937804378598e-17
+08-Feb 08:31:36:INFO:root:-- Outer 2: 0.011993106468485821
+08-Feb 08:31:36:INFO:root:--- Period 17 ---
+08-Feb 08:31:36:INFO:root:BEGIN Outer loop
+08-Feb 08:31:36:INFO:root:------ Middle 1: 0.00017125035001231906
+08-Feb 08:31:36:INFO:root:Starting from 1.319155687573263e-17
+08-Feb 08:31:36:INFO:root:-- Outer 6: 0.000691712181158192
+08-Feb 08:31:36:INFO:root:END Outer loop
+08-Feb 08:31:36:INFO:root:------ Middle 1: 0.000915223283800373
+08-Feb 08:31:36:INFO:root:------ Middle 2: 0.000309673726753432
+08-Feb 08:31:36:INFO:root:------ Middle 1: 0.00013151106616904543
+08-Feb 08:31:36:INFO:root:Starting from 1.3922563397112864e-17
+08-Feb 08:31:36:INFO:root:-- Outer 7: 0.00019042847551292618
+08-Feb 08:31:36:INFO:root:END Outer loop
+08-Feb 08:31:36:INFO:root:------ Middle 3: 0.00046943182533804067
+08-Feb 08:31:36:INFO:root:------ Middle 3: 0.0005301138647252515
+08-Feb 08:31:36:INFO:root:------ Middle 3: 0.000185057587118298
+08-Feb 08:31:36:INFO:root:Starting from 1.5400838401807826e-17
+08-Feb 08:31:36:INFO:root:-- Outer 3: 0.006514466765357172
+08-Feb 08:31:36:INFO:root:------ Middle 4: 0.0002754865443919653
+08-Feb 08:31:36:INFO:root:Starting from 1.5896267723125138e-17
+08-Feb 08:31:36:INFO:root:------ Middle 1: 0.0002616901448567562
+08-Feb 08:31:36:INFO:root:-- Outer 2: 0.013281563958075646
+08-Feb 08:31:36:INFO:root:Starting from 1.3480810263666142e-17
+08-Feb 08:31:36:INFO:root:-- Outer 5: 0.0014462150591470352
+08-Feb 08:31:36:INFO:root:------ Middle 4: 0.0002859801205355486
+08-Feb 08:31:36:INFO:root:Starting from 1.4194861806858074e-17
+08-Feb 08:31:36:INFO:root:-- Outer 2: 0.014498069923188214
+08-Feb 08:31:36:INFO:root:------ Middle 1: 0.0004884528187727485
+08-Feb 08:31:36:INFO:root:------ Middle 1: 0.00030836110789861056
+08-Feb 08:31:36:INFO:root:Model trade shares: [0.970521, 0.93381, 0.993596]
+08-Feb 08:31:37:INFO:root:Data trade shares: [0.975035, 0.947137, 0.993826]
+08-Feb 08:31:37:INFO:root:US prices: [1.205, 1.10932, 1.11512]
+08-Feb 08:31:37:INFO:root:in the data: [1.5623, 1.46271, 1.46271]
+08-Feb 08:31:37:INFO:root:------ Middle 1: 0.0007089643398221022
+08-Feb 08:31:37:INFO:root:------ Middle 1: 0.0002123382319254901
+08-Feb 08:31:37:INFO:root:Starting from 1.4624307636123288e-17
+08-Feb 08:31:37:INFO:root:-- Outer 6: 0.0015271768812710072
+08-Feb 08:31:37:INFO:root:------ Middle 1: 0.0008308264168107696
+08-Feb 08:31:37:INFO:root:Nominal world expenditure: 9.18216820679191e6
+08-Feb 08:31:37:INFO:root:Model trade shares: [0.971866, 0.937794, 0.992439]
+08-Feb 08:31:37:INFO:root:Data trade shares: [0.966266, 0.92464, 0.992831]
+08-Feb 08:31:37:INFO:root:US prices: [1.3606, 1.05436, 1.06747]
+08-Feb 08:31:37:INFO:root:in the data: [2.27198, 1.79075, 1.79075]
+08-Feb 08:31:37:INFO:root:Nominal world expenditure: 1.0807353433465721e7
+08-Feb 08:31:37:INFO:root:------ Middle 2: 0.0002879902309306239
+08-Feb 08:31:37:INFO:root:Starting from 1.4754157872537605e-17
+08-Feb 08:31:37:INFO:root:-- Outer 2: 0.014661318389840836
+08-Feb 08:31:37:INFO:root:--------------In the data: [1.27847e7]
+08-Feb 08:31:37:INFO:root:--------------In the data: [2.07618e7]
+08-Feb 08:31:38:INFO:root:--- Period 18 ---
+08-Feb 08:31:38:INFO:root:BEGIN Outer loop
+08-Feb 08:31:38:INFO:root:------ Middle 1: 0.00013218830597843455
+08-Feb 08:31:38:INFO:root:Starting from 1.5477859049246287e-17
+08-Feb 08:31:38:INFO:root:-- Outer 7: 0.00019047974009026781
+08-Feb 08:31:38:INFO:root:END Outer loop
+08-Feb 08:31:38:INFO:root:------ Middle 2: 0.00019037704494520553
+08-Feb 08:31:38:INFO:root:Starting from 1.575971017584273e-17
+08-Feb 08:31:38:INFO:root:-- Outer 4: 0.0027006921623269034
+08-Feb 08:31:38:INFO:root:------ Middle 2: 0.0001740340135550937
+08-Feb 08:31:38:INFO:root:Starting from 1.4913241519631105e-17
+08-Feb 08:31:38:INFO:root:--- Period 19 ---
+08-Feb 08:31:38:INFO:root:-- Outer 3: 0.005953112111609884
+08-Feb 08:31:38:INFO:root:BEGIN Outer loop
+08-Feb 08:31:38:INFO:root:------ Middle 1: 0.00016797457624608016
+08-Feb 08:31:38:INFO:root:Starting from 1.4518709025118974e-17
+08-Feb 08:31:38:INFO:root:-- Outer 5: 0.002766128693009057
+08-Feb 08:31:38:INFO:root:------ Middle 1: 0.00038318053742417705
+08-Feb 08:31:38:INFO:root:Model trade shares: [0.970749, 0.938603, 0.993224]
+08-Feb 08:31:38:INFO:root:Data trade shares: [0.961487, 0.929057, 0.992737]
+08-Feb 08:31:38:INFO:root:US prices: [1.30841, 1.06121, 1.07062]
+08-Feb 08:31:38:INFO:root:in the data: [1.96012, 1.64035, 1.64035]
+08-Feb 08:31:38:INFO:root:Nominal world expenditure: 1.0501472008969797e7
+08-Feb 08:31:38:INFO:root:------ Middle 2: 0.0003438125249714621
+08-Feb 08:31:38:INFO:root:------ Middle 2: 0.00035507684135755596
+08-Feb 08:31:38:INFO:root:--------------In the data: [1.80704e7]
+08-Feb 08:31:39:INFO:root:------ Middle 3: 0.00020497793608860085
+08-Feb 08:31:39:INFO:root:------ Middle 3: 0.00021082150254479124
+08-Feb 08:31:39:INFO:root:Starting from 1.869373499543032e-17
+08-Feb 08:31:39:INFO:root:Starting from 1.9038362863098333e-17
+08-Feb 08:31:39:INFO:root:-- Outer 3: 0.005638848589821599
+08-Feb 08:31:39:INFO:root:-- Outer 3: 0.006229838849691315
+08-Feb 08:31:39:INFO:root:--- Period 20 ---
+08-Feb 08:31:39:INFO:root:BEGIN Outer loop
+08-Feb 08:31:39:INFO:root:------ Middle 1: 0.000304044398673076
+08-Feb 08:31:39:INFO:root:------ Middle 1: 0.0002554627727737396
+08-Feb 08:31:39:INFO:root:Starting from 1.4289257342417184e-17
+08-Feb 08:31:39:INFO:root:-- Outer 4: 0.005916604093371581
+08-Feb 08:31:39:INFO:root:------ Middle 1: 0.00039520107319039897
+08-Feb 08:31:40:INFO:root:------ Middle 2: 0.00015698609286655702
+08-Feb 08:31:40:INFO:root:Starting from 1.9931800565240964e-17
+08-Feb 08:31:40:INFO:root:-- Outer 4: 0.0025704652733295214
+08-Feb 08:31:40:INFO:root:------ Middle 1: 0.00016591683729822292
+08-Feb 08:31:40:INFO:root:Starting from 1.70442278058182e-17
+08-Feb 08:31:40:INFO:root:-- Outer 6: 0.000739053314330142
+08-Feb 08:31:40:INFO:root:END Outer loop
+08-Feb 08:31:40:INFO:root:------ Middle 1: 0.00019832354449751235
+08-Feb 08:31:40:INFO:root:Starting from 2.040198084530446e-17
+08-Feb 08:31:40:INFO:root:-- Outer 5: 0.002681317379957546
+08-Feb 08:31:40:INFO:root:------ Middle 2: 0.0001989472031706655
+08-Feb 08:31:40:INFO:root:Starting from 1.4506783187111962e-17
+08-Feb 08:31:40:INFO:root:-- Outer 4: 0.002552480865859792
+08-Feb 08:31:40:INFO:root:------ Middle 2: 0.00023227996074897615
+08-Feb 08:31:40:INFO:root:Starting from 1.4234215912441113e-17
+08-Feb 08:31:40:INFO:root:-- Outer 3: 0.00617568198277164
+08-Feb 08:31:40:INFO:root:------ Middle 1: 0.00017329237182909748
+08-Feb 08:31:40:INFO:root:Starting from 1.6755921194801022e-17
+08-Feb 08:31:40:INFO:root:-- Outer 5: 0.002625859616473956
+08-Feb 08:31:40:INFO:root:Model trade shares: [0.970258, 0.935685, 0.993363]
+08-Feb 08:31:40:INFO:root:Data trade shares: [0.967429, 0.940539, 0.992695]
+08-Feb 08:31:40:INFO:root:US prices: [1.24411, 1.10431, 1.10518]
+08-Feb 08:31:40:INFO:root:in the data: [1.63396, 1.43854, 1.43854]
+08-Feb 08:31:41:INFO:root:Nominal world expenditure: 9.46707423896848e6
+08-Feb 08:31:41:INFO:root:------ Middle 1: 0.00024130547060741614
+08-Feb 08:31:41:INFO:root:Starting from 1.2517369318338303e-17
+08-Feb 08:31:41:INFO:root:-- Outer 5: 0.001366071336842885
+08-Feb 08:31:41:INFO:root:--------------In the data: [1.37348e7]
+08-Feb 08:31:41:INFO:root:------ Middle 1: 0.0001617822133402302
+08-Feb 08:31:41:INFO:root:Starting from 1.6153378115641623e-17
+08-Feb 08:31:41:INFO:root:-- Outer 6: 0.0005949987476002369
+08-Feb 08:31:41:INFO:root:END Outer loop
+08-Feb 08:31:41:INFO:root:Model trade shares: [0.96925, 0.936748, 0.993185]
+08-Feb 08:31:41:INFO:root:Data trade shares: [0.971404, 0.929028, 0.993445]
+08-Feb 08:31:41:INFO:root:US prices: [1.29099, 0.956105, 0.957475]
+08-Feb 08:31:41:INFO:root:in the data: [2.9591, 2.1512, 2.1512]
+08-Feb 08:31:41:INFO:root:Nominal world expenditure: 1.1176020450919606e7
+08-Feb 08:31:41:INFO:root:--------------In the data: [2.42511e7]
+08-Feb 08:31:41:INFO:root:------ Middle 1: 0.0001998711220782826
+08-Feb 08:31:41:INFO:root:Starting from 1.3331824811586545e-17
+08-Feb 08:31:41:INFO:root:-- Outer 6: 0.0014437239012465085
+08-Feb 08:31:41:INFO:root:--- Period 21 ---
+08-Feb 08:31:41:INFO:root:BEGIN Outer loop
+08-Feb 08:31:41:INFO:root:--- Period 22 ---
+08-Feb 08:31:42:INFO:root:BEGIN Outer loop
+08-Feb 08:31:42:INFO:root:------ Middle 1: 0.000167817648972947
+08-Feb 08:31:42:INFO:root:Starting from 1.3718863541794751e-17
+08-Feb 08:31:42:INFO:root:-- Outer 6: 0.0007200877442170048
+08-Feb 08:31:42:INFO:root:END Outer loop
+08-Feb 08:31:42:INFO:root:Model trade shares: [0.969381, 0.935442, 0.993269]
+08-Feb 08:31:42:INFO:root:Data trade shares: [0.959721, 0.934044, 0.992669]
+08-Feb 08:31:42:INFO:root:US prices: [1.27917, 1.08921, 1.09039]
+08-Feb 08:31:42:INFO:root:in the data: [1.70549, 1.50868, 1.50868]
+08-Feb 08:31:42:INFO:root:Nominal world expenditure: 9.977260873010548e6
+08-Feb 08:31:42:INFO:root:------ Middle 1: 0.00025923201854834323
+08-Feb 08:31:42:INFO:root:Starting from 1.2698762372943457e-17
+08-Feb 08:31:42:INFO:root:-- Outer 4: 0.002697724211355787
+08-Feb 08:31:43:INFO:root:------ Middle 1: 0.00012427538357243716
+08-Feb 08:31:43:INFO:root:Starting from 1.50770592842065e-17
+08-Feb 08:31:43:INFO:root:-- Outer 7: 0.0002326067772344217
+08-Feb 08:31:43:INFO:root:END Outer loop
+08-Feb 08:31:42:INFO:root:--------------In the data: [1.54393e7]
+08-Feb 08:31:43:INFO:root:------ Middle 1: 0.00026280620556245153
+08-Feb 08:31:43:INFO:root:Starting from 1.5133841634645173e-17
+08-Feb 08:31:43:INFO:root:-- Outer 5: 0.002741180312477472
+08-Feb 08:31:43:INFO:root:--- Period 23 ---
+08-Feb 08:31:43:INFO:root:BEGIN Outer loop
+08-Feb 08:31:43:INFO:root:Model trade shares: [0.970789, 0.934669, 0.991919]
+08-Feb 08:31:43:INFO:root:Data trade shares: [0.972765, 0.936372, 0.980463]
+08-Feb 08:31:43:INFO:root:US prices: [1.37955, 0.979468, 0.975418]
+08-Feb 08:31:43:INFO:root:in the data: [3.02084, 2.07936, 2.07936]
+08-Feb 08:31:43:INFO:root:Nominal world expenditure: 1.0673023141459994e7
+08-Feb 08:31:43:INFO:root:------ Middle 1: 0.0002102283499087088
+08-Feb 08:31:43:INFO:root:Starting from 1.54039597371911e-17
+08-Feb 08:31:43:INFO:root:-- Outer 6: 0.0008400469599940471
+08-Feb 08:31:43:INFO:root:END Outer loop
+08-Feb 08:31:43:INFO:root:--------------In the data: [2.36221e7]
+08-Feb 08:31:44:INFO:root:--- Period 24 ---
+08-Feb 08:31:44:INFO:root:BEGIN Outer loop
+08-Feb 08:31:44:INFO:root:Model trade shares: [0.972682, 0.938416, 0.994009]
+08-Feb 08:31:44:INFO:root:Data trade shares: [0.973362, 0.938447, 0.994052]
+08-Feb 08:31:44:INFO:root:US prices: [1.16136, 1.0955, 1.11294]
+08-Feb 08:31:44:INFO:root:in the data: [1.46789, 1.34924, 1.34924]
+08-Feb 08:31:44:INFO:root:Nominal world expenditure: 8.989012761275347e6
+08-Feb 08:31:44:INFO:root:--------------In the data: [1.15794e7]
+08-Feb 08:31:45:INFO:root:--- Period 25 ---
+08-Feb 08:31:45:INFO:root:BEGIN Outer loop
+08-Feb 08:32:04:INFO:root:------ Middle 1: 0.0036492050955789787
+08-Feb 08:32:06:INFO:root:------ Middle 2: 0.0023294184798591335
+08-Feb 08:32:07:INFO:root:------ Middle 3: 0.0012984737583487216
+08-Feb 08:32:08:INFO:root:------ Middle 4: 0.0010331951267928696
+08-Feb 08:32:09:INFO:root:------ Middle 5: 0.0005823481571855437
+08-Feb 08:32:09:INFO:root:------ Middle 1: 0.003814083971924486
+08-Feb 08:32:10:INFO:root:------ Middle 6: 0.0004905719287718323
+08-Feb 08:32:11:INFO:root:------ Middle 7: 0.0002752947624604478
+08-Feb 08:32:11:INFO:root:Starting from 1.285236021970883e-17
+08-Feb 08:32:11:INFO:root:-- Outer 1: 0.026378744767256088
+08-Feb 08:32:11:INFO:root:------ Middle 1: 0.0037956673664828263
+08-Feb 08:32:12:INFO:root:------ Middle 1: 0.003926140338675719
+08-Feb 08:32:14:INFO:root:------ Middle 2: 0.0024171569387165946
+08-Feb 08:32:14:INFO:root:------ Middle 1: 0.0007873128223190866
+08-Feb 08:32:15:INFO:root:------ Middle 2: 0.0004305093831376916
+08-Feb 08:32:15:INFO:root:------ Middle 3: 0.00029456068051516074
+08-Feb 08:32:15:INFO:root:Starting from 1.8387081589807832e-17
+08-Feb 08:32:15:INFO:root:-- Outer 2: 0.012381808880785888
+08-Feb 08:32:15:INFO:root:------ Middle 3: 0.001567509745822515
+08-Feb 08:32:15:INFO:root:------ Middle 1: 0.003851606281251911
+08-Feb 08:32:15:INFO:root:------ Middle 1: 0.0009911511705448508
+08-Feb 08:32:16:INFO:root:------ Middle 1: 0.003933403951945927
+08-Feb 08:32:17:INFO:root:------ Middle 2: 0.0001790820421309534
+08-Feb 08:32:17:INFO:root:Starting from 1.673644456320091e-17
+08-Feb 08:32:17:INFO:root:-- Outer 3: 0.006172535037610613
+08-Feb 08:32:17:INFO:root:------ Middle 1: 0.00040967677579899274
+08-Feb 08:32:17:INFO:root:------ Middle 2: 0.0025149100249978575
+08-Feb 08:32:18:INFO:root:------ Middle 4: 0.0010190407717755002
+08-Feb 08:32:18:INFO:root:------ Middle 2: 0.002495790526925391
+08-Feb 08:32:19:INFO:root:------ Middle 2: 0.00016239306359264167
+08-Feb 08:32:19:INFO:root:Starting from 1.194292871396488e-17
+08-Feb 08:32:19:INFO:root:-- Outer 4: 0.0026821335779256303
+08-Feb 08:32:19:INFO:root:------ Middle 1: 0.00020794341621987582
+08-Feb 08:32:19:INFO:root:Starting from 1.521119808072558e-17
+08-Feb 08:32:19:INFO:root:-- Outer 5: 0.002791248423328424
+08-Feb 08:32:19:INFO:root:------ Middle 3: 0.001597054390657974
+08-Feb 08:32:20:INFO:root:------ Middle 5: 0.0006683148028931392
+08-Feb 08:32:20:INFO:root:------ Middle 4: 0.0008896743551927577
+08-Feb 08:32:20:INFO:root:------ Middle 1: 0.0039636386375513375
+08-Feb 08:32:20:INFO:root:------ Middle 2: 0.00246399327415344
+08-Feb 08:32:20:INFO:root:------ Middle 3: 0.0015964488032721828
+08-Feb 08:32:20:INFO:root:------ Middle 4: 0.0008835510946758978
+08-Feb 08:32:20:INFO:root:------ Middle 6: 0.00044555478266610887
+08-Feb 08:32:21:INFO:root:------ Middle 1: 0.0001670756385085963
+08-Feb 08:32:21:INFO:root:Starting from 1.591661793528254e-17
+08-Feb 08:32:21:INFO:root:-- Outer 6: 0.0006102187043008603
+08-Feb 08:32:21:INFO:root:END Outer loop
+08-Feb 08:32:21:INFO:root:Model trade shares: [0.967744, 0.937558, 0.994231]
+08-Feb 08:32:21:INFO:root:Data trade shares: [0.967576, 0.927756, 0.993556]
+08-Feb 08:32:21:INFO:root:US prices: [1.19536, 0.945863, 0.946634]
+08-Feb 08:32:21:INFO:root:in the data: [2.78451, 2.12334, 2.12334]
+08-Feb 08:32:21:INFO:root:Nominal world expenditure: 1.2034974836574247e7
+08-Feb 08:32:21:INFO:root:--------------In the data: [2.5209e7]
+08-Feb 08:32:21:INFO:root:--- Period 26 ---
+08-Feb 08:32:21:INFO:root:BEGIN Outer loop
+08-Feb 08:32:21:INFO:root:------ Middle 7: 0.00029080495641365756
+08-Feb 08:32:21:INFO:root:Starting from 1.2243640022470787e-17
+08-Feb 08:32:21:INFO:root:-- Outer 1: 0.025039528233856925
+08-Feb 08:32:21:INFO:root:------ Middle 5: 0.0007172400913884396
+08-Feb 08:32:21:INFO:root:------ Middle 1: 0.004031292272764601
+08-Feb 08:32:22:INFO:root:------ Middle 6: 0.00040029332094429585
+08-Feb 08:32:22:INFO:root:------ Middle 5: 0.0007257382725027573
+08-Feb 08:32:22:INFO:root:------ Middle 1: 0.0038583457022365224
+08-Feb 08:32:22:INFO:root:------ Middle 6: 0.00040416577559169374
+08-Feb 08:32:22:INFO:root:------ Middle 7: 0.0003562442019287203
+08-Feb 08:32:22:INFO:root:------ Middle 1: 0.003947721738511199
+08-Feb 08:32:23:INFO:root:------ Middle 2: 0.0025289166941477544
+08-Feb 08:32:23:INFO:root:------ Middle 8: 0.0002022370896054838
+08-Feb 08:32:23:INFO:root:Starting from 1.2111078962746749e-17
+08-Feb 08:32:23:INFO:root:-- Outer 1: 0.02684417067518461
+08-Feb 08:32:23:INFO:root:------ Middle 7: 0.0003635365618126631
+08-Feb 08:32:23:INFO:root:------ Middle 1: 0.0007747287113384331
+08-Feb 08:32:23:INFO:root:------ Middle 1: 0.003809372849377599
+08-Feb 08:32:23:INFO:root:------ Middle 1: 0.0038558975420690867
+08-Feb 08:32:23:INFO:root:------ Middle 8: 0.00020547118121497162
+08-Feb 08:32:23:INFO:root:Starting from 1.2068250148010354e-17
+08-Feb 08:32:23:INFO:root:-- Outer 1: 0.025400156067751162
+08-Feb 08:32:23:INFO:root:------ Middle 1: 0.003686630516460801
+08-Feb 08:32:24:INFO:root:------ Middle 2: 0.0004611191409358494
+08-Feb 08:32:24:INFO:root:------ Middle 3: 0.0002496072159641662
+08-Feb 08:32:24:INFO:root:Starting from 2.0662200222342777e-17
+08-Feb 08:32:24:INFO:root:-- Outer 2: 0.010948956087769393
+08-Feb 08:32:24:INFO:root:------ Middle 3: 0.0016257129936985968
+08-Feb 08:32:25:INFO:root:------ Middle 4: 0.0008964314100532925
+08-Feb 08:32:25:INFO:root:------ Middle 2: 0.0024493888141737955
+08-Feb 08:32:25:INFO:root:------ Middle 1: 0.003991207243434604
+08-Feb 08:32:25:INFO:root:------ Middle 2: 0.000914398706926561
+08-Feb 08:32:25:INFO:root:------ Middle 1: 0.0004344061083876943
+08-Feb 08:32:26:INFO:root:------ Middle 2: 0.00023522843752459956
+08-Feb 08:32:26:INFO:root:Starting from 2.1332767725739575e-17
+08-Feb 08:32:26:INFO:root:-- Outer 3: 0.0048746718094533565
+08-Feb 08:32:26:INFO:root:------ Middle 2: 0.0008954299220830782
+08-Feb 08:32:26:INFO:root:------ Middle 5: 0.0007217128552256179
+08-Feb 08:32:26:INFO:root:------ Middle 6: 0.00042630949673266145
+08-Feb 08:32:26:INFO:root:------ Middle 2: 0.002518847056517764
+08-Feb 08:32:26:INFO:root:------ Middle 2: 0.0030769229486832085
+08-Feb 08:32:26:INFO:root:------ Middle 3: 0.0015655144035305404
+08-Feb 08:32:26:INFO:root:------ Middle 3: 0.0005630045283050632
+08-Feb 08:32:26:INFO:root:------ Middle 7: 0.00036705891981225606
+08-Feb 08:32:27:INFO:root:------ Middle 4: 0.0008644075090853702
+08-Feb 08:32:27:INFO:root:------ Middle 4: 0.0003145952662126967
+08-Feb 08:32:27:INFO:root:------ Middle 8: 0.0002576272797007461
+08-Feb 08:32:27:INFO:root:Starting from 1.2177002138512168e-17
+08-Feb 08:32:27:INFO:root:-- Outer 1: 0.026239489044249324
+08-Feb 08:32:27:INFO:root:------ Middle 5: 0.0001826801951487407
+08-Feb 08:32:27:INFO:root:Starting from 1.8717086394094957e-17
+08-Feb 08:32:27:INFO:root:-- Outer 2: 0.013044345706600981
+08-Feb 08:32:27:INFO:root:------ Middle 3: 0.0005461196888074497
+08-Feb 08:32:27:INFO:root:------ Middle 1: 0.0036831268647031725
+08-Feb 08:32:27:INFO:root:------ Middle 1: 0.0008169903080356983
+08-Feb 08:32:27:INFO:root:------ Middle 4: 0.00030401545133870603
+08-Feb 08:32:27:INFO:root:------ Middle 1: 0.00029590259612903965
+08-Feb 08:32:27:INFO:root:Starting from 1.7184138926128222e-17
+08-Feb 08:32:27:INFO:root:-- Outer 4: 0.002175167208971156
+08-Feb 08:32:27:INFO:root:------ Middle 5: 0.000176671503500548
+08-Feb 08:32:27:INFO:root:Starting from 2.1819345568768614e-17
+08-Feb 08:32:27:INFO:root:-- Outer 2: 0.012353197944548106
+08-Feb 08:32:27:INFO:root:------ Middle 1: 0.0003171732695740162
+08-Feb 08:32:28:INFO:root:------ Middle 1: 0.000776645848354692
+08-Feb 08:32:28:INFO:root:------ Middle 5: 0.0007126479359176906
+08-Feb 08:32:28:INFO:root:------ Middle 3: 0.0015899121463609773
+08-Feb 08:32:28:INFO:root:------ Middle 2: 0.00013977737324160491
+08-Feb 08:32:28:INFO:root:Starting from 1.4285914138750912e-17
+08-Feb 08:32:28:INFO:root:-- Outer 5: 0.0009885994247924531
+08-Feb 08:32:28:INFO:root:END Outer loop
+08-Feb 08:32:28:INFO:root:------ Middle 6: 0.00039563269108976564
+08-Feb 08:32:28:INFO:root:Model trade shares: [0.965797, 0.940703, 0.993428]
+08-Feb 08:32:28:INFO:root:Data trade shares: [0.960926, 0.936095, 0.990604]
+08-Feb 08:32:28:INFO:root:US prices: [0.91222, 0.898125, 0.882944]
+08-Feb 08:32:28:INFO:root:in the data: [2.54462, 2.53886, 2.53886]
+08-Feb 08:32:28:INFO:root:Nominal world expenditure: 1.4846465624708233e7
+08-Feb 08:32:28:INFO:root:--------------In the data: [4.29516e7]
+08-Feb 08:32:28:INFO:root:--- Period 27 ---
+08-Feb 08:32:28:INFO:root:BEGIN Outer loop
+08-Feb 08:32:28:INFO:root:------ Middle 2: 0.0003226977101460023
+08-Feb 08:32:29:INFO:root:------ Middle 2: 0.0024713743702989227
+08-Feb 08:32:29:INFO:root:------ Middle 3: 0.00019454502574066162
+08-Feb 08:32:29:INFO:root:Starting from 1.505100893904899e-17
+08-Feb 08:32:29:INFO:root:-- Outer 3: 0.00568686864719901
+08-Feb 08:32:29:INFO:root:------ Middle 3: 0.0016156806260881821
+08-Feb 08:32:29:INFO:root:------ Middle 7: 0.0003616579997269619
+08-Feb 08:32:29:INFO:root:------ Middle 1: 0.00030581107617357853
+08-Feb 08:32:29:INFO:root:------ Middle 4: 0.0008901333142990803
+08-Feb 08:32:29:INFO:root:------ Middle 2: 0.0008916375579090986
+08-Feb 08:32:29:INFO:root:------ Middle 8: 0.00020442096599865785
+08-Feb 08:32:29:INFO:root:Starting from 1.1957985140377521e-17
+08-Feb 08:32:29:INFO:root:-- Outer 1: 0.025763661947071692
+08-Feb 08:32:30:INFO:root:------ Middle 2: 0.0003152477517297753
+08-Feb 08:32:30:INFO:root:------ Middle 1: 0.0033446536426681947
+08-Feb 08:32:30:INFO:root:------ Middle 3: 0.00019042936011777462
+08-Feb 08:32:30:INFO:root:Starting from 1.2340575257583729e-17
+08-Feb 08:32:30:INFO:root:-- Outer 3: 0.005336529107836563
+08-Feb 08:32:30:INFO:root:------ Middle 1: 0.00027929920678272907
+08-Feb 08:32:30:INFO:root:Starting from 1.4878891312776433e-17
+08-Feb 08:32:30:INFO:root:-- Outer 4: 0.00554067588699757
+08-Feb 08:32:30:INFO:root:------ Middle 4: 0.001021660552857411
+08-Feb 08:32:31:INFO:root:------ Middle 3: 0.0005541565354527248
+08-Feb 08:32:31:INFO:root:------ Middle 5: 0.000717859382363449
+08-Feb 08:32:31:INFO:root:------ Middle 2: 0.00019988387261654064
+08-Feb 08:32:31:INFO:root:Starting from 1.7506481308005416e-17
+08-Feb 08:32:31:INFO:root:-- Outer 4: 0.0022925985958795734
+08-Feb 08:32:31:INFO:root:------ Middle 4: 0.00030888345934082664
+08-Feb 08:32:31:INFO:root:------ Middle 6: 0.0003974151380976442
+08-Feb 08:32:31:INFO:root:------ Middle 1: 0.0001758948588898869
+08-Feb 08:32:31:INFO:root:Starting from 1.6275691365280477e-17
+08-Feb 08:32:31:INFO:root:-- Outer 5: 0.002366143472845834
+08-Feb 08:32:31:INFO:root:------ Middle 5: 0.00017894892047095478
+08-Feb 08:32:31:INFO:root:Starting from 1.7612711939641182e-17
+08-Feb 08:32:31:INFO:root:-- Outer 2: 0.012703682410141536
+08-Feb 08:32:31:INFO:root:------ Middle 1: 0.0007866847471777868
+08-Feb 08:32:31:INFO:root:------ Middle 3: 0.0015746229874690977
+08-Feb 08:32:32:INFO:root:------ Middle 7: 0.000361303303487347
+08-Feb 08:32:32:INFO:root:------ Middle 1: 0.00016900209602984217
+08-Feb 08:32:32:INFO:root:Starting from 1.6278834696128718e-17
+08-Feb 08:32:32:INFO:root:-- Outer 6: 0.000838767992057392
+08-Feb 08:32:32:INFO:root:END Outer loop
+08-Feb 08:32:32:INFO:root:Model trade shares: [0.966749, 0.939952, 0.994219]
+08-Feb 08:32:32:INFO:root:Data trade shares: [0.958317, 0.928046, 0.993489]
+08-Feb 08:32:32:INFO:root:US prices: [1.04757, 0.932164, 0.938681]
+08-Feb 08:32:32:INFO:root:in the data: [2.43661, 2.20422, 2.20422]
+08-Feb 08:32:32:INFO:root:Nominal world expenditure: 1.3230195475226117e7
+08-Feb 08:32:32:INFO:root:--------------In the data: [3.25615e7]
+08-Feb 08:32:32:INFO:root:--- Period 28 ---
+08-Feb 08:32:32:INFO:root:BEGIN Outer loop
+08-Feb 08:32:32:INFO:root:------ Middle 1: 0.0002346642713621028
+08-Feb 08:32:32:INFO:root:Starting from 2.1168079332941857e-17
+08-Feb 08:32:32:INFO:root:-- Outer 5: 0.001261484513419378
+08-Feb 08:32:32:INFO:root:------ Middle 8: 0.00020405570041034064
+08-Feb 08:32:32:INFO:root:Starting from 1.1964032684109523e-17
+08-Feb 08:32:32:INFO:root:-- Outer 1: 0.026524399478905926
+08-Feb 08:32:32:INFO:root:------ Middle 1: 0.00019748481737561982
+08-Feb 08:32:32:INFO:root:Starting from 1.4555560473453328e-17
+08-Feb 08:32:32:INFO:root:-- Outer 6: 0.0013394723136684375
+08-Feb 08:32:32:INFO:root:------ Middle 5: 0.0006670661453270344
+08-Feb 08:32:32:INFO:root:------ Middle 1: 0.0033946437487101127
+08-Feb 08:32:33:INFO:root:------ Middle 4: 0.0010174351636936454
+08-Feb 08:32:33:INFO:root:------ Middle 5: 0.0005542857440748377
+08-Feb 08:32:33:INFO:root:------ Middle 2: 0.0008826364320229861
+08-Feb 08:32:33:INFO:root:------ Middle 1: 0.00012519374085920098
+08-Feb 08:32:33:INFO:root:Starting from 1.7557774008264644e-17
+08-Feb 08:32:33:INFO:root:-- Outer 7: 0.00022162242458651402
+08-Feb 08:32:33:INFO:root:END Outer loop
+08-Feb 08:32:33:INFO:root:------ Middle 2: 0.00031932853664594314
+08-Feb 08:32:33:INFO:root:Model trade shares: [0.967527, 0.942251, 0.994134]
+08-Feb 08:32:33:INFO:root:Data trade shares: [0.961578, 0.934257, 0.993842]
+08-Feb 08:32:33:INFO:root:US prices: [0.962402, 0.908413, 0.900875]
+08-Feb 08:32:33:INFO:root:in the data: [2.5813, 2.43608, 2.43608]
+08-Feb 08:32:33:INFO:root:Nominal world expenditure: 1.4649194187464736e7
+08-Feb 08:32:33:INFO:root:--------------In the data: [3.7723e7]
+08-Feb 08:32:33:INFO:root:------ Middle 3: 0.000492778850176729
+08-Feb 08:32:33:INFO:root:--- Period 29 ---
+08-Feb 08:32:33:INFO:root:BEGIN Outer loop
+08-Feb 08:32:33:INFO:root:------ Middle 3: 0.00019264653612157672
+08-Feb 08:32:33:INFO:root:Starting from 1.6092159049589154e-17
+08-Feb 08:32:33:INFO:root:-- Outer 3: 0.0055032597056141495
+08-Feb 08:32:34:INFO:root:------ Middle 1: 0.0002911655811255737
+08-Feb 08:32:34:INFO:root:Starting from 1.8914367259513215e-17
+08-Feb 08:32:34:INFO:root:-- Outer 4: 0.005750619800444519
+08-Feb 08:32:34:INFO:root:------ Middle 6: 0.0004603723563752643
+08-Feb 08:32:34:INFO:root:------ Middle 4: 0.00036894123216980076
+08-Feb 08:32:34:INFO:root:------ Middle 7: 0.0002552332799436839
+08-Feb 08:32:34:INFO:root:Starting from 1.2380154478301482e-17
+08-Feb 08:32:34:INFO:root:-- Outer 1: 0.023619958505937306
+08-Feb 08:32:34:INFO:root:------ Middle 5: 0.00021229179747309898
+08-Feb 08:32:34:INFO:root:Starting from 2.0688413900998768e-17
+08-Feb 08:32:34:INFO:root:-- Outer 2: 0.011960253452262462
+08-Feb 08:32:34:INFO:root:------ Middle 3: 0.0018173725577855834
+08-Feb 08:32:35:INFO:root:------ Middle 6: 0.000438795077114433
+08-Feb 08:32:35:INFO:root:------ Middle 1: 0.0007320403019492352
+08-Feb 08:32:35:INFO:root:------ Middle 4: 0.001009076902491339
+08-Feb 08:32:36:INFO:root:------ Middle 7: 0.00029279669153914095
+08-Feb 08:32:36:INFO:root:Starting from 1.24165870943335e-17
+08-Feb 08:32:36:INFO:root:-- Outer 1: 0.024944409793322624
+08-Feb 08:32:36:INFO:root:------ Middle 1: 0.0002461730960160161
+08-Feb 08:32:36:INFO:root:Starting from 1.967600628438711e-17
+08-Feb 08:32:36:INFO:root:-- Outer 5: 0.0012956099360252155
+08-Feb 08:32:36:INFO:root:------ Middle 2: 0.0008889080043129298
+08-Feb 08:32:36:INFO:root:------ Middle 1: 0.0002044397730589413
+08-Feb 08:32:36:INFO:root:Starting from 1.9325420770887372e-17
+08-Feb 08:32:36:INFO:root:-- Outer 6: 0.0013739455271583542
+08-Feb 08:32:36:INFO:root:------ Middle 3: 0.0004941715353626586
+08-Feb 08:32:36:INFO:root:------ Middle 2: 0.00029010728787054197
+08-Feb 08:32:36:INFO:root:Starting from 1.6450853762064076e-17
+08-Feb 08:32:36:INFO:root:-- Outer 3: 0.005488609730054987
+08-Feb 08:32:37:INFO:root:------ Middle 1: 0.0007722528441545747
+08-Feb 08:32:37:INFO:root:------ Middle 1: 0.0002973812540085024
+08-Feb 08:32:37:INFO:root:Starting from 1.394182625828762e-17
+08-Feb 08:32:37:INFO:root:-- Outer 4: 0.005777415769106785
+08-Feb 08:32:37:INFO:root:------ Middle 2: 0.00042262478187317994
+08-Feb 08:32:37:INFO:root:------ Middle 4: 0.00036950587596884884
+08-Feb 08:32:37:INFO:root:------ Middle 5: 0.0007890741422408786
+08-Feb 08:32:37:INFO:root:------ Middle 5: 0.0002112900836455318
+08-Feb 08:32:37:INFO:root:Starting from 1.4684026693290918e-17
+08-Feb 08:32:37:INFO:root:-- Outer 2: 0.012351459438908205
+08-Feb 08:32:37:INFO:root:------ Middle 1: 0.00012912630855810268
+08-Feb 08:32:37:INFO:root:Starting from 1.6038444741682906e-17
+08-Feb 08:32:37:INFO:root:-- Outer 7: 0.00022705099473437133
+08-Feb 08:32:37:INFO:root:END Outer loop
+08-Feb 08:32:37:INFO:root:------ Middle 6: 0.00044100649953334077
+08-Feb 08:32:37:INFO:root:Model trade shares: [0.967453, 0.942287, 0.994403]
+08-Feb 08:32:37:INFO:root:Data trade shares: [0.960962, 0.931588, 0.993893]
+08-Feb 08:32:37:INFO:root:US prices: [0.993616, 0.916648, 0.915429]
+08-Feb 08:32:37:INFO:root:in the data: [2.50767, 2.31742, 2.31742]
+08-Feb 08:32:37:INFO:root:Nominal world expenditure: 1.4185921801866362e7
+08-Feb 08:32:37:INFO:root:--------------In the data: [3.61928e7]
+08-Feb 08:32:38:INFO:root:------ Middle 3: 0.00029610362166659654
+08-Feb 08:32:38:INFO:root:Starting from 1.9272088480871434e-17
+08-Feb 08:32:38:INFO:root:-- Outer 2: 0.01108396980719844
+08-Feb 08:32:38:INFO:root:--- Period 30 ---
+08-Feb 08:32:38:INFO:root:------ Middle 1: 0.0007753692825967348
+08-Feb 08:32:38:INFO:root:BEGIN Outer loop
+08-Feb 08:32:38:INFO:root:------ Middle 1: 0.0009333094874845505
+08-Feb 08:32:38:INFO:root:------ Middle 1: 0.000801589350572307
+08-Feb 08:32:39:INFO:root:------ Middle 1: 0.0002882914231647846
+08-Feb 08:32:39:INFO:root:Starting from 1.8847626765160107e-17
+08-Feb 08:32:39:INFO:root:-- Outer 5: 0.0013744527476005385
+08-Feb 08:32:39:INFO:root:------ Middle 1: 0.00023255744651593153
+08-Feb 08:32:39:INFO:root:Starting from 2.050809690446397e-17
+08-Feb 08:32:39:INFO:root:-- Outer 6: 0.0014638037052535568
+08-Feb 08:32:39:INFO:root:------ Middle 2: 0.00019693668690953022
+08-Feb 08:32:39:INFO:root:------ Middle 2: 0.0004728915361445905
+08-Feb 08:32:39:INFO:root:Starting from 1.2316221917276689e-17
+08-Feb 08:32:39:INFO:root:-- Outer 3: 0.005654448600635679
+08-Feb 08:32:39:INFO:root:------ Middle 3: 0.00025674732790192375
+08-Feb 08:32:39:INFO:root:Starting from 2.0590402920110027e-17
+08-Feb 08:32:39:INFO:root:-- Outer 2: 0.011069781963926625
+08-Feb 08:32:39:INFO:root:------ Middle 7: 0.0003580853765923099
+08-Feb 08:32:40:INFO:root:------ Middle 2: 0.00028915674072692516
+08-Feb 08:32:40:INFO:root:------ Middle 1: 0.00042093257405420305
+08-Feb 08:32:40:INFO:root:Starting from 1.3396981394217733e-17
+08-Feb 08:32:40:INFO:root:-- Outer 3: 0.00575059773173139
+08-Feb 08:32:40:INFO:root:------ Middle 1: 0.0003268393985410944
+08-Feb 08:32:40:INFO:root:------ Middle 1: 0.00014899828527053564
+08-Feb 08:32:40:INFO:root:Starting from 2.011517328958943e-17
+08-Feb 08:32:40:INFO:root:-- Outer 7: 0.0002517443584462607
+08-Feb 08:32:40:INFO:root:END Outer loop
+08-Feb 08:32:40:INFO:root:------ Middle 8: 0.001300139042898921
+08-Feb 08:32:40:INFO:root:Model trade shares: [0.964125, 0.940334, 0.993479]
+08-Feb 08:32:40:INFO:root:Data trade shares: [0.960491, 0.93458, 0.986591]
+08-Feb 08:32:40:INFO:root:US prices: [0.903682, 0.886433, 0.882519]
+08-Feb 08:32:40:INFO:root:in the data: [2.52256, 2.5595, 2.5595]
+08-Feb 08:32:40:INFO:root:Nominal world expenditure: 1.590760893233084e7
+08-Feb 08:32:40:INFO:root:--------------In the data: [4.55098e7]
+08-Feb 08:32:40:INFO:root:--- Period 31 ---
+08-Feb 08:32:40:INFO:root:BEGIN Outer loop
+08-Feb 08:32:41:INFO:root:------ Middle 2: 0.0001693785332365738
+08-Feb 08:32:41:INFO:root:Starting from 1.946830527369442e-17
+08-Feb 08:32:41:INFO:root:-- Outer 4: 0.002591725606395198
+08-Feb 08:32:41:INFO:root:------ Middle 1: 0.00022914488406636916
+08-Feb 08:32:41:INFO:root:Starting from 1.596738450636997e-17
+08-Feb 08:32:41:INFO:root:-- Outer 5: 0.0027165733112869826
+08-Feb 08:32:41:INFO:root:------ Middle 9: 0.0005779897476930334
+08-Feb 08:32:41:INFO:root:------ Middle 10: 0.00033872510623386855
+08-Feb 08:32:41:INFO:root:------ Middle 1: 0.00043564488922925474
+08-Feb 08:32:42:INFO:root:------ Middle 2: 0.00023409304905170372
+08-Feb 08:32:42:INFO:root:Starting from 1.816586423508395e-17
+08-Feb 08:32:42:INFO:root:-- Outer 3: 0.004979743393064682
+08-Feb 08:32:42:INFO:root:------ Middle 2: 0.00023177261935122603
+08-Feb 08:32:42:INFO:root:Starting from 2.1365238749798067e-17
+08-Feb 08:32:42:INFO:root:-- Outer 4: 0.002342181128624393
+08-Feb 08:32:42:INFO:root:------ Middle 1: 0.00019754021485393467
+08-Feb 08:32:42:INFO:root:Starting from 1.4516954575975806e-17
+08-Feb 08:32:42:INFO:root:-- Outer 6: 0.0009121346221618932
+08-Feb 08:32:42:INFO:root:END Outer loop
+08-Feb 08:32:42:INFO:root:------ Middle 1: 0.00020958658394161546
+08-Feb 08:32:42:INFO:root:Starting from 1.5872409728337736e-17
+08-Feb 08:32:42:INFO:root:-- Outer 5: 0.002418672193404305
+08-Feb 08:32:42:INFO:root:Model trade shares: [0.955933, 0.935995, 0.992111]
+08-Feb 08:32:42:INFO:root:Data trade shares: [0.954902, 0.927282, 0.98849]
+08-Feb 08:32:42:INFO:root:US prices: [0.893952, 0.87032, 0.90829]
+08-Feb 08:32:42:INFO:root:in the data: [2.81662, 2.76323, 2.76323]
+08-Feb 08:32:42:INFO:root:Nominal world expenditure: 1.5874860383419026e7
+08-Feb 08:32:42:INFO:root:--------------In the data: [5.52518e7]
+08-Feb 08:32:42:INFO:root:--- Period 32 ---
+08-Feb 08:32:42:INFO:root:BEGIN Outer loop
+08-Feb 08:32:42:INFO:root:------ Middle 11: 0.0001307676134247193
+08-Feb 08:32:42:INFO:root:Starting from 1.2247936524402912e-17
+08-Feb 08:32:42:INFO:root:-- Outer 1: 0.026081605438387095
+08-Feb 08:32:42:INFO:root:------ Middle 1: 0.003432062517242969
+08-Feb 08:32:43:INFO:root:------ Middle 1: 0.00019713752698538389
+08-Feb 08:32:43:INFO:root:Starting from 1.9635212151035955e-17
+08-Feb 08:32:43:INFO:root:-- Outer 6: 0.0009303087831410738
+08-Feb 08:32:43:INFO:root:END Outer loop
+08-Feb 08:32:43:INFO:root:Model trade shares: [0.95929, 0.934471, 0.992532]
+08-Feb 08:32:43:INFO:root:Data trade shares: [0.959588, 0.937566, 0.971212]
+08-Feb 08:32:43:INFO:root:US prices: [0.904965, 0.894587, 0.899782]
+08-Feb 08:32:43:INFO:root:in the data: [2.70826, 2.57595, 2.57595]
+08-Feb 08:32:43:INFO:root:Nominal world expenditure: 1.5371762104296485e7
+08-Feb 08:32:43:INFO:root:--------------In the data: [4.5848e7]
+08-Feb 08:32:43:INFO:root:--- Period 33 ---
+08-Feb 08:32:43:INFO:root:BEGIN Outer loop
+08-Feb 08:32:43:INFO:root:------ Middle 1: 0.0002914185038864547
+08-Feb 08:32:43:INFO:root:Starting from 1.8547039241561307e-17
+08-Feb 08:32:43:INFO:root:-- Outer 4: 0.002257164099470904
+08-Feb 08:32:44:INFO:root:------ Middle 1: 0.0003197430117002925
+08-Feb 08:32:44:INFO:root:------ Middle 2: 0.00013563355675859078
+08-Feb 08:32:44:INFO:root:Starting from 2.1491472523981725e-17
+08-Feb 08:32:44:INFO:root:-- Outer 5: 0.001060178454860584
+08-Feb 08:32:45:INFO:root:------ Middle 1: 0.00013846049814623395
+08-Feb 08:32:45:INFO:root:Starting from 1.721659212106032e-17
+08-Feb 08:32:45:INFO:root:-- Outer 6: 0.0006609448344238502
+08-Feb 08:32:45:INFO:root:END Outer loop
+08-Feb 08:32:45:INFO:root:Model trade shares: [0.96707, 0.942539, 0.993865]
+08-Feb 08:32:45:INFO:root:Data trade shares: [0.963666, 0.934551, 0.994086]
+08-Feb 08:32:45:INFO:root:US prices: [0.935269, 0.903683, 0.887533]
+08-Feb 08:32:45:INFO:root:in the data: [2.67778, 2.5352, 2.5352]
+08-Feb 08:32:45:INFO:root:Nominal world expenditure: 1.4470766399258902e7
+08-Feb 08:32:45:INFO:root:--------------In the data: [4.12361e7]
+08-Feb 08:32:45:INFO:root:--- Period 34 ---
+08-Feb 08:32:45:INFO:root:BEGIN Outer loop
+08-Feb 08:32:46:INFO:root:------ Middle 2: 0.0009609057764173308
+08-Feb 08:32:46:INFO:root:------ Middle 3: 0.0005331622583704436
+08-Feb 08:32:47:INFO:root:------ Middle 4: 0.0004035856363852197
+08-Feb 08:32:47:INFO:root:------ Middle 5: 0.0002277501531057485
+08-Feb 08:32:47:INFO:root:Starting from 2.1911174372083402e-17
+08-Feb 08:32:47:INFO:root:-- Outer 2: 0.011956834251280538
+08-Feb 08:32:48:INFO:root:------ Middle 1: 0.0007931705019343912
+08-Feb 08:32:49:INFO:root:------ Middle 2: 0.0024477358185912863
+08-Feb 08:32:49:INFO:root:------ Middle 1: 0.0035678681549487492
+08-Feb 08:32:49:INFO:root:------ Middle 2: 0.0002846839973691778
+08-Feb 08:32:49:INFO:root:Starting from 1.4257387009996505e-17
+08-Feb 08:32:49:INFO:root:-- Outer 3: 0.005742062510684797
+08-Feb 08:32:49:INFO:root:------ Middle 1: 0.00035441353936000163
+08-Feb 08:32:50:INFO:root:------ Middle 2: 0.00022197753731285013
+08-Feb 08:32:50:INFO:root:Starting from 1.3566467986633926e-17
+08-Feb 08:32:50:INFO:root:-- Outer 4: 0.0024798190198678325
+08-Feb 08:32:50:INFO:root:------ Middle 2: 0.0022476877604023387
+08-Feb 08:32:51:INFO:root:------ Middle 1: 0.00021987371352396548
+08-Feb 08:32:51:INFO:root:Starting from 1.2063974714007603e-17
+08-Feb 08:32:51:INFO:root:-- Outer 5: 0.002589456125687018
+08-Feb 08:32:51:INFO:root:------ Middle 3: 0.0012483382033586137
+08-Feb 08:32:52:INFO:root:------ Middle 4: 0.0009946969391819867
+08-Feb 08:32:52:INFO:root:------ Middle 1: 0.00019435502163259982
+08-Feb 08:32:52:INFO:root:Starting from 1.554742012605565e-17
+08-Feb 08:32:52:INFO:root:-- Outer 6: 0.0006519796536293645
+08-Feb 08:32:52:INFO:root:END Outer loop
+08-Feb 08:32:52:INFO:root:------ Middle 5: 0.0005605581001229067
+08-Feb 08:32:53:INFO:root:Model trade shares: [0.959591, 0.938257, 0.992247]
+08-Feb 08:32:53:INFO:root:Data trade shares: [0.950579, 0.929714, 0.991388]
+08-Feb 08:32:53:INFO:root:US prices: [0.891785, 0.879153, 0.907942]
+08-Feb 08:32:53:INFO:root:in the data: [2.71827, 2.64842, 2.64842]
+08-Feb 08:32:53:INFO:root:Nominal world expenditure: 1.5841402802457862e7
+08-Feb 08:32:53:INFO:root:--------------In the data: [5.43532e7]
+08-Feb 08:32:53:INFO:root:--- Period 35 ---
+08-Feb 08:32:53:INFO:root:BEGIN Outer loop
+08-Feb 08:32:54:INFO:root:------ Middle 6: 0.00047198489500383894
+08-Feb 08:32:54:INFO:root:------ Middle 7: 0.00026319252963733094
+08-Feb 08:32:54:INFO:root:Starting from 1.3040009037087319e-17
+08-Feb 08:32:54:INFO:root:-- Outer 1: 0.01977703234083791
+08-Feb 08:32:55:INFO:root:------ Middle 1: 0.0036684795920239586
+08-Feb 08:32:57:INFO:root:------ Middle 2: 0.0023257519737572467
+08-Feb 08:32:57:INFO:root:------ Middle 3: 0.0012881341525352794
+08-Feb 08:32:59:INFO:root:------ Middle 4: 0.0010304631110137211
+08-Feb 08:32:59:INFO:root:------ Middle 5: 0.0005845647555930686
+08-Feb 08:33:00:INFO:root:------ Middle 6: 0.0004718732909732924
+08-Feb 08:33:00:INFO:root:------ Middle 7: 0.0002642493668607985
+08-Feb 08:33:00:INFO:root:Starting from 1.2843097760027487e-17
+08-Feb 08:33:00:INFO:root:-- Outer 1: 0.020222771771589005
+08-Feb 08:33:01:INFO:root:------ Middle 1: 0.0037180188412830077
+08-Feb 08:33:01:INFO:root:------ Middle 1: 0.004198908893853201
+08-Feb 08:33:01:INFO:root:------ Middle 1: 0.0006761212041289114
+08-Feb 08:33:02:INFO:root:------ Middle 2: 0.00041007968370502054
+08-Feb 08:33:03:INFO:root:------ Middle 2: 0.002618897040158273
+08-Feb 08:33:03:INFO:root:------ Middle 3: 0.0014466884524699307
+08-Feb 08:33:03:INFO:root:------ Middle 3: 0.0002501488358496801
+08-Feb 08:33:03:INFO:root:Starting from 2.0811698599120847e-17
+08-Feb 08:33:03:INFO:root:-- Outer 2: 0.009369918542905965
+08-Feb 08:33:04:INFO:root:------ Middle 1: 0.0007286331390252848
+08-Feb 08:33:05:INFO:root:------ Middle 1: 0.00041189912161871577
+08-Feb 08:33:05:INFO:root:------ Middle 4: 0.0011424527094613963
+08-Feb 08:33:05:INFO:root:------ Middle 2: 0.0004360729156651668
+08-Feb 08:33:05:INFO:root:------ Middle 5: 0.0006396479640816216
+08-Feb 08:33:05:INFO:root:------ Middle 2: 0.00024404841426312526
+08-Feb 08:33:05:INFO:root:Starting from 1.835483727693499e-17
+08-Feb 08:33:05:INFO:root:-- Outer 3: 0.004493355429395672
+08-Feb 08:33:05:INFO:root:------ Middle 1: 0.004570298853921747
+08-Feb 08:33:06:INFO:root:------ Middle 1: 0.00045458800304444693
+08-Feb 08:33:06:INFO:root:------ Middle 3: 0.0002609135396269304
+08-Feb 08:33:06:INFO:root:Starting from 2.3679602375550035e-17
+08-Feb 08:33:06:INFO:root:-- Outer 2: 0.00965341055550988
+08-Feb 08:33:06:INFO:root:------ Middle 1: 0.0008853092336034947
+08-Feb 08:33:06:INFO:root:------ Middle 6: 0.0005264274238682096
+08-Feb 08:33:06:INFO:root:------ Middle 7: 0.00029194431260916873
+08-Feb 08:33:06:INFO:root:Starting from 1.1816297333696445e-17
+08-Feb 08:33:06:INFO:root:-- Outer 1: 0.022825548519515144
+08-Feb 08:33:07:INFO:root:------ Middle 2: 0.00013539045684279392
+08-Feb 08:33:07:INFO:root:Starting from 1.3045858731671263e-17
+08-Feb 08:33:07:INFO:root:-- Outer 4: 0.0023956965906778657
+08-Feb 08:33:07:INFO:root:------ Middle 2: 0.0023743511566712045
+08-Feb 08:33:07:INFO:root:------ Middle 1: 0.00023429892653076284
+08-Feb 08:33:07:INFO:root:Starting from 2.0354026322208118e-17
+08-Feb 08:33:07:INFO:root:-- Outer 5: 0.002527754296537579
+08-Feb 08:33:07:INFO:root:------ Middle 2: 0.00017823827199536026
+08-Feb 08:33:07:INFO:root:Starting from 2.1221552651327234e-17
+08-Feb 08:33:07:INFO:root:-- Outer 3: 0.0050706944886365615
+08-Feb 08:33:08:INFO:root:------ Middle 1: 0.00040685225540033296
+08-Feb 08:33:08:INFO:root:------ Middle 2: 0.002542252842358547
+08-Feb 08:33:09:INFO:root:------ Middle 1: 0.004269966225153741
+08-Feb 08:33:09:INFO:root:------ Middle 1: 0.0008293500814735464
+08-Feb 08:33:09:INFO:root:------ Middle 1: 0.00016740813361101976
+08-Feb 08:33:09:INFO:root:Starting from 1.8747749144445612e-17
+08-Feb 08:33:09:INFO:root:-- Outer 6: 0.00045402174035104646
+08-Feb 08:33:09:INFO:root:END Outer loop
+08-Feb 08:33:09:INFO:root:------ Middle 2: 0.00045420741327510417
+08-Feb 08:33:09:INFO:root:Model trade shares: [0.957034, 0.943725, 0.990796]
+08-Feb 08:33:09:INFO:root:Data trade shares: [0.943324, 0.928045, 0.988948]
+08-Feb 08:33:09:INFO:root:US prices: [0.858739, 0.81533, 0.860089]
+08-Feb 08:33:09:INFO:root:in the data: [2.94743, 2.7898, 2.7898]
+08-Feb 08:33:09:INFO:root:Nominal world expenditure: 1.5510809758578293e7
+08-Feb 08:33:09:INFO:root:--------------In the data: [5.65242e7]
+08-Feb 08:33:09:INFO:root:--- Period 36 ---
+08-Feb 08:33:09:INFO:root:BEGIN Outer loop
+08-Feb 08:33:09:INFO:root:------ Middle 2: 0.00015617151953750623
+08-Feb 08:33:09:INFO:root:Starting from 1.821703887269058e-17
+08-Feb 08:33:09:INFO:root:-- Outer 4: 0.002376521861946917
+08-Feb 08:33:09:INFO:root:------ Middle 1: 0.003608276078136581
+08-Feb 08:33:09:INFO:root:------ Middle 1: 0.0002207813864296614
+08-Feb 08:33:09:INFO:root:Starting from 1.5762752955074307e-17
+08-Feb 08:33:09:INFO:root:-- Outer 5: 0.002518079872371708
+08-Feb 08:33:10:INFO:root:------ Middle 3: 0.00032116112976799044
+08-Feb 08:33:10:INFO:root:------ Middle 2: 0.0028422039913354943
+08-Feb 08:33:10:INFO:root:------ Middle 4: 0.00017931660239047884
+08-Feb 08:33:10:INFO:root:Starting from 1.6819351311207965e-17
+08-Feb 08:33:10:INFO:root:-- Outer 2: 0.010829225851679348
+08-Feb 08:33:10:INFO:root:------ Middle 3: 0.0015169960307700547
+08-Feb 08:33:10:INFO:root:------ Middle 1: 0.0009282364186595709
+08-Feb 08:33:10:INFO:root:------ Middle 3: 0.0019138928153932153
+08-Feb 08:33:10:INFO:root:------ Middle 4: 0.0008359048750302882
+08-Feb 08:33:10:INFO:root:------ Middle 2: 0.00264683483828469
+08-Feb 08:33:11:INFO:root:------ Middle 1: 0.00017854776695385612
+08-Feb 08:33:11:INFO:root:Starting from 1.4586011278796036e-17
+08-Feb 08:33:11:INFO:root:-- Outer 6: 0.000538939149479322
+08-Feb 08:33:11:INFO:root:END Outer loop
+08-Feb 08:33:11:INFO:root:Model trade shares: [0.954449, 0.94179, 0.989434]
+08-Feb 08:33:11:INFO:root:Data trade shares: [0.949239, 0.924453, 0.987338]
+08-Feb 08:33:11:INFO:root:US prices: [0.849265, 0.809103, 0.862074]
+08-Feb 08:33:11:INFO:root:in the data: [2.95883, 2.79593, 2.79593]
+08-Feb 08:33:11:INFO:root:Nominal world expenditure: 1.5971382387652915e7
+08-Feb 08:33:11:INFO:root:--------------In the data: [5.8302e7]
+08-Feb 08:33:11:INFO:root:------ Middle 2: 0.00018990064002937217
+08-Feb 08:33:11:INFO:root:Starting from 1.594336108637239e-17
+08-Feb 08:33:11:INFO:root:-- Outer 3: 0.00560601356729812
+08-Feb 08:33:12:INFO:root:------ Middle 5: 0.0006688838321536598
+08-Feb 08:33:12:INFO:root:------ Middle 1: 0.0004465360898796909
+08-Feb 08:33:12:INFO:root:------ Middle 3: 0.001671288763680352
+08-Feb 08:33:12:INFO:root:------ Middle 6: 0.0003703424502115568
+08-Feb 08:33:12:INFO:root:------ Middle 4: 0.000917099195994359
+08-Feb 08:33:12:INFO:root:------ Middle 4: 0.00135006955450783
+08-Feb 08:33:12:INFO:root:------ Middle 5: 0.000771919739473207
+08-Feb 08:33:13:INFO:root:------ Middle 7: 0.000334093580087276
+08-Feb 08:33:13:INFO:root:------ Middle 1: 0.003918142505613283
+08-Feb 08:33:13:INFO:root:------ Middle 8: 0.00018934811288261844
+08-Feb 08:33:13:INFO:root:Starting from 1.2115677341334756e-17
+08-Feb 08:33:13:INFO:root:-- Outer 1: 0.022386805937119513
+08-Feb 08:33:13:INFO:root:------ Middle 2: 0.0021568884253419696
+08-Feb 08:33:13:INFO:root:------ Middle 1: 0.003127047676665335
+08-Feb 08:33:14:INFO:root:------ Middle 2: 0.00017788919982374032
+08-Feb 08:33:14:INFO:root:Starting from 1.534584725517125e-17
+08-Feb 08:33:14:INFO:root:-- Outer 4: 0.0026205098552192466
+08-Feb 08:33:14:INFO:root:------ Middle 5: 0.0007204109992337671
+08-Feb 08:33:14:INFO:root:------ Middle 6: 0.00039708255195449723
+08-Feb 08:33:14:INFO:root:------ Middle 1: 0.00025335157570636737
+08-Feb 08:33:14:INFO:root:Starting from 1.950486797075503e-17
+08-Feb 08:33:14:INFO:root:-- Outer 5: 0.002774347904702414
+08-Feb 08:33:14:INFO:root:------ Middle 6: 0.0006332247888561865
+08-Feb 08:33:14:INFO:root:------ Middle 7: 0.0003294074511749512
+08-Feb 08:33:14:INFO:root:------ Middle 7: 0.00034566016340152654
+08-Feb 08:33:15:INFO:root:------ Middle 8: 0.0001873987542194528
+08-Feb 08:33:15:INFO:root:Starting from 1.1497269325886496e-17
+08-Feb 08:33:15:INFO:root:-- Outer 1: 0.02072513274874465
+08-Feb 08:33:15:INFO:root:------ Middle 8: 0.0003068088654188222
+08-Feb 08:33:15:INFO:root:------ Middle 1: 0.003827976716548134
+08-Feb 08:33:15:INFO:root:------ Middle 9: 0.00027297120174571725
+08-Feb 08:33:15:INFO:root:Starting from 1.1781432010317061e-17
+08-Feb 08:33:15:INFO:root:-- Outer 1: 0.024546960985606357
+08-Feb 08:33:16:INFO:root:------ Middle 1: 0.003480860948590099
+08-Feb 08:33:16:INFO:root:------ Middle 1: 0.00020383214844520414
+08-Feb 08:33:16:INFO:root:Starting from 1.981270706762843e-17
+08-Feb 08:33:16:INFO:root:-- Outer 6: 0.000606588811004565
+08-Feb 08:33:16:INFO:root:END Outer loop
+08-Feb 08:33:16:INFO:root:Model trade shares: [0.95144, 0.930386, 0.983523]
+08-Feb 08:33:16:INFO:root:Data trade shares: [0.946294, 0.923226, 0.982471]
+08-Feb 08:33:16:INFO:root:US prices: [0.875107, 0.860224, 0.950271]
+08-Feb 08:33:16:INFO:root:in the data: [2.69951, 2.89119, 2.89119]
+08-Feb 08:33:16:INFO:root:Nominal world expenditure: 1.7511160187039815e7
+08-Feb 08:33:16:INFO:root:--------------In the data: [5.96564e7]
+08-Feb 08:33:17:INFO:root:------ Middle 2: 0.001032347723148748
+08-Feb 08:33:17:INFO:root:------ Middle 3: 0.0005967856703370713
+08-Feb 08:33:17:INFO:root:------ Middle 2: 0.0023030629270086762
+08-Feb 08:33:18:INFO:root:------ Middle 3: 0.0017049358654973046
+08-Feb 08:33:18:INFO:root:------ Middle 4: 0.0009395063258594253
+08-Feb 08:33:18:INFO:root:------ Middle 4: 0.000432566223045644
+08-Feb 08:33:19:INFO:root:------ Middle 5: 0.0002406338193057847
+08-Feb 08:33:19:INFO:root:Starting from 1.2858198705042595e-17
+08-Feb 08:33:19:INFO:root:-- Outer 2: 0.010421829297406114
+08-Feb 08:33:19:INFO:root:------ Middle 2: 0.0010720074301960002
+08-Feb 08:33:19:INFO:root:------ Middle 5: 0.0007540805266485743
+08-Feb 08:33:20:INFO:root:------ Middle 2: 0.0008661644022923796
+08-Feb 08:33:20:INFO:root:------ Middle 6: 0.0004293121049778712
+08-Feb 08:33:20:INFO:root:------ Middle 3: 0.000636499293458685
+08-Feb 08:33:20:INFO:root:------ Middle 3: 0.0014707040314640989
+08-Feb 08:33:20:INFO:root:------ Middle 1: 0.00461214098714358
+08-Feb 08:33:21:INFO:root:------ Middle 1: 0.0003757882888867835
+08-Feb 08:33:21:INFO:root:------ Middle 3: 0.0005356808241277795
+08-Feb 08:33:21:INFO:root:------ Middle 4: 0.0003608959775358523
+08-Feb 08:33:21:INFO:root:------ Middle 2: 0.00020997328317019255
+08-Feb 08:33:21:INFO:root:------ Middle 7: 0.00036238042137204634
+08-Feb 08:33:21:INFO:root:Starting from 1.6167475269966183e-17
+08-Feb 08:33:21:INFO:root:-- Outer 3: 0.004671711079900598
+08-Feb 08:33:21:INFO:root:------ Middle 5: 0.00021557143496763687
+08-Feb 08:33:21:INFO:root:Starting from 1.8153696001248586e-17
+08-Feb 08:33:21:INFO:root:-- Outer 2: 0.011536505766381013
+08-Feb 08:33:21:INFO:root:------ Middle 1: 0.00047679489606979974
+08-Feb 08:33:21:INFO:root:------ Middle 8: 0.00020348570261391596
+08-Feb 08:33:21:INFO:root:Starting from 1.2623541789831698e-17
+08-Feb 08:33:21:INFO:root:-- Outer 1: 0.021749090083177002
+08-Feb 08:33:21:INFO:root:------ Middle 1: 0.0008349035392555188
+08-Feb 08:33:22:INFO:root:------ Middle 4: 0.0009401301584839106
+08-Feb 08:33:22:INFO:root:------ Middle 4: 0.00032889867107890983
+08-Feb 08:33:22:INFO:root:------ Middle 5: 0.0005176188963687434
+08-Feb 08:33:22:INFO:root:------ Middle 2: 0.00016747781114527779
+08-Feb 08:33:22:INFO:root:Starting from 1.8843849849281084e-17
+08-Feb 08:33:22:INFO:root:-- Outer 4: 0.002411834340048914
+08-Feb 08:33:22:INFO:root:------ Middle 1: 0.00026679891537225467
+08-Feb 08:33:22:INFO:root:Starting from 1.4821748631745787e-17
+08-Feb 08:33:22:INFO:root:-- Outer 5: 0.0025198410324119595
+08-Feb 08:33:23:INFO:root:------ Middle 5: 0.00020486692601076357
+08-Feb 08:33:23:INFO:root:------ Middle 2: 0.00028494269332483
+08-Feb 08:33:23:INFO:root:Starting from 1.7893175957667048e-17
+08-Feb 08:33:23:INFO:root:Starting from 1.9961154611584744e-17
+08-Feb 08:33:23:INFO:root:-- Outer 2: 0.010483079931057543
+08-Feb 08:33:23:INFO:root:-- Outer 3: 0.005574537730062647
+08-Feb 08:33:23:INFO:root:------ Middle 1: 0.00040087382274518925
+08-Feb 08:33:24:INFO:root:------ Middle 6: 0.00042990408510690606
+08-Feb 08:33:24:INFO:root:------ Middle 7: 0.00023856906028895316
+08-Feb 08:33:24:INFO:root:Starting from 1.2046846116339247e-17
+08-Feb 08:33:24:INFO:root:-- Outer 1: 0.020604918968391374
+08-Feb 08:33:24:INFO:root:------ Middle 1: 0.00019327204107806177
+08-Feb 08:33:24:INFO:root:Starting from 1.5230931106661143e-17
+08-Feb 08:33:24:INFO:root:-- Outer 6: 0.0005111027548633758
+08-Feb 08:33:24:INFO:root:END Outer loop
+08-Feb 08:33:24:INFO:root:Model trade shares: [0.956956, 0.916997, 0.98032]
+08-Feb 08:33:24:INFO:root:Data trade shares: [0.954831, 0.902146, 0.983572]
+08-Feb 08:33:24:INFO:root:US prices: [1.13345, 0.955538, 1.13401]
+08-Feb 08:33:24:INFO:root:in the data: [3.88449, 3.20236, 3.20236]
+08-Feb 08:33:24:INFO:root:Nominal world expenditure: 2.7416989601967856e7
+08-Feb 08:33:24:INFO:root:--------------In the data: [8.8489e7]
+08-Feb 08:33:24:INFO:root:------ Middle 2: 0.002906195744332631
+08-Feb 08:33:25:INFO:root:------ Middle 1: 0.0007497786888767856
+08-Feb 08:33:25:INFO:root:------ Middle 2: 0.00041126602150573375
+08-Feb 08:33:25:INFO:root:------ Middle 2: 0.00022224598518110183
+08-Feb 08:33:25:INFO:root:Starting from 1.4762434850399426e-17
+08-Feb 08:33:25:INFO:root:-- Outer 4: 0.002588945133089181
+08-Feb 08:33:25:INFO:root:------ Middle 1: 0.0002947211929262356
+08-Feb 08:33:25:INFO:root:Starting from 1.7020675507147896e-17
+08-Feb 08:33:25:INFO:root:-- Outer 3: 0.00492597066055022
+08-Feb 08:33:25:INFO:root:------ Middle 1: 0.00025036073119887774
+08-Feb 08:33:25:INFO:root:Starting from 1.7565089798668517e-17
+08-Feb 08:33:25:INFO:root:-- Outer 5: 0.0027116481146153846
+08-Feb 08:33:25:INFO:root:------ Middle 1: 0.00045914265382441844
+08-Feb 08:33:25:INFO:root:------ Middle 3: 0.00028664017100624
+08-Feb 08:33:25:INFO:root:Starting from 1.5171293201742685e-17
+08-Feb 08:33:25:INFO:root:-- Outer 2: 0.010143687258743149
+08-Feb 08:33:26:INFO:root:------ Middle 1: 0.0009458549783834957
+08-Feb 08:33:27:INFO:root:------ Middle 2: 0.00017881330656507896
+08-Feb 08:33:27:INFO:root:Starting from 1.5203153714164528e-17
+08-Feb 08:33:27:INFO:root:-- Outer 4: 0.00235574044806269
+08-Feb 08:33:27:INFO:root:------ Middle 3: 0.001830906899443252
+08-Feb 08:33:27:INFO:root:------ Middle 1: 0.0002148484036404082
+08-Feb 08:33:27:INFO:root:Starting from 1.4140408772624245e-17
+08-Feb 08:33:27:INFO:root:-- Outer 6: 0.0006954721773596764
+08-Feb 08:33:27:INFO:root:END Outer loop
+08-Feb 08:33:27:INFO:root:------ Middle 1: 0.00023877814840989563
+08-Feb 08:33:27:INFO:root:Starting from 1.649075195662641e-17
+08-Feb 08:33:27:INFO:root:-- Outer 5: 0.0024628174377911926
+08-Feb 08:33:27:INFO:root:Model trade shares: [0.941777, 0.908441, 0.978507]
+08-Feb 08:33:27:INFO:root:Data trade shares: [0.95138, 0.919234, 0.983181]
+08-Feb 08:33:27:INFO:root:US prices: [0.912628, 0.889996, 1.01489]
+08-Feb 08:33:27:INFO:root:in the data: [3.11354, 3.01039, 3.01039]
+08-Feb 08:33:27:INFO:root:Nominal world expenditure: 1.8253835864975393e7
+08-Feb 08:33:27:INFO:root:--------------In the data: [6.70931e7]
+08-Feb 08:33:28:INFO:root:------ Middle 2: 0.00020127368659139775
+08-Feb 08:33:28:INFO:root:Starting from 2.2443700462392792e-17
+08-Feb 08:33:28:INFO:root:-- Outer 3: 0.005230621616880261
+08-Feb 08:33:28:INFO:root:------ Middle 1: 0.0004309270804830022
+08-Feb 08:33:28:INFO:root:------ Middle 1: 0.00019507592980808576
+08-Feb 08:33:28:INFO:root:Starting from 1.966398923883209e-17
+08-Feb 08:33:28:INFO:root:-- Outer 6: 0.0008160214739027608
+08-Feb 08:33:28:INFO:root:END Outer loop
+08-Feb 08:33:28:INFO:root:------ Middle 3: 0.0015807674694928112
+08-Feb 08:33:28:INFO:root:------ Middle 4: 0.0011541276054172253
+08-Feb 08:33:28:INFO:root:Model trade shares: [0.953903, 0.936141, 0.992517]
+08-Feb 08:33:28:INFO:root:Data trade shares: [0.951101, 0.932187, 0.983861]
+08-Feb 08:33:28:INFO:root:US prices: [0.887821, 0.853766, 0.897489]
+08-Feb 08:33:28:INFO:root:in the data: [2.96009, 2.78199, 2.78199]
+08-Feb 08:33:28:INFO:root:Nominal world expenditure: 1.6012884777147455e7
+08-Feb 08:33:28:INFO:root:--------------In the data: [5.49713e7]
+08-Feb 08:33:28:INFO:root:------ Middle 5: 0.0006338636589083785
+08-Feb 08:33:29:INFO:root:------ Middle 6: 0.000508136657427816
+08-Feb 08:33:30:INFO:root:------ Middle 7: 0.00027773230993420313
+08-Feb 08:33:30:INFO:root:Starting from 1.125066870931922e-17
+08-Feb 08:33:30:INFO:root:-- Outer 1: 0.02405531799502037
+08-Feb 08:33:30:INFO:root:------ Middle 2: 0.0001742391092598962
+08-Feb 08:33:30:INFO:root:Starting from 1.8943303668918447e-17
+08-Feb 08:33:30:INFO:root:-- Outer 4: 0.0024330858349850713
+08-Feb 08:33:30:INFO:root:------ Middle 1: 0.004561968850926442
+08-Feb 08:33:30:INFO:root:------ Middle 1: 0.00023848519821598898
+08-Feb 08:33:30:INFO:root:Starting from 1.403523483226443e-17
+08-Feb 08:33:30:INFO:root:-- Outer 5: 0.002583602924282967
+08-Feb 08:33:32:INFO:root:------ Middle 1: 0.00019154179030204336
+08-Feb 08:33:32:INFO:root:Starting from 1.7977343495791218e-17
+08-Feb 08:33:32:INFO:root:-- Outer 6: 0.0005716141656739209
+08-Feb 08:33:32:INFO:root:END Outer loop
+08-Feb 08:33:32:INFO:root:Model trade shares: [0.952605, 0.93676, 0.986622]
+08-Feb 08:33:32:INFO:root:Data trade shares: [0.951781, 0.9268, 0.989231]
+08-Feb 08:33:32:INFO:root:US prices: [0.85346, 0.831753, 0.89654]
+08-Feb 08:33:32:INFO:root:in the data: [2.94894, 2.90959, 2.90959]
+08-Feb 08:33:32:INFO:root:Nominal world expenditure: 1.6267017102824036e7
+08-Feb 08:33:32:INFO:root:--------------In the data: [5.76528e7]
+08-Feb 08:33:32:INFO:root:------ Middle 1: 0.0008546531835131674
+08-Feb 08:33:32:INFO:root:------ Middle 2: 0.0004693264358675852
+08-Feb 08:33:33:INFO:root:------ Middle 3: 0.0003297642106629871
+08-Feb 08:33:33:INFO:root:------ Middle 4: 0.00018354395767331108
+08-Feb 08:33:33:INFO:root:Starting from 1.6168689098565797e-17
+08-Feb 08:33:33:INFO:root:-- Outer 2: 0.011314411168558995
+08-Feb 08:33:33:INFO:root:------ Middle 1: 0.000958707333114168
+08-Feb 08:33:33:INFO:root:------ Middle 1: 0.0006656445455621344
+08-Feb 08:33:34:INFO:root:------ Middle 2: 0.00040314572018340216
+08-Feb 08:33:34:INFO:root:------ Middle 2: 0.00020343053124894376
+08-Feb 08:33:34:INFO:root:Starting from 1.456405332550647e-17
+08-Feb 08:33:34:INFO:root:-- Outer 3: 0.005847436489926327
+08-Feb 08:33:35:INFO:root:------ Middle 1: 0.0004682524683453994
+08-Feb 08:33:35:INFO:root:------ Middle 3: 0.0002456629054891848
+08-Feb 08:33:35:INFO:root:Starting from 2.1328819869749003e-17
+08-Feb 08:33:35:INFO:root:-- Outer 2: 0.009560714777536424
+08-Feb 08:33:35:INFO:root:------ Middle 2: 0.002866696304835141
+08-Feb 08:33:36:INFO:root:------ Middle 2: 0.00018236862210139356
+08-Feb 08:33:36:INFO:root:Starting from 1.3601869489089096e-17
+08-Feb 08:33:36:INFO:root:-- Outer 4: 0.002851654195969522
+08-Feb 08:33:36:INFO:root:------ Middle 1: 0.0002697821824982042
+08-Feb 08:33:36:INFO:root:Starting from 2.0663562276436205e-17
+08-Feb 08:33:36:INFO:root:-- Outer 5: 0.002988655102844075
+08-Feb 08:33:37:INFO:root:------ Middle 1: 0.0004102591731288061
+08-Feb 08:33:37:INFO:root:------ Middle 3: 0.0017894702879227083
+08-Feb 08:33:37:INFO:root:------ Middle 1: 0.00021389000376085865
+08-Feb 08:33:37:INFO:root:Starting from 1.8383975369956424e-17
+08-Feb 08:33:37:INFO:root:-- Outer 6: 0.0006687793081987305
+08-Feb 08:33:37:INFO:root:END Outer loop
+08-Feb 08:33:37:INFO:root:------ Middle 2: 0.00024069355303780026
+08-Feb 08:33:37:INFO:root:Starting from 1.4923160292334163e-17
+08-Feb 08:33:37:INFO:root:-- Outer 3: 0.004533365990960084
+08-Feb 08:33:37:INFO:root:Model trade shares: [0.953151, 0.923172, 0.979048]
+08-Feb 08:33:37:INFO:root:Data trade shares: [0.95528, 0.914832, 0.982791]
+08-Feb 08:33:37:INFO:root:US prices: [0.979361, 0.906439, 1.07025]
+08-Feb 08:33:37:INFO:root:in the data: [3.32883, 3.15407, 3.15407]
+08-Feb 08:33:37:INFO:root:Nominal world expenditure: 2.1765953662754364e7
+08-Feb 08:33:37:INFO:root:--------------In the data: [7.56745e7]
+08-Feb 08:33:38:INFO:root:------ Middle 4: 0.0011361143918725146
+08-Feb 08:33:39:INFO:root:------ Middle 5: 0.0006247884787495218
+08-Feb 08:33:39:INFO:root:------ Middle 1: 0.00028881865073555245
+08-Feb 08:33:39:INFO:root:Starting from 1.6775658394103875e-17
+08-Feb 08:33:39:INFO:root:-- Outer 4: 0.0022444338026228563
+08-Feb 08:33:39:INFO:root:------ Middle 1: 0.00032050504686584444
+08-Feb 08:33:40:INFO:root:------ Middle 2: 0.00014516670803508034
+08-Feb 08:33:40:INFO:root:Starting from 1.5292921552567796e-17
+08-Feb 08:33:40:INFO:root:-- Outer 5: 0.0012239234317070803
+08-Feb 08:33:40:INFO:root:------ Middle 6: 0.0004985572465392528
+08-Feb 08:33:40:INFO:root:------ Middle 7: 0.0002727137867627587
+08-Feb 08:33:40:INFO:root:Starting from 1.1915151092201682e-17
+08-Feb 08:33:40:INFO:root:-- Outer 1: 0.02294586619506006
+08-Feb 08:33:40:INFO:root:------ Middle 1: 0.00018824443688126772
+08-Feb 08:33:40:INFO:root:Starting from 1.7174948924237085e-17
+08-Feb 08:33:40:INFO:root:-- Outer 6: 0.0006931763606832311
+08-Feb 08:33:40:INFO:root:END Outer loop
+08-Feb 08:33:40:INFO:root:Model trade shares: [0.956928, 0.941296, 0.991837]
+08-Feb 08:33:40:INFO:root:Data trade shares: [0.944757, 0.931965, 0.986375]
+08-Feb 08:33:40:INFO:root:US prices: [0.864125, 0.8265, 0.866567]
+08-Feb 08:33:40:INFO:root:in the data: [2.85731, 2.74066, 2.74066]
+08-Feb 08:33:40:INFO:root:Nominal world expenditure: 1.5697383446424073e7
+08-Feb 08:33:40:INFO:root:--------------In the data: [5.4623e7]
+08-Feb 08:33:42:INFO:root:------ Middle 1: 0.0008812461670224135
+08-Feb 08:33:42:INFO:root:------ Middle 2: 0.0004858668448432055
+08-Feb 08:33:43:INFO:root:------ Middle 3: 0.00033545535997263516
+08-Feb 08:33:43:INFO:root:------ Middle 4: 0.00018571270277606227
+08-Feb 08:33:43:INFO:root:Starting from 1.7254393858185572e-17
+08-Feb 08:33:43:INFO:root:-- Outer 2: 0.010962990604591868
+08-Feb 08:33:43:INFO:root:------ Middle 1: 0.0009745941303250077
+08-Feb 08:33:44:INFO:root:------ Middle 2: 0.00020449994683012594
+08-Feb 08:33:44:INFO:root:Starting from 1.3773773864970168e-17
+08-Feb 08:33:44:INFO:root:-- Outer 3: 0.005678736130932641
+08-Feb 08:33:44:INFO:root:------ Middle 1: 0.0004738009296950866
+08-Feb 08:33:46:INFO:root:------ Middle 2: 0.0001793868437199323
+08-Feb 08:33:46:INFO:root:Starting from 2.015729825852206e-17
+08-Feb 08:33:46:INFO:root:-- Outer 4: 0.0027849492000486223
+08-Feb 08:33:46:INFO:root:------ Middle 1: 0.0002702668839124173
+08-Feb 08:33:46:INFO:root:Starting from 1.5164211214956952e-17
+08-Feb 08:33:46:INFO:root:-- Outer 5: 0.0029161848441438265
+08-Feb 08:33:46:INFO:root:------ Middle 1: 0.0037907460403225346
+08-Feb 08:33:47:INFO:root:------ Middle 3: 0.0016317190651298033
+08-Feb 08:33:47:INFO:root:------ Middle 1: 0.00020993060851307512
+08-Feb 08:33:47:INFO:root:Starting from 1.676299126838945e-17
+08-Feb 08:33:47:INFO:root:-- Outer 6: 0.0006227629880356248
+08-Feb 08:33:47:INFO:root:END Outer loop
+08-Feb 08:33:47:INFO:root:Model trade shares: [0.955548, 0.920038, 0.978665]
+08-Feb 08:33:47:INFO:root:Data trade shares: [0.956446, 0.911974, 0.985299]
+08-Feb 08:33:47:INFO:root:US prices: [1.05581, 0.926123, 1.11327]
+08-Feb 08:33:47:INFO:root:in the data: [3.74316, 3.20378, 3.20378]
+08-Feb 08:33:47:INFO:root:Nominal world expenditure: 2.5157671990623742e7
+08-Feb 08:33:47:INFO:root:--------------In the data: [8.18345e7]
+08-Feb 08:33:50:INFO:root:------ Middle 2: 0.0023588834646415444
+08-Feb 08:33:51:INFO:root:------ Middle 3: 0.0014619945249982845
+08-Feb 08:33:52:INFO:root:------ Middle 4: 0.0009243918216819315
+08-Feb 08:33:52:INFO:root:------ Middle 5: 0.0005077780357758538
+08-Feb 08:33:53:INFO:root:------ Middle 6: 0.0004238212888261666
+08-Feb 08:33:53:INFO:root:------ Middle 7: 0.00022719092128255087
+08-Feb 08:33:53:INFO:root:Starting from 1.1647291168102753e-17
+08-Feb 08:33:53:INFO:root:-- Outer 1: 0.016733165169625887
+08-Feb 08:33:53:INFO:root:------ Middle 1: 0.003890493055823648
+08-Feb 08:33:55:INFO:root:------ Middle 2: 0.0010255497464082238
+08-Feb 08:33:55:INFO:root:------ Middle 3: 0.000592685108008898
+08-Feb 08:33:56:INFO:root:------ Middle 4: 0.00042852803743092865
+08-Feb 08:33:56:INFO:root:------ Middle 5: 0.00023717433935225774
+08-Feb 08:33:56:INFO:root:Starting from 1.7867576290308832e-17
+08-Feb 08:33:56:INFO:root:-- Outer 2: 0.008916284802022435
+08-Feb 08:33:58:INFO:root:------ Middle 1: 0.00033537426839987903
+08-Feb 08:33:58:INFO:root:------ Middle 2: 0.00018647992362314818
+08-Feb 08:33:58:INFO:root:Starting from 1.495486835179467e-17
+08-Feb 08:33:58:INFO:root:-- Outer 3: 0.004070976207147982
+08-Feb 08:33:58:INFO:root:------ Middle 1: 0.00043484960660620945
+08-Feb 08:33:59:INFO:root:------ Middle 2: 0.00014588540409554715
+08-Feb 08:33:59:INFO:root:Starting from 2.0276199474154322e-17
+08-Feb 08:33:59:INFO:root:-- Outer 4: 0.002142199889449386
+08-Feb 08:33:59:INFO:root:------ Middle 1: 0.00023995171341841247
+08-Feb 08:33:59:INFO:root:Starting from 1.650299894799375e-17
+08-Feb 08:33:59:INFO:root:-- Outer 5: 0.002237690443270821
+08-Feb 08:34:00:INFO:root:------ Middle 1: 0.00017127092034328415
+08-Feb 08:34:00:INFO:root:Starting from 1.7410771533691187e-17
+08-Feb 08:34:00:INFO:root:-- Outer 6: 0.0006252747253836841
+08-Feb 08:34:00:INFO:root:END Outer loop
+08-Feb 08:34:00:INFO:root:Model trade shares: [0.9606, 0.91991, 0.982774]
+08-Feb 08:34:00:INFO:root:Data trade shares: [0.955026, 0.900005, 0.981768]
+08-Feb 08:34:00:INFO:root:US prices: [1.23243, 1.00273, 1.14751]
+08-Feb 08:34:00:INFO:root:in the data: [4.23838, 3.41193, 3.41193]
+08-Feb 08:34:00:INFO:root:Nominal world expenditure: 2.948870231180498e7
+08-Feb 08:34:00:INFO:root:--------------In the data: [9.98292e7]
+08-Feb 08:34:02:INFO:root:------ Middle 4: 0.001026258591207387
+08-Feb 08:34:19:INFO:root:------ Middle 4: 0.001053406091129176
+08-Feb 08:34:34:INFO:root:------ Middle 5: 0.0006691706492362823
+08-Feb 08:34:50:INFO:root:------ Middle 5: 0.00068368007058429
+08-Feb 08:35:06:INFO:root:------ Middle 6: 0.00043789919402512057
+08-Feb 08:35:22:INFO:root:------ Middle 6: 0.00044586936428188775
+08-Feb 08:35:39:INFO:root:------ Middle 7: 0.00028742101321366757
+08-Feb 08:35:39:INFO:root:Starting from 1.1742024087563787e-17
+08-Feb 08:35:39:INFO:root:-- Outer 1: 0.027212456938641782
+08-Feb 08:35:57:INFO:root:------ Middle 7: 0.0002920551618948597
+08-Feb 08:35:57:INFO:root:Starting from 1.1800650486182583e-17
+08-Feb 08:35:57:INFO:root:-- Outer 1: 0.026543809941956292
+08-Feb 08:36:19:INFO:root:------ Middle 1: 0.0007484002134145909
+08-Feb 08:36:36:INFO:root:------ Middle 1: 0.0008012904686652016
+08-Feb 08:36:58:INFO:root:------ Middle 2: 0.00045205811451529793
+08-Feb 08:37:19:INFO:root:------ Middle 2: 0.000485350974140702
+08-Feb 08:37:39:INFO:root:------ Middle 3: 0.0002747779087567635
+08-Feb 08:37:39:INFO:root:Starting from 2.031501249233447e-17
+08-Feb 08:37:39:INFO:root:-- Outer 2: 0.011921993013964998
+08-Feb 08:37:59:INFO:root:------ Middle 3: 0.0002955116294967419
+08-Feb 08:37:59:INFO:root:Starting from 2.1241971260544002e-17
+08-Feb 08:37:59:INFO:root:-- Outer 2: 0.011610425102735274
+08-Feb 08:38:15:INFO:root:------ Middle 1: 0.0004205295569540056
+08-Feb 08:38:34:INFO:root:------ Middle 1: 0.00047331009874489725
+08-Feb 08:38:55:INFO:root:------ Middle 2: 0.00025348083578760145
+08-Feb 08:38:55:INFO:root:Starting from 1.359787489438007e-17
+08-Feb 08:38:55:INFO:root:-- Outer 3: 0.00523934654309365
+08-Feb 08:39:08:INFO:root:------ Middle 2: 0.0002870155134190457
+08-Feb 08:39:08:INFO:root:Starting from 1.9519066647180474e-17
+08-Feb 08:39:08:INFO:root:-- Outer 3: 0.0052042508749993435
+08-Feb 08:39:30:INFO:root:------ Middle 1: 0.0002926028983697068
+08-Feb 08:39:30:INFO:root:Starting from 1.3802233133983962e-17
+08-Feb 08:39:30:INFO:root:-- Outer 4: 0.0024067335268566333
+08-Feb 08:39:42:INFO:root:------ Middle 1: 0.0003336387742979196
+08-Feb 08:40:03:INFO:root:------ Middle 1: 0.000256289535008316
+08-Feb 08:40:03:INFO:root:Starting from 1.6214039379539197e-17
+08-Feb 08:40:03:INFO:root:-- Outer 5: 0.0012016692945099727
+08-Feb 08:40:16:INFO:root:------ Middle 2: 0.00020220756785567135
+08-Feb 08:40:16:INFO:root:Starting from 1.8505501597059482e-17
+08-Feb 08:40:16:INFO:root:-- Outer 4: 0.0025090450764341868
+08-Feb 08:40:47:INFO:root:------ Middle 1: 0.00020248637123690432
+08-Feb 08:40:47:INFO:root:Starting from 1.8440938796726676e-17
+08-Feb 08:40:47:INFO:root:-- Outer 6: 0.0006574905318502739
+08-Feb 08:40:47:INFO:root:END Outer loop
+08-Feb 08:40:47:INFO:root:Model trade shares: [0.969595, 0.942994, 0.994896]
+08-Feb 08:40:47:INFO:root:Data trade shares: [0.953126, 0.923314, 0.993566]
+08-Feb 08:40:47:INFO:root:US prices: [1.09684, 0.940274, 0.932616]
+08-Feb 08:40:47:INFO:root:in the data: [2.3065, 2.15345, 2.15345]
+08-Feb 08:40:47:INFO:root:Nominal world expenditure: 1.2764997916349933e7
+08-Feb 08:40:47:INFO:root:--------------In the data: [2.91447e7]
+08-Feb 08:40:54:INFO:root:------ Middle 1: 0.00021687825710903647
+08-Feb 08:40:54:INFO:root:Starting from 1.481608813926848e-17
+08-Feb 08:40:54:INFO:root:-- Outer 5: 0.001298424318948486
+08-Feb 08:41:31:INFO:root:------ Middle 1: 0.00018686351586204623
+08-Feb 08:41:31:INFO:root:Starting from 1.4707137297245747e-17
+08-Feb 08:41:31:INFO:root:-- Outer 6: 0.0007317001883334199
+08-Feb 08:41:31:INFO:root:END Outer loop
+08-Feb 08:41:31:INFO:root:Model trade shares: [0.960603, 0.938976, 0.99289]
+08-Feb 08:41:31:INFO:root:Data trade shares: [0.955615, 0.931697, 0.991754]
+08-Feb 08:41:31:INFO:root:US prices: [0.886106, 0.884564, 0.897353]
+08-Feb 08:41:31:INFO:root:in the data: [2.59006, 2.59665, 2.59665]
+08-Feb 08:41:31:INFO:root:Nominal world expenditure: 1.5621495642609227e7
+08-Feb 08:41:31:INFO:root:--------------In the data: [4.90999e7]
+655.848806 seconds (909.25 k allocations: 735.973 MiB, 0.04% gc time)
