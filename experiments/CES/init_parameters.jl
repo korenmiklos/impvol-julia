@@ -6,7 +6,7 @@ using ImpvolEquilibrium, FileIO, JLD2
 parameters = Dict{Symbol, Any}()
 
 # CES parameters
-sigmas = [0.3 0.4 0.45 0.5 0.7 0.8 0.9 0.999 1.1 1.2 1.3 1.5 1.75 2.0]
+sigmas = [0.3 0.4 0.5 0.7 0.8 0.9 0.999 1.1 1.2 1.3 1.5 1.75 2.0]
 parameters[:theta] = 4.0
 parameters[:eta] = 4.0
 
