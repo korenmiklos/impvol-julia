@@ -16,6 +16,13 @@ S500: experiments/S500/output_table.csv
 
 calibrate: $(foreach table,$(TABLES),experiments/$(table)/common_parameters.jld2) 
 
+admissible_eos: $(wildcard experiments/CES/*/results.jld2)
+experiments/CES/%/results.jld2: experiments/CES/%/common_parameters.jld2 experiments/CES/scenario.jl
+	cd experiments/CES && julia scenario.jl $(subst experiments/CES/,,$<) 
+
+experiments/CES/2.0/common_parameters.jld2: experiments/CES/init_parameters.jl $(CALIBRATION) 
+	cd experiments/CES && julia init_parameters.jl
+
 experiments/%/common_parameters.jld2: experiments/%/init_parameters.jl $(CALIBRATION) 
 	cd $(dir $@) && julia init_parameters.jl
 
