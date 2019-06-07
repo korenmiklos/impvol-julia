@@ -1221,10 +1221,20 @@ experimented with a range of values of $\frac{1}{\varrho }$ (from 0.0005 to
 \subsubsection{Preferences with Constant Elasticity of Substitution}\label{Sces}
 
 In our baseline model preferences over sectoral goods aggregate in
-Cobb-Douglas fashion. In this robustness check we replace equation (\ref%
-{aggregate}) by a CES formulation. This requires calibrating $J$ \
-\textquotedblleft share\textquotedblright\ parameters, as well as an
-elasticity of substitution. Our strategy is to calibrate the share
+Cobb--Douglas fashion. In this robustness check we replace equation (\ref%
+{aggregate}) by a CES formulation, 
+\begin{equation}
+C_{nt} = \left[
+	\sum_{j=1}^{J}
+		\left( \nu_{t}^{j}\right) ^{1/\sigma}
+		\left( C_{nt}^{j}\right) ^{(\sigma-1)/\sigma}
+	\right]^{\sigma/(\sigma-1)},
+\label{ces_aggregate}
+\end{equation}%
+where $\sigma>0$ is the elasticity of substitution across sectors and $\nu_{t}^j$ is a demand shifter. We normalize $\sum_{j=1}^J \nu_t^j=1$. As in the Cobb--Douglas case, we let demand shifters vary over time.
+
+This requires calibrating the $J$ demand parameters $\nu_{t}^j$ for each year, as well as the
+elasticity of substitution $\sigma$. Our strategy is to calibrate the demand
 parameters by matching the share of each final good sector in global expenditure for each year. 
 We then look at how our results vary with different
 values of the elasticity of substitution.
