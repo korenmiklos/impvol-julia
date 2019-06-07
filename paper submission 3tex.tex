@@ -1,0 +1,1978 @@
+%2multibyte Version: 5.50.0.2960 CodePage: 65001
+
+\documentclass[12pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{harvard}
+\usepackage{sectsty}
+\usepackage{endnotes}
+\usepackage{graphicx}
+\usepackage{float}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2960}
+%TCIDATA{Codepage=65001}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{LastRevised=Thursday, June 06, 2019 18:01:13}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{Language=American English}
+
+\setlength{\footnotesep}{11.0pt}
+\renewcommand{\baselinestretch}{2}
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\geometry{left=1in,right=1in,top=1in,bottom=1in}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\thesection.\Alph{subsection}}
+\graphicspath{{C:/Users/tenreyro/Dropbox/impvol/Finalversion/impvol_text/}}
+\input{tcilatex}
+\begin{document}
+
+\title{Diversification through Trade \thanks{%
+Thanks: Referees, Pol Antras, Costas Arkolakis, Robert Barro, Fernando
+Broner, Ariel Burstein, Lorenzo Caliendo, Julian DiGiovanni, Bernardo
+Guimaraes, Nobu Kiyotaki, Pete Klenow, David Laibson, Fabrizio Perri, Steve
+Redding, Ina Simonovska, Jaume Ventura, Romain Wacziarg, and seminar
+participants at Bocconi, Birmingham, CREI, Princeton, Penn, Yale, NYU, UCL,
+LBS, LSE, Toulouse, Warwick, as well as participants at SED, ESSIM, and the
+Nottingham trade conference. Calin Vlad Demian, Balazs Kertesz, Federico
+Rossi, and Peter Zsohar provided superb research assistance. Caselli
+acknowledges financial support from the Luverlhume Fellowship. Koren
+acknowledges financial support from the European Research Council (ERC)
+starting grant 313164. Tenreyro acknowledges financial support from the ERC
+starting grant 240852. \newline
+$^{\dag }$ London School of Economics, CfM, CEPR. $^{\ddag }$ Central
+European University, MTA KRTK, CEPR. $^{\S }$ European Comission.
+Correspondence: s.tenreyro@LSE.ac.uk.} }
+\author{Francesco Caselli$^{\dag }$ \and Miklos Koren$^{\ddag }$ \and Milan
+Lisicky$^{\S }$ \and Silvana Tenreyro$^{\dag }$}
+\date{This draft: November 2017}
+\maketitle
+
+\begin{abstract}
+A widely held view is that openness to international trade leads to higher
+income volatility, as trade increases specialization and hence exposure to
+sector-specific shocks. Contrary to this common wisdom, we argue that when
+country-wide shocks are important, openness to international trade can lower
+income volatility by reducing exposure to domestic shocks, and allowing
+countries to diversify the sources of demand and supply across countries.
+Using a quantitative model of trade, we assess the importance of the two
+mechanisms (sectoral specialization and cross-country diversification) and
+show that in recent decades international trade has reduced economic
+volatility for most countries.
+\end{abstract}
+
+\section{Introduction}
+
+An important question at the crossroads of macro-development and
+international economics is whether and how openness to trade affects
+macroeconomic volatility. A widely held view in academic and policy
+discussions, which can be traced back at least to Newbery and Stiglitz
+(1984), is that openness to international trade leads to higher income
+volatility. The origins of this view are rooted in a large class of theories
+of international trade predicting that openness to trade increases
+specialization. Because specialization in production tends to increase a
+country's exposure to shocks specific to the sectors (or range of products)
+in which the country specializes, it is generally inferred that trade
+increases volatility.\ This view seems present in policy circles, where
+trade openness is often perceived as posing a trade-off between the first
+and second moments (i.e., trade causes higher productivity at the cost of
+higher volatility).\footnote{%
+See for example the report on \textquotedblleft Economic openness and
+economic prosperity: trade and investment analytical
+paper\textquotedblright\ (2011), prepared by the U.K. Department of
+International Development.}
+
+This paper revisits the common wisdom on two conceptual grounds. First, the
+existing wisdom is strongly predicated on the assumption that
+sector-specific shocks (hitting a particular sector) are the dominant source
+of income volatility. The evidence, however, does not support this
+assumption. Indeed, country-specific shocks (shocks common to all sectors in
+a given country) are at least as important as sector-specific shocks in
+shaping countries' volatility patterns (e.g. Stockman, 1988, Costello, 1993,
+Koren and Tenreyro, 2007).\footnote{%
+Both Stockman and Costello find that country-specific shocks are more
+important than sector-specific shocks in shaping volatility patterns in
+seven (resp., five) industrialized countries. Using a wider sample of
+countries and a different method, Koren and Tenreyro confirm these results,
+and find that the relative weight of country-specific shocks is even more
+relevant in less developed economies.} The first contribution of this paper
+is to show analytically that when country-specific shocks are an important
+source of volatility, openness to international trade can lower income
+volatility. In particular, openness reduces a country's exposure to domestic
+shocks, and allows it to diversify its sources of demand and supply, leading
+to potentially lower overall volatility. This is true as long as the
+volatility of shocks affecting trading partners is not too large, or the
+covariance of shocks across countries is not too large. In other words, we
+show that the sign and size of the effect of openness on volatility depends
+on the variances and covariances of shocks across countries.
+
+The paper furthermore questions the mechanical assumption that higher
+sectorial specialization per se leads to higher volatility. Indeed, whether
+income volatility increases or decreases with specialization depends on the
+intrinsic volatility of the sectors in which the economy specializes in, as
+well as on the covariance among sectorial shocks and between sectorial and
+country-wide shocks.
+
+We make these points in the context of a quantitative, multi-sector,
+stochastic model of trade and GDP determination. The model builds on a
+variation of Eaton and Kortum (2002), Alvarez and Lucas (2007), and Caliendo
+and Parro (2015), augmented to allow for country-specific and
+sector-specific shocks.\footnote{\label{FTlit}Variations of this model have
+been used to address a number of questions in international economics. An
+incomplete list includes Hsieh and Ossa (2011) and di Giovanni, Levchenko,
+and Zhang (2014), who study the global welfare impact of China's trade
+integration and technological change; Levchenko and Zhang (2013), who
+investigate the impact of trade with emerging countries on labour markets;
+Burstein and Vogel (2016) and Parro (2013), who study the effect of
+international trade on the skill premium; Caliendo, Parro, Rossi-Hansberg
+and Sarte (2014), who study the impact of regional productivity changes on
+the U.S. economy, and so on. None of these applications, however, focuses on
+the impact of openness to trade on volatility. A partial exception is
+Burgess and Donaldson (2012), which we discuss below.} In each sector,
+production combines equipped labour with a variety of tradable inputs.
+Producers source tradable inputs from the lowest-cost supplier (where supply
+costs depend on the supplier's productivity as well as trade costs), after
+productivity shocks have been realized. This generates the potential for
+trade to \textquotedblleft insure\textquotedblright\ against shocks, as
+producers can redirect input demand to countries experiencing positive
+supply shocks. However, (equipped) labor must be allocated to sectors before
+productivity shocks are realized. This friction allows us to capture the
+traditional specialization channel, because it reduces a country's ability
+to respond to sectorial shocks by reallocating resources to other sectors.
+An extension of the model allows for ex-post sectorial reallocation of
+equipped labour in the presence of reallocation costs.
+
+We use the model in conjunction with sector-level production and bilateral
+trade data for a diverse group of 24 countries to quantitatively assess how
+changes in trading costs since the early 1970s have affected income
+volatility.\footnote{%
+The data are disaggregated into 24 sectors. We stop the analysis in 2007 as
+our model abstracts from the factors underlying the financial crisis.} We
+find that the decline in trade costs since the 1970s has caused sizeable
+reductions in income volatility in the vast majority of\textbf{\ }the
+countries in our sample. The range of changes in volatility due to trade
+varies significantly across countries, with the largest reductions being
+nearly 80\%. On average, volatility fell 37\% compared to a counterfactual
+where trade barriers remain at their early-1970s level.
+
+The general decline in volatility due to trade is the net result of the two
+different mechanisms discussed above: sectorial specialization, and
+country-wide diversification. The country-wide diversification mechanism
+again contributed to lower volatility in most of the countries in our
+sample, consistent with our key idea that trade is a source of
+diversification of country-wide shocks. The sectoral-specialization
+mechanism increased volatility in 54\% of the countries in the sample.
+Consistent with our theoretical points above, then, the common wisdom that
+specialization leads to greater volatility fails to apply almost as often as
+it does. The crucial and most important point, however, is that the
+country-wide diversification effect is on average eight times as large as
+the sectoral-specialization effect, so that the net effect is that trade
+reduces volatility in the overwhelming majority of cases.\footnote{%
+While in this paper the focus is on country-wide shocks and sectoral shocks,
+future work could even extend to \textquotedblleft
+granular\textquotedblright\ shocks. See, e.g. di Giovanni and Levchenko
+(2012) for a discussion of trade and volatility with granular shocks and di
+Giovanni, Levchenko and Mejean (2014) for a country-level application.}
+
+We subject our results to a variety of robustness checks and extensions. In
+the latter, we find that it is important to feature a detailed input-output
+structure to fully capture the impact of trade on volatility. We also find
+that the impact of trade on volatility is not driven by the emergence of
+China, but it is a much more general phenomenon.
+
+The focus of our quantitative evaluation is real income, defined as nominal
+GDP deflated by a cost of living index. In the model, the cost of living
+index is a preferenced-based ideal price deflator. In the data counterpart,
+the cost of living index is the CPI. Hence, we work with a welfare-relevant
+notion of income.\footnote{%
+Kehoe and Ruhl (2008) and Burstein and Cravino (2015) study the theoretical
+impact of foreign productivity shocks on various measures of domesitc
+economic activity. In general, foreign productivity shocks (or other sources
+of change in the terms of trade) have little first-order effects on
+production-based measures of activity (e.g. GDP deflated by the GDP
+deflator), while they have first-order effects on welfare-based measures.}
+Indeed, we could alternatively have focused on consumption volatility,
+because, for most countries in the world, income and consumption
+fluctuations are almost perfectly correlated, and in our model income equals
+consumption. For the same reason\textbf{, }our model abstracts from trade in
+financial assets.
+
+The fact that openness to trade has ambiguous predicted effects on
+volatility might partly explain why direct empirical evidence on the effect
+of openness on volatility has yielded mixed results. Some studies find that
+trade decreases volatility [e.g., Bejan (2006), Buch, D\"{o}pke and
+Strotmann (2009), Cavallo (2008), Haddad, Lim and Saborowski (2010),
+Parinduri (2011), Burgess and Donaldson (2012)], while others find that
+trade increases it [e.g., Rodrik (1998), Easterly, Islam, and Stiglitz
+(2001), Kose, Prasad, and Terrones (2003), di Giovanni and Levchenko
+(2009)]. The model-based analysis can circumvent the problem of causal
+identification faced by many empirical studies, allowing for counterfactual
+exercises that isolate the effect of trade costs on volatility. Moreover, it
+can cope with highly heterogenous trade effects across countries.
+
+Besides contrasting with assessments of the trade-volatility relationship
+based on (a simplistic understanding of) the specialization framework, our
+paper also offers an alternative perspective on openness and volatility to
+the so-called International Real Business Cycle approach. Backus, Kehoe, and
+Kydland (1992) show that GDP volatility is higher in the open economy than
+in the closed economy, as capital inputs are allocated to production in the
+country with the most favorable technology shock. Hence, income fluctuations
+are amplified in an open economy. In our multi-country, multi-sector
+setting, instead, income volatility can---and often does---decrease with
+openness, as intra-temporal trade in inputs allows countries with less
+favorable productivity shocks to source inputs from abroad, thus reducing
+income (as well as consumption) volatility.\footnote{%
+Also related is the empirical literature initiated by Frankel and Rose
+(1998), who documented a strong correlation between bilateral trade flows
+and GDP comovements between pairs of countries (see also, e.g., Kose and Yi
+(2001), Arkolakis and Ramanarayanan (2009)). Our main focus in this paper is
+on the effect of trade on \textit{volatility}---and the channels mediating
+this effect---but the quantitative approach we follow in our counterfactual
+exercise can potentially be extended to also identify the effect of trade on
+bilateral comovement---and indeed, other higher-order moments.}
+
+A paper that is closely related to ours is Burgess and Donaldson (2012), who
+use the Eaton-Kortum model in conjunction with data on the expansion of
+railroads across regions in India to assess whether real income became more
+or less sensitive to rainfall shocks, as India's regions became more open to
+trade. The authors find that the decline in transportation costs lowered the
+impact of productivity shocks on real income, implying a reduction in
+volatility. Our analysis is at a higher level of generality,\textbf{\ }and
+highlights that, while a reduction in volatility has been experienced by
+many countries as they became more open to trade, the size and sign of the
+trade effect on volatility may be--- and indeed has been---different across
+different countries.\footnote{%
+See also Donaldson (2015), where the question is also addressed in the
+context of India's railroad expansion. There is\ also a growing literature
+on the effect of globalization on income risk and inequality. We do not
+focus on distributional effects within countries in this paper, though it is
+obviously a very important issue, and a natural next step in our research.
+For theoretical developments in that area, see for example, Anderson (2011)
+and the references therein.}
+
+\textbf{While this paper focuses on contrasting our new
+diversification-through-trade mechanism with the traditional sectoral
+specialization mechanism, it leaves to future work to include the role of
+\textquotedblleft granular\textquotedblright\ shocks. As pointed out by di
+Giovanni and Levchenko (2012), if openness to trade increases concentration
+the impact of granular shocks is exacerbated, potentially leading to an
+increase in volatility. See also di Giovanni, Levchenko and Mejean (2014)
+for a country-level application.}
+
+The remainder of the paper is organized as follows. Section II presents the
+model and solves analytically for two special cases, autarky and costless
+free trade. Section III introduces the data and calibration. Section IV
+presents the quantitative results, including robustness checks and
+extensions. Section V presents concluding remarks. The Appendix contains
+further derivations and a detailed description of the datasets used in the
+paper.
+
+\section{A Model of Trade with Stochastic Shocks}
+
+The baseline model builds on a multi-sector variation of Eaton and Kortum
+(2002), Alvarez and Lucas (2006), and Caliendo and Parro (2015), augmented
+to allow for stochastic shocks, as well as frictions to the allocation of
+non-produced (and non-traded) inputs across sectors.
+
+\subsection{Model Assumptions}
+
+The world economy is composed of $N$ countries. In each country $n$ there is
+a final consumption good. The consumption good is a bundle of sectoral goods
+produced by $J$ sectors. In turn, each sectoral output is a bundle of
+sector-specific varieties. Each sectoral variety can be produced
+domestically or imported. Domestic production of sectoral varieties uses
+non-produced inputs, to which we refer as \textquotedblleft equipped
+labor,\textquotedblright\ and other sectoral goods acting as intermediates.
+All markets are perfectly competitive.
+
+The consumption bundle $C_{nt}$ is packaged by a consumption-good producer
+using the Cobb-Douglas aggregate 
+\begin{equation}
+C_{nt}=\prod\nolimits_{j=1}^{J}\left( C_{nt}^{j}\right) ^{\alpha _{t}^{j}},
+\label{aggregate}
+\end{equation}%
+where $C_{nt}^{j}$ is the quantity of sectoral good $j$ used for
+consumption, and $\sum_{j=1}^{J}\alpha _{t}^{j}=1$. The $\alpha $s are
+allowed to change over time to capture possible changes in tastes. \textbf{%
+In Section \ref{Sces} we investigate the robustness of our results to a
+specification of preferences in which the elasticity of substitution among
+sectoral goods is not unitary.}
+
+Sectoral output in sector $j$, $Q_{nt}^{j}$, is 
+\begin{equation}
+Q_{nt}^{j}=\left[ \int_{0}^{1}q_{nt}(\omega ^{j})^{\frac{\eta -1}{\eta }%
+}d\omega ^{j}\right] ^{\frac{\eta }{\eta -1}},  \label{sectoroutput}
+\end{equation}%
+where $q_{nt}(\omega ^{j})$ is the quantity of sectoral variety $\omega ^{j}$
+used in sector $j$, and $\eta >0$ is the elasticity of substitution across
+goods within a given sector. Implicit in this formulation is the assumption
+that each sector relies on a continuum of sector-specific varieties, $\omega
+^{j}$.
+
+The technology for producing good $\omega ^{j}$ in country $n$ is 
+\begin{equation}
+x_{nt}(\omega ^{j})=A_{nt}^{j}z_{n}(\omega ^{j})l_{nt}(\omega ^{j})^{\beta
+^{j}}\prod\nolimits_{k=1}^{J}M_{nt}^{k}(\omega ^{j})^{\gamma ^{kj}},
+\label{eqinput}
+\end{equation}%
+where $x_{nt}(\omega ^{j})$ is the output of good $\omega ^{j}$ by country $%
+n $ at time $t$; $M_{nt}^{k}(\omega ^{j})$ is the amount of sector $k$
+output used by country $n$ in the production of good $\omega ^{j};$ $%
+l_{nt}(\omega ^{j})$ is the corresponding amount of equipped labour; $%
+z_{n}(\omega ^{j})$ is a time-invariant variety-specific productivity
+factor; and $A_{nt}^{j}$ is a time-varying productivity shock common to all
+the varieties in sector $j $. The exponent $\gamma ^{kj}$ captures the share
+of sector $k$ in the total production cost of sector $j.$ We assume constant
+returns to scale, or $\beta ^{j}+\sum_{k=1}^{J}\gamma ^{kj}=1$, for all $j$.
+Notice that (\ref{eqinput}) allows for a rich input-output structure, as the
+intensity with which each sector's output is used as intermediate by other
+sectors varies across all sector pairs.
+
+Building on the literature, we assume the productivities $z_{n}(\omega ^{j})$
+follow a sector-specific, time-invariant Fr\'{e}chet distribution $%
+F_{n}^{j}(z)=\exp (-T_{n}^{j}z^{-\theta })$. A higher $T_{n}^{j}$ shifts the
+distribution of productivities to the right, that is leading to
+probabilistically higher productivities. A higher $\theta $ decreases the
+dispersion of the productivity distribution, and hence reduces the scope for
+comparative advantage. The $z$\ terms are the main determinants of long-term
+comparative advantage in our model.
+
+The shocks to $A_{nt}^{j}$ over time are interpreted as standard TFP shocks,
+and are what make the model stochastic at the aggregate level. We will later
+decompose them into a country-specific component and a sector-specific
+component. This decomposition will be used to identify separately the
+country diversification and the sectoral specialization channels.
+
+The intermediate goods $\omega ^{j}$ can be produced locally or imported
+from other countries. Delivering a good from country $n$ to country $m$ in
+sector $j$ and time period $t$ results in $0<\kappa _{mnt}^{j}\leq 1$ goods
+arriving at $m$; we assume that $\kappa _{mnt}^{j}\geq \kappa
+_{mkt}^{j}\kappa _{knt}^{j}\quad \forall m,n,k,j,t$ and $\kappa _{nnt}^{j}=1$%
+. All costs incurred are net losses.\footnote{%
+In the calibration, the $\kappa $s will reflect all trading costs, including
+tariffs; so implicitly we adopt the extreme assumption that tariff revenues
+are wasted---or at least not rebated back to agents in a way that would
+interact with the allocation of resources in the economy.} Under the
+assumption of perfect competition, goods are sourced from the lowest-cost
+producer, after adjusting for transport costs. The sectoral outputs $%
+Q_{nt}^{j}$ are nontraded.
+
+At a given point in time $t$, country $n$ is endowed with $L_{nt}$ units of
+a primary (non produced) input, which we interpret as equipped labour. At
+the beginning of each period, before the realization of the shocks $%
+A_{nt}^{j}$, a representative consumer decides on the optimal allocation of
+the primary input $L_{nt}$ across the different sectors, $L_{nt}^{j}$. After
+the shocks to productivity are realized, equipped labour can be reallocated
+within a sector, but not across sectors. Next, production and consumption
+take place. Clearly, clearing in the input market within a sector implies 
+\begin{equation*}
+L_{nt}^{j}=\int_{0}^{1}l_{nt}(\omega ^{j})d\omega ^{j}.
+\end{equation*}
+
+The lack of ex-post reallocation across sectors in a given period aims at
+capturing the idea that in the short run it is costly to reallocate
+productive factors across sectors. Aside from realism, our main intention in
+including it is that we wish to nest into our model the traditional view
+that trade causes volatility by pushing countries to specialize - thus
+making them overly responsive to sectoral shocks. Without frictions to
+sectoral reallocation, this mechanism could not arise, as the economy would
+respond to shocks by moving labor from the negatively-affected sectors to
+the sectors receiving (relatively) positive shocks. Our model would then
+feature only our novel mechanism, namely the diversification of
+country-level shocks.\footnote{%
+In the quantification, a period will be one year. This amounts to assuming
+that it takes at least one year for resources to be reallocated across
+sectors. In Section V we relax the assumption of full rigidity within one
+period, and allow for ex post sectoral reallocation of equipped labour
+subject to an adjustment cost, which we calibrate to match sectoral
+reallocation flows in the data.}
+
+The representative agent has a per-period utility flow $\log (C_{nt})$.%
+\footnote{%
+The log utility assumption gives rise to a particularly intutive and
+tractable decision rule for the labor allocation.} Because there is no
+(endogenous) intertemporal trade and no capital in the economy, the only
+decision the representative agent has to take in each period is the
+allocation of equipped labor across sectors before observing the shock
+realizations. Since labor can be freely reallocated at the beginning of each
+period, this is a purely static decision.
+
+Since equipped labor is the only non-produced input, the per period budget
+constraint in each period is: 
+\begin{equation}
+P_{nt}C_{nt}=\sum\nolimits_{j=1}^{J}w_{nt}^{j}L_{nt}^{j}  \label{BC}
+\end{equation}%
+where $P_{nt}$ is the price of the consumption good defined in equation (\ref%
+{aggregate}), and $w_{nt}^{j}L_{nt}^{j}$ is the nominal value-added
+generated in sector $j$. This budget constraint assumes that trade is
+balanced. In Section V we relax this assumption.
+
+Using (\ref{BC}) in the utility function we can solve for the sectoral labor
+allocation:%
+\begin{equation}
+L_{nt}^{j}=\arg \max E_{t-1}\left[ \log \left( \frac{%
+\sum_{j=1}^{J}w_{nt}^{j}L_{nt}^{j}}{P_{nt}}\right) \right]
+,s.t.:\sum\nolimits_{j=1}^{J}L_{nt}^{j}=L_{nt},  \label{eq:log:utility}
+\end{equation}%
+\textbf{where }$E_{t-1}$\textbf{\ indicates the rational expectation over
+the possible realizations of period }$t$\textbf{\ shocks. In particular, the
+representative agent knows }$L_{nt}^{j}$\textbf{\ and }$\kappa _{nt}^{j}$%
+\textbf{, as well as the previous values of the shock processes }$%
+A_{nt-1}^{j}$\textbf{. The agent also knows the distribution of }$A_{nt}^{j}$%
+\textbf{\ conditional on }$A_{nt-1}^{j}$\textbf{\ (which we estimate later
+from data), and is therefore able to compute the rational expectation in (%
+\ref{eq:log:utility})}.\footnote{%
+Implicit in our formulation is the assumption that there is perfect
+risk-sharing within a country, but no risk-sharing across countries. To
+motivate the lack of risk-sharing across countries, see our earlier
+discussion on the high comovement between consumption and output as well as
+the high correlation between consumption and output volatility.}
+
+\subsection{Model Solution}
+
+Conditional on the realization of the country-and-sector specific shocks $%
+A_{nt}^{j}$, our model is very similar to other general equilibrium,
+multi-sector versions of the Eaton-Kortum model. The main difference is that
+equipped labor is pre-allocated across sectors. Hence, we do not offer a
+detailed derivation of the key equilibrium conditions that are unaffected by
+the ex-ante allocation of resources, but merely state them in the following
+list.
+
+\begin{equation}
+d_{nmt}^{j}=\frac{T_{m}^{j}\left( \frac{B^{j}\left( w_{mt}^{j}\right)
+^{\beta ^{j}}\prod_{k=1}^{J}(P_{mt}^{k})^{\gamma ^{kj}}}{A_{mt}^{j}\kappa
+_{nmt}^{j}}\right) ^{-\theta }} {\sum_{i=1}^{N}T_{i}^{j}\left( \frac{%
+B^{j}\left( w_{it}^{j}\right) ^{\beta
+^{j}}\prod_{k=1}^{J}(P_{it}^{k})^{\gamma ^{kj}}}{A_{it}^{j}\kappa _{nit}^{j}}%
+\right) ^{-\theta }},  \label{shares}
+\end{equation}
+
+\begin{equation}
+P_{nt}^{j}=\xi \sum_{m=1}^{N}T_{m}^{j}\left( \frac{B^{j}\left(
+w_{mt}^{j}\right) ^{\beta ^{j}}\prod_{k=1}^{J}(P_{mt}^{k})^{\gamma ^{kj}}}{%
+A_{mt}^{j}\kappa _{nmt}^{j}}\right) ,  \label{eq2}
+\end{equation}
+
+\begin{equation}
+P_{nt}=\prod\nolimits_{j}^{J}\left( \frac{1}{\alpha _{n}^{j}}\right)
+^{\alpha ^{j}}\left( P_{nt}^{j}\right) ^{\alpha ^{j}},  \label{eq1}
+\end{equation}%
+\begin{equation}
+R_{nt}^{j}=\sum\nolimits_{m=1}^{N}d_{mnt}^{j}E_{mt}^{j},  \label{rev}
+\end{equation}%
+\begin{equation}
+E_{nt}^{j}=\alpha _{t}^{j}P_{nt}C_{nt}+\sum\nolimits_{k=1}^{J}\gamma
+^{jk}R_{nt}^{k},  \label{exp}
+\end{equation}%
+\begin{equation}
+w_{nt}^{j}L_{nt}^{j}=\beta ^{j}R_{nt}^{j},  \label{RC}
+\end{equation}%
+and the budget constraint (\ref{BC}). In the equations above, $d_{nmt}^{j}$
+is the fraction of country $n$'s total spending on sector-$j$ goods that is
+imported from country $m;$ $P_{nt}^{j}$ is the price of sectoral-good $j$ in
+country $n$; $R_{nt}^{j}$ is total revenues accruing to firms operating in
+sector $j$ in country $n$; and $E_{nt}^{j}$ is total expenditure by country $%
+n$ residents (consumers and firms) on sectoral good $j$. $B^{j}\equiv \left(
+\beta ^{j}\right) ^{-\beta ^{j}}\dprod\limits_{k=1}^{J}\left( \gamma
+^{k_{j}}\right) ^{-\gamma ^{k_{j}}}$ and $\xi \equiv \left[ \Gamma \left( 
+\frac{\theta +1-\eta }{\theta }\right) \right] $, where $\Gamma $ is the
+gamma function, are parametric constants. Hence, equation (\ref{shares})
+says that country $n$ imports disproportionately from countries $m$ and
+sectors $j$ that have high productivity draws $T_{m}^{j}$ and $A_{mt}^{j}$;
+low wages $w_{mt}^{j}$ and sectoral prices $P_{mt}^{k}$; and low bilateral
+trading costs, namely high $\kappa _{nmt}$s. Equation (\ref{eq2}) says that
+the same factors affect domestic sectoral prices. Equation (\ref{eq1})
+follows from the final-good producer's profit maximization problem, and
+shows the price of consumption as an aggregate of the sectoral prices.
+Equation (\ref{rev}) expresses the total sales of sector $j$ in country $n$
+as a function of each country's expenditures on that sector and the share of
+country $n$ in each country's imports in that sector. Equation (\ref{exp})
+states that a country's expenditures in sector $j$ is the sum of final and
+intermediate uses of sector $j$ goods. Equation (\ref{RC}) simply notes from
+the Cobb-Douglas formulation that value added from sector $j$ is a share $%
+\beta ^{j}$ of the gross output of sector $j$.
+
+To these fairly standard equilibrium conditions we add here the first-order
+conditions for the allocation of inputs to sectors, i.e. the solution to (%
+\ref{eq:log:utility}). This turns out to be: 
+\begin{equation}
+\frac{L_{nt}^{j}}{L_{nt}}=E_{t-1}\left[ \frac{w_{nt}^{j}L_{nt}^{j}}{%
+\sum_{k}w_{nt}^{k}L_{nt}^{k}}\right] ,\qquad \forall j,t.  \label{eq:FOC}
+\end{equation}%
+The share of resources allocated to a given sector equals its expected share
+in value added. Note that $1/\sum_{k}w_{nt}^{k}L_{nt}^{k}$ is the marginal
+utility of consumption in period $t$; thus, more resources are allocated to
+higher value-added sectors, after appropriately weighting by marginal
+utility.\footnote{%
+Compared to the allocation in a determinisitc model, in our stochastic
+application sectors whose productivity is negatively correlated with
+aggregate productivity (that is, they have high value added when the rest of
+the economy has low value added) are allocated a disproportionate share of
+resources. In states of the world in which overall income is low, the
+marginal utility of consumption $1/\sum_{k}w_{nt}^{k}L_{nt}^{k}$ will be
+high and hence the optimal allocation entails allocating more resources to
+this sector.}
+
+The model can conceptually be solved backwards in two steps. First, for any
+given set of values for $L_{nt}^{j}$, equations (\ref{shares})-(\ref{RC})
+can be solved for $P_{nt}$, $w_{nt}^{j}$, $P_{nt}^{j}$, $d_{nmt}^{j}$, $%
+E_{nt}^{j}$, $R_{nt}^{j}$, and $C_{nt}$ as functions of the $\kappa
+_{mnt}^{j}$s, the $T_{nt}^{j}$s, the $A_{nt}^{j}$s, and of course the $%
+L_{nt}^{j}$s. For calibration purposes it turns out to be both possible and
+convenient to express the dependence of these solutions on $T_{n}^{j}$, $%
+A_{nt}^{j}$, and $L_{nt}^{j}$ in terms of the \textit{augmented productivity
+factors}%
+\begin{equation}
+Z_{nt}^{j}\equiv T_{n}^{j}\left( A_{nt}^{j}\right) ^{\theta }\left(
+L_{nt}\right) ^{\beta ^{j}\theta }  \label{productivityfactor}
+\end{equation}%
+and the sectoral employment shares $\frac{L_{nt}^{j}}{L_{nt}}$. The
+augmented productivity factors capture the joint influence of all the
+exogenous processes (whether deterministic or stochastic) that impinge on
+the country and sector overall productive capacity.
+
+\textbf{The second stage of the solution uses (\ref{eq:FOC}) to find the
+ex-ante shares }$L_{nt}^{j}/L_{nt}$\textbf{. Our solution method computes
+the rational expectation in (\ref{eq:FOC}) by bootstrapping from the
+empirical distribution of }$A_{nt}^{j}$\textbf{. In particular, we begin
+with a choice of candidate values for the }$L_{nt}^{j}$\textbf{s, and draw a
+large number of realizations of the }$A_{nt}^{j}$\textbf{s from their
+empirical distributions (conditional on the }$A_{nt-1}^{j}$\textbf{s). For
+each of these realizations, we compute the solution for the }$w_{nt}^{j}$%
+\textbf{s from the system (\ref{shares})-(\ref{RC}), and then the term in
+brackets on the right side of (\ref{eq:FOC}). The rational expectation is
+then the average of the terms in brackets across all the bootstrapped
+realizations. If this is (close enough to being) equal to the starting guess
+for }$L_{nt}^{j}/L_{nt}$\textbf{\ we stop. Otherwise, we move to a new guess
+for }$L_{nt}^{j}/L_{nt}$\textbf{. A more detailed explanation is provided in
+the Appendix.}
+
+The key theoretical outcome we are interested in is aggregate income
+volatility, which we measure as the variance (or standard deviation, where
+indicated), of real income deviations from country-specific trends. In turn,
+real income in the model is given by total value added deflated by the
+optimal expenditure-based price index, or $Y_{nt}=\frac{w_{nt}L_{nt}}{P_{nt}}%
+.$ As discussed in the Introduction, these welfare-relevant measures of
+income are expected to show first-order responses to changes in the terms of
+trade, and hence in foreign productivities, endowments, or trade costs.%
+\footnote{%
+In contrast, if we were to deflate nominal GDP by using the CES price
+aggregates of the sector-level variety baskets, we would retrieve the
+Kehoe-Ruhl invariance of GDP\ to shocks to the terms of trade. It is
+doubtful, however, that GDP as constructed by statistical agencies maps well
+into this theoretical construct. They may measure the price of a
+representative variety within each sector, the average price of an aggregate
+variety basket, or a random sample of continuously used varieties. This
+choice might also depend on the source country, as import price indexes are
+computed differently from producer price indexes (Nakamura and Steinsson,
+2008 QJE vs Nakamura and Steinsson, 2012 AER). In contrast, the CPI is
+easier to map to our model, because consumers only consume J different final
+goods, not a continuum of varieties. Our welfare-relevant price index, which
+is the geometric average of final good prices is a very close approximation
+of the expenditure-weighted T\"{o}rnqvist price index, the way the CPI is
+usually calculated.} \textbf{Please check this footnote very carefully.}
+
+\subsection{Two Illustrative Cases: Autarky and Costless Trade}
+
+To illustrate our novel mechanism of diversification through trade, we begin
+by analyzing a one-sector version of the model (that is, the original
+Eaton-Kortum model) under two extreme cases for which we have closed-form
+analytical solutions: autarky ($\kappa _{nmt}=0$ for all $n\neq m,t$) and
+costless trade ($\kappa _{nmt}=1$ for all $n,m,t$). We accordingly drop the
+sector subscripts. The final good is still used as an intermediate. Note
+that in both cases we can set $P_{n}=1$ for all $n$. In the autarky case
+this is an innocuous normalization. In the costless-trade case this is due
+to the fact that prices are equalized across countries.
+
+\subsubsection{Volatility under Autarky}
+
+Under complete autarky, it can be easily shown that value added in the
+one-sector economy is a function of augmented productivity: 
+\begin{equation*}
+Y_{nt}\propto \left( Z_{nt}\right) ^{\frac{1}{\beta \theta }}
+\end{equation*}%
+where, recall, $Z_{nt}\equiv T_{n}\left( L_{nt}A_{nt}^{1/\beta }\right)
+^{\beta \theta }$. Defining $\hat{Z}_{nt}$ ($\hat{Y}_{nt}$) as the
+log-deviation of $Z_{nt}$ ($Y_{nt}$) from its deterministic trend, we thus
+have $\hat{Y}_{nt}=\frac{1}{\beta \theta }\hat{Z}_{nt}.$ Hence, much as in a
+RBC model, in the one-sector economy under autarky shocks to value added are
+driven exclusively by domestic shocks to the productive capacity of the
+economy, $\hat{Z}_{nt}.$ The variance of income, $Var(\hat{Y}_{nt})$ thus
+depends on the variance of the shocks $Var(\hat{Z}_{nt})$: 
+\begin{equation*}
+Var(\hat{Y}_{nt})=\frac{1}{\left( \beta \theta \right) ^{2}}Var(\hat{Z}%
+_{nt}).
+\end{equation*}
+
+\subsubsection{Volatility under Costless International Trade}
+
+Under costless international trade ($\kappa _{nmt}=1$) in the one-sector
+economy income per capita is:\footnote{%
+See derivations in the Appendix. With costless international trade, the
+aggregate production function exhibits decreasing returns in the domestic
+equipped labour $L_{nt}$, a result that goes back to Acemoglu and Ventura
+(2002).} 
+\begin{equation*}
+Y_{nt}=\left( \xi B\right) ^{1/\beta }Z_{nt}^{\frac{1}{1+\beta \theta }%
+}\left( \sum\nolimits_{m=1}^{N}Z_{mt}^{\frac{1}{1+\beta \theta }}\right) ^{%
+\frac{1}{\beta \theta }}
+\end{equation*}%
+and hence income fluctuations are given by: 
+\begin{equation*}
+\hat{Y}_{nt}=\frac{1}{1+\beta \theta }\left[ \hat{Z}_{n}+\frac{1}{\beta
+\theta }\sum\nolimits_{m=1}^{N}\gamma _{m}\hat{Z}_{m}\right] 
+\end{equation*}%
+where $\gamma _{m}=\frac{\bar{Z}_{m}^{\frac{1}{1+\beta \theta }}}{%
+\sum_{i=1}^{N}\bar{Z}_{i}^{\frac{1}{1+\beta \theta }}}$ is the relative size
+of country $j$ evaluated at the mean of $Z_{j}s$. Rearranging, we obtain $%
+\hat{Y}_{nt}=\frac{1}{\beta \theta }\left[ \frac{\gamma _{n}+\beta \theta }{%
+1+\beta \theta }\hat{Z}_{n}+\frac{1}{1+\beta \theta }\sum_{m\neq
+n}^{N}\gamma _{m}\hat{Z}_{m}\right] $. Volatility under free trade is hence
+given by: 
+\begin{equation*}
+Var(\hat{Y}_{nt})=\left( \frac{1}{\beta \theta }\right) ^{2}\left\{ 
+\begin{array}{c}
+\left( \frac{\gamma _{n}+\beta \theta }{1+\beta \theta }\right) ^{2}Var(\hat{%
+Z}_{nt})+\left[ \frac{1}{1+\beta \theta }\right] ^{2}\sum_{m\neq i}\gamma
+_{m}^{2}Var(\hat{Z}_{mt}) \\ 
+2\frac{\gamma _{n}+\beta \theta }{1+\beta \theta }\frac{1}{1+\beta \theta }%
+\sum_{m\neq n}\gamma _{m}Cov(\hat{Z}_{m,}\hat{Z}_{n})%
+\end{array}%
+\right\} 
+\end{equation*}
+
+Compared to the variance in autarky, $\frac{1}{\left( \beta \theta \right)
+^{2}}V(\hat{Z}_{nt})$, it is clear that the volatility due to domestic
+productivity fluctuations, $Var(\hat{Z}_{nt}),$ now receives a smaller
+loading, as $\left( \frac{\gamma _{n}+\beta \theta }{1+\beta \theta }\right)
+^{2}<1$ since $\gamma _{n}<1.$ The smaller the country (as gauged by its
+share $\gamma _{n}$), the smaller the impact of domestic volatility of
+shocks, $\hat{Z}_{n},$ on its income, when compared to autarky. Openness to
+trade, however, exposes the economy to other countries' productivity shocks,
+which will also contribute to the country's overall volatility.
+
+Whether or not the gain in diversification (given by lower exposure to
+domestic productivity) is bigger than the increased exposure to new shocks
+depends on the variance-covariance matrix of shocks across countries. If all
+countries have the same constant variance $Var(\hat{Z}_{nt})=\sigma ,$ and
+the $\hat{Z}_{nt}$ are uncorrelated, volatility under free trade becomes: 
+\begin{equation*}
+Var(\hat{Y}_{nt})=\left( \frac{1}{\beta \theta }\right) ^{2}\left\{ \left( 
+\frac{\gamma _{n}+\beta \theta }{1+\beta \theta }\right) ^{2}+\left[ \frac{1%
+}{1+\beta \theta }\right] ^{2}\sum_{m\neq i}\gamma _{m}^{2}\right\} \sigma
+\end{equation*}%
+which is unambiguously lower than the volatility under autarky.\footnote{%
+To see this note that $2\beta \theta \gamma _{n}+\sum_{j=1}\gamma
+_{j}^{2}<2\beta \theta +1$ since $\gamma _{m}\leq 1$ for every $m$, and so $%
+\left( \beta \theta \right) ^{2}+2\beta \theta \gamma _{n}+\sum_{j=1}\gamma
+_{j}^{2}<(1+\beta \theta )^{2}$. This means that the expression in curly
+brackets is less than 1.} Of course, if other countries have higher
+variances or the covariance terms are important, then the weights countries
+receive matter and the resulting change in volatility cannot be
+unambiguously signed.
+
+Aside from the over-simplified variance and covariance structure, these
+examples abstract from the traditional channel thought to link trade to
+increased volatility, namely sectoral specialization. In order to evaluate
+the relative importance of country diversification and sectoral
+specialization, as well as to base the analysis on a more realistic
+stochastic environment based on the data, and to evaluate infra-marginal
+changes in trade costs, the rest of the paper focuses on the full
+multi-sector model with frictions to the reallocation of labor following the
+realization of shocks.
+
+\section{Quantification}
+
+\label{mapping_into_observables} Our goal is to quantitatively assess the
+effect of historical changes in trade barriers on income volatility for as
+large a sample of countries and as fine a level of sectoral disaggregation
+as available data allows. It turns out that the necessary data are available
+for a sample of 24\ core countries, and an aggregate of the remaining
+countries,\ to which we refer to as \textquotedblleft rest of the
+world\textquotedblright\ (ROW). The country coverage is good, in the sense
+that the countries included account for an overwhelming share of world GDP
+and trade. In terms of sectoral breakdown, we are able to consider 24
+sectors: agriculture, 22 manufacturing sectors, and services. It would
+clearly have been desirable to access an even finer breakdown. Among other
+things, a finer breakdown would have potentially implied greater effective
+rigidity in the allocation of labor across sectors, allowing us to test the
+robustness of our conclusions on the importance of the specialization
+channel. Nevertheless, 24 sectors is at the top end of the level of
+disaggregation usually achieved in applications of the Eaton-Kortum
+framework.
+
+In order to solve the model\ numerically, we need to estimate the values of
+the exogenous trading costs $\kappa _{nmt}^{j}$ and the augmented
+productivity processes $Z_{nt}^{j}$. We also need to calibrate the
+parameters $\alpha _{t}^{j}$, $\beta ^{j}$, $\gamma ^{kj}$, $\theta $, and $%
+\eta $.
+
+\subsection{Exogenous Processes}
+
+As has become standard in empirical applications of the Eaton and Kortum
+framework, we back out realized paths of both trade costs $\kappa _{nmt}^{j}$
+and augmented productivities $Z_{nt}^{j}$ from (versions of) the gravity
+equation (\ref{shares}) [e.g. Costinot, Donaldson, Komunjer (2012),
+Levchenko and Zhang (2014, 2016)]. Allen, Arkolakis, and Takahashi (2017)
+discuss the identification issues involved in this inference problem, whose
+solution generally requires additional information on trade costs. In our
+case, we impose additional restrictions on the patterns of bilateral trade
+costs, which allow us to back out the full matrix of bilateral trade costs $%
+\kappa _{nmt}^{j}$ independently from the $Z_{nt}^{j}$s. We can then plug
+the estimated $\kappa _{nmt}^{j}$s back into (\ref{shares}) to back out the $%
+Z_{nt}^{j}$s.\footnote{%
+An alternative to our two-step strategy is to find proxies for the
+observable determinants of trade costs (e.g. distance, or colonial links)
+and model the $\kappa $s explicitly as functions of these determinants. Then
+equation (\ref{shares}) can be estimated econometrically and the $Z$s
+recoverd as (functions of) country-sector fixed effects. See, e.g.,
+Levchenko and Zhang (2014).}
+
+\subsubsection{Trade Costs}
+
+In order to back out the $\kappa _{nmt}^{j}$s independently of the other
+variables in the gravity equation we follow Head and Ries (2001) and assume
+that $\kappa _{nmt}^{j}=1$ for $n=m$, and that $\kappa _{nmt}^{j}=\kappa
+_{mnt}^{j}$ for all $n$, $m$, and $j$. With these assumptions, equation (\ref%
+{shares}) can be manipulated to yield:%
+\begin{equation}
+\frac{d_{nmt}^{j}d_{mnt}^{j}}{d_{mmt}^{j}d_{nnt}^{j}}=\left( \kappa
+_{nmt}^{j}\right) ^{2\theta }.  \label{kappa}
+\end{equation}%
+Recall that $d_{nmt}^{j}$ is the fraction of country $n$'s total spending on
+sector-$j$ goods that is imported from country $m$. Imports are directly
+observable and spending can be constructed from available data as gross
+sectoral output plus sectoral imports minus sectoral exports. Hence, for a
+given value of $\theta $ (see below for the calibration of this parameter),
+we can obtain the time series of trading costs by sector and country-pairs $%
+\left\{ \kappa _{nmt}^{j}\right\} $.
+
+Figure 1 shows the histograms of bilateral $\kappa $s in manufacturing and
+agriculture in the first and last year of our sample (recall that services
+are treated as a nontradable sector). In both agriculture and manufacturing
+trade barriers have declined significantly since the early 1970s. As is
+typical of estimated trade costs from gravity equations the \textit{levels}
+of the trade costs are very large. But it is important to remember that the
+trade barriers do not only reflect transport costs and tariff and non-tariff
+trade barriers; but also that many manufacturing and, especially,
+agricultural goods are not fully tradable (e.g. perishable products). They
+may also pick up a home-bias effect that is not explicitly modelled in Eaton
+and Kortum.
+
+\subsubsection{\label{PTS}Productivity in Tradable Sectors}
+
+Using again (\ref{shares}), together with (\ref{eq2}) and our definition of
+augmented productivity (\ref{productivityfactor}), some algebra yields 
+\begin{equation}
+Z_{nt}^{j}=\underbrace{{B^{j}}^{\theta }{\xi }^{\theta }d_{mnt}^{j}\left(
+y_{n}^{j}\right) ^{\theta \beta ^{j}}\left( \kappa _{mnt}^{j}\right)
+^{-\theta }\left( P_{nt}^{\beta
+^{j}}\prod\nolimits_{k=1}^{J}(P_{nt}^{k})^{\gamma ^{kj}}\right) ^{\theta
+}\left( \psi _{nt}^{j}\right) ^{-\theta \beta ^{j}}}_{\equiv \exp (\zeta
+_{mnt}^{j})}\left( {P_{mt}^{j}}\right) ^{-\theta },  \label{Z}
+\end{equation}%
+where $\psi _{n}^{j}\equiv \frac{L_{n}^{j}}{L_{n}}$ and $y_{n}^{j}\equiv 
+\frac{L_{n}^{j}w_{n}^{j}}{P_{n}}$. This equation holds for all $n,m,j,t$. It
+says that, for a given price of sectoral good $j$ in country $m$, ${%
+P_{mt}^{j}}$, and bilateral trading costs $\kappa _{mnt}^{j}$, productivity
+in country $n$ in that sector is inferred to be high if country $n$ exports
+a lot to country $m$, or $d_{mnt}^{j}$ is large; if value added $y_{n}^{j}$
+is large; or the sectoral input share $\psi _{n}^{j}$ is large.
+
+For all countries, we can directly observe several of the terms collected in
+the object we have called $\exp (\zeta _{mnt}^{j})$. In particular, data is
+available for sectoral import shares $d_{mnt}^{j}$ (as already used in the
+previous subsection), sectoral value added $y_{nt}^{j}$, and aggregate
+prices $P_{nt}$. We do not observe directly the sectoral shares $\psi
+_{nt}^{j}$. However, recall from equation (\ref{eq:FOC}) that, in our model,
+equipped labour is allocated across sectors so that the share of employment
+in each sector equals the \textit{expected} share of that sector's value
+added in total value added. Hence, to compute the terms $\psi _{nt}^{j}$ we
+take the time series of sector $j$'s value added in country $n$'s value
+added, and extract its (nonlinear) time trend. We then treat the trend as a
+proxy for the expected value and plug it into (\ref{Z}) as our estimate of $%
+\psi _{nt}^{j}.$\footnote{%
+An alternative procedure would be to take a stand on the equipped-labor
+aggregate. For example, Levchenko and Zhang (2014) assume it is a
+Cobb-Douglas aggregate of capital and (raw) labor.}
+
+This leaves us needing the sector-specific price deflators ${P_{mt}^{j}}$
+for some benchmark country $m$. We could easily just plug into (\ref{Z}) the
+US sectoral price indices and use them to recover the $Z_{nt}^{j}$s for all
+other countries (and the US itself). It turns out, however, that in the next
+subsection we will need sectoral price deflators for tradable sectors for
+all countries in order to obtain estimates of the productivity processes for
+the nontradable sector. As these sectoral price indices are not available
+for many of the countries in our sample, we develop here a procedure to back
+out tradeable prices. When we have tradable prices for all countries, we can
+use (\ref{Z}) more efficiently to estimate productivity processes.
+
+Taking logs and rearranging (\ref{Z}) yields.%
+\begin{equation*}
+\theta \log \left( P_{mt}^{j}\right) =\zeta _{mnt}^{j}-\log \left(
+Z_{nt}^{j}\right) .
+\end{equation*}%
+Since this relationship (vis-a-vis) country $n$ must hold for any generic
+countries $m$ and $m^{\prime }$, we can write%
+\begin{equation*}
+\theta \log \left( P_{mt}^{j}\right) -\theta \log \left( P_{m^{\prime
+}t}^{j}\right) =\zeta _{mnt}^{j}-\zeta _{m^{\prime }nt}^{j}.
+\end{equation*}%
+Rearranging this, and averaging over $n$, we further get%
+\begin{equation*}
+\theta \log \left( P_{mt}^{j}\right) =\frac{1}{N}\sum\nolimits_{n=1}^{N}%
+\left( \zeta _{mnt}^{j}-\zeta _{m^{\prime }nt}^{j}\right) +\theta \log
+\left( P_{m^{\prime }t}^{j}\right) .
+\end{equation*}%
+Recalling that the $\zeta $s are observable for all $n$, this expression
+tells us that we can recover the sectoral prices for any country $m$ if we
+have sectoral price indices for at least one country $m^{\prime }$. We do
+have sectoral price indices for the US. We choose units of accounts for each
+sector so that U.S. nominal sectoral prices are equal to 1 in 1972.
+
+Having thus obtained sectoral price series $P_{mt}^{j}$ for all countries
+and sectors, we can return to (\ref{Z}) and recover $Z_{nt}^{j}$ from%
+\begin{equation*}
+\log (Z_{nt}^{j})=\frac{1}{N}\sum\nolimits_{m=1}^{N}\left[ \zeta
+_{mnt}^{j}-\theta \log \left( P_{mt}^{j}\right) \right] .
+\end{equation*}%
+Note that, in the last two expressions, instead of using the average across
+a country's trade partners we could have used any individual bilateral
+relation. Theoretically, either option is valid. However, using the average
+minimizes the influence of measurement error.
+
+\subsubsection{\label{PNTS}Productivity in Nontradables}
+
+The procedure in the previous subsection uses data on trade flows and is
+thus only applicable to the recovery of augmented productivities in the
+tradable sectors: agriculture and the various manufacturing industries. To
+recover the productivity series in the service sector we begin by
+constructing a time series for the price of services. From equation (\ref%
+{eq1}), the price of services $P_{n,t}^{s}$ can be written as%
+\begin{equation*}
+P_{nt}^{s}=\left( \frac{P_{nt}}{P_{US,t}}P_{US,t}\right) ^{\frac{1}{\alpha
+^{s}}}\left( \prod\nolimits_{j=1}^{J}{\alpha ^{j}}^{-\alpha ^{j}}\right) ^{-%
+\frac{1}{\alpha ^{s}}}\left[ \prod\nolimits_{j\neq s}\left(
+P_{nt}^{j}\right) ^{\alpha ^{j}}\right] ^{-\frac{1}{\alpha ^{s}}}.
+\end{equation*}%
+We have just described in the previous subsection how to estimate the prices
+of all the sectors other than services, i.e. the $P_{nt}^{j}$s in the last
+term. From the Penn World Tables we can obtain a general price index for
+each country $n$ relative to the United States, $\frac{P_{nt}}{P_{US,t}}$.
+And $P_{US,t}$ is simply the US general price index. With the price series
+for services at hand, we can construct augmented productivity in services, $%
+Z_{nt}^{s}$ using again equation (\ref{Z}), for the case $n=m$.\footnote{%
+Implying, therefore, $d_{mnt}^{s}=\kappa_{mnt}^s=1$.}
+
+\subsubsection{\label{SvAS}Sectoral versus Aggregate Shocks}
+
+Since we are interested in decomposing the overall effect of trade on
+volatility into the contributions of the two mechanisms, specialization and
+diversification, we need to separately identify sectoral and aggregate
+shocks. We resort to a factor model that decomposes augmented productivity
+shocks into sector- and country-specific components, as described in Koren
+and Tenreyro (2007). To separate per period shocks from trends we use a
+band-pass filter to detrend each $\left\{ \log {Z_{nt}^{j}}\right\}
+_{t=1}^{T}$ series. Without loss of generality, we decompose the cyclical
+component, denoted $\hat{Z}_{nt}^{j}$, as: 
+\begin{equation*}
+\hat{Z}_{nt}^{j}=\lambda _{t}^{j}+\mu _{nt}+\epsilon _{nt}^{j},
+\end{equation*}%
+where ${\mu _{nt}}$ is the country-specific factor, affecting all sectors
+within the country; $\lambda _{t}^{j}$ is the global sectoral factor,
+affecting sector $j$ in all countries;\ and the residual $\epsilon _{nt}^{j}$
+is the idiosyncratic component, specific to the country and sector.\footnote{%
+The three factors, $\lambda ,\mu $, and $\epsilon $ are estimated as: 
+\begin{align*}
+\lambda _{t}^{j}& =N^{-1}\sum_{n=1}^{N}\hat{Z}_{nt}^{j} \\
+\mu _{nt}& =J^{-1}\sum_{j=1}^{J}\bar{\alpha}^{j}\left( \hat{Z}%
+_{nt}^{j}-\lambda _{t}^{j}\right) \\
+\epsilon _{nt}^{j}& =\hat{Z}_{nt}^{j}-\lambda _{t}^{j}-\mu _{nt}\text{,}
+\end{align*}%
+where $\bar{\alpha}^{j}$ is the time average of sectoral expenditure shares $%
+\alpha _{t}^{j}$, and we impose the restriction $\sum_{n}{\mu _{n}}=0,$
+implying that the country-specific effect is expressed relative to the
+world's aggregate. We calculate the country factor as a weighted average of
+shocks, because the single sector of services takes up 70-80 percent of
+value added in many economies. This is in contrast to Koren and Tenreyro
+(2007), who use unweighted average. Their application focuses on
+manufacturing sectors, which do not differ as much in size.} In the
+counterfactual exercises, we can mute the sector- or country-specific
+factors by setting the corresponding components equal to 0, in order to
+identify the separate effects of the two trade channels affecting volatility.
+
+\textbf{In order to solve the model, we must be able to compute the rational
+expectation of a sector's value added as a share of total value added at the
+beginning of period }$t$\textbf{, conditional on }$\hat{Z}_{nt-1}^{j}$%
+\textbf{\ (see equation (\ref{eq:FOC})). To do this we assume that the
+processes }$\lambda _{t}^{j}$\textbf{, }$\mu _{nt}$\textbf{, and }$\epsilon
+_{nt}^{j}$\textbf{\ are all AR(1) log-normal processes, and for each of them
+we estimate specific autoregressive and variance parameters. We then
+construct possible realizations of }$Z_{nt}^{j}$\textbf{\ by bootsrapping
+from the distributions of }$\lambda _{t}^{j}$\textbf{, }$\mu _{nt}$\textbf{,
+and }$\epsilon _{nt}^{j}$\textbf{\ \ conditional on }$\lambda _{t-1}^{j}$%
+\textbf{, }$\mu _{nt-1}$\textbf{, and }$\epsilon _{nt-1}^{j}$\textbf{, and
+adding the bootstrapped values to the deterministic (trend) component of }$%
+Z_{nt}^{j}$\textbf{.}
+
+\subsection{Calibration}
+
+We set $\alpha _{t}^{j}$ so as to match the cross-country average of the
+share of sector $j$ in total final uses, in each year, using the data on
+value added described in the Appendix. The $\beta ^{j}$s are calculated as
+the average ratios (across time and countries) of value added to total
+output in each sector, again using the sectoral value added and gross output
+data from the appendix. And the $\gamma ^{kj}$s are the average shares of
+purchases by sector $j$ from sector $k$ from the OECD input-output tables,
+as a share of total sectoral output.
+
+We allow for a relatively broad parametric range for $\theta $, from $\theta
+=2$ to $\theta =8,$ consistent with the estimates in the literature (see
+Eaton and Kortum, 2002, Donaldson 2015, and Simonovska and Waugh, 2014). We
+use $\theta =4$ as the baseline case, and report the results for other
+values when discussing the sensitivity of our results. We calibrate the
+elasticity of substitution across varieties $\eta =4$, consistent with Broda
+and Weinstein (2006)'s median estimates. The results are not sensitive to
+this parametric choice.
+
+\section{The Effect of Trade on Volatility}
+
+This section uses the framework developed above to quantitatively assess how
+historical changes in trade costs from the early 1970s have affected
+volatility patterns in a sample of countries at different levels of
+development. We first analyze the baseline model's results and then perform
+a series of sensitivity checks and extensions.
+
+\subsection{Baseline Results}
+
+Figure 2 starts by comparing the baseline model-generated income volatility
+with the volatility in the data. The baseline model uses our benchmark
+calibration, $\theta =4$, and feeds in the historical time series for the
+trade costs $\kappa _{mnt}$, and for the augmented productivity factors $%
+Z_{nt}^{j}$. The graph shows the standard deviation of real income
+deviations from trend. Recall that real income is measured as value added
+deflated by the expenditure-based price index. The data counterpart is
+nominal GDP deflated by the CPI index. The correlation between standard
+deviations in the model and data series is 0.96 (0.88 without China) for the
+standard deviation and 0.99 (0.89 without China) for the variance. The
+analysis that follows will focus on the variance as a measure of volatility,
+rather than the standard deviation, because we exploit the additivity
+properties of the former to separately account for the diversification and
+sectoral-specialization effects.
+
+Table 1 investigates how the changes in trading costs have affected
+volatility in the 24 countries in our sample (plus the rest of the world).
+Column 1 compares our baseline scenario, which uses the estimated time paths
+of trading costs and productivity processes, to a scenario in which we
+remove the secular decline in trading costs.\footnote{%
+The absolute numbers of the volatilities generated by the scenarios
+discussed in this Section are reported in Appendix Table 1.} In particular,
+in the counterfactual scenario we keep all the $\kappa _{nmt}^{j}$s constant
+at their 1972 level. The column shows volatility under the counterfactual
+minus volatility in the baseline, and this difference taken as a percentage
+of the volatility at constant trading costs. The numbers can be interpreted
+as the proportional change in volatility caused by the decline in trading
+costs.
+
+The comparison in Column 1 reveals that volatility is generally higher under
+the counterfactual scenario with constant trading costs than in the
+baseline. For all countries except for China, there would have been more
+volatility under constant trade costs than there has been. For almost all
+countries, therefore, the common wisdom which predicts greater volatility
+following trade integration does not seem to apply.
+
+The biggest declines in volatility caused by trade occurred in
+Belgium-Luxemburg, Canada, Denmark, Germany, Ireland, Mexico, the
+Netherlands, Spain, and the United Kingdom, all of which saw volatility
+reductions due to trade in excess of 50\% (meaning their volatility has been
+50 percent lower than it would have been had trading costs stayed at their
+1972 levels). In the one country in which trade has created additional
+volatility, the excess volatility is negligible. The (unweighted) average
+country in our sample experienced a 36\% decline in volatility thanks to
+increased openness. But this average effect masks a huge amount of
+heterogeneity in the quantitative and qualitative effect of trade in
+volatility, consistent with our discussion of the country-specificity of the
+trade-volatility relation.
+
+As discussed at several points, openness affects volatility through two
+channels: a diversification effect and a specialization effect. While
+neither effect has an unambiguous impact, it is sensible to expect the
+diversification effect to reduce the impact of country-specific shocks, and
+hence - in most cases - to reduce volatility; similarly, by exacerbating the
+impact of sectoral shocks, the specialization effect is generally deemed to
+increase volatility. In the rest of the table we assess and quantify these
+predictions.
+
+In order to quantify the impact of the diversification effect, we compare
+two counter-factual scenarios. As before, the two scenarios differ in the
+path of trading costs, with one scenario featuring the same decline in
+trading cost that we back out from the data, and the other having trading
+costs constant at 1972 levels. However, in these two scenarios the series
+for $Z_{nt}^{j}$ is replaced by a modified series from which we remove all
+sectoral shocks (i.e. the shocks $\lambda _{t}^{j}$ and $\varepsilon
+_{t}^{j} $ defined in Section \ref{SvAS}). In other words we ask what
+volatility would have been with and without the observed decline in trade
+costs, if the only shocks to productivity had been the country-wide shocks.
+Because these two scenarios do not feature sectoral shocks, any differences
+in volatility must be ascribed to the diversification effect.
+
+The difference is again expressed as a percentage of the volatility under
+the 1972's trading cost levels\ and is reported in Column 2. Once again,
+overwhelmingly volatility at 1972 trade barriers is larger than volatility
+in the baseline case, confirming that the diversification channel strongly
+operates in the direction of lower volatility - as expected. It is
+interesting though that there are a few countries for which volatility is
+lower at 1972 trade costs. As discussed, even the diversification channel
+can amplify volatility, if openness exposes a country to disproportionately
+large and volatile trading partners, or partners whose shocks are highly
+correlated with a country's own. Evidently this was the case for these
+countries. On average, the diversification channel induces a 41\% drop in
+volatility relative to the case where barriers are held at the initial value.
+
+Because of the additive properties of the variance, the specialization
+effect can be quantified as the difference between the overall change in
+volatility, and the change due to the diversification effect. This is
+reported in Column 3. The figures should be interpreted as the change in
+volatility due to trade integration that would have occurred if only
+sectoral shocks (global or country specific) had been present. The change is
+positive for 15 out of 24 countries. Consistent with the standard view,
+therefore, the specialization channel tends to increase volatility in a
+majority of cases. Remarkably, however, there is a large number of countries
+which evidently are pushed to specialize into less volatile sectors, or into
+sectors that comove negatively (or less positively) with the country's
+aggregate shocks or other sectoral shocks. On average, the specialization
+channel implies an increase in volatility of 5\%.
+
+The most important lesson from the comparison of Columns 2 and 3 is about
+the relative magnitude of the diversification and specialization effects.
+The average change due to the diversification mechanism is about eight times
+as large as the average change due to the specialization mechanism. The
+specialization effect, on which the policy debate seems centred, is not as
+important as the diversification effect. We have hinted at the likely reason
+for this in the Introduction: country-specific shocks are simply much more
+important quantitatively than sector-specific ones.
+
+In Table 2 we briefly present a dynamic view of how the overall changes seen
+in Table 1 came about. As Table 1, the table presents comparisons of
+volatility under different scenarios, but volatility is computed by decade.%
+\footnote{%
+To calculate decadal volatility, we compute the variance of annual log
+growth rates in real GDP. It is infeasible to estimate a band-pass filter
+given just 10 years of data. The overall magnitudes of volatility are very
+similar to those in Table 1.} Not surprisingly, the impact of trade
+(understood as the change in trading costs since 1972) on volatility is
+modest in the 1970s, as by the end of the 1970s trade costs had not had much
+time to drift away from the 1972 values. Throughout the rest of the period,
+the gap between actual volatility and volatility at 1972 trade costs opens
+steadily, as the world economy becomes more and more integrated.
+
+\textbf{This overall monotonic decline in volatilty, however, masks some
+more nuanced dynamics of the diversification and specialization effects. In
+particular, the diversification effect peters out in the period 2000-2007.
+This petering out in the last seven years of the sample may possibly reflect
+some noisiness due to the relative short time span over which volatilities
+are computed. However, taken at face value, it points to the fact that --
+consistent with our theory -- the impact of trade on volatility is not only
+heterogenous across countries, but also over time. For example, the decline
+in the diversification effect could be due to country-wide shocks becaming
+more correlated in the 2000s.}
+
+\subsection{Sensitivity Analysis}
+
+In this section we evaluate the robustness of our baseline results to three
+alternative implementation choices: (i) allowing for unbalanced trade; (ii)
+alternative calibration values; (iii) allowing for costly labor reallocation
+across sectors, \textbf{and (iv) allowing for elasticities of substitution
+in consumption other than 1.}
+
+\subsubsection{Trade Imbalances}
+
+Our benchmark model focuses on the balanced trade case. Because we observe
+significant trade imbalances during the sample period, we begin our
+robustness checks by allowing countries to run trade surpluses and deficits.
+We do not attempt to endogenize trade deficits as the computational
+challenges of adding intertemporal considerations (including issues of
+default) are formidable. Furthermore, available theoretical models of
+intertemporal trade are not particularly successful empirically. Hence, as
+is customary in quantitative applications of the Eaton and Kortum model, we
+treat the trade surplus an as exogenous process which we take from the data.
+The required modifications to the baseline model are described in the
+appendix. As shown in Table 3, the quantitative results with trade
+imbalances are extremely similar to those in the baseline.
+
+\subsubsection{Scope for Comparative Advantage $\protect\theta $}
+
+Table 4 shows the change in volatility due to international trade and its
+decomposition for two other\ (extreme) values of $\theta $, $\theta =2$ and $%
+\theta =8.$ The general message is qualitatively robust: i) the effect of
+trade on volatility varies across countries; ii) the diversification channel
+tends to reduce volatility; iii) sectoral specialization tends to reduce
+volatility; (iv) the diversification channel is much more important than the
+specialization channel. Having said that, the magnitude of the effects is
+quite sensitive to changes in $\theta $, with the effect of trade on
+volatility being stronger for lower values of $\theta $, i.e. when the scope
+for comparative advantage increases.\footnote{%
+This exercise underscores the importance of the parameter $\theta $, and
+adds to the message of Arkolakis, Costinot, and Rodriguez-Clare (2012): in
+order to assess the effects of trade on key aggregate variables, the
+elasticity of trade to trade costs plays a key role.}
+
+\subsubsection{Adjustment Costs and Ex Post Sectoral Reallocation}
+
+The baseline model assumes that the sectoral allocation of equipped labour
+is decided one period in advance, before productivity shocks are realized.
+In this section we relax this stark assumption. We assume that the ex post
+reallocation of equipped labour is possible, but an adjustment cost is paid
+in that reallocation. By making sectoral reallocation of labor more flexible
+we necessarily reduce the importance of the sectoral specialization effect,
+and magnify the relative importance of our novel diversification mechanism.
+
+We model the cost of labor reallocation in reduced-form fashion. In
+particular, lifetime utility is given by 
+\begin{equation}
+U_{n}=\sum\limits_{t=0}^{\infty }\delta ^{t}\left\{ \log (C_{nt})-\frac{%
+\varrho }{2}\sum_{j=1}^{J}\left[ \psi _{nt_{+}}^{j}-\psi _{nt_{-}}^{j}\right]
+^{2}\right\} ,  \label{AC}
+\end{equation}%
+where $\psi _{nt_{-}}^{j}=\frac{L_{nt_{_{-}}}^{j}}{L_{nt}}$ and $\psi
+_{nt_{+}}^{j}=\frac{L_{nt_{+}}^{j}}{L_{nt}}$, and $L_{nt_{_{-}}}^{j}$($%
+L_{nt_{+}}^{j}$) is the equipped labour assigned to sector $j$ before
+(after) observing the realization of the shocks. A higher value of $\varrho $
+implies higher adjustment costs.
+
+The ex-post sectoral input allocation solves:%
+\begin{equation*}
+L_{nt_{+}}^{k}=\arg \max \left[ \log \left( \frac{%
+\sum_{j=1}^{J}w_{nt}^{j}L_{nt_{+}}^{j}}{P_{nt}}\right) -\frac{\varrho }{2}%
+\sum_{j=1}^{J}\left[ \psi _{nt_{+}}^{j}-\psi _{nt_{-}}^{j}\right] ^{2}\right]
+,\text{ }s.t.:\sum_{j=1}^{J}\psi _{nt_{+}}^{j}=\sum_{j=1}^{J}\psi
+_{nt_{-}}^{j}=1,
+\end{equation*}%
+and the first-order conditions lead to:%
+\begin{equation}
+\psi _{nt_{+}}^{k}=\psi _{nt_{-}}^{k}+\frac{1}{\varrho }\left[ \frac{%
+w_{nt}^{k}-\frac{1}{J}\sum_{j=1}^{J}w_{nt}^{j}}{%
+\sum_{j=1}^{J}w_{nt}^{j}L_{nt_{+}}^{j}/L_{nt}}\right] .  \label{estimate}
+\end{equation}%
+The ex post input shares $\psi _{nt_{+}}^{k}$ equal the ex-ante optimal
+shares $\psi _{nt_{-}}^{k}$ plus a fraction of the percentage differential
+between the sectoral input cost $w_{nt}^{k}$ and the average equipped labour
+cost in the economy $\frac{1}{J}\sum_{j=1}^{J}w_{nt}^{j}$. (Note that the
+denominator is the average input cost in the economy.) The adjustment cost
+parameter $\varrho $ determines the semi-elasticity of sectoral adjustment
+to the cost differential.
+
+Using (\ref{estimate}) in (\ref{AC}) we can solve for the ex-ante
+allocation, which turns out to be independent of $\varrho $, and hence it
+will be the same as in our baseline case, where $\varrho $ is implicitly
+assumed to be infinite. In other words, $\psi _{nt_{-}}^{j}$ is given by
+equation (\ref{eq:FOC}). \textbf{Miklos is this still true? I have vague
+memories of conversations where we concluded this is not quite right. Have
+we made any changes?}
+
+To calibrate $\varrho $, we use EU KLEMS data on employment and compensation
+for all countries in the European Union from 1970 to 2007. Using these data,
+we compute the object in the square bracket in equation (\ref{estimate}). We
+then regress yearly changes in labour shares on yearly changes in the wage
+differentials to obtain estimates of $\frac{1}{\varrho }$. The estimated
+regression coefficient is 0.001 (p-value 0.03), implying that labor
+reallocation is quite unresponsive to wage differentials.\footnote{%
+This result is remniniscent of Wacziarg and Wallack (2004), who find small
+intersectoral labor movements in response to trade liberalizations.}
+
+We solve the model and counterfactuals under $\frac{1}{\varrho }=0.001$ and
+report the results in Table $5.$ Given the large estimated value of $\varrho 
+$, the results are very similar to those in the baseline model. We have
+experimented with a range of values of $\frac{1}{\varrho }$ (from 0.0005 to
+0.002) and the results are virtually identical.
+
+\subsubsection{CES Preferences}
+
+\textbf{In our baseline model preferences over sectoral goods aggregate in
+Cobb-Douglas fashion. In this robustness check we replace equation (\ref%
+{aggregate}) by a CES formulation. This requires calibrating }$J$\textbf{\
+\textquotedblleft share\textquotedblright\ parameters, as well as an
+elasticity of substitution. Our strategy is to calibrate the share
+parameters by .... and then look at how our results vary with different
+values of the elasticity of substitution. }
+
+\textbf{The results are presented in Table 6. The overall effect of trade on
+volatility is quite similar across different specifications of preferences,
+though when substitutability is quite low (elasticity of substitution equal
+to 0.5) the diversification effect and the sectoral specialization effect
+change in offsetting directions}
+
+\subsection{Additional Insights from the Calibrated Model}
+
+In this section we use our model to investigate two further questions about
+the forces at work in our model and in the data. In particular we ask: (i)
+What is the quantitative role of intersectoral input-output linkages in the
+relationship between trade openness and volatility? And (ii) Did the
+emergence of China as a global trading powerhouse exert a disproportionate
+effect in other countries' volatility through trade?
+
+\subsubsection{Input-Output Linkages}
+
+Our model features input-output linkages as each sector produces goods that
+can be used as intermediates for other sectors. It is interesting to
+evaluate the role of these input-output linkages in producing our
+quantitative results. In principle, we would expect the existence of
+input-output linkages to provide diversification benefits to sectors, as
+implicit in such linkages there are possibilities for substitution away from
+inputs experiencing adverse shocks [e.g., Koren and Tenreyro (2013)].
+However, similar to our discussion of the country diversification channel,
+input-output linkages can also create excessive exposure to particularly
+volatile suppliers, potentially leading to greater volatility relative to a
+benchmark where each sector only uses non-produced inputs (or intermediates
+originating from within the sector). Either way, increased openness to trade
+should magnify these effects. For example, the more a country can freely
+trade, the greater the opportunities for a firm to diversify among its input
+suppliers, and the greater the diversification benefits associates with
+input-output linkages.
+
+To see if input-output linkages do indeed amplify the impact of trade on
+income volatility in our model, we compare our baseline results to those of
+an alternative model without intermediates, i.e. where we set $\gamma
+^{kj}=0 $ for all $j$ and $k$ (and consequently $\beta =1$). We then
+re-calibrate the productivity shocks and the trade cost processes to fit
+value-added and trade data, as before. The results from this no-input-output
+model are presented in Table $7$, and should as usual be compared to those
+of Table 1. While the qualitative findings are similar to those of the full
+model with input-output linkages, the quantitative impact of trade is
+considerably reduced in their absence. The average decline in volatility due
+to trade is only 3.5\% (as usual entirely by the diversification effect).
+Hence, allowing firms to source inputs from other sectors is crucial to
+capture the full effects of trade on volatility.
+
+\subsubsection{The Role of China}
+
+Our model can be used to generate additional counterfactuals that can shed
+further light on the sources of changes in income volatility over the last
+few decades. The emergence of China as a major global trading nation has
+certainly had a significant effect on the overall openness of other
+countries. Other authors have already offered evaluations of the impact of
+China on the first moment of income, i.e. via the classic gains from trade
+[di Giovanni, Levchenko, and Zhang (2014); Hsieh and Ossa (2016) ]; its
+impact on local labor markets [Autor, Dorn, and Hansen (2013), Caliendo,
+Dvorkin, and Parro (2017)]; and its influence on innovation [Bloom, Daca,
+and Van Reenen (2016)]. Given China's distinct patterns of comparative
+advantage and unique cyclical characteristics, it is also interesting to
+assess its effects on other countries' income volatility.
+
+We assess the role of China with two distinct thought experiments. In the
+first experiment we imagine a counter-factual world where China does not
+exists. That is, we perform our usual set of simulations but we drop China
+from the set of countries. The changes in volatilities we report are
+therefore the changes in volatility that lower trade costs among the
+remaining countries would have generated if China had not been participating
+in world trade. In the second experiment, we imagine a scenario in which
+China does participate in world trade, but its trading costs are held
+constant at 1972 levels. The changes in volatility we report are therefore
+the changes in volatility that lower trade costs among the remaining
+countries would have generated if China had not experienced any decline in
+trade costs.
+
+The results from these experiments are presented in Table 8. With only a few
+exceptions, the impact of trade on volatility without China or when China's
+trading costs are held constant at 1972 levels are broadly of a similar
+magnitude. This is not too surprising as China was obviously quite closed in
+1972, so holding its trade costs constant limits China's impact on other
+countries in a similar way as not having China at all.
+
+The most interesting comparison, however, is not between the two scenarios
+in Table 8, but between the scenarios in Table 8 and our baseline Table 1.
+The main thing to notice is that the figures in Table 1 are generally quite
+close to the figures in Table 8. This means that the decline in volatility
+when all countries experience trade cost declines is quite similar to the
+decline in volatility when all countries bar China experience trade cost
+declines, or even when China does not participate in world trade at all. Put
+crudely, China does not drive our main results.
+
+\section{Conclusions}
+
+How does openness to trade affect income volatility? Our study challenges
+the standard view that trade increases volatility. It highlights a new
+mechanism (country diversification) whereby trade can lower volatility. It
+also shows that the standard mechanism of sectoral specialization---usually
+deemed to increase volatility---can often in practice lead to lower
+volatility. The analysis indicates that diversification of country-specific
+shocks has generally led to lower volatility during the period we analyze,
+and has been quantitatively much more important than the specialization
+mechanism. The sizeable heterogeneity in the trade effects on volatility can
+contribute to understand the heterogeneity of results documented by the
+existing empirical literature.
+
+\begin{thebibliography}{99}
+\bibitem{} Acemoglu, D. and J. Ventura (2002), \textquotedblleft The World
+Income Distribution,\textquotedblright\ Quarterly Journal of Economics, 117
+(2), p. 659-694
+
+\bibitem{} Allen, A., C. Arkolakis, and Y. Takahashi (2017)
+\textquotedblleft Universal Gravity,\textquotedblright\ Yale manuscript.
+
+\bibitem{} Alvarez, F. and R. E. Lucas (2007), \textquotedblleft General
+Equilibrium Analysis of the Eaton-Kortum Model of International
+Trade,\textquotedblright\ Journal of Monetary Economics, 54 (6): 1726-1768.
+
+\bibitem{} Anderson, J., 2011. \textquotedblleft The specific factors
+continuum model, with implications for globalization and income
+risk,\textquotedblright\ Journal of International Economics, Elsevier, vol.
+85(2): 174-185.
+
+\bibitem{} Arkolakis, C., A. Costinot and A. Rodriguez-Clare (2012),
+\textquotedblleft New Trade Models, Same Old Gains?\textquotedblright\
+American Economic Review, 2012, 102(1), p. 94-130.
+
+\bibitem{} Arkolakis, C. and A. Ramanarayanan (2009), \textquotedblleft
+Vertical Specialization and International Business Cycle
+Synchronization,\textquotedblright\ Scandinavian Journal of Economics,
+111(4), 655-80.
+
+\bibitem{} Autor, David H., David Dorn, and Gordon H. Hanson. 2013. "The
+China Syndrome: Local Labor Market Effects of Import Competition in the
+United States." American Economic Review, 103(6): 2121-68.
+
+\bibitem{} Backus, D., Patrick J. Kehoe, and F. Kydland (1992),
+"International Real Business Cycles", Journal of Political Economy 100 (4):
+745--775.
+
+\bibitem{} Bejan, M. (2006), \textquotedblleft Trade Openness and Output
+Volatility,\textquotedblright\ manuscript,
+http://mpra.ub.uni-muenchen.de/2759/.
+
+\bibitem{} Bloom, Nicholas; Draca Mirko and John Van Reenen (2016):
+\textquotedblleft Trade Induced Technical Change? The Impact of Chinese
+Imports on Innovation, IT and Productivity,\textquotedblright\ \textit{The
+Review of Economic Studies}, Volume 83, Issue 1, Pages 87--117.
+
+\bibitem{} Broda, C. and D. Weinstein (2006), \textquotedblleft
+Globalization and the Gains from Variety,\textquotedblright\ The Quarterly
+Journal of Economics, MIT Press, vol. 121(2): 541-585, May.
+
+\bibitem{} Burgess, R. and D. Donaldson (2012) \textquotedblleft Railroads
+and the Demise of Famine in Colonial India,\textquotedblright\ MIT
+manuscript.
+
+\bibitem{} Burstein, A. and J. Vogel (2016), \textquotedblleft International
+trade, technology, and the skill premium,\textquotedblright\ forthcoming
+Journal of Political Economy.
+
+\bibitem{} Burstein, A. and J. Cravino (2015), \textquotedblleft Measured
+Aggregate Gains from International Trade\textquotedblright\ with Javier
+Cravino, American Economic Journal: Macroeconomics, vol 7 (2): 181-218.
+
+\bibitem{} Caliendo, L., M.Dvorkin, and F. Parro (2019) \textquotedblleft
+Trade and Labor Market Dynamics: General Equilibrium Analysis of the China
+Trade Shock,\textquotedblright\ Econometrica, 87(3), 741-835.
+
+\bibitem{} Caliendo, L. and F. Parro (2015) \textquotedblleft Estimates of
+the Trade and Welfare Effects of NAFTA,\textquotedblright\ Review of
+Economic Studies, 82(1), 1-44.
+
+\bibitem{} Caliendo, L., F. Parro, E. Rossi-Hansberg and D. Sarte (2014).
+\textquotedblleft The impact of regional and sectoral productivity changes
+on the U.S. economy,\textquotedblright\ Princeton and Yale manuscripts.
+
+\bibitem{} Cavallo, E. (2008). \textquotedblleft Output Volatility and
+Openess to Trade: a Reassessment,\textquotedblright\ Journal of LACEA
+Economia, Latin America and Caribbean Economic Association.
+
+\bibitem{} Costello, D. (1993) \textquotedblleft A Cross-Country,
+Cross-Industry Comparison of Productivity Growth,\textquotedblright\ Journal
+of Political Economy, Vol. 101(2): 207-222.
+
+\bibitem{} Costinot, A., D. Donaldson, and I. Komunjer (2012):
+\textquotedblleft What Goods Do Countries Trade?A Quantitative Exploration
+of Ricardo's Ideas,\textquotedblright\ Review of Economic Studies, 79,
+581-608.
+
+\bibitem{} Department for International Development (2011),
+\textquotedblleft Economic openness and economic prosperity: trade and
+investment analytical paper\textquotedblright\ (2011), prepared by the U.K.
+Department of International Development's Department for Business,
+Innovation \& Skills, February 2011.
+
+\bibitem{} di Giovanni, J. and A. Levchenko (2009). \textquotedblleft Trade
+Openness and Volatility,\textquotedblright\ The Review of Economics and
+Statistics, MIT Press, vol. 91(3): 558-585, August.
+
+\bibitem{} di Giovanni, J. and A. Levchenko (2012), \textquotedblleft
+Country Size, International Trade, and Aggregate Fluctuations in Granular
+Economies,\textquotedblright\ Journal of Political Economy, 120 (6):
+1083-1132.
+
+\bibitem{} di Giovanni, J, A. Levchenko and I. Mejean (2014),
+\textquotedblleft Firms, Destinations, and Aggregate
+Fluctuations,\textquotedblright\ Econometrica, 82:4, pages 1303-1340.
+
+\bibitem{} di Giovanni, J., A. Levchenko, and J. Zhang (2014).
+\textquotedblleft The Global Welfare Impact of China: Trade Integration and
+Technological Change,\textquotedblright\ American Economic Journal:
+Macroeconomics.
+
+\bibitem{} Donaldson, D. \textquotedblleft Railroads of the Raj: Estimating
+the Impact of Transportation Infrastructure,\textquotedblright\ (2015)
+forthcoming, American Economic Review.
+
+\bibitem{} Easterly, W., R. Islam, and J. Stiglitz (2001), \textquotedblleft
+Shaken and Stirred: Explaining Growth Volatility,\textquotedblright\ Annual
+World Bank Conference on Development Economics, p. 191-212. World Bank,
+July, 2001.
+
+\bibitem{} Eaton, J. and S. Kortum (2002), \textquotedblleft Technology,
+Geography and Trade,\textquotedblright\ Econometrica 70: 1741-1780.
+
+\bibitem{} Frankel, J. and A. Rose (1998), \textquotedblleft The Endogeneity
+of the Optimum Currency Area Criteria,\textquotedblright\ Economic Journal,
+Vol. 108, No. 449 (July):. 100-120.
+
+\bibitem{} Haddad, M., J. Lim, and C. Saborowski (2013), \textquotedblleft
+Trade Openness Reduces Growth Volatility When Countries Are Well
+Diversified,\textquotedblright\ Canadian Journal of Economics, 46(2), 765-90.
+
+\bibitem{} Head, K. and J. Ries (2001), \textquotedblleft Increasing Returns
+versus National Product Differentiation as an Explanation for the Pattern of
+U.S.-Canada Trade.\textquotedblright\ American Economic Review 91: 858-876.
+
+\bibitem{} Hsieh, C. and Ossa, R. (2011), \textquotedblleft A Global View of
+Productivity Growth in China,\textquotedblright\ \textit{Journal of
+International Economics} 102: 209-224, September 2016.
+
+\bibitem{} Kehoe, T. and K. J. Ruhl (2008), \textquotedblleft Are Shocks to
+the Terms of Trade Shocks to Productivity?,\textquotedblright\ Review of
+Economic Dynamics, Elsevier for the Society for Economic Dynamics, vol.
+11(4): 804-819, October.
+
+\bibitem{} Koren, M. and S. Tenreyro (2007), \textquotedblleft Volatility
+and Development,\textquotedblright\ Quarterly Journal of Economics, 122 (1):
+243-287.
+
+\bibitem{} Koren, M. and S. Tenreyro (2013), \textquotedblleft Technological
+Diversification,\textquotedblright\ The American Economic Review, February
+2013, Volume 103(1): 378-414.
+
+\bibitem{} Kose, A., E. Prasad, and M. Terrones (2003), \textquotedblleft
+Financial Integration and Macroeconomic Volatility,\textquotedblright\ IMF
+Staff Papers, Vol 50, Special Issue, p. 119-142.
+
+\bibitem{} Kose, A. and K. Yi, (2001), \textquotedblleft International Trade
+and Business Cycles: Is Vertical Specialization the Missing
+Link?,\textquotedblright\ American Economic Review, vol. 91(2): 371-375, May.
+
+\bibitem{} Levchenko, A. and J. Zhang (2013), \textquotedblleft The Global
+Labor Market Impact of Emerging Giants: a Quantitative
+Assessment,\textquotedblright\ IMF Economic Review, 61:3 (August 2013),
+479-519.
+
+\bibitem{} Levchenko, A. and J. Zhang (2014), \textquotedblleft Ricardian
+Productivity Differences and the Gains from Trade,\textquotedblright\
+European Economic Review, 65 (January 2014), 45-65.
+
+\bibitem{} Levchenko, A. and J. Zhang (2016), \textquotedblleft The
+Evolution of Comparative Advantage: Measurement and Welfare
+Implications,\textquotedblright\ Journal of Monetary Economics, 78, 96-111
+
+\bibitem{} Newbery, D. and J. Stiglitz, (1984), \textquotedblleft Pareto
+Inferior Trade,\textquotedblright\ Review of Economic Studies, Wiley
+Blackwell, vol. 51(1): 1-12, January.
+
+\bibitem{} Parinduri, R. (2011), \textquotedblleft Growth Volatility and
+Trade: Evidence from the 1967-1975 Closure of the Suez
+Canal,\textquotedblright\ manuscript University of Nottingham.
+
+\bibitem{} Parro, F. (2013), \textquotedblleft Capital-Skill Complementarity
+and the Skill Premium in a Quantitative Model of Trade,\textquotedblright\
+American Economic Journal: Macroeconomics, American Economic Association,
+vol. 5(2): 72-117, April.
+
+\bibitem{} Rodrik, D., (1998), \textquotedblleft Why Do More Open Economies
+Have Bigger Governments?,\textquotedblright\ Journal of Political Economy,
+vol. 106(5): 997-1032, October.
+
+\bibitem{} Simonovska, I. and M. E. Waugh (2014), \textquotedblleft The
+Elasticity of Trade: Estimates \& Evidence,\textquotedblright\ Journal of
+International Economics, 92(1), 34-50.
+
+\bibitem{} Stockman, A. (1988), \textquotedblleft Sectoral and National
+Aggregate Disturbances to Industrial Output in Seven European
+Countries,\textquotedblright\ Journal of Monetary Economics 21 (March):
+387-409.
+
+\bibitem{} Buch, C., J. D\"{o}pke and H. Strotmann (2009), \textquotedblleft
+Does trade openness increase firm-level volatility?,\textquotedblright\
+World Economy.
+
+\bibitem{} Wacziarg, R. and J. S. Wallack (2004), \textquotedblleft Trade
+liberalization and intersectoral labor movements,\textquotedblright\ Journal
+of International Economics 64 (2004) 411-- 439.
+\end{thebibliography}
+
+\section*{Appendix}
+
+\subsection*{Derivation of national income under free trade}
+
+In the one-sector economy, under free trade, prices are equalized across
+countries. 
+\begin{equation*}
+P_{t}=P_{nt}=\left( \xi B\right) ^{1/\beta }\left\{
+\sum_{m=1}^{N}T_{m}\left( A_{mt}\right) ^{\theta }\left( w_{mt}\right)
+^{-\beta \theta }\right\} ^{\frac{-1}{\beta \theta }}
+\end{equation*}%
+Thus, from $d_{nmt}=\left( \xi B\right) ^{-\theta }T_{m}\left( A_{mt}\right)
+^{\theta }\left( w_{mt}\right) ^{-\beta \theta }\left( P_{mt}\right) ^{\beta
+\theta }$ we obtain: 
+\begin{equation*}
+d_{mnt}=T_{n}\left( A_{nt}\right) ^{\theta }\left( w_{nt}\right) ^{-\beta
+\theta }\left\{ \sum_{m=1}^{N}T_{m}\left( A_{mt}\right) ^{\theta }\left(
+w_{mt}\right) ^{-\beta \theta }\right\} ^{-1}
+\end{equation*}%
+and from $w_{nt}L_{nt}=\sum\nolimits_{m=1}^{N}d_{mnt}w_{mt}L_{mt},$, we
+have: 
+\begin{equation*}
+w_{nt}=\left( \frac{T_{n}\left( A_{nt}\right) ^{\theta }}{L_{nt}}\right) ^{%
+\frac{1}{1+\beta \theta }}V_{t}
+\end{equation*}%
+where $V_{t}\equiv \left[ \sum\nolimits_{m=1}^{N}\frac{w_{mt}L_{mt}}{%
+\sum_{i=1}^{N}T_{i}\left( A_{it}\right) ^{\theta }\left( w_{it}\right)
+^{-\beta \theta }}\right] ^{\frac{1}{1+\beta \theta }}$ is common to all
+countries. Therefore, using the definition of $Z_{nt}$, and recalling our
+definition of real income, $Y_{nt}=\frac{w_{nt}L_{nt}}{P_{nt}}$, we have%
+\begin{align*}
+Y_{nt}& =L_{nt}\left( \frac{T_{n}\left( A_{nt}\right) ^{\theta }}{L_{nt}}%
+\right) ^{\frac{1}{1+\beta \theta }}V_{t}\left( \xi B\right) ^{1/\beta
+}\left\{ \sum_{i=1}^{N}T_{i}\left( A_{it}\right) ^{\theta }\left( \left( 
+\frac{T_{i}\left( A_{it}\right) ^{\theta }}{L_{it}}\right) ^{\frac{1}{%
+1+\beta \theta }}V_{t}\right) ^{-\beta \theta }\right\} ^{\frac{1}{\beta
+\theta }} \\
+& =\left( \xi B\right) ^{1/\beta }\left( T_{n}A_{nt}^{\theta }L_{nt}^{\beta
+\theta }\right) ^{\frac{1}{1+\beta \theta }}\left[ \sum_{i=1}^{N}\left(
+T_{i}\left( A_{it}\right) ^{\theta }L_{it}^{\beta \theta }\right) ^{\frac{1}{%
+1+\beta \theta }}\right] ^{\frac{1}{\beta \theta }} \\
+& =\left( \xi B\right) ^{1/\beta }Z_{nt}^{\frac{1}{1+\beta \theta }}\left(
+\sum_{m=1}^{N}Z_{mt}^{\frac{1}{1+\beta \theta }}\right) ^{\frac{1}{\beta
+\theta }}
+\end{align*}
+
+\subsection*{Numerical Procedure for Model Equilibrium}
+
+We use nested iterations to compute the model equilibrium.\textbf{\ Miklos I
+changed the outer loop to the best of my understanding but I thunk changes
+are needed to Inner Loop and Middle Loop as well.}
+
+\subsubsection*{Inner Loop}
+
+For a given pair of sectoral resource allocation $(L_{nt}^{j})$ and sectoral
+wages $(w_{nt}^{j})$ solve the system below for sectoral price indexes $%
+P_{nt}^{j}.$%
+\begin{align*}
+P_{nt}& =\prod_{j=1}^{J}{\alpha _{t}^{j}}^{-\alpha _{t}^{j}}{P_{nt}^{j}}%
+^{\alpha _{t}^{j}} \\
+P_{nt}^{j}& =\xi {\Phi _{nt}^{j}}^{-\frac{1}{\theta }} \\
+\Phi _{nt}^{j}& ={B^{j}}^{-\theta }\sum_{i=1}^{N}T_{i}^{j}{A_{it}^{j}}%
+^{\theta }\left( \frac{{w_{it}^{j}}^{\beta ^{j}}\prod_{k=1}^{J}{P_{it}^{k}}%
+^{\gamma ^{kj}}}{\kappa _{nit}^{j}}\right) ^{-\theta }
+\end{align*}
+
+Simplify $\Phi_{nt}^j:$ 
+\begin{eqnarray*}
+\Phi_{nt}^j &=& {B^j}^{-\theta} \sum_{i = 1}^N \underbrace{T_i^j {A_{it}^j}%
+^{\theta}}_{\frac{Z_{it}^j}{{L_{it}}^{\beta^j\theta}}} \left(\frac{ {w_{it}^j%
+}^{\beta^j} \prod_{k = 1}^{J}{P_{it}^k}^{\gamma^{kj}}}{\kappa_{nit}^j}%
+\right)^{-\theta} \\
+&=& {B^j}^{-\theta} \sum_{i = 1}^N Z_{it}^j {L_{it}}^{- \beta^j\theta} {%
+w_{it}^j}^{-\beta^j\theta} {\kappa_{nit}^j}^{\theta} \prod_{k = 1}^{J}{%
+P_{it}^k}^{-\theta\gamma^{kj}} \\
+&=& {B^j}^{-\theta} \sum_{i = 1}^N \underbrace{Z_{it}^j {%
+\left((L_{it}w_{it}^j)^{- \beta^j} \kappa_{nit}^j\right)}^{\theta}}%
+_{D_{nit}^j} \prod_{k = 1}^{J}{P_{it}^k}^{-\theta\gamma^{kj}} \\
+&=& {B^j}^{-\theta} \sum_{i = 1}^N D_{nit}^j \prod_{k = 1}^{J}{P_{it}^k}%
+^{-\theta\gamma^{kj}}
+\end{eqnarray*}
+Note that we can compute the coefficients of the equation (the $D$ values)
+before starting the search for prices. Now we can write the system of
+equations as 
+\begin{align*}
+{P_{nt}^j}^{-\theta} &= \xi^{-\theta} {\Phi_{nt}^j} \\
+{P_{nt}^j}^{-\theta} &= \xi^{-\theta} {{B^j}^{-\theta} \sum_{i = 1}^N
+D_{nit}^j \prod_{k = 1}^{J}{P_{it}^k}^{-\theta\gamma^{kj}}}
+\end{align*}
+or 
+\begin{equation}  \label{inner:loop}
+\mathcal{P}_{nt}^j = \left(\xi B^j\right)^{-\theta} \sum_{i = 1}^N D_{nit}^j
+\prod_{k = 1}^{J}{\mathcal{P}_{it}^k}^{\gamma^{kj}}
+\end{equation}
+where $\mathcal{P}_{nt}^j \equiv {P_{nt}^j}^{-\theta}$. We iterate %
+\eqref{inner:loop} until convergence.
+
+\subsubsection*{Middle loop}
+
+For a given resource allocation, $L_{nt}^{j}$, this loop searches for
+sectoral wages $w_{nt}^{j}$ that solve the system of equations below. For
+notational simplicity we solve the system in terms of sectoral revenue and
+then calculate corresponding wages from $w_{nt}^{j}L_{nt}^{j}=\beta
+^{j}R_{nt}^{j}$. 
+\begin{align*}
+R_{nt}^{j}& =\sum_{m=1}^{N}E_{mt}^{j}d_{mnt}^{j}\!\left( w_{nt}^{j}\right) \\
+E_{mt}^{j}& =\alpha _{t}^{j}P_{mt}C_{mt}+\sum_{k=1}^{J}\gamma ^{jk}R_{mt}^{k}
+\\
+P_{mt}C_{mt}& =\sum_{j=1}^{J}\beta ^{j}R_{mt}^{j}-S_{mt},
+\end{align*}%
+where $S_{mt}$ is the exogenous trade surplus of country $m$ in year $t$,
+with $\sum_{m}S_{mt}=0$. In the baseline specification, we set $S_{mt}=0$
+for each country. (A subsequent appendix explains how the trade surplus
+enters into the numerical algorithm).
+
+Substituting in, we get a system of linear equations in $R_{nt}^{j}$ for any
+given value of $d_{mnt}^{j}(w_{nt}^{j})$: 
+\begin{equation}
+R_{nt}^{j}=\sum_{m=1}^{N}d_{mnt}^{j}(w_{nt}^{j})\left[ \alpha
+_{t}^{j}\sum_{k=1}^{J}\beta ^{k}R_{mt}^{k}-\alpha
+_{t}^{j}S_{mt}+\sum_{k=1}^{J}\gamma ^{jk}R_{mt}^{k}\right]
+\label{middle:loop}
+\end{equation}
+
+Note that $d^j_{mnt}$ depends on $w_{nt}^j$ through 
+\begin{equation*}
+d_{mnt}^j = \frac{{B^j}^{-\theta} T_n^j {A_{nt}^j}^{\theta} \left(\frac{{%
+w_{nt}^j}^{\beta^j} \prod_{k = 1}^{J}{P_{nt}^k}^{\gamma^{kj}} }{%
+\kappa_{mnt}^j}\right)^{-\theta}}{{B^j}^{-\theta} \sum_{i = 1}^N T_i^j {%
+A_{it}^j}^{\theta} \left(\frac{{w_{it}^j}^{\beta^j} \prod_{k = 1}^{J}{%
+P_{it}^k}^{\gamma^{kj}} }{\kappa_{mit}^j}\right)^{-\theta}},
+\end{equation*}
+where prices were solved for in the inner loop. To facilitate computation we
+introduce $D$, the coefficients from the inner loop. We can rewrite the
+definition of $d$ as 
+\begin{align*}
+d_{mnt}^j &= \frac{\overbrace{T_n^j {A_{nt}^j}^{\theta}}^{\frac{Z_{nt}^j}{{%
+L_{nt}}^{\beta^j\theta}}} \left(\frac{{P_{nt}}^{1 - \beta^j} {w_{nt}^j}%
+^{\beta^j}}{\kappa_{mnt}^j}\right)^{-\theta}}{\sum_{i = 1}^N \underbrace{%
+T_i^j {A_{it}^j}^{\theta}}_{\frac{Z_{it}^j}{{L_{it}}^{\beta^j\theta}}} \left(%
+\frac{{P_{it}}^{1 - \beta^j} {w_{it}^j}^{\beta^j}}{\kappa_{mit}^j}%
+\right)^{-\theta}} \\
+&= \frac{Z_{nt}^j {L_{nt}}^{- \beta^j\theta} {w_{nt}^j}^{-\beta^j\theta} {%
+\kappa_{mnt}^j}^{\theta}{P_{nt}}^{\theta(\beta^j - 1)}}{\sum_{i = 1}^N
+Z_{it}^j {L_{it}}^{- \beta^j\theta} {w_{it}^j}^{-\beta^j\theta} {%
+\kappa_{mit}^j}^{\theta}{P_{it}}^{\theta(\beta^j - 1)}} \\
+&= \frac{\overbrace{Z_{nt}^j {L_{nt}}^{- \beta^j\theta} {w_{nt}^j}%
+^{-\beta^j\theta} {\kappa_{mnt}^j}^{\theta}}^{D_{mnt}^j}{P_{nt}}%
+^{\theta(\beta^j - 1)}}{\sum_{i = 1}^N \underbrace{Z_{it}^j {L_{it}}^{-
+\beta^j\theta} {w_{it}^j}^{-\beta^j\theta} {\kappa_{mit}^j}^{\theta}}%
+_{D_{mit}^j}{P_{it}}^{\theta(\beta^j - 1)}} \\
+&= \frac{D_{mnt}^j {P_{nt}}^{\theta(\beta^j - 1)}}{\sum_{i = 1}^N D_{mit}^j{%
+P_{it}}^{\theta(\beta^j - 1)}}
+\end{align*}
+Note that $d$ does not depend on the resource allocation.
+
+We guess a wage to compute $d$, then solve the linear equations %
+\eqref{middle:loop} for revenue. Our new wage can be computed from the
+revenue, and we iterate until convergence.
+
+\subsubsection*{Outer loop}
+
+\textbf{The goal of this loop is to find the sectoral resource allocations }$%
+L_{nt}^{j}$\textbf{\ that satisfy }%
+\begin{equation*}
+\frac{L_{nt}^{j}}{L_{nt}}=E_{t-1}\left( \frac{w_{nt}^{j}L_{nt}^{j}}{%
+w_{nt}L_{nt}}\right)
+\end{equation*}%
+\textbf{where }$w_{nt}$\textbf{\ is the average wage. When searching for the
+equilibrium value of }$L_{nt}^{j}$\textbf{\ the state of the economy is made
+up of the deterministic component of the augmented-productivity processes, }$%
+\bar{Z}_{nt}^{j}$\textbf{, as well as the previous-period values of the
+log-deviation processes representing country, sector, and idyosincratic
+shocks, }$\lambda _{t-1}^{j}$\textbf{, }$\mu _{nt-1}$\textbf{, and }$%
+\epsilon _{nt-1}^{j}$\textbf{. This state is known both to us and to the
+decision make in the model, as are the autoregressive parameters driving the
+shock processes and their variances. Hence, we can draw values from the
+distribution of }$\lambda _{t}^{j}$\textbf{, }$\mu _{nt}$\textbf{, and }$%
+\epsilon _{nt}^{j}$\textbf{\ and combine them }$\bar{Z}_{nt}^{j}$\textbf{\
+to create corresponding draws for }$Z_{nt}^{j}$\textbf{. For each iteration
+over possible candidates for the }$L_{nt}^{j}$\textbf{s, we thus draw XXX
+possible realizations of the }$Z_{nt}^{j}$\textbf{s, and for each of them we
+compute }$w_{nt}^{j}$\textbf{\ and }$w_{nt}$\textbf{, and hence }$\frac{%
+w_{nt}^{j}L_{nt}^{j}}{w_{nt}L_{nt}}$\textbf{\ from the middle loop. Then the
+expectation of these wage shares is simply the average across all the draws
+of }$Z_{nt}^{j}$\textbf{. The iteration ends when the left hand siode and
+right hand side are close enough.}
+
+\subsection*{Data Sources}
+
+We first describe the sample of countries and then the various sources of
+data.
+
+\subsubsection*{Sample of Countries}
+
+Our sample consists of 24 core countries, for which we were able to collect
+all the information needed to carry out the quantitative analysis with no
+need---or very limited need---of estimation. Other countries, for which data
+are nearly complete and estimation of some sectors' output or value added
+was needed, are grouped as \textquotedblleft Rest of the
+World\textquotedblright\ (ROW); the sectoral trade data are available for
+virtually all countries. Some countries were aggregated (for example Belgium
+and Luxembourg, and, before making it into ROW, Former USSR, Former
+Yugoslavia.). In particular, the minimum condition to keep a country (or an
+aggregation of countries) in the sample is the availability of complete
+series of sectoral value added and the presence of trade data.
+
+The core sample of countries include the United States, Mexico, Canada,
+Australia, China, Japan, South Korea, India, Colombia, the United Kingdom, a
+composite of France and its overseas departments, Germany, Italy, Spain,
+Portugal, a composite of Belgium and Luxembourg, the Netherlands, Finland,
+Sweden, Norway, Denmark, Greece, Austria and Ireland. While some important
+countries appear only in our ROW group (most notably Brazil, Russia, Turkey,
+Indonesia, Malaysia and oil exporters), the selection of core countries is
+meaningful both in terms of geographic location (covering all continents)
+and in terms of their share in global trade and GDP. The time period we
+study covers years from 1972 to 2007.\ 1970--1971 are slightly problematic
+for trade data, as there are many missing observations; hence the decision
+to start in 1972. The end period is chosen in order to avoid confounding the
+trade effects we are after with the financial crisis, which had other
+underlying causes. We focus on annual data.
+
+\subsubsection*{Sectoral Gross Output}
+
+The data are disaggregated into 24 sectors: agriculture (including mining
+and quarrying), 22 manufacturing sectors, and services, all available in US
+dollars for the core countries and the Rest of the world (ROW). The 22
+manufacturing sectors correspond to the industries numbered 15 to 37 in the
+ISIC Rev. 3 classification (36 and 37 are bundled together).
+
+The final dataset is obtained by combining different sources and some
+estimation. Data on agriculture, aggregate manufacturing, and services for
+core countries come mostly from the EU KLEMS database. There is no available
+series for services output in China and India, so they are obtained as
+residuals. Additional data come from the UN National Accounts.
+
+Data on manufacturing subsectors come from UNIDO and EU KLEMS. For some
+subsectors, EU KLEMS data are available only at a higher level of
+aggregation (i.e. sector 15\&16 instead of the two separately); in those
+cases, we use the country specific average shares from UNIDO for the years
+in which they are available to impute values for each subsectors.
+
+For the countries in the ROW, the output dataset is completed through
+estimation, using sectoral value added, aggregate output, GDP and population
+(the latter two from the Penn World Table 7.1) in a Poisson regressions.
+
+Finally, for the few countries for which we have sectoral value added data
+(described below) but no PWT data, we estimate sectoral output by
+calculating for each year and sector the average value added/output ratio, 
+\begin{equation*}
+\bar{\beta}_{t}^{j}=\frac{1}{N}\sum_{i=1}^{N}\frac{VA_{i,t}^{j}}{%
+Output_{i,t}^{j}}
+\end{equation*}%
+and then use it in 
+\begin{equation*}
+\widehat{Output_{i,t}^{j}}=\frac{VA_{i,t}^{j}}{\bar{\beta}_{t}^{j}}
+\end{equation*}%
+Data collection notes on the core countries are as follows:
+
+\begin{itemize}
+\item USA: missing years 1970-76 generated using a growth rate of each
+sector from EU KLEMS (March 2008 edition).
+
+\item Canada: 1970-04 EU KLEMS (March 2008 edition), for 2005-06 sectoral
+growth rates from the Canadian Statistical Office's National Economic
+Accounts (table Provincial gross output at basic prices by industries).
+
+\item China: data are from the Statistical yearbooks of China. Output in
+agriculture is defined as gross output value of farming, forestry, animal
+husbandry and fishery and is available for all years. Mining and
+manufacturing is reported as a single unit labelled output in industry,
+which apart from the extraction of natural resources and manufacture of
+industrial products includes sectors not covered by other countries: water
+and gas production, electricity generation and supply and repair of
+industrial products (no adjustment was made). The primary concern was the
+methodological change initiated around 1998, when China stopped reporting 
+\textit{total} industrial output and limited the coverage to industrial
+output of firms with annual sales above 5m yuan (USD 625 000). The sectoral
+coverage remained the same in both series. There were 5 years of overlapping
+data of both series over which the share of the 5m+ firms on total output
+decreased from 66 to 57 percent. The chosen approach to align both series
+was to take the levels of output from the pre-1999 series (output of all
+firms) and apply the growth rate of output of 5m+ firms in the post-1999
+period. This procedure probably exaggerates the level of output in the last
+seven years and leads to an enormous increase in the output/GDP in industry
+ratio (from 3.5 in 1999 to 6.0 in 2006). Our conjecture is that the ratio
+would be less steep if the denominator was value added in industry
+(unavailable on a comparable basis) because the GDP figure includes net
+taxes, which might take large negative values. Output in industry of all
+firms reflects the 1995 adjustment with the latest economic census.
+
+There is no available estimate for output in services, so we use the
+predicted values from a Poisson regression on the other core countries, with
+sectoral value added (see below for details on the source), output in
+agriculture, output in manufacturing, GDP and population (the latter two
+from the Penn World Table 7.1) and year dummies as regressors.
+
+\item India: data are from the Statistical Office of India, National
+Accounts Statistics. Years 1999-06 are reported on the SNA93 basis. Earlier
+years were obtained using the growth rates of sectoral output as defined in
+their `Back Series' database. The main issue with India was the large share
+of `unregistered' manufacturing that is reported in the SNA93 series but
+missing in the pre-1999 data. The `unregistered' manufacturing covers firms
+employing less than 10 workers and is also referred to as the informal or
+unorganized sector. We reconstructed the total manufacturing output using
+the assumption that the share of registered manufacturing output in total
+manufacturing output mirrors the share of value added of the registered
+manufacturing sector in total value added in manufacturing (available from
+the `Back Series' database).
+
+As for China, output in services was estimated through a Poisson regression
+method.
+
+\item Mexico: data are from the System of National Accounts published by the
+INEGI and from the UN National Accounts Database. 2003-06 Sistema de cuentas
+nacionales, INEGI (NAICS), 1980-03 growth rate from the UN National Accounts
+Data, 1978-79 growth rate from Sistema de cuentas nacionales, INEGI,
+1970-1978 growth rate from System of National Accounts (1981), Volumen I
+issued by the SPP.
+
+\item Japan: data for 1973-06 are from EU KLEMS (November 2009 Edition), for
+1970-72 the source is the OECD STAN database (growth rate).
+
+\item Colombia and Norway: data are from the UN National Accounts Database.
+
+\item Germany: the series is EU KLEMS' estimate for both parts of Germany.
+\end{itemize}
+
+The exchange rates used for the conversion of output data come from the IMF.
+
+\subsubsection*{Sectoral Value Added}
+
+The data on sectoral value added is obtained by combining data from the
+World Bank, UN National Accounts, EU KLEMS and UNIDO. For the World Bank and
+UN cases, the format of the data does not allow to have exactly the same
+sectoral classification as the output data: namely, mining here is not
+included in agriculture.
+
+The World Bank and UN data are cleaned (we noted a contradiction in the UN
+data for Ethiopia and Former Ethiopia, which we correct to include in ROW
+final sample).
+
+Data on manufacturing subsectors come from UNIDO and EU KLEMS. For some
+subsectors, EU KLEMS data are available only at a higher level of
+aggregation (i.e. sector 15\&16 instead of the two separately); in those
+cases, we use the country specific average shares from UNIDO for the years
+in which they are available to impute values for each subsectors; if no such
+data are available in UNIDO, we use the average shares for the whole sample.
+We use the UNIDO data as baseline and complete it with EU KLEMS when
+necessary (in these cases the growth rates of the EU KLEMS series are used
+to impute values; this is done because sometimes the magnitudes are quite
+different in the two datasets). If an observation is missing in both
+datasets, we impute it using the country specific average sectoral shares
+for the years in which data are available.
+
+\subsubsection*{Trade flows}
+
+We use bilateral imports and exports at the sectoral level from 1972 to 2007
+from the UN COMTRADE database. This dataset contains the value of all the
+transactions with international partners reported by each country. Since
+every transaction is potentially recorded twice (once reported by the
+exporter and once by the importer) we use the values reported by the
+importer when possible and integrate with the corresponding values reported
+by the exporter if only those are available. Re-exports and re-imports are
+not included in the exports and imports figures.
+
+We use the SITC1 classification for all the sample. This is made in order to
+ensure a consistent definition of the sectors throughout the whole time
+period. In order to construct the agricultural sector we aggregate the
+subsectors in the SITC1 classification corresponding to the BEC11 group. For
+the manufacturing sectors, we use the correspondence tables available on the
+UN website to identify the SITC1 groups corresponding to the ISIC 3 groups
+used for output and value added.
+
+\subsubsection*{Prices}
+
+\textbf{Miklos: I have a feeling this needs to be updated}
+
+In order to back out the augmented productivity processes $Z_{nt}^{j}$ we
+require aggregate price indices for all countries. For the resulting $%
+Z_{nt}^{j}$ to be comparable across countries, these price indices must be
+in a common currency. Hence, we use the price of GDP variable from the Penn
+World Tables (PWT) which is expressed in a common unit (so-called
+\textquotedblleft international dollars\textquotedblright ).\footnote{%
+Strictly speaking a better match between the price of GDP in the model and
+in the data would have been the price of consumption, but as is well known
+these variables take almost identical values in the PWTs. It is important to
+note that we use the PWT for $P_{nt}$ only in the procedure to back out the $%
+Z_{nt}^{j}$s. As discussed later, when we compute real agregate income in
+the data to generate aggregate volatility figures to compare to the model
+output, we do not need to worry about having the prices in the same
+currency, and we are therefore able to use national CPIs, which map exactly
+into the theoretical counterpart.} In particular, we use version 7.1 of PWT
+for all countries, except for Former USSR, Former Czechoslovakia and Former
+Yugoslavia, for which we use the PWT 5.6. For the ROW, we compute a weighted
+average of the relative prices of GDP for all the countries for which the
+PWT data are available (most of the ROW countries), where the weights are
+each country's share of total output. Similarly, for Belgium-Luxembourg, we
+compute the weighed average of the two.
+
+For the augmented productivity processes we also require sectoral price
+deflators from the USA. These are taken from EU\ KLEMS.
+
+\subsubsection*{Real Income}
+
+We need a time series for real income to generate volatility figures to
+compare to the volatility implied by our model. We use nominal value added
+(the aggregate for all sectors) in local currency units, deflated by the
+countries' CPI. The data are provided by the World Bank's World Development
+Indicators, in turn sourced by the International Monetary Fund (IMF). For
+Germany we use the CPI index provided by the OECD, as the IMF index is not
+consistent over time. For the United Kingdom we use the Retail Price Index,
+as the CPI index is not available.
+
+\subsection*{Trade Imbalances}
+
+In the presence of trade imbalances, equation (\ref{BC}) becomes%
+\begin{equation*}
+P_{nt}C_{nt}=\sum\nolimits_{j=1}^{J}w_{nt}^{j}L_{nt}^{j}-S_{nt},
+\end{equation*}%
+where $S_{nt}$ is the exogenously given current account surplus. As a
+consequence, the first order condition for labor allocations becomes%
+\begin{equation*}
+\frac{L_{nt}^{j}}{L_{nt}}=\frac{E_{t-1}\left( \frac{w_{nt}^{j}L_{nt}^{j}}{%
+\sum_{j=1}^{J}w_{nt}^{j}L_{nt}^{j}-S_{nt}}\right) }{E_{t-1}\left( \frac{%
+\sum_{j=1}^{J}w_{nt}^{j}L_{nt}^{j}}{\sum_{j=1}^{J}w_{nt}^{j}L_{nt}^{j}-S_{nt}%
+}\right) }.
+\end{equation*}%
+It can easily be shown that (\ref{eq:FOC}) is the first order approximation
+of the expression above around $S_{nt}=0.$ Hence, there is no compelling
+quantitative reason to change this part of the model when allowing for trade
+imbalances.
+
+On the other hand, equation (\ref{exp}) becomes%
+\begin{equation*}
+E_{mt}^{j}=\alpha _{t}^{j}\left( P_{mt}C_{mt}-S_{mt}\right)
++\sum\nolimits_{k=1}^{J}\gamma ^{jk}R_{mt}^{k}.
+\end{equation*}%
+Since $S_{mt}$ enters this linearly, the model must be solved again with
+this equation instead of the original (\ref{exp}).
+
+\end{document}
