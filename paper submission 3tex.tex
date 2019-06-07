@@ -790,34 +790,43 @@ and Kortum.
 Using again (\ref{shares}), together with (\ref{eq2}) and our definition of
 augmented productivity (\ref{productivityfactor}), some algebra yields 
 \begin{equation}
-Z_{nt}^{j}=\underbrace{{B^{j}}^{\theta }{\xi }^{\theta }d_{mnt}^{j}\left(
-y_{n}^{j}\right) ^{\theta \beta ^{j}}\left( \kappa _{mnt}^{j}\right)
-^{-\theta }\left( P_{nt}^{\beta
-^{j}}\prod\nolimits_{k=1}^{J}(P_{nt}^{k})^{\gamma ^{kj}}\right) ^{\theta
-}\left( \psi _{nt}^{j}\right) ^{-\theta \beta ^{j}}}_{\equiv \exp (\zeta
-_{mnt}^{j})}\left( {P_{mt}^{j}}\right) ^{-\theta },  \label{Z}
-\end{equation}%
-where $\psi _{n}^{j}\equiv \frac{L_{n}^{j}}{L_{n}}$ and $y_{n}^{j}\equiv 
-\frac{L_{n}^{j}w_{n}^{j}}{P_{n}}$. This equation holds for all $n,m,j,t$. It
+Z_{nt}^{j} = \underbrace{{B^{j}}^{\theta }{\xi }^{\theta }d_{mnt}^{j}
+\left(
+\frac{w_{nt}^{j}}{w_{nt}}
+w_{nt}L_{nt}\right)^{\theta \beta ^{j}}
+\left( \kappa _{mnt}^{j}\right)^{-\theta }
+\prod\nolimits_{k=1}^{J}(P_{nt}^{k})^{\theta\gamma ^{kj}}
+}_{\equiv \exp (\zeta
+_{mnt}^{j})}
+\left( {P_{mt}^{j}}\right) ^{-\theta }.  \label{Z}
+\end{equation}
+This equation holds for all $n,m,j,t$. It
 says that, for a given price of sectoral good $j$ in country $m$, ${%
 P_{mt}^{j}}$, and bilateral trading costs $\kappa _{mnt}^{j}$, productivity
 in country $n$ in that sector is inferred to be high if country $n$ exports
-a lot to country $m$, or $d_{mnt}^{j}$ is large; if value added $y_{n}^{j}$
-is large; or the sectoral input share $\psi _{n}^{j}$ is large.
+a lot to country $m$, or $d_{mnt}^{j}$ is large; aggregate value added $w_{nt}L_{nt}$ is large, 
+or if the sector has a high $w_{nt}^{j}/w_{nt}$ wage premium.
 
 For all countries, we can directly observe several of the terms collected in
 the object we have called $\exp (\zeta _{mnt}^{j})$. In particular, data is
 available for sectoral import shares $d_{mnt}^{j}$ (as already used in the
-previous subsection), sectoral value added $y_{nt}^{j}$, and aggregate
-prices $P_{nt}$. We do not observe directly the sectoral shares $\psi
-_{nt}^{j}$. However, recall from equation (\ref{eq:FOC}) that, in our model,
+previous subsection), nominal value added $w_{nt}L_{nt}$, and aggregate
+prices $P_{nt}$. We do not observe directly the sectoral wage premium $w
+_{nt}^{j}/w_{nt}$, especially since it is interpreted as the returns to \emph{equipped} labor. 
+However, recall from equation (\ref{eq:FOC}) that, in our model,
 equipped labour is allocated across sectors so that the share of employment
 in each sector equals the \textit{expected} share of that sector's value
-added in total value added. Hence, to compute the terms $\psi _{nt}^{j}$ we
+added in total value added. Hence, any \emph{unexpected} deviation in the value added share comes from the wage premium,
+\[
+\frac {w_{nt}^j} {w_{nt}}
+= \frac { w_{nt}^jL_{nt}^j/ w_{nt}L_{nt} }
+	{ E_{t-1}(w_{nt}^jL_{nt}^j/ w_{nt}L_{nt}) }.
+\]
+To compute expectations of the value added share in the denominator, we
 take the time series of sector $j$'s value added in country $n$'s value
-added, and extract its (nonlinear) time trend. We then treat the trend as a
-proxy for the expected value and plug it into (\ref{Z}) as our estimate of $%
-\psi _{nt}^{j}.$\footnote{%
+added, and extract its (nonlinear) time trend. We then treat the deviations from the trend as a
+proxy for wage premium, 
+ and plug it into (\ref{Z}).\footnote{%
 An alternative procedure would be to take a stand on the equipped-labor
 aggregate. For example, Levchenko and Zhang (2014) assume it is a
 Cobb-Douglas aggregate of capital and (raw) labor.}
