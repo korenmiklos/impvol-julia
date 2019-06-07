@@ -1584,117 +1584,42 @@ T_{i}\left( A_{it}\right) ^{\theta }L_{it}^{\beta \theta }\right) ^{\frac{1}{%
 
 \subsection*{Numerical Procedure for Model Equilibrium}
 
-We use nested iterations to compute the model equilibrium.\textbf{\ Miklos I
-changed the outer loop to the best of my understanding but I thunk changes
-are needed to Inner Loop and Middle Loop as well.}
+We use nested iterations to compute the model equilibrium. In the inner loop, we search for equilibrium prices, taking labor allocations as given. The outer loop searches for the optimal labor allocation.
 
 \subsubsection*{Inner Loop}
-
-For a given pair of sectoral resource allocation $(L_{nt}^{j})$ and sectoral
-wages $(w_{nt}^{j})$ solve the system below for sectoral price indexes $%
-P_{nt}^{j}.$%
-\begin{align*}
-P_{nt}& =\prod_{j=1}^{J}{\alpha _{t}^{j}}^{-\alpha _{t}^{j}}{P_{nt}^{j}}%
-^{\alpha _{t}^{j}} \\
-P_{nt}^{j}& =\xi {\Phi _{nt}^{j}}^{-\frac{1}{\theta }} \\
-\Phi _{nt}^{j}& ={B^{j}}^{-\theta }\sum_{i=1}^{N}T_{i}^{j}{A_{it}^{j}}%
-^{\theta }\left( \frac{{w_{it}^{j}}^{\beta ^{j}}\prod_{k=1}^{J}{P_{it}^{k}}%
-^{\gamma ^{kj}}}{\kappa _{nit}^{j}}\right) ^{-\theta }
-\end{align*}
-
-Simplify $\Phi_{nt}^j:$ 
-\begin{eqnarray*}
-\Phi_{nt}^j &=& {B^j}^{-\theta} \sum_{i = 1}^N \underbrace{T_i^j {A_{it}^j}%
-^{\theta}}_{\frac{Z_{it}^j}{{L_{it}}^{\beta^j\theta}}} \left(\frac{ {w_{it}^j%
-}^{\beta^j} \prod_{k = 1}^{J}{P_{it}^k}^{\gamma^{kj}}}{\kappa_{nit}^j}%
-\right)^{-\theta} \\
-&=& {B^j}^{-\theta} \sum_{i = 1}^N Z_{it}^j {L_{it}}^{- \beta^j\theta} {%
-w_{it}^j}^{-\beta^j\theta} {\kappa_{nit}^j}^{\theta} \prod_{k = 1}^{J}{%
-P_{it}^k}^{-\theta\gamma^{kj}} \\
-&=& {B^j}^{-\theta} \sum_{i = 1}^N \underbrace{Z_{it}^j {%
-\left((L_{it}w_{it}^j)^{- \beta^j} \kappa_{nit}^j\right)}^{\theta}}%
-_{D_{nit}^j} \prod_{k = 1}^{J}{P_{it}^k}^{-\theta\gamma^{kj}} \\
-&=& {B^j}^{-\theta} \sum_{i = 1}^N D_{nit}^j \prod_{k = 1}^{J}{P_{it}^k}%
-^{-\theta\gamma^{kj}}
-\end{eqnarray*}
-Note that we can compute the coefficients of the equation (the $D$ values)
-before starting the search for prices. Now we can write the system of
-equations as 
-\begin{align*}
-{P_{nt}^j}^{-\theta} &= \xi^{-\theta} {\Phi_{nt}^j} \\
-{P_{nt}^j}^{-\theta} &= \xi^{-\theta} {{B^j}^{-\theta} \sum_{i = 1}^N
-D_{nit}^j \prod_{k = 1}^{J}{P_{it}^k}^{-\theta\gamma^{kj}}}
-\end{align*}
-or 
-\begin{equation}  \label{inner:loop}
-\mathcal{P}_{nt}^j = \left(\xi B^j\right)^{-\theta} \sum_{i = 1}^N D_{nit}^j
-\prod_{k = 1}^{J}{\mathcal{P}_{it}^k}^{\gamma^{kj}}
+Introduce an auxiliary variable for the factory-gate price of intermediate goods,
+\begin{equation}\label{eq:varrho}
+	\phi_{nt}^j = \xi B^j (T_{n}^j)^{-1/\theta} (A_{nt}^j)^{-1} w_{nt}^{j\beta^j} \prod_{k=1}^J P_{nt}^{k\gamma^{kj}}.
 \end{equation}
-where $\mathcal{P}_{nt}^j \equiv {P_{nt}^j}^{-\theta}$. We iterate %
-\eqref{inner:loop} until convergence.
-
-\subsubsection*{Middle loop}
-
-For a given resource allocation, $L_{nt}^{j}$, this loop searches for
-sectoral wages $w_{nt}^{j}$ that solve the system of equations below. For
-notational simplicity we solve the system in terms of sectoral revenue and
-then calculate corresponding wages from $w_{nt}^{j}L_{nt}^{j}=\beta
-^{j}R_{nt}^{j}$. 
-\begin{align*}
-R_{nt}^{j}& =\sum_{m=1}^{N}E_{mt}^{j}d_{mnt}^{j}\!\left( w_{nt}^{j}\right) \\
-E_{mt}^{j}& =\alpha _{t}^{j}P_{mt}C_{mt}+\sum_{k=1}^{J}\gamma ^{jk}R_{mt}^{k}
-\\
-P_{mt}C_{mt}& =\sum_{j=1}^{J}\beta ^{j}R_{mt}^{j}-S_{mt},
-\end{align*}%
-where $S_{mt}$ is the exogenous trade surplus of country $m$ in year $t$,
-with $\sum_{m}S_{mt}=0$. In the baseline specification, we set $S_{mt}=0$
-for each country. (A subsequent appendix explains how the trade surplus
-enters into the numerical algorithm).
-
-Substituting in, we get a system of linear equations in $R_{nt}^{j}$ for any
-given value of $d_{mnt}^{j}(w_{nt}^{j})$: 
-\begin{equation}
-R_{nt}^{j}=\sum_{m=1}^{N}d_{mnt}^{j}(w_{nt}^{j})\left[ \alpha
-_{t}^{j}\sum_{k=1}^{J}\beta ^{k}R_{mt}^{k}-\alpha
-_{t}^{j}S_{mt}+\sum_{k=1}^{J}\gamma ^{jk}R_{mt}^{k}\right]
-\label{middle:loop}
+The prices of the final goods and wage rates can be directly expressed as a function of intermediate prices and parameters,
+\begin{equation}\label{eq:price}
+	P_{mt}^j(\phi) = \left[
+		\sum_{n=1}^N (\phi_{nt}^j/\kappa_{mnt}^j)^{-\theta}
+		\right]^{-1/\theta}.
 \end{equation}
-
-Note that $d^j_{mnt}$ depends on $w_{nt}^j$ through 
-\begin{equation*}
-d_{mnt}^j = \frac{{B^j}^{-\theta} T_n^j {A_{nt}^j}^{\theta} \left(\frac{{%
-w_{nt}^j}^{\beta^j} \prod_{k = 1}^{J}{P_{nt}^k}^{\gamma^{kj}} }{%
-\kappa_{mnt}^j}\right)^{-\theta}}{{B^j}^{-\theta} \sum_{i = 1}^N T_i^j {%
-A_{it}^j}^{\theta} \left(\frac{{w_{it}^j}^{\beta^j} \prod_{k = 1}^{J}{%
-P_{it}^k}^{\gamma^{kj}} }{\kappa_{mit}^j}\right)^{-\theta}},
-\end{equation*}
-where prices were solved for in the inner loop. To facilitate computation we
-introduce $D$, the coefficients from the inner loop. We can rewrite the
-definition of $d$ as 
-\begin{align*}
-d_{mnt}^j &= \frac{\overbrace{T_n^j {A_{nt}^j}^{\theta}}^{\frac{Z_{nt}^j}{{%
-L_{nt}}^{\beta^j\theta}}} \left(\frac{{P_{nt}}^{1 - \beta^j} {w_{nt}^j}%
-^{\beta^j}}{\kappa_{mnt}^j}\right)^{-\theta}}{\sum_{i = 1}^N \underbrace{%
-T_i^j {A_{it}^j}^{\theta}}_{\frac{Z_{it}^j}{{L_{it}}^{\beta^j\theta}}} \left(%
-\frac{{P_{it}}^{1 - \beta^j} {w_{it}^j}^{\beta^j}}{\kappa_{mit}^j}%
-\right)^{-\theta}} \\
-&= \frac{Z_{nt}^j {L_{nt}}^{- \beta^j\theta} {w_{nt}^j}^{-\beta^j\theta} {%
-\kappa_{mnt}^j}^{\theta}{P_{nt}}^{\theta(\beta^j - 1)}}{\sum_{i = 1}^N
-Z_{it}^j {L_{it}}^{- \beta^j\theta} {w_{it}^j}^{-\beta^j\theta} {%
-\kappa_{mit}^j}^{\theta}{P_{it}}^{\theta(\beta^j - 1)}} \\
-&= \frac{\overbrace{Z_{nt}^j {L_{nt}}^{- \beta^j\theta} {w_{nt}^j}%
-^{-\beta^j\theta} {\kappa_{mnt}^j}^{\theta}}^{D_{mnt}^j}{P_{nt}}%
-^{\theta(\beta^j - 1)}}{\sum_{i = 1}^N \underbrace{Z_{it}^j {L_{it}}^{-
-\beta^j\theta} {w_{it}^j}^{-\beta^j\theta} {\kappa_{mit}^j}^{\theta}}%
-_{D_{mit}^j}{P_{it}}^{\theta(\beta^j - 1)}} \\
-&= \frac{D_{mnt}^j {P_{nt}}^{\theta(\beta^j - 1)}}{\sum_{i = 1}^N D_{mit}^j{%
-P_{it}}^{\theta(\beta^j - 1)}}
-\end{align*}
-Note that $d$ does not depend on the resource allocation.
-
-We guess a wage to compute $d$, then solve the linear equations %
-\eqref{middle:loop} for revenue. Our new wage can be computed from the
-revenue, and we iterate until convergence.
+\begin{equation}\label{eq:wage}
+	w_{nt}^j(\phi) = (\xi B^j)^{-1/\beta^j}
+	(\phi_{nt}^j)^{1/\beta^j}  
+	(T_{n}^j)^{1/(\beta^j\theta)}(A_{nt}^j)^{1/\beta^j} 
+	\prod_{k=1}^J P_{nt}^k(\phi)^{-\gamma^{kj}/\beta^j}.
+\end{equation}
+Sectoral revenues are a constant multiple of sectoral wage bill, so, given labor allocations, we can also express them as a function of only intermediate prices and parameters,
+\begin{equation}\label{eq:revenue}
+	R_{nt}^j(\phi) = w_{nt}^j(\phi)L_{nt}^j/\beta^j.
+\end{equation}
+Taking the market clearing conditions in \eqref{rev} and \eqref{exp}, we can write intermediate prices as a function of sectoral revenues,
+\begin{equation}\label{eq:market_clearing}
+	\phi_{nt}^j = R_{nt}^j(\phi)^{-1/\theta}
+	\left\{
+	\sum_{m=1}^N
+		[\kappa_{mnt}^j P_{mt}^j(\phi)]^{\theta}
+		\sum_{k=1}^J
+			\left( \alpha_{t}^j
+				\beta^k 
+			+ \gamma^{jk}\right)R_{mt}^k(\phi)
+	\right\}^{1/\theta}.
+\end{equation}
+We start from a guess for sectoral revenues (computed analytically for the free-trade equilibrium) and then use \eqref{eq:market_clearing} to obtain a guess for intermediate prices. We recompute sectoral revenues under these intermediate prices and iterate until convergence.
 
 \subsubsection*{Outer loop}
 
