@@ -320,10 +320,10 @@ C_{nt}=\prod\nolimits_{j=1}^{J}\left( C_{nt}^{j}\right) ^{\alpha _{t}^{j}},
 \end{equation}%
 where $C_{nt}^{j}$ is the quantity of sectoral good $j$ used for
 consumption, and $\sum_{j=1}^{J}\alpha _{t}^{j}=1$. The $\alpha $s are
-allowed to change over time to capture possible changes in tastes. \textbf{%
+allowed to change over time to capture possible changes in tastes. 
 In Section \ref{Sces} we investigate the robustness of our results to a
 specification of preferences in which the elasticity of substitution among
-sectoral goods is not unitary.}
+sectoral goods is not unitary.
 
 Sectoral output in sector $j$, $Q_{nt}^{j}$, is 
 \begin{equation}
@@ -441,14 +441,13 @@ L_{nt}^{j}=\arg \max E_{t-1}\left[ \log \left( \frac{%
 \sum_{j=1}^{J}w_{nt}^{j}L_{nt}^{j}}{P_{nt}}\right) \right]
 ,s.t.:\sum\nolimits_{j=1}^{J}L_{nt}^{j}=L_{nt},  \label{eq:log:utility}
 \end{equation}%
-\textbf{where }$E_{t-1}$\textbf{\ indicates the rational expectation over
-the possible realizations of period }$t$\textbf{\ shocks. In particular, the
-representative agent knows }$L_{nt}^{j}$\textbf{\ and }$\kappa _{nt}^{j}$%
-\textbf{, as well as the previous values of the shock processes }$%
-A_{nt-1}^{j}$\textbf{. The agent also knows the distribution of }$A_{nt}^{j}$%
-\textbf{\ conditional on }$A_{nt-1}^{j}$\textbf{\ (which we estimate later
+where $E_{t-1}$ indicates the rational expectation over
+the possible realizations of period $t$ shocks. In particular, the
+representative agent knows the previous values of the shock processes $%
+A_{nt-1}^{j}$. The agent also knows the distribution of $A_{nt}^{j}$%
+ conditional on $A_{nt-1}^{j}$ (which we estimate later
 from data), and is therefore able to compute the rational expectation in (%
-\ref{eq:log:utility})}.\footnote{%
+\ref{eq:log:utility}).\footnote{%
 Implicit in our formulation is the assumption that there is perfect
 risk-sharing within a country, but no risk-sharing across countries. To
 motivate the lack of risk-sharing across countries, see our earlier
@@ -558,21 +557,21 @@ augmented productivity factors capture the joint influence of all the
 exogenous processes (whether deterministic or stochastic) that impinge on
 the country and sector overall productive capacity.
 
-\textbf{The second stage of the solution uses (\ref{eq:FOC}) to find the
-ex-ante shares }$L_{nt}^{j}/L_{nt}$\textbf{. Our solution method computes
-the rational expectation in (\ref{eq:FOC}) by bootstrapping from the
-empirical distribution of }$A_{nt}^{j}$\textbf{. In particular, we begin
-with a choice of candidate values for the }$L_{nt}^{j}$\textbf{s, and draw a
-large number of realizations of the }$A_{nt}^{j}$\textbf{s from their
-empirical distributions (conditional on the }$A_{nt-1}^{j}$\textbf{s). For
-each of these realizations, we compute the solution for the }$w_{nt}^{j}$%
-\textbf{s from the system (\ref{shares})-(\ref{RC}), and then the term in
+The second stage of the solution uses (\ref{eq:FOC}) to find the
+ex-ante shares $L_{nt}^{j}/L_{nt}$. Our solution method computes
+the rational expectation in (\ref{eq:FOC}) by drawing from the
+estimated distribution of $A_{nt}^{j}$. In particular, we begin
+with a choice of candidate values for the $L_{nt}^{j}$s, and draw a
+large number of realizations of the $A_{nt}^{j}$s from their
+estimated distributions (conditional on the $A_{nt-1}^{j}$s). For
+each of these realizations, we compute the solution for the $w_{nt}^{j}$%
+s from the system (\ref{shares})-(\ref{RC}), and then the term in
 brackets on the right side of (\ref{eq:FOC}). The rational expectation is
-then the average of the terms in brackets across all the bootstrapped
+then the average of the terms in brackets across all the simulated
 realizations. If this is (close enough to being) equal to the starting guess
-for }$L_{nt}^{j}/L_{nt}$\textbf{\ we stop. Otherwise, we move to a new guess
-for }$L_{nt}^{j}/L_{nt}$\textbf{. A more detailed explanation is provided in
-the Appendix.}
+for $L_{nt}^{j}/L_{nt}$ we stop. Otherwise, we move to a new guess
+for $L_{nt}^{j}/L_{nt}$. A more detailed explanation is provided in
+the Appendix.
 
 The key theoretical outcome we are interested in is aggregate income
 volatility, which we measure as the variance (or standard deviation, where
@@ -585,19 +584,19 @@ trade, and hence in foreign productivities, endowments, or trade costs.%
 \footnote{%
 In contrast, if we were to deflate nominal GDP by using the CES price
 aggregates of the sector-level variety baskets, we would retrieve the
-Kehoe-Ruhl invariance of GDP\ to shocks to the terms of trade. It is
+Kehoe-Ruhl invariance of GDP to shocks to the terms of trade. It is
 doubtful, however, that GDP as constructed by statistical agencies maps well
 into this theoretical construct. They may measure the price of a
 representative variety within each sector, the average price of an aggregate
 variety basket, or a random sample of continuously used varieties. This
 choice might also depend on the source country, as import price indexes are
 computed differently from producer price indexes (Nakamura and Steinsson,
-2008 QJE vs Nakamura and Steinsson, 2012 AER). In contrast, the CPI is
-easier to map to our model, because consumers only consume J different final
+2008 and Nakamura and Steinsson, 2012). In contrast, the CPI is
+easier to map to our model, because consumers only consume $J$ different final
 goods, not a continuum of varieties. Our welfare-relevant price index, which
 is the geometric average of final good prices is a very close approximation
 of the expenditure-weighted T\"{o}rnqvist price index, the way the CPI is
-usually calculated.} \textbf{Please check this footnote very carefully.}
+usually calculated.}
 
 \subsection{Two Illustrative Cases: Autarky and Costless Trade}
 
@@ -928,19 +927,19 @@ counterfactual exercises, we can mute the sector- or country-specific
 factors by setting the corresponding components equal to 0, in order to
 identify the separate effects of the two trade channels affecting volatility.
 
-\textbf{In order to solve the model, we must be able to compute the rational
+In order to solve the model, we must be able to compute the rational
 expectation of a sector's value added as a share of total value added at the
-beginning of period }$t$\textbf{, conditional on }$\hat{Z}_{nt-1}^{j}$%
-\textbf{\ (see equation (\ref{eq:FOC})). To do this we assume that the
-processes }$\lambda _{t}^{j}$\textbf{, }$\mu _{nt}$\textbf{, and }$\epsilon
-_{nt}^{j}$\textbf{\ are all AR(1) log-normal processes, and for each of them
+beginning of period $t$, conditional on $\hat{Z}_{nt-1}^{j}$%
+ (see equation (\ref{eq:FOC})). To do this we assume that the
+processes $\lambda _{t}^{j}$, $\mu _{nt}$, and $\epsilon
+_{nt}^{j}$ are all AR(1) log-normal processes, and for each of them
 we estimate specific autoregressive and variance parameters. We then
-construct possible realizations of }$Z_{nt}^{j}$\textbf{\ by bootsrapping
-from the distributions of }$\lambda _{t}^{j}$\textbf{, }$\mu _{nt}$\textbf{,
-and }$\epsilon _{nt}^{j}$\textbf{\ \ conditional on }$\lambda _{t-1}^{j}$%
-\textbf{, }$\mu _{nt-1}$\textbf{, and }$\epsilon _{nt-1}^{j}$\textbf{, and
-adding the bootstrapped values to the deterministic (trend) component of }$%
-Z_{nt}^{j}$\textbf{.}
+construct possible realizations of $Z_{nt}^{j}$ by drawing
+from the estimated distributions of $\lambda _{t}^{j}$, $\mu _{nt}$,
+and $\epsilon _{nt}^{j}$ conditional on $\lambda _{t-1}^{j}$%
+, $\mu _{nt-1}$, and $\epsilon _{nt-1}^{j}$, and
+adding the drawn values to the deterministic (trend) component of log $%
+Z_{nt}^{j}$.
 
 \subsection{Calibration}
 
@@ -1190,12 +1189,10 @@ parameter $\varrho $ determines the semi-elasticity of sectoral adjustment
 to the cost differential.
 
 Using (\ref{estimate}) in (\ref{AC}) we can solve for the ex-ante
-allocation, which turns out to be independent of $\varrho $, and hence it
-will be the same as in our baseline case, where $\varrho $ is implicitly
-assumed to be infinite. In other words, $\psi _{nt_{-}}^{j}$ is given by
-equation (\ref{eq:FOC}). \textbf{Miklos is this still true? I have vague
-memories of conversations where we concluded this is not quite right. Have
-we made any changes?}
+allocation. The first-order condition for $\psi _{nt_{-}}^{j}$ is given by
+equation (\ref{eq:FOC}). This is the same condition as in our baseline case. 
+That is ex-ante labor shares should equal expected wage bill shares. 
+Note, however, that the stochastic process of $w^j_{nt}$ is different with labor adjustment, so the solution to the ex-ante labor allocation problem will be different than in our baseline case.
 
 To calibrate $\varrho $, we use EU KLEMS data on employment and compensation
 for all countries in the European Union from 1970 to 2007. Using these data,
@@ -1213,21 +1210,22 @@ $, the results are very similar to those in the baseline model. We have
 experimented with a range of values of $\frac{1}{\varrho }$ (from 0.0005 to
 0.002) and the results are virtually identical.
 
-\subsubsection{CES Preferences}
+\subsubsection{Preferences with Constant Elasticity of Substitution}\label{Sces}
 
-\textbf{In our baseline model preferences over sectoral goods aggregate in
+In our baseline model preferences over sectoral goods aggregate in
 Cobb-Douglas fashion. In this robustness check we replace equation (\ref%
-{aggregate}) by a CES formulation. This requires calibrating }$J$\textbf{\
+{aggregate}) by a CES formulation. This requires calibrating $J$ \
 \textquotedblleft share\textquotedblright\ parameters, as well as an
 elasticity of substitution. Our strategy is to calibrate the share
-parameters by .... and then look at how our results vary with different
-values of the elasticity of substitution. }
+parameters by matching the share of each final good sector in global expenditure for each year. 
+We then look at how our results vary with different
+values of the elasticity of substitution.
 
-\textbf{The results are presented in Table 6. The overall effect of trade on
+The results are presented in Table 6. The overall effect of trade on
 volatility is quite similar across different specifications of preferences,
 though when substitutability is quite low (elasticity of substitution equal
 to 0.5) the diversification effect and the sectoral specialization effect
-change in offsetting directions}
+change in offsetting directions
 
 \subsection{Additional Insights from the Calibrated Model}
 
@@ -1499,6 +1497,10 @@ European Economic Review, 65 (January 2014), 45-65.
 Evolution of Comparative Advantage: Measurement and Welfare
 Implications,\textquotedblright\ Journal of Monetary Economics, 78, 96-111
 
+\bibitem{} Nakamura, Emi, and Jón Steinsson. 2008. “Five Facts about Prices: A Reevaluation of Menu Cost Models.” The Quarterly Journal of Economics 123 (4): 1415–64.
+
+\bibitem{} Nakamura, Emi, and Jón Steinsson. 2012. “Lost in Transit: Product Replacement Bias and Pricing to Market.” The American Economic Review 102 (7): 3277–3316.
+
 \bibitem{} Newbery, D. and J. Stiglitz, (1984), \textquotedblleft Pareto
 Inferior Trade,\textquotedblright\ Review of Economic Studies, Wiley
 Blackwell, vol. 51(1): 1-12, January.
@@ -1696,31 +1698,31 @@ revenue, and we iterate until convergence.
 
 \subsubsection*{Outer loop}
 
-\textbf{The goal of this loop is to find the sectoral resource allocations }$%
-L_{nt}^{j}$\textbf{\ that satisfy }%
+The goal of this loop is to find the sectoral resource allocations $%
+L_{nt}^{j}$ that satisfy %
 \begin{equation*}
 \frac{L_{nt}^{j}}{L_{nt}}=E_{t-1}\left( \frac{w_{nt}^{j}L_{nt}^{j}}{%
 w_{nt}L_{nt}}\right)
 \end{equation*}%
-\textbf{where }$w_{nt}$\textbf{\ is the average wage. When searching for the
-equilibrium value of }$L_{nt}^{j}$\textbf{\ the state of the economy is made
-up of the deterministic component of the augmented-productivity processes, }$%
-\bar{Z}_{nt}^{j}$\textbf{, as well as the previous-period values of the
+where $w_{nt}$ is the average wage. When searching for the
+equilibrium value of $L_{nt}^{j}$ the state of the economy is made
+up of the deterministic component of the augmented-productivity processes, $%
+\bar{Z}_{nt}^{j}$, as well as the previous-period values of the
 log-deviation processes representing country, sector, and idyosincratic
-shocks, }$\lambda _{t-1}^{j}$\textbf{, }$\mu _{nt-1}$\textbf{, and }$%
-\epsilon _{nt-1}^{j}$\textbf{. This state is known both to us and to the
-decision make in the model, as are the autoregressive parameters driving the
+shocks, $\lambda _{t-1}^{j}$, $\mu _{nt-1}$, and $%
+\epsilon _{nt-1}^{j}$. This state is known both to us and to the
+decision maker in the model, as are the autoregressive parameters driving the
 shock processes and their variances. Hence, we can draw values from the
-distribution of }$\lambda _{t}^{j}$\textbf{, }$\mu _{nt}$\textbf{, and }$%
-\epsilon _{nt}^{j}$\textbf{\ and combine them }$\bar{Z}_{nt}^{j}$\textbf{\
-to create corresponding draws for }$Z_{nt}^{j}$\textbf{. For each iteration
-over possible candidates for the }$L_{nt}^{j}$\textbf{s, we thus draw XXX
-possible realizations of the }$Z_{nt}^{j}$\textbf{s, and for each of them we
-compute }$w_{nt}^{j}$\textbf{\ and }$w_{nt}$\textbf{, and hence }$\frac{%
-w_{nt}^{j}L_{nt}^{j}}{w_{nt}L_{nt}}$\textbf{\ from the middle loop. Then the
+distribution of $\lambda _{t}^{j}$, $\mu _{nt}$, and $%
+\epsilon _{nt}^{j}$ and combine them with $\bar{Z}_{nt}^{j}$
+to create corresponding draws for $Z_{nt}^{j}$. For each iteration
+over possible candidates for the $L_{nt}^{j}$s, we thus draw 100
+random realizations of the $Z_{nt}^{j}$s, and for each of them we
+compute $w_{nt}^{j}$ and $w_{nt}$, and hence $\frac{%
+w_{nt}^{j}L_{nt}^{j}}{w_{nt}L_{nt}}$ from the middle loop. Then the
 expectation of these wage shares is simply the average across all the draws
-of }$Z_{nt}^{j}$\textbf{. The iteration ends when the left hand siode and
-right hand side are close enough.}
+of $Z_{nt}^{j}$. The iteration ends when the left hand side and
+right hand side are close enough.
 
 \subsection*{Data Sources}
 
@@ -1909,8 +1911,6 @@ UN website to identify the SITC1 groups corresponding to the ISIC 3 groups
 used for output and value added.
 
 \subsubsection*{Prices}
-
-\textbf{Miklos: I have a feeling this needs to be updated}
 
 In order to back out the augmented productivity processes $Z_{nt}^{j}$ we
 require aggregate price indices for all countries. For the resulting $%
