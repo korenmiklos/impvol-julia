@@ -123,7 +123,7 @@ module ImpvolOutput
 		# Volatility of the desired variable found in the last folders of depth 'dirsdown' from the 'rootpath' is calculated by this function
 
 		# Create 'stats' array to store volatilities
-		stats = DataFrame([String, Real, Real, Real, Real, Real, Real, Real], [:country_names, :actual, :kappa1972, :nosectoral, :nosectoral_kappa1972, :trade_barriers, :diversification, :specialization], 25)
+		stats = DataFrame([String, Real, Real, Real, Real, Real, Real, Real, Real, Real], [:country_names, :actual, :kappa1972, :nosectoral, :nosectoral_kappa1972, :onlyglobal, :onlyglobal_kappa1972, :trade_barriers, :diversification, :specialization], 25)
 
 		stats[:country_names] = CSV.read("data/country_name.txt", header = false, types = [String], nullable=false)[1]
 

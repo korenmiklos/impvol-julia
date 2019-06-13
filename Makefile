@@ -1,7 +1,7 @@
 .PHONY: data install tables template calibrate
 CALIBRATION = calibrate_params.jl calibration_utils.jl experiments/config.jl data/impvol_data.jld2
 EQULIBRIUM = utils.jl equilibrium.jl experiments/config.jl
-COLUMNS = actual kappa1972 nosectoral nosectoral_kappa1972
+COLUMNS = actual kappa1972 nosectoral nosectoral_kappa1972 onlyglobal onlyglobal_kappa1972
 CES = CES0.5 CES1.5 
 TABLES = $(CES) baseline china_1972 no_china no_io_linkages labor_adjustment trade_imbalance theta2 theta8 rho002 rho0005
 .PRECIOUS: $(foreach table,$(TABLES),$(foreach column,$(COLUMNS),experiments/$(table)/$(column)/results.jld2))
